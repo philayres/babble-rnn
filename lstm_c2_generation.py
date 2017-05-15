@@ -117,7 +117,7 @@ for iteration in range(1, 600):
 
     generated = []
     sentence = frames[start_index: start_index + maxlen]
-    generated.append( sentence)
+    generated += ( sentence)
     print('----- Generating with seed: ', str(sentence[0]) )
    # sys.stdout.write(str(generated[0:1]))
   #  sys.stdout.flush()
@@ -146,8 +146,9 @@ for iteration in range(1, 600):
         sentence = sentence[1:]
         sentence.append( next_frame)
        # print("new sentence length", len(sentence))
-    
-    for i, frame in enumerate(sentence):
+   
+    print("last result: ", str(generated[-1]) 
+    for i, frame in enumerate(generated):
       #for j,c in enumerate(frame):
         ofile.write((frame))
         
