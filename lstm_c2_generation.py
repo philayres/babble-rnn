@@ -22,7 +22,7 @@ fname="test/LDC97S44-8k.c2cb"
 odir="out/LDC97S44/"+str(epoch_time)+"/"
 os.makedirs(odir)
 ofname=odir+"out-c2cb-"
-
+modelf=odir+"model-"
 #text = open(fname).read()
 text = np.fromfile(fname, dtype=np.uint8)
 print('corpus length:', len(text))
@@ -106,7 +106,7 @@ def sample(preds, temperature=1.0):
 
 # train the model, output generated text after each iteration
 for iteration in range(1, 600):
-    ofile= open(ofname+"-"+str(iteration), "w")
+    ofile= open(ofname+str(iteration), "w")
     print()
     print('-' * 50)
     print('Iteration', iteration)
@@ -152,4 +152,5 @@ for iteration in range(1, 600):
         ofile.write((frame))
         
     ofile.close()
+    model.save(modelf+str(iteration))
     print()
