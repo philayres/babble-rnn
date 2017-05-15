@@ -147,7 +147,7 @@ for iteration in range(1, 600):
         sentence.append( next_frame)
        # print("new sentence length", len(sentence))
    
-    print("last result: ", str(generated[-1]) 
+    print("last result: ", str(generated[-1]) )
     for i, frame in enumerate(generated):
       #for j,c in enumerate(frame):
         ofile.write((frame))
