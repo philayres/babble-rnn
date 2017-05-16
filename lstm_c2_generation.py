@@ -89,6 +89,8 @@ model.add(Dense(framelen))
 #model.add(LSTM(128))
 #model.add(Dense(framelen))
 model.add(Dense(framelen))
+
+model.add(Dropout(0.2))
 #model.add(Dense(framelen))
 #model.add(Activation('softmax'))
 
