@@ -157,7 +157,12 @@ for iteration in range(1, 600):
            ic = 255
         if ic<0:
            ic = 0
-        ofile.write(chr(ic))
+        try:
+          ofile.write(chr(ic))
+          break
+        except ValueError:
+          ofile.write(chr(0))
+          print("failed to store value: ", ic)
 #        print(str(frame))
 
       #for j,c in enumerate(frame):
