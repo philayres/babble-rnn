@@ -84,12 +84,12 @@ for i, sentence in enumerate(sentences):
 # build the model: a single LSTM
 print('Build model...')
 model = Sequential()
-model.add(GRU(128, input_shape=(maxlen, framelen)))
+model.add(LSTM(256, input_shape=(maxlen, framelen)))
 model.add(Dense(framelen))
 model.add(Dense(framelen))
 model.add(Dense(framelen))
 model.add(Dense(framelen))
-model.add(Dropout(0.2))
+#model.add(Dropout(0.2))
 #model.add(Dense(framelen))
 #model.add(Activation('softmax'))
 
