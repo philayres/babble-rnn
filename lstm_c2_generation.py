@@ -84,9 +84,9 @@ for i, sentence in enumerate(sentences):
 # build the model: a single LSTM
 print('Build model...')
 model = Sequential()
-model.add(LSTM(128, input_shape=(maxlen, framelen), return_sequences=True))
-model.add(LSTM(128, return_sequences=True))
-model.add(LSTM(128))
+model.add(LSTM(384, input_shape=(maxlen, framelen))) #, return_sequences=True))
+#model.add(LSTM(128, return_sequences=True))
+#model.add(LSTM(128))
 model.add(Dense(framelen))
 model.add(Dense(framelen))
 model.add(Dense(framelen))
