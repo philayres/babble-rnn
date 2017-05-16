@@ -87,9 +87,9 @@ model = Sequential()
 model.add(LSTM(128, input_shape=(maxlen, framelen)))
 model.add(Dense(framelen))
 #model.add(LSTM(128))
+#model.add(Dense(framelen))
 model.add(Dense(framelen))
-model.add(Dense(framelen))
-model.add(Dense(framelen))
+#model.add(Dense(framelen))
 #model.add(Activation('softmax'))
 
 optimizer = RMSprop(lr=0.01)
@@ -149,10 +149,17 @@ for iteration in range(1, 600):
         sentence.append( next_frame)
        # print("new sentence length", len(sentence))
    
-    print("last result: ", str(generated[-1]) )
+#    print("last result: ", str(generated[-1]) )
     for i, frame in enumerate(generated):
+      for j,c in enumerate(frame):
+        ic = int(c)
+        if ic>255:
+           ic = 255
+        ofile.write(chr(ic))
+#        print(str(frame))
+
       #for j,c in enumerate(frame):
-        ofile.write((frame))
+ #       ofile.write((frame))
         
     ofile.close()
     model.save(modelf+str(iteration))
