@@ -7,7 +7,7 @@ from __future__ import print_function
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout
 from keras.layers import LSTM
-from keras.optimizers import RMSprop
+from keras.optimizers import Adam #RMSprop
 from keras.utils.data_utils import get_file
 import numpy as np
 import random
@@ -84,7 +84,7 @@ for i, sentence in enumerate(sentences):
 # build the model: a single LSTM
 print('Build model...')
 model = Sequential()
-model.add(LSTM(256, input_shape=(maxlen, framelen)))
+model.add(LSTM(128, input_shape=(maxlen, framelen)))
 model.add(Dense(framelen))
 model.add(Dense(framelen))
 model.add(Dense(framelen))
@@ -93,7 +93,7 @@ model.add(Dense(framelen))
 #model.add(Dense(framelen))
 #model.add(Activation('softmax'))
 
-optimizer = RMSprop(lr=0.01)
+optimizer = Adam() #RMSprop(lr=0.01)
 model.compile(loss='mean_absolute_error', optimizer=optimizer)
 
 
