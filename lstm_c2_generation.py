@@ -155,6 +155,8 @@ for iteration in range(1, 600):
         ic = int(c)
         if ic>255:
            ic = 255
+        if ic<0:
+           ic = 0
         ofile.write(chr(ic))
 #        print(str(frame))
 
