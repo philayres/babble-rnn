@@ -5,7 +5,7 @@
 
 from __future__ import print_function
 from keras.models import Sequential
-from keras.layers import Dense, Activation
+from keras.layers import Dense, Activation, Dropout
 from keras.layers import GRU
 from keras.optimizers import RMSprop
 from keras.utils.data_utils import get_file
@@ -89,7 +89,7 @@ model.add(Dense(framelen))
 model.add(Dense(framelen))
 model.add(Dense(framelen))
 model.add(Dense(framelen))
-
+model.add(Dropout(0.2))
 #model.add(Dense(framelen))
 #model.add(Activation('softmax'))
 
