@@ -7,7 +7,7 @@ from __future__ import print_function
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout
 from keras.layers import LSTM
-from keras.optimizers import SGD #Adam #RMSprop
+from keras.optimizers import Nadam # SGD #Adam #RMSprop
 from keras.utils.data_utils import get_file
 import numpy as np
 import random
@@ -93,7 +93,7 @@ model.add(Dense(framelen))
 #model.add(Dense(framelen))
 #model.add(Activation('softmax'))
 
-optimizer = SGD() #Adam() #RMSprop(lr=0.01)
+optimizer = Nadam() #SGD() #Adam() #RMSprop(lr=0.01)
 model.compile(loss='mean_absolute_error', optimizer=optimizer)
 
 
