@@ -45,7 +45,7 @@ num_frames = int(len_text / framelen)
 #indices_char = dict((i, c) for i, c in enumerate(chars))
 
 # cut the text in semi-redundant sequences of maxlen characters
-maxlen = 100
+maxlen = 1000
 step = 3
 sentences = []
 next_chars = []
@@ -84,9 +84,9 @@ for i, sentence in enumerate(sentences):
 # build the model: a single LSTM
 print('Build model...')
 model = Sequential()
-model.add(LSTM(384, input_shape=(maxlen, framelen))) #, return_sequences=True))
-#model.add(LSTM(128, return_sequences=True))
-#model.add(LSTM(128))
+model.add(LSTM(128, input_shape=(maxlen, framelen), return_sequences=True)) #, return_sequences=True))
+model.add(LSTM(128, return_sequences=True))
+model.add(LSTM(128))
 model.add(Dense(framelen))
 model.add(Dense(framelen))
 model.add(Dense(framelen))
@@ -127,14 +127,9 @@ for iteration in range(1, 600):
    # sys.stdout.write(str(generated[0:1]))
   #  sys.stdout.flush()
     
-    for i in range(400):
+    for i in range(4000):
         x = np.zeros((1, maxlen, framelen))
-     #   print("* from range: ", i)
-    #    print("sentence length", len(sentence))
         for t, frame in enumerate(sentence):
-            #for p in range(0, framelen):
-            #    f = frame[p]
-               # x[0, t, p] = float(ord(f))
             x[0, t] = frame
 
         preds = model.predict(x, verbose=0)[0]
