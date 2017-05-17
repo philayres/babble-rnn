@@ -98,7 +98,7 @@ model.add(Dense(framelen))
 optimizer = Nadam() #SGD() #Adam() #RMSprop(lr=0.01)
 model.compile(loss='mean_absolute_error', optimizer=optimizer)
 
-sample_weight = [4,4,4,4,1,1,2,2,2,2,2,2,2,3,3,3]
+sample_weight = np.array([4,4,4,4,1,1,2,2,2,2,2,2,2,3,3,3])
 
 def sample(preds, temperature=1.0):
     # helper function to sample an index from a probability array
