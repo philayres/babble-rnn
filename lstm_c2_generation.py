@@ -45,7 +45,7 @@ num_frames = int(len_text / framelen)
 #indices_char = dict((i, c) for i, c in enumerate(chars))
 
 # cut the text in semi-redundant sequences of maxlen characters
-maxlen = 1000
+maxlen = 100
 step = 3
 sentences = []
 next_chars = []
@@ -98,6 +98,7 @@ model.add(Dense(framelen))
 optimizer = Nadam() #SGD() #Adam() #RMSprop(lr=0.01)
 model.compile(loss='mean_absolute_error', optimizer=optimizer)
 
+sample_weight = [4,4,4,4,1,1,2,2,2,2,2,2,2,3,3,3]
 
 def sample(preds, temperature=1.0):
     # helper function to sample an index from a probability array
@@ -115,7 +116,7 @@ for iteration in range(1, 600):
     print()
     print('-' * 50)
     print('Iteration', iteration)
-    model.fit(X, y, batch_size=128, nb_epoch=1)
+    model.fit(X, y, batch_size=128, nb_epoch=1, sample_weight=sample_weight)
 
     start_index = random.randint(0, num_frames - maxlen - 1)
     print("start index and maxlen from frames: ", start_index, maxlen, num_frames)
