@@ -5,6 +5,7 @@
 
 from __future__ import print_function
 from keras.models import Sequential
+from keras.models import load_model
 from keras.layers import Dense, Activation, Dropout
 from keras.layers import LSTM
 from keras.optimizers import Nadam # SGD #Adam #RMSprop
@@ -15,6 +16,7 @@ import sys
 import os
 import time
 
+genlen=2000
 framelen=16
 epoch_time = int(time.time())
 
@@ -45,7 +47,7 @@ num_frames = int(len_text / framelen)
 #indices_char = dict((i, c) for i, c in enumerate(chars))
 
 # cut the text in semi-redundant sequences of maxlen characters
-maxlen = 100
+maxlen = 400
 step = 3
 sentences = []
 next_chars = []
@@ -83,21 +85,32 @@ for i, sentence in enumerate(sentences):
 
 # build the model: a single LSTM
 print('Build model...')
-model = Sequential()
-model.add(LSTM(128, input_shape=(maxlen, framelen), return_sequences=True)) #, return_sequences=True))
-model.add(LSTM(128, return_sequences=True))
-model.add(LSTM(128))
-model.add(Dense(framelen))
-model.add(Dense(framelen))
-model.add(Dense(framelen))
-model.add(Dense(framelen))
-#model.add(Dropout(0.2))
-#model.add(Dense(framelen))
-#model.add(Activation('softmax'))
+model = None
 
-optimizer = Nadam() #SGD() #Adam() #RMSprop(lr=0.01)
-model.compile(loss='mean_absolute_error', optimizer=optimizer)
+if len(sys.argv) > 1:
+    mn=sys.argv[0]
+    print("loading model")
+    model = load_model(mn)
+else:
+    model=  Sequential()
+    model.add(LSTM(128, input_shape=(maxlen, framelen), return_sequences=True)) #, return_sequences=True))
+    model.add(LSTM(128, return_sequences=True))
+    model.add(LSTM(128))
+    model.add(Dense(framelen))
+    model.add(Dense(framelen))
+    model.add(Dense(framelen))
+    model.add(Dense(framelen))
+    #model.add(Dropout(0.2))
+    #model.add(Dense(framelen))
+    #model.add(Activation('softmax'))
+    
+    optimizer = Nadam() #SGD() #Adam() #RMSprop(lr=0.01)
+    model.compile(loss='mean_absolute_error', optimizer=optimizer)
 
+    json_string = model.to_json()
+    mfile= open(odir + "model.json", "w")
+    mfile.write(json_string)
+    mfile.close
 
 def sample(preds, temperature=1.0):
     # helper function to sample an index from a probability array
@@ -107,7 +120,10 @@ def sample(preds, temperature=1.0):
   #  exp_preds = np.exp(preds)
 #    preds = exp_preds / np.sum(exp_preds)
 #    probas = np.random.multinomial(1, preds, 1)
-    return preds # np.argmax(probas)
+    intpreds = []
+    for p in preds:
+      intpreds.append(int(p))
+    return np.array([intpreds], dtype=np.uint8) # np.argmax(probas)
 
 # train the model, output generated text after each iteration
 for iteration in range(1, 600):
@@ -124,10 +140,10 @@ for iteration in range(1, 600):
     sentence = frames[start_index: start_index + maxlen]
     generated += ( sentence)
     print('----- Generating with seed: ', str(sentence[0]) )
-   # sys.stdout.write(str(generated[0:1]))
+    #sys.stdout.write(str(generated))
   #  sys.stdout.flush()
     
-    for i in range(4000):
+    for i in range(genlen):
         x = np.zeros((1, maxlen, framelen))
         for t, frame in enumerate(sentence):
             x[0, t] = frame
@@ -140,32 +156,28 @@ for iteration in range(1, 600):
   #      for p in np.nditer(preds):
    #         intpreds.append(float(round(p)))
    #     next_frame = intpreds
-    #    sys.stdout.write(str(next_frame))
+        #sys.stdout.write(str(next_frame))
     #    sys.stdout.flush()
         generated.append( next_frame)
         sentence = sentence[1:]
-        sentence.append( next_frame)
+        sentence.append(next_frame)
        # print("new sentence length", len(sentence))
    
 #    print("last result: ", str(generated[-1]) )
-    for i, frame in enumerate(generated):
-      for j,c in enumerate(frame):
-        ic = int(c)
-        if ic>255:
-           ic = 255
-        if ic<0:
-           ic = 0
-        try:
-          ofile.write(chr(ic))
-          break
-        except ValueError:
-          ofile.write(chr(0))
-          print("failed to store value: ", ic)
+    for frame in generated:
+      #sys.stdout.write(frame)
+     # for c in frame:
+      #  try:
+          ofile.write(frame)
+      #    break
+       # except ValueError:
+         # ofile.write(chr(0))
+        #  print("failed to store value: ", c)
 #        print(str(frame))
 
       #for j,c in enumerate(frame):
  #       ofile.write((frame))
         
     ofile.close()
-    model.save(modelf+str(iteration))
+    model.save(modelf+str(iteration)+".h5")
     print()
