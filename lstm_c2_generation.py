@@ -10,13 +10,14 @@ from keras.layers import Dense, Activation, Dropout
 from keras.layers import LSTM
 from keras.optimizers import Nadam # SGD #Adam #RMSprop
 from keras.utils.data_utils import get_file
+from keras import backend as K
 import numpy as np
 import random
 import sys
 import os
 import time
 
-genlen=2000
+genlen=400
 framelen=16
 epoch_time = int(time.time())
 
@@ -83,7 +84,24 @@ for i, sentence in enumerate(sentences):
     y[i] = next_chars[i]
 
 
-# build the model: a single LSTM
+def codec2_param_error(y_true, y_pred):
+  p_scale = np.array([
+    8,8,8,8,
+    1,
+    1,
+    2,2,2,2,2,2,
+    3,3,
+    4,4
+  
+  
+  ])
+  np.multiply(y_pred, p_scale)
+  np.multiply(y_true, p_scale)
+  return K.mean(K.abs(y_pred - y_true), axis=-1)
+
+
+
+
 print('Build model...')
 model = None
 
@@ -93,11 +111,11 @@ if len(sys.argv) > 1:
     model = load_model(mn)
 else:
     model=  Sequential()
-    model.add(LSTM(128, input_shape=(maxlen, framelen), return_sequences=True)) #, return_sequences=True))
-    model.add(LSTM(128, return_sequences=True))
-    model.add(LSTM(128))
-    model.add(Dense(framelen))
-    model.add(Dense(framelen))
+    model.add(LSTM(128, input_shape=(maxlen, framelen)  )) #, return_sequences=True)) #, return_sequences=True))
+  #  model.add(LSTM(128, return_sequences=True))
+  #  model.add(LSTM(128))
+#    model.add(Dense(framelen))
+#    model.add(Dense(framelen))
     model.add(Dense(framelen))
     model.add(Dense(framelen))
     #model.add(Dropout(0.2))
@@ -105,7 +123,9 @@ else:
     #model.add(Activation('softmax'))
     
     optimizer = Nadam() #SGD() #Adam() #RMSprop(lr=0.01)
-    model.compile(loss='mean_absolute_error', optimizer=optimizer)
+
+    model.compile(loss=codec2_param_error,#'mean_absolute_error',
+     optimizer=optimizer)
 
     json_string = model.to_json()
     mfile= open(odir + "model.json", "w")
