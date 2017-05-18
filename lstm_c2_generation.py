@@ -1,11 +1,13 @@
-'''Example 
-
-
-'''
-
 from __future__ import print_function
+
+from model_utils import ModelUtils
+
+# check command line args before loading everything, to save time
+
+utils = ModelUtils()
+
+
 from keras.models import Sequential
-from keras.models import load_model
 from keras.layers import Dense, Activation, Dropout
 from keras.layers import LSTM
 from keras.optimizers import Nadam # SGD #Adam #RMSprop
@@ -13,77 +15,82 @@ from keras.utils.data_utils import get_file
 from keras import backend as K
 import numpy as np
 import random
+import time
 import sys
 import os
-import time
 
+# number of training iterations
+num_iterations = 600
+
+fit_batch_size = 128
+
+# length of frame sequence to generate
 genlen=400
+
+# generate sample data every nth iteration
+gen_every_nth = 1
+
+# number of bytes (unsigned 8 bit) in a Codec 2 frame
+# note: one frame encodes 40ms of raw PCM audio
 framelen=16
-epoch_time = int(time.time())
 
-fname="test/LDC97S44-8k.c2cb"
-odir="out/LDC97S44/"+str(epoch_time)+"/"
-os.makedirs(odir)
-ofname=odir+"out-c2cb-"
-modelf=odir+"model-"
-#text = open(fname).read()
-text = np.fromfile(fname, dtype=np.uint8)
-print('corpus length:', len(text))
-
-
-len_text = len(text)
-#len_text = 16000
-
-'''
-bytes=[]
-for i,t in enumerate(text):
-    bytes.append(ord(t))
-text = bytes
-'''
-
-num_frames = int(len_text / framelen)
-#chars = sorted(list(set(text)))
-#print('total chars:', len(chars))
-#char_indices = dict((c, i) for i, c in enumerate(chars))
-#indices_char = dict((i, c) for i, c in enumerate(chars))
-
-# cut the text in semi-redundant sequences of maxlen characters
-maxlen = 100
+# length of frame sequence for learning
+frame_seq_len = 20 # 200 # 5 seconds of audio
 step = 3
-sentences = []
-next_chars = []
-print("scanning byte sequence")
 
-frames = []
 
+
+
+print("loading test data from: ", utils.testdata_filename)
+testdata = np.fromfile(utils.testdata_filename, dtype=np.uint8)
+
+len_testdata = len(testdata)
+
+num_frames = int(len_testdata / framelen)
+
+print('corpus length:', len_testdata)
+
+
+
+# cut the testdata into sequences of frame_seq_len characters
+print("scanning testdata into frames and frame sequences")
+
+frame_seqs = []
+next_frames = []
+all_frames = []
+
+# step through the testdata, pulling those bytes into an array of all the the frames, all_frames
 for j in range(0, num_frames):
-    i = j*framelen
-    frames.append(text[i: i+framelen])
-print('nb frames:', len(frames), len_text/framelen)
-print("scanning frames of length ", len(frames[0]))
-for i in range(0, num_frames-maxlen, step):
-    # print("getting set from:", i)
-    sentences.append(frames[i: i + maxlen])
-    next_chars.append(frames[i + maxlen])
-print("got sets")
-print('nb sequences in bytes:', len(sentences))
+    i = j * framelen
+    all_frames.append(testdata[i: i + framelen])
+
+print('number of frames:', len(all_frames))
+
+# pull the frames into frame sequences (frame_seqs) of frame_seq_len frames
+# pull a single frame following each frame sequence into an array of next_frames
+for i in range(0, num_frames - frame_seq_len, step):
+    frame_seqs.append(all_frames[i: i + frame_seq_len])
+    next_frames.append(all_frames[i + frame_seq_len])
+
+print('number of frame sequences:', len(frame_seqs))
 
 
-print('Vectorization...')
-X = np.zeros((len(sentences), maxlen, framelen), dtype=np.uint8)
-y = np.zeros((len(sentences), framelen), dtype=np.uint8)
-for i, sentence in enumerate(sentences):
-    for t, frame in enumerate(sentence):
-        #X[i, t, char_indices[char]] = 1
-        #for p, prop in enumerate(frame):
-         #   X[i, t, p] = (prop)
-        X[i,t] = frame
-    #y[i, char_indices[next_chars[i]]] = 1
-    #for n in range(0, framelen):
-    #  y[i, n] = (next_chars[i][n])
-    y[i] = next_chars[i]
+print('initialising input and expected output arrays')
+X = np.zeros((len(frame_seqs), frame_seq_len, framelen), dtype=np.uint8)
+y = np.zeros((len(frame_seqs), framelen), dtype=np.uint8)
+
+for i, frame_seq in enumerate(frame_seqs):
+    # expected output is always the next frame for corresponding frame_seq
+    y[i] = next_frames[i]
+
+    # input is just each frame_seq 
+    X[i] = frame_seq
+    #for t, frame in enumerate(frame_seq):
+        #X[i,t] = frame
 
 
+# Define a custom loss calculation, allowing the individual properties
+# of the Codec 2 frame to be represented, based on their relative size
 def codec2_param_error(y_true, y_pred):
   p_scale = np.array([
     8,8,8,8,
@@ -91,117 +98,132 @@ def codec2_param_error(y_true, y_pred):
     1,
     2,2,2,2,2,2,
     3,3,
-    4,4
-  
-  
+    4,4  
   ])
   np.multiply(y_pred, p_scale)
   np.multiply(y_true, p_scale)
+  
+  # perform a basic mean absolute error calculation
   return K.mean(K.abs(y_pred - y_true), axis=-1)
 
+# Define a new model
+# only used if a model is not loaded from a file
+def define_model():
+    model =  Sequential()
+    model.add(LSTM(
+        20 
+        ,input_shape=(frame_seq_len, framelen) 
+#        ,return_sequences=True
+      )
+    ) 
+#    model.add(LSTM(
+#        40
+#        , return_sequences=True
+#        )
+#      )
+#    model.add(LSTM(40))
 
-
-
-print('Build model...')
-model = None
-
-if len(sys.argv) > 1:
-    mn=sys.argv[0]
-    print("loading model")
-    model = load_model(mn)
-else:
-    model=  Sequential()
-    model.add(LSTM(20, input_shape=(maxlen, framelen), return_sequences=True)) #, return_sequences=True))
-    model.add(LSTM(40, return_sequences=True))
-    model.add(LSTM(40))
-#    model.add(Dense(framelen))
 #    model.add(Dense(framelen))
     model.add(Dense(framelen))
-    model.add(Dense(framelen))
-    #model.add(Dropout(0.2))
-    #model.add(Dense(framelen))
-    #model.add(Activation('softmax'))
+
+    #model.add(Dropout(0.02))
+    #model.add(Activation('relu'))
     
     optimizer = Nadam() #SGD() #Adam() #RMSprop(lr=0.01)
+    loss = codec2_param_error #'mean_absolute_error'
+    
+    model.compile(loss=loss, optimizer=optimizer)
+    return model
 
-    model.compile(loss=codec2_param_error,#'mean_absolute_error',
-     optimizer=optimizer)
-
-    json_string = model.to_json()
-    mfile= open(odir + "model.json", "w")
-    mfile.write(json_string)
-    mfile.close
-
+# process the sample prediction, ensuring it can be saved directly
+# into a Codec 2 "charbits" file
 def sample(preds, temperature=1.0):
-    # helper function to sample an index from a probability array
     preds = np.asarray(preds).astype('float64')
     preds = np.round(preds)
-   # preds = np.log(preds) / temperature
-  #  exp_preds = np.exp(preds)
-#    preds = exp_preds / np.sum(exp_preds)
-#    probas = np.random.multinomial(1, preds, 1)
+
+    # it is necessary to cast to int before attempting to write to a file
+    # to ensure that a real byte value is stored, not a byte 
+    # representation of a floating point number
     intpreds = []
     for p in preds:
       intpreds.append(int(p))
-    return np.array([intpreds], dtype=np.uint8) # np.argmax(probas)
+    return np.array([intpreds], dtype=np.uint8) 
 
-# train the model, output generated text after each iteration
-for iteration in range(1, 600):
-  ofile= open(ofname+str(iteration), "w")
-  print()
+def gen_sequence(iteration):
+  return (iteration % gen_every_nth == 0)
+
+####  Setup the model
+model = None
+
+if len(utils.model_filename) > 0:
+
+  utils.load_model()    
+else:
+  print("creating new model")
+  model = define_model()
+  utils.save_json_model(model)
+
+# train the model
+# output generated frames after nth iteration
+for iteration in range(1, num_iterations + 1):
   print('-' * 50)
   print('Iteration', iteration)
-  model.fit(X, y, batch_size=128, nb_epoch=1)
 
+  model.fit(X, y, batch_size=fit_batch_size, nb_epoch=1)
 
-  if iteration % 10 == 0:
-    print("generating sequence")
-    start_index = random.randint(0, num_frames - maxlen - 1)
-    print("start index and maxlen from frames: ", start_index, maxlen, num_frames)
+  if gen_sequence(iteration):
+    ofn = utils.open_output_file(iteration)
+    print("saving generated sample output to: ", ofn)
+  else:
+    print("not generating samples this iteration")  
 
+  # every nth iteration generate sample data as a Codec 2 file
+  if gen_sequence(iteration):
+    print("generating sample data")
+    start_index = random.randint(0, num_frames - frame_seq_len - 1)
+    print("seed sequence for generation starts at frame index: ", start_index)
+
+    # pick the seed frame sequence starting at the random start index, with frame_seq_len frames
+    seed_frame_seq = all_frames[start_index: start_index + frame_seq_len]
+    
+    # the output file should start with a copy of the seed frame sequence
+    for frame in seed_frame_seq:
+      utils.output_file.write(frame)
+      
     generated = []
-    sentence = frames[start_index: start_index + maxlen]
-    generated = sentence[0:]
-    print('----- Generating with seed: ', str(sentence[0]) )
-    #sys.stdout.write(str(generated))
-  #  sys.stdout.flush()
+    print('----- Generating with seed (just showing first): ', str(seed_frame_seq[0]) )
     
     for i in range(genlen):
-        x = np.zeros((1, maxlen, framelen))
-        for t, frame in enumerate(sentence):
-            x[0, t] = frame
+      # setup seed input
+      x = np.zeros((1, frame_seq_len, framelen))
+      for t, frame in enumerate(seed_frame_seq):
+        x[0, t] = frame
 
-        preds = model.predict(x, verbose=0)[0]
-        next_frame = sample(preds)
+      # run the prediction for the next frame
+      predicted_frame_props = model.predict(x, verbose=0)[0]
+      # generate a Codec 2 frame from the predicted frame property values
+      # we use the clumsy name predicted_frame_props to highlight that the frame properties are still
+      # continuous (float) estimated values, rather than discrete Codec 2 values
+      next_frame = sample(predicted_frame_props)
         
- #           next_char = indices_char[next_index]
-     #   intpreds=[]
-  #      for p in np.nditer(preds):
-   #         intpreds.append(float(round(p)))
-   #     next_frame = intpreds
-        #sys.stdout.write(str(next_frame))
-    #    sys.stdout.flush()
-        generated.append( next_frame)
-        sentence = sentence[1:]
-        sentence.append(next_frame)
-       # print("new sentence length", len(sentence))
-   
-#    print("last result: ", str(generated[-1]) )
-    for frame in generated:
-      #sys.stdout.write(frame)
-     # for c in frame:
-      #  try:
-          ofile.write(frame)
-      #    break
-       # except ValueError:
-         # ofile.write(chr(0))
-        #  print("failed to store value: ", c)
-#        print(str(frame))
+      # append the result to the generated set
+      generated.append(next_frame)
+      
+      # update the seed frame sequence to remove the oldest frame and add the new predicted frame
+      seed_frame_seq = seed_frame_seq[1:]
+      seed_frame_seq.append(next_frame)
 
-      #for j,c in enumerate(frame):
- #       ofile.write((frame))
+    # write the seed + generated data to the output file
+    print ("writing output file to disk")
+    #for frame in generated:
+    #  utils.output_file.write(frame)
         
-    ofile.close()
-    if iteration % 10 == 0:
-      model.save(modelf+str(iteration)+".h5")
-    print()
+    utils.output_file.close()
+    
+    if gen_sequence(iteration):
+      print("saving .h5 model file")
+      utils.save_h5_model(model, iteration)
+    
+  print()
+
+
