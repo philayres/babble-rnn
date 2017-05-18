@@ -28,18 +28,30 @@ fit_batch_size = 128
 genlen=400
 
 # generate sample data every nth iteration
-gen_every_nth = 1
+gen_every_nth = 10
 
 # number of bytes (unsigned 8 bit) in a Codec 2 frame
 # note: one frame encodes 40ms of raw PCM audio
 framelen=16
 
 # length of frame sequence for learning
-frame_seq_len = 20 # 200 # 5 seconds of audio
+frame_seq_len = 40 # 200 # 5 seconds of audio
 step = 3
 
+frame_property_bits = [
+1,1,1,1, # voiced flags for 4 PCM frames
+7, #Wo
+5, #E
+16,16,16,16,16,16,16,8,8,4 #LSP
+]
 
 
+frame_prop_loss_scale = np.array([
+ 64,64,64,64,
+ 1,
+ 4,
+ 8,8,8,8,8,8,8,16,16,32
+])
 
 print("loading test data from: ", utils.testdata_filename)
 testdata = np.fromfile(utils.testdata_filename, dtype=np.uint8)
@@ -92,16 +104,9 @@ for i, frame_seq in enumerate(frame_seqs):
 # Define a custom loss calculation, allowing the individual properties
 # of the Codec 2 frame to be represented, based on their relative size
 def codec2_param_error(y_true, y_pred):
-  p_scale = np.array([
-    8,8,8,8,
-    1,
-    1,
-    2,2,2,2,2,2,
-    3,3,
-    4,4  
-  ])
-  np.multiply(y_pred, p_scale)
-  np.multiply(y_true, p_scale)
+  
+  np.multiply(y_pred, frame_prop_loss_scale)
+  np.multiply(y_true, frame_prop_loss_scale)
   
   # perform a basic mean absolute error calculation
   return K.mean(K.abs(y_pred - y_true), axis=-1)
@@ -181,7 +186,9 @@ for iteration in range(1, num_iterations + 1):
   if gen_sequence(iteration):
     print("generating sample data")
     start_index = random.randint(0, num_frames - frame_seq_len - 1)
-    print("seed sequence for generation starts at frame index: ", start_index)
+    start_time = 1.0 * start_index / 40
+    
+    print("seed sequence for generation starts at frame index: ", start_index, " (approx. ", int(start_time / 60), ":", int(start_time % 60), ")" )
 
     # pick the seed frame sequence starting at the random start index, with frame_seq_len frames
     seed_frame_seq = all_frames[start_index: start_index + frame_seq_len]
@@ -215,8 +222,8 @@ for iteration in range(1, num_iterations + 1):
 
     # write the seed + generated data to the output file
     print ("writing output file to disk")
-    #for frame in generated:
-    #  utils.output_file.write(frame)
+    for frame in generated:
+      utils.output_file.write(frame)
         
     utils.output_file.close()
     
