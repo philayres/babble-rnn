@@ -23,10 +23,10 @@ import os
 num_iterations = 600
 
 fit_batch_size = 128
-
+print("fit_batch_size: ", fit_batch_size)
 # length of frame sequence to generate
 genlen=400
-
+print("genlen: ", genlen)
 # generate sample data every nth iteration
 gen_every_nth = 10
 
@@ -36,14 +36,15 @@ framelen=16
 
 # length of frame sequence for learning
 frame_seq_len = 40 # 200 # 5 seconds of audio
+print("frame_seq_len: ", frame_seq_len)
 step = 3
 
-frame_property_bits = [
-1,1,1,1, # voiced flags for 4 PCM frames
-7, #Wo
-5, #E
-16,16,16,16,16,16,16,8,8,4 #LSP
-]
+#frame_property_bits 
+#1,1,1,1, # voiced flags for 4 PCM frames
+#7, #Wo
+#5, #E
+#16,16,16,16,16,16,16,8,8,4 #LSP
+
 
 
 frame_prop_loss_scale = np.array([
@@ -52,6 +53,7 @@ frame_prop_loss_scale = np.array([
  4,
  8,8,8,8,8,8,8,16,16,32
 ])
+print("frame_prop_loss_scale: ", str(frame_prop_loss_scale))
 
 print("loading test data from: ", utils.testdata_filename)
 testdata = np.fromfile(utils.testdata_filename, dtype=np.uint8)
