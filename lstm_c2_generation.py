@@ -111,9 +111,9 @@ if len(sys.argv) > 1:
     model = load_model(mn)
 else:
     model=  Sequential()
-    model.add(LSTM(128, input_shape=(maxlen, framelen)  )) #, return_sequences=True)) #, return_sequences=True))
-  #  model.add(LSTM(128, return_sequences=True))
-  #  model.add(LSTM(128))
+    model.add(LSTM(20, input_shape=(maxlen, framelen), return_sequences=True)) #, return_sequences=True))
+    model.add(LSTM(40, return_sequences=True))
+    model.add(LSTM(80))
 #    model.add(Dense(framelen))
 #    model.add(Dense(framelen))
     model.add(Dense(framelen))
@@ -147,18 +147,21 @@ def sample(preds, temperature=1.0):
 
 # train the model, output generated text after each iteration
 for iteration in range(1, 600):
-    ofile= open(ofname+str(iteration), "w")
-    print()
-    print('-' * 50)
-    print('Iteration', iteration)
-    model.fit(X, y, batch_size=128, nb_epoch=1)
+  ofile= open(ofname+str(iteration), "w")
+  print()
+  print('-' * 50)
+  print('Iteration', iteration)
+  model.fit(X, y, batch_size=128, nb_epoch=1)
 
+
+  if iteration % 10 == 0:
+    print("generating sequence")
     start_index = random.randint(0, num_frames - maxlen - 1)
     print("start index and maxlen from frames: ", start_index, maxlen, num_frames)
 
     generated = []
     sentence = frames[start_index: start_index + maxlen]
-    generated += ( sentence)
+    generated = sentence[0:]
     print('----- Generating with seed: ', str(sentence[0]) )
     #sys.stdout.write(str(generated))
   #  sys.stdout.flush()
@@ -199,5 +202,6 @@ for iteration in range(1, 600):
  #       ofile.write((frame))
         
     ofile.close()
-    model.save(modelf+str(iteration)+".h5")
+    if iteration % 10 == 0:
+      model.save(modelf+str(iteration)+".h5")
     print()
