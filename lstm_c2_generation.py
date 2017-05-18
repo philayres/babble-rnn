@@ -113,7 +113,7 @@ else:
     model=  Sequential()
     model.add(LSTM(20, input_shape=(maxlen, framelen), return_sequences=True)) #, return_sequences=True))
     model.add(LSTM(40, return_sequences=True))
-    model.add(LSTM(80))
+    model.add(LSTM(40))
 #    model.add(Dense(framelen))
 #    model.add(Dense(framelen))
     model.add(Dense(framelen))
