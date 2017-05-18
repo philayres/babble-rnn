@@ -47,7 +47,7 @@ num_frames = int(len_text / framelen)
 #indices_char = dict((i, c) for i, c in enumerate(chars))
 
 # cut the text in semi-redundant sequences of maxlen characters
-maxlen = 400
+maxlen = 100
 step = 3
 sentences = []
 next_chars = []
