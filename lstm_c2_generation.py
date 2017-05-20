@@ -41,10 +41,30 @@ gen_every_nth = 10
 framelen=16
 
 # length of frame sequence for learning
-frame_seq_len = 4 # 200 # 5 seconds of audio
+frame_seq_len = 200 # 5 seconds of audio
 utils.log("frame_seq_len: ", frame_seq_len)
 step = 3
 
+frame_property_bits = [
+ 1,1,1,1, # voiced flags for 4 PCM frames
+ 7, #Wo
+ 5, #E
+ 4,4,4,4,4,4,4,3,3,2 #LSP
+]
+
+frame_property_normalizations =[
+ 1,1,1,1,
+ 2**-7,
+ 2**-5,
+ 1/16,1/16,1/16,1/16,1/16,1/16,1/16,1/8,1/8,1/4
+]
+
+frame_property_scaleup = [
+ 1,1,1,1,
+ 2**7,
+ 2**5,
+ 16,16,16,16,16,16,16,8,8,4
+]
 
 utils.log("loading test data from: ", utils.testdata_filename)
 testdata = np.fromfile(utils.testdata_filename, dtype=np.uint8)
@@ -64,10 +84,16 @@ frame_seqs = []
 next_frames = []
 all_frames = []
 
+def normalize_input(frame):
+  normframe = np.array(frame, dtype=np.float32)
+  normframe = np.multiply(normframe,frame_property_normalizations)
+  return normframe
+
 # step through the testdata, pulling those bytes into an array of all the the frames, all_frames
 for j in range(0, num_frames):
     i = j * framelen
-    all_frames.append(testdata[i: i + framelen])
+    
+    all_frames.append(normalize_input(testdata[i: i + framelen]))
 
 utils.log('number of frames:', len(all_frames))
 
@@ -81,8 +107,8 @@ utils.log('number of frame sequences:', len(frame_seqs))
 
 
 print('initialising input and expected output arrays')
-X = np.zeros((len(frame_seqs), frame_seq_len, framelen), dtype=np.uint8)
-y = np.zeros((len(frame_seqs), framelen), dtype=np.uint8)
+X = np.zeros((len(frame_seqs), frame_seq_len, framelen), dtype=np.float32)
+y = np.zeros((len(frame_seqs), framelen), dtype=np.float32)
 
 for i, frame_seq in enumerate(frame_seqs):
     # expected output is always the next frame for corresponding frame_seq
@@ -99,22 +125,28 @@ for i, frame_seq in enumerate(frame_seqs):
 def define_model():
     model =  Sequential()
     model.add(LSTM(
-        80 
+        160
         ,input_shape=(frame_seq_len, framelen) 
-        ,return_sequences=True
+        ,return_sequences=True     
       )
     ) 
+
     model.add(LSTM(
         80
         , return_sequences=True
       )
     )
-    model.add(LSTM(80))
+    model.add(LSTM(
+        80
+      )
+    )
 
-    model.add(Dense(framelen))
-    model.add(Dense(framelen))
-    model.add(Dense(framelen))
-    model.add(Dense(framelen))
+    model.add(Dense(
+        framelen
+#      ,activation="relu"
+      )
+    )
+
 
     #model.add(Dropout(0.02))
     #model.add(Activation('relu'))
@@ -128,7 +160,8 @@ def define_model():
 # process the sample prediction, ensuring it can be saved directly
 # into a Codec 2 "charbits" file
 def sample(preds, temperature=1.0):
-    preds = np.asarray(preds).astype('float64')
+    preds = np.asarray(preds).astype('float32')
+    preds = np.multiply(preds,frame_property_scaleup)
     preds = np.round(preds)
 
     # it is necessary to cast to int before attempting to write to a file
@@ -182,7 +215,7 @@ for iteration in range(1, num_iterations + 1):
     
     # the output file should start with a copy of the seed frame sequence
     for frame in seed_frame_seq:
-      utils.output_file.write(frame)
+      utils.output_file.write(sample(frame))
       
     generated = []
     print('----- Generating with seed (just showing first): ', str(seed_frame_seq[0]) )

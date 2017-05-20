@@ -7,13 +7,21 @@ import numpy as np
 #5, #E
 #16,16,16,16,16,16,16,8,8,4 #LSP
 
-frame_prop_loss_scale = np.array([
+frame_prop_loss_scale = [
+ 1,1,1,1,
+ 2**7,
+ 2**5,
+ 16,16,16,16,16,16,16,8,8,4
+]
+
+'''
+([
    16,16,16,16,
    1,
    4,
    8,8,8,8,8,8,8,16,16,32
   ])
-
+'''
 
 class CustomObjects:
 
@@ -27,8 +35,8 @@ class CustomObjects:
   @staticmethod
   def codec2_param_error(y_true, y_pred):
     
-    np.multiply(y_pred, frame_prop_loss_scale)
-    np.multiply(y_true, frame_prop_loss_scale)
-    
+    y_pred = y_pred * frame_prop_loss_scale
+    y_true = y_true * frame_prop_loss_scale
+    diff_pred = y_pred - y_true
     # perform a basic mean absolute error calculation
-    return K.mean(K.abs(y_pred - y_true), axis=-1)
+    return K.mean(K.abs(diff_pred), axis=-1)
