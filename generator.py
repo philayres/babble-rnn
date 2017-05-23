@@ -1,5 +1,6 @@
 import random
 import numpy as np
+from subprocess import call
 
 
 class Generator:
@@ -68,13 +69,17 @@ class Generator:
     print('----- Generating with seed (just showing first): ', str(seed_frame_seq[0]) )
     
     for i in range(generate_len):
+      if utils.generate_mode():
+        print("Generating", i, "of", generate_len)
       # setup seed input
       x = np.zeros((1, seed_seq_len, framelen), dtype=np.float32)
       for t, frame in enumerate(seed_frame_seq):
         x[0, t] = frame
 
       # run the prediction for the next frame
-      predicted_frame_props = model_def.model.predict(x, verbose=0)[0]
+      predicted_frame_props = model_def.model.predict_on_batch(x)[0]
+     # predicted_frame_props = model_def.model.predict(x,
+      # batch_size=self.generate_len, verbose=0)[0]
       # generate a Codec 2 frame from the predicted frame property values
       # we use the clumsy name predicted_frame_props to highlight that the frame properties are still
       # continuous (float) estimated values, rather than discrete Codec 2 values
@@ -95,3 +100,5 @@ class Generator:
     utils.output_file.close()
     utils.log("wrote frames: ", len(generated))
     
+    if utils.generate_mode():
+      call(["bash", "./c2towav.sh", utils.output_fn])
