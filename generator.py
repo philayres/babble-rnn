@@ -52,7 +52,7 @@ class Generator:
     utils.log("saving generated sample output to: ", ofn)
   
     utils.log("generating sample data of length: ", generate_len)
-    start_index = random.randint(0, num_frames - seed_seq_len - 1)
+    start_index = 0 #random.randint(0, num_frames - seed_seq_len - 1)
     start_time = 1.0 * start_index / 40
     
     utils.log("seed sequence for generation starts at frame index: ", start_index, " (approx. ", int(start_time / 60), ":", int(start_time % 60), ")" )

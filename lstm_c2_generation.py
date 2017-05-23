@@ -48,7 +48,7 @@ frame_seq_len = 200 # 5 seconds of audio
 seed_seq_len = frame_seq_len
 utils.log("frame_seq_len: ", frame_seq_len)
 
-seq_step =  frame_seq_len / 3
+seq_step = int(frame_seq_len / 10)
 utils.log("seq_step: ", seq_step)
 
 frame_property_scaleup = [
@@ -128,11 +128,11 @@ for iteration in range(1, num_iterations + 1):
   utils.log('Iteration', iteration)
   
   
-  if iteration == 30:
-    model_def.model_updates_1(framelen)  
+#  if iteration == 60:
+ #   model_def.model_updates_1(framelen)  
 
-  if iteration == 300:
-    model_def.model_updates_2(framelen)  
+#  if iteration == 240:
+ #   model_def.model_updates_2(framelen)  
   
 
   model_def.model.fit(X, y, batch_size=fit_batch_size, nb_epoch=1,
