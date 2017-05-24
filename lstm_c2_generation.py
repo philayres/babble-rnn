@@ -17,6 +17,7 @@ signal.signal(signal.SIGINT, utils.signal_handler)
 signal.signal(signal.SIGTERM, utils.signal_handler)
 # number of training iterations
 num_iterations = 600
+start_iteration = 1
 
 fit_batch_size = 200 #128
 utils.log("fit_batch_size: ", fit_batch_size)
@@ -122,7 +123,7 @@ if utils.generate_mode():
 
 # train the model
 # output generated frames after nth iteration
-for iteration in range(1, num_iterations + 1):
+for iteration in range(start_iteration, num_iterations + 1):
   print('-' * 50)
   
   
