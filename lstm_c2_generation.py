@@ -17,7 +17,7 @@ signal.signal(signal.SIGINT, utils.signal_handler)
 signal.signal(signal.SIGTERM, utils.signal_handler)
 # number of training iterations
 num_iterations = 600
-start_iteration = 1
+start_iteration = 60
 
 fit_batch_size = 200 #128
 utils.log("fit_batch_size: ", fit_batch_size)
