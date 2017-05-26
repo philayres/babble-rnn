@@ -17,6 +17,7 @@ signal.signal(signal.SIGINT, utils.signal_handler)
 signal.signal(signal.SIGTERM, utils.signal_handler)
 # number of training iterations
 num_iterations = 600
+
 start_iteration = 1
 
 fit_batch_size = 200 #128
@@ -45,7 +46,8 @@ frame_seq_len = 200 # 8 seconds of audio
 seed_seq_len = frame_seq_len
 utils.log("frame_seq_len: ", frame_seq_len)
 
-seq_step = int(frame_seq_len/1.2) #int(frame_seq_len/10)
+#seq_step = int(frame_seq_len/1.2) 
+seq_step = int(frame_seq_len/10)
 utils.log("seq_step: ", seq_step)
 
 model_def = None
