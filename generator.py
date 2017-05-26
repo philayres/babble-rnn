@@ -11,13 +11,34 @@ class Generator:
   frame_property_scaleup = None
   generate_len = None
   framelen = None
+  num_frames = None
+  seed_start_index = 0
   
   def __init__(self, utils, all_frames, seed_seq_len, generate_len):
     self.utils = utils  
     self.all_frames = all_frames
     self.seed_seq_len = seed_seq_len
     self.generate_len = generate_len
-  
+    self.num_frames = len(all_frames)
+
+
+  def set_random_seed_start_index(self):
+    self.seed_start_index = random.randint(0, 
+      self.num_frames - self.seed_seq_len - 1)
+    self.fix_seed_start_index()
+
+  def set_time_seed_start_index(self, seconds):
+    self.seed_start_index = int(float(seconds) / 0.04)
+    self.fix_seed_start_index()
+
+  def set_frame_seed_start_index(self, index):
+    self.seed_start_index = int(index)
+    self.fix_seed_start_index()
+
+  def fix_seed_start_index(self):
+    if self.seed_start_index < 0: self.seed_start_index = 0
+    latest = self.num_frames - self.seed_seq_len - 1
+    if self.seed_start_index > latest: self.seed_start_index = latest
   
   # process the sample prediction, ensuring it can be saved directly
   # into a Codec 2 "charbits" file
@@ -45,7 +66,7 @@ class Generator:
     seed_seq_len = self.seed_seq_len
     generate_len = self.generate_len
     framelen = self.framelen
-    num_frames = len(all_frames)
+    num_frames = self.num_frames
     
     model_def = utils.model_def
     
@@ -53,7 +74,7 @@ class Generator:
     utils.log("saving generated sample output to: ", ofn)
   
     utils.log("generating sample data of length: ", generate_len)
-    start_index = 0 #random.randint(0, num_frames - seed_seq_len - 1)
+    start_index = self.seed_start_index 
     start_time = 1.0 * start_index / 40
     
     utils.log("seed sequence for generation starts at frame index: ", start_index, " (approx. ", int(start_time / 60), ":", int(start_time % 60), ")" )
@@ -68,6 +89,7 @@ class Generator:
     generated = []
     print('----- Generating with seed (just showing first): ', str(seed_frame_seq[0]) )
     
+
     for i in range(generate_len):
       if utils.generate_mode():
         print("Generating", i, "of", generate_len)
@@ -76,8 +98,11 @@ class Generator:
       for t, frame in enumerate(seed_frame_seq):
         x[0, t] = frame
 
+
+      if utils.generate_mode() : utils.log("predicting",i)
       # run the prediction for the next frame
       predicted_frame_props = model_def.model.predict_on_batch(x)[0]
+      
      # predicted_frame_props = model_def.model.predict(x,
       # batch_size=self.generate_len, verbose=0)[0]
       # generate a Codec 2 frame from the predicted frame property values

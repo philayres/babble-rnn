@@ -17,7 +17,7 @@ signal.signal(signal.SIGINT, utils.signal_handler)
 signal.signal(signal.SIGTERM, utils.signal_handler)
 # number of training iterations
 num_iterations = 600
-start_iteration = 60
+start_iteration = 1
 
 fit_batch_size = 200 #128
 utils.log("fit_batch_size: ", fit_batch_size)
@@ -41,11 +41,11 @@ frame_property_bits = [
 '''
 
 # length of frame sequence for learning
-frame_seq_len = 200 # 5 seconds of audio
+frame_seq_len = 200 # 8 seconds of audio
 seed_seq_len = frame_seq_len
 utils.log("frame_seq_len: ", frame_seq_len)
 
-seq_step = int(frame_seq_len/10)
+seq_step = int(frame_seq_len/1.2) #int(frame_seq_len/10)
 utils.log("seq_step: ", seq_step)
 
 model_def = None
@@ -114,6 +114,7 @@ for i, frame_seq in enumerate(frame_seqs):
 generator = Generator(utils, all_frames, seed_seq_len, genlen)
 generator.frame_property_scaleup = model_def.frame_property_scaleup
 generator.framelen = framelen
+utils.setup_seed_start(generator)
 
 if utils.generate_mode():
   utils.log("Generating Samples")

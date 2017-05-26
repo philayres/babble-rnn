@@ -18,8 +18,9 @@ def model_config(network_tag):
   for cs in config:
     c = cs['config']
     print(c['name'], ":", cs['class_name'])
-    print(c['units'], "units")
-    print(c['activation'], "activation")
+    print(c.get('units',""), "units")
+    print(c.get('activation', ""), "activation")
+    print(c.get('dropout',""), "dropout")
     print()
     
 def plot_training_loss(network_tag):
