@@ -3,12 +3,12 @@
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="content-type">
 	<style type="text/css">
-   body {font-family: sans-serif;}
+   body {font-family: sans-serif; color: #444;}
    
 	</style>
 	<title></title>
 </head>
-<body style="background-color:#ffffff;padding:72pt 72pt 72pt 72pt;max-width:451.4pt">
+<body style="padding:72pt 72pt 72pt 72pt;max-width:451.4pt">
 	<p class="title" id="h.kb9f43w95koy" style="padding-top:0pt;margin:0;padding-left:0;font-size:26pt;padding-bottom:3pt;line-height:1.15;page-break-after:avoid;font-family:&quot;Arial&quot;;orphans:2;widows:2;text-align:left;padding-right:0"><span style="font-weight:400;text-decoration:none;vertical-align:baseline;font-size:26pt;font-family:&quot;Arial&quot;;font-style:normal">Babble-rnn: Generating speech from speech with LSTM networks</span></p>
 	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:right"><span style="font-weight:700;text-decoration:none;vertical-align:baseline;;font-style:normal">Phil Ayres</span></p>
 	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:right"><span style="font-weight:700;text-decoration:none;vertical-align:baseline;;font-style:normal">phil.ayres@consected.com</span></p>
@@ -18,7 +18,7 @@
 	
 	<p><span>These examples by prominent authors have helped many people, including myself, to see that there is more to deep-learning than just recognising cats and dogs in social media photos. These influential papers and posts include:</span></p>
 	
-	<ul class="lst-kix_8xo8w4yl2i0y-0 start" style="padding:0;margin:0">
+	<ul class="lst-kix_8xo8w4yl2i0y-0 start">
 		<li><a href="https://www.google.com/url?q=http://karpathy.github.io/2015/05/21/rnn-effectiveness/&amp;sa=D&amp;ust=1496085997835000&amp;usg=AFQjCNHROUmyrwLm1Z_p_LkyxUVZ2hurlA">The Unreasonable Effectiveness of Recurrent Neural Networks</a></span><span><br>
 		Andrej Karpathy</span></li>
 		<li><a href="https://www.google.com/url?q=https://arxiv.org/abs/1308.0850&amp;sa=D&amp;ust=1496085997836000&amp;usg=AFQjCNG9uR2_JmSbVsT2lSJRGqE8aOHYpw">Generating Sequences With Recurrent Neural Networks</a></span><span><br>
@@ -37,7 +37,7 @@
 	<h2 id="h.ltylc9r84smm">Research</span></h2>
 	<p><span>The research we have found related to audio generation has provided some background to the problem and possible neural network architectures. These papers have taken various approaches to the actual representation of audio data or are focused on a more traditional text-to-speech problem. Key references are:</span></p>
 	
-	<ul class="lst-kix_4pukr7vfg0d0-0 start" style="padding:0;margin:0">
+	<ul class="lst-kix_4pukr7vfg0d0-0 start">
 		<li><a href="https://www.google.com/url?q=http://www.johnglover.net/blog/generating-sound-with-rnns.html&amp;sa=D&amp;ust=1496085997846000&amp;usg=AFQjCNGAGTikOnKsalOXQ8EKZRKznMj3PQ">Generating sound with recurrent neural networks</a></span><span><br>
 		John Glover</span></li>
 		<li><a href="https://www.google.com/url?q=https://research.google.com/pubs/pub43893.html&amp;sa=D&amp;ust=1496085997847000&amp;usg=AFQjCNEVbw91hwRzuDVtoM4IpzkXfx7vcg">Acoustic Modeling in Statistical Parametric Speech Synthesis - from HMM to LSTM-RNN</a></span><span><br>
@@ -93,7 +93,7 @@
 	<h2 id="h.100ggq4b6k7j">Training the Network</span></h2>
 	<p><span>Various layer sizes, optimizers and training regimes were tested early on in the project. These included:</span></p>
 	
-	<ul class="lst-kix_9964vpb2d50w-0 start" style="padding:0;margin:0">
+	<ul class="lst-kix_9964vpb2d50w-0 start">
 		<li><span>only one or two LSTM layers</span></li>
 		<li><span>short LSTM layers</span></li>
 		<li><span>GRU units</span></li>
@@ -121,7 +121,7 @@
 	<h2 id="h.b6162exy2iq0">Sample Generation</span></h2>
 	<p><span>The proof of the performance of the</span> <span style="font-weight:700">babble-rnn</span> <span>is less in the measured loss and more in the observed quality of audio produced.</span> <span>Sample generation follows a standard RNN procedure:</span></p>
 	
-	<ul class="lst-kix_2x1png4tdnmy-0 start" style="padding:0;margin:0">
+	<ul class="lst-kix_2x1png4tdnmy-0 start">
 		<li><span>a seed sequence is passed to the network, and a prediction sample is returned</span></li>
 		<li><span>the seed sequence is updated to append the new sample, pushing the initial value out of the list, maintaining a constant length</span></li>
 		<li><span>the new sequence is passed to the the network, repeating until a desired length has been fulfilled</span></li>
@@ -137,41 +137,54 @@
 	
 	<p><span>Medium sized LSTMs (160 units) converge on a mean absolute loss of about 0.55. The audio generated does manage to achieve some structure that has sequences of roughly word length. The pitch was variable and vaguely natural.</span></p>
 	
-	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:center"><span>&lt;audio controls&gt;<br>
-	&nbsp;&lt;source src=&quot;160-3.wav&quot; type=&quot;audio/wav&quot;&gt;<br>
-	&nbsp;Your browser does not support the audio tag.<br>
-	&lt;/audio&gt;</span></p>
-	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:center"><span>&lt;img src=&quot;160-3.png&quot; /&gt;</span></p>
+	<p><span style="font-style:italic">Note: in the following examples, the initial 200 frames (8 seconds of audio) are the seed sequence, included for reference.</span></p>
 	
-	
-	<p><span>Long LSTMs (320 units) converge on a mean absolute loss below 0.2 with the original set of batches. To alleviate concerns over overfitting the network was further trained using a large set of batches from the original corpus.</span></p>
-	
-	<p><span>The audio generated manages word and sentence length sequences. Occasional babblings could be construed as real words.</span></p>
-	
-	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:center"><span>&lt;audio controls&gt;<br>
-	&nbsp;&lt;source src=&quot;320-3.wav&quot; type=&quot;audio/wav&quot;&gt;<br>
-	&nbsp;Your browser does not support the audio tag.<br>
-	&lt;/audio&gt;</span></p>
-	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:center"><span>&lt;img src=&quot;320-3.png&quot; /&gt;</span></p>
+	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:center">
+	<audio controls>
+ <source src="160-3.wav" type="audio/wav">
+ Your browser does not support the audio tag.
+</audio>
+<img src="160-3.png" />
+	</p>
 	
 	
 	<p><span>Since training is performed from lowest to highest layers, it is instructive to hear the results earlier in the training.</span></p>
 	
 	<p><span>First layer trained:</span></p>
+	<p style="text-align:center">
+	<audio controls>
+ <source src="320-1.wav" type="audio/wav">
+ Your browser does not support the audio tag.
+</audio>
+	</p>
+	<p style="text-align:center"><img src="320-1.png" /></p>
 	
-	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:center"><span>&lt;audio controls&gt;<br>
-	&nbsp;&lt;source src=&quot;320-1.wav&quot; type=&quot;audio/wav&quot;&gt;<br>
-	&nbsp;Your browser does not support the audio tag.<br>
-	&lt;/audio&gt;</span></p>
-	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:center"><span>&lt;img src=&quot;320-1.png&quot; /&gt;</span></p>
+
 	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;height:11pt;text-align:center">&nbsp;</p>
 	<p><span>Second layer trained:</span></p>
 	
-	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:center"><span>&lt;audio controls&gt;<br>
-	&nbsp;&lt;source src=&quot;320-2.wav&quot; type=&quot;audio/wav&quot;&gt;<br>
-	&nbsp;Your browser does not support the audio tag.<br>
-	&lt;/audio&gt;</span></p>
-	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:center"><span>&lt;img src=&quot;320-2.png&quot; /&gt;</span></p>
+	<p style="text-align:center">
+	<audio controls>
+ <source src="320-2.wav" type="audio/wav">
+ Your browser does not support the audio tag.
+</audio>
+	</p>
+	<p style="text-align:center"><img src="320-2.png" /></p>
+
+	
+		<p><span>Long LSTMs (320 units) converge on a mean absolute loss below 0.2 with the original set of batches. To alleviate concerns over overfitting the network was further trained using a large set of batches from the original corpus.</span></p>
+	
+	<p><span>The audio generated manages word and sentence length sequences. Occasional babblings could be construed as real words.</span></p>
+	
+	<p style="text-align:center">
+	<audio controls>
+ <source src="320-3.wav" type="audio/wav">
+ Your browser does not support the audio tag.
+</audio>
+	</p>
+	<p style="text-align:center"><img src="320-3.png" /></p>
+	
+
 	
 	<h2 id="h.dv78nfegys7">Conclusions</span></h2>
 	<p><span>A simple neural network architecture of deep LSTM layers has been shown to be able to learn to model speech-based audio when encoded by a codec adapted specifically for vocal compression. When run as a feed-forward generator, the network manages to predict samples that track the original pace of the corpus with natural sounding pitch inflections over the course of sentences, and short term sequences that might reflect the structure of words.</span></p>
@@ -186,7 +199,7 @@
 	<p><span>Application of alternative neural network architectures should be considered in the future. Mixture Density Networks as used in Graves handwriting generation (ref: 2) and Glover musical instrument sound generation (ref: 4), based on the paper by Bishop (ref:15), seems to be worth evaluation. Similarly, HyperLSTM (ref: 14) and Diagonal LSTM (ref: 9) have shown some success in sequence generation and we would consider future research with these structures.</span></p>
 	
 	<h2 id="h.fcgggf9hdrrr">Additional References</span></h2>
-	<ol class="lst-kix_spfx41keudyh-0 start" start="1" style="padding:0;margin:0">
+	<ol class="lst-kix_spfx41keudyh-0 start" start="1">
 		<li><a href="https://www.google.com/url?q=http://karpathy.github.io/2015/05/21/rnn-effectiveness/&amp;sa=D&amp;ust=1496085997924000&amp;usg=AFQjCNFGlh-swHpN2hWTwNVkVq__bi_aFA">The Unreasonable Effectiveness of Recurrent Neural Networks</a></span><span><br>
 		Andrej Karpathy</span></li>
 		<li><a href="https://www.google.com/url?q=https://arxiv.org/abs/1308.0850&amp;sa=D&amp;ust=1496085997925000&amp;usg=AFQjCNHkqz7opLk9YXRQ4BnSOkbiqYgcog">Generating Sequences With Recurrent Neural Networks</a></span><span><br>
@@ -220,12 +233,12 @@
 		<li><a href="https://www.google.com/url?q=http://www.etsi.org/deliver/etsi_gts/06/0610/03.02.00_60/gsmts_0610sv030200p.pdf&amp;sa=D&amp;ust=1496085997937000&amp;usg=AFQjCNHc4V25DJEToUe7ucGQi36ltXqDCg">GSM 06.10 &ldquo;Full Rate Speech Transcoding&rdquo;</a></span></li>
 		<li><a href="https://www.google.com/url?q=http://www.rowetel.com/?page_id%3D452&amp;sa=D&amp;ust=1496085997938000&amp;usg=AFQjCNFK8meRGkLVZiN5NKTZaWr0c8w24A">Codec 2 website</a></span><span><br>
 		David Rowe</span></li>
-		<li><a href="https://www.google.com/url?q=https://github.com/philayres/c2gen&amp;sa=D&amp;ust=1496085997939000&amp;usg=AFQjCNGQqLJEgP1D16rJdJwIyt-88lJCEw">Babbler-rnn c2gen Git repository on Github</a></span></li>
+		<li><a href="https://github.com/philayres/babble-rnn">Babbler-rnn c2gen Git repository on Github</a></span></li>
 	</ol>
 	
 	
-	
-	<h2 id="h.gfev4o4f20r1">Codec 2 Data Frame</span></h2>
+	<h2>Additional Resources</h2>
+	<h3 id="h.gfev4o4f20r1">Codec 2 Data Frame</span></h3>
 	<p><span>For reference, each frame of Codec 2 data is represented as:</span></p>
 	<a id="t.14a040d1a00c91f27a629d49514fce9bfa7b79e4"></a><a id="t.0"></a>
 	<table style="margin-left:;border-spacing:0;border-collapse:collapse;margin-right:auto">
@@ -273,7 +286,7 @@
 		</tbody>
 	</table>
 	
-	<h2 id="h.1c0d9jetrhe2">Codec 2 Parameter Progression</span></h2>
+	<h3 id="h.1c0d9jetrhe2">Codec 2 Parameter Progression</span></h3>
 	<p><span>A rapid graphical evaluation of the progression from one Codec 2 frame to the next was performed. The objective was to see the likely impact on audio output based on small errors in each value.</span></p>
 	
 	<p><span>The charts each show a single Codec 2 parameter over a significant sample of the corpus. The charts show current value on the horizontal axis, against next value on vertical axis. This rapid visualisation shows how the progression from one frame to the next is generally clustered, although varies between parameters.</span></p>
