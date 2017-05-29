@@ -18,6 +18,7 @@ def model_config(network_tag):
   for cs in config:
     c = cs['config']
     print(c['name'], ":", cs['class_name'])
+    print("trainable? ", c['trainable'])
     print(c.get('units',""), "units")
     print(c.get('activation', ""), "activation")
     print(c.get('dropout',""), "dropout")
@@ -64,6 +65,20 @@ def plot_audio_waveform(network_tag, iteration):
   plt.xlabel('time (samples)')
   plt.ylabel('audio waveform')
   plt.title('Audio Waveform\n' + network_tag + " @ iteration " + iteration)
+  plt.grid(True)
+#  fn = "audio-plot-" + network_tag + "-" + iteration + ".png"
+#  plt.savefig(fn)
+  plt.show()
+
+def plot_gen_audio_waveform(infilename):
+
+  infilename = "/home/ec2-user/store/c2gen/generated/"+infilename+".wav"
+  data = np.fromfile(infilename, dtype=np.int16)
+  
+  plt.plot(data)
+  plt.xlabel('time (samples)')
+  plt.ylabel('audio waveform')
+  plt.title('Audio Waveform\n')
   plt.grid(True)
 #  fn = "audio-plot-" + network_tag + "-" + iteration + ".png"
 #  plt.savefig(fn)

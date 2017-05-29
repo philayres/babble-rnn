@@ -8,5 +8,5 @@ The implementation is based on [Keras](https://keras.io) / [Theano](http://www.d
 
 Read the [babble-rnn research post](docs/babble-rnn-generating-speech-from-speech-post.html)
 
-View the [babble-rnn code on Github](https://github.com/philayres/babble-rnn/blob/master/README.md)
+View the [babble-rnn code on Github](https://github.com/philayres/babble-rnn/blob/master/README-code.md)
 
