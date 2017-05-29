@@ -22,9 +22,7 @@ start_iteration = 1
 
 fit_batch_size = 200 #128
 utils.log("fit_batch_size: ", fit_batch_size)
-# length of frame sequence to generate
-genlen=400
-utils.log("genlen: ", genlen)
+
 # generate sample data every nth iteration
 gen_every_nth = 5
 
@@ -47,7 +45,8 @@ seed_seq_len = frame_seq_len
 utils.log("frame_seq_len: ", frame_seq_len)
 
 #seq_step = int(frame_seq_len/1.2) 
-seq_step = int(frame_seq_len/10)
+#seq_step = int(frame_seq_len/10)
+seq_step=15
 utils.log("seq_step: ", seq_step)
 
 model_def = None
@@ -113,7 +112,8 @@ for i, frame_seq in enumerate(frame_seqs):
 
 
 
-generator = Generator(utils, all_frames, seed_seq_len, genlen)
+
+generator = Generator(utils, all_frames, seed_seq_len, utils.generate_len)
 generator.frame_property_scaleup = model_def.frame_property_scaleup
 generator.framelen = framelen
 utils.setup_seed_start(generator)

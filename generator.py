@@ -19,6 +19,7 @@ class Generator:
     self.all_frames = all_frames
     self.seed_seq_len = seed_seq_len
     self.generate_len = generate_len
+    utils.log("generate_len:", generate_len)
     self.num_frames = len(all_frames)
 
 
