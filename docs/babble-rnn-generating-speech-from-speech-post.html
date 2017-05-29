@@ -3,7 +3,7 @@
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="content-type">
 	<style type="text/css">
-   body {font-family: sans-serif; color: #444;}
+   body {font-family: sans-serif; color: #444; font-size: 14pt;}
    
 	</style>
 	<title></title>
@@ -137,14 +137,14 @@
 	
 	<p><span>Medium sized LSTMs (160 units) converge on a mean absolute loss of about 0.55. The audio generated does manage to achieve some structure that has sequences of roughly word length. The pitch was variable and vaguely natural.</span></p>
 	
-	<p><span style="font-style:italic">Note: in the following examples, the initial 200 frames (8 seconds of audio) are the seed sequence, included for reference.</span></p>
+	<p><span style="font-style:italic">Note: in the following examples, the initial 64000 samples (8 seconds of audio or 200 Codec 2 frames) are the seed sequence, included for reference. A plot of the generated audio waveform, and scaled plot of Codec 2 frame parameters are also shown to highlight the data being generated. </span></p>
 	
 	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:center">
 	<audio controls>
  <source src="160-3.wav" type="audio/wav">
  Your browser does not support the audio tag.
 </audio>
-<img src="160-3.png" />
+<img src="160-3.png" /> <img src="160-3-c2.png" />
 	</p>
 	
 	
@@ -293,15 +293,25 @@
 	
 	<p><span style="font-weight:700;text-decoration:none;vertical-align:baseline;;font-style:normal">Fundamental frequency</span></p>
 	<p><span>The strong cluster around</span> <span style="font-style:italic">x=y</span> <span>follows an expectation that the primary vocal pitch does not rapidly fluctuate over time. Interestingly, at the lower end there is more variation.</span></p>
-	
+	<p style="text-align:center"><img src="codec-plot-4.png" /></p>
 	<p><span style="font-weight:700;text-decoration:none;vertical-align:baseline;;font-style:normal">Energy</span></p>
 	<p><span>Variations in energy vary more at the top end of the range. It is not expected that errors here will lead to incomprehensible speech.</span></p>
-	
+		<p style="text-align:center"><img src="codec-plot-5.png" /></p>
 	<p><span style="font-weight:700;text-decoration:none;vertical-align:baseline;;font-style:normal">Spectral magnitudes</span></p>
 	<p><span>These vary significantly from one frame to the next. The parameters with the greatest range again follow</span> <span style="font-style:italic">x = y</span> <span>to a limited degree. Lower range parameters appear to have a greater spread of next values.</span></p>
-	
+		<p style="text-align:center"><img src="codec-plot-6.png" /></p>
+		<p style="text-align:center"><img src="codec-plot-7.png" /></p>
+		<p style="text-align:center"><img src="codec-plot-8.png" /></p>
+		<p style="text-align:center"><img src="codec-plot-9.png" /></p>
+		<p style="text-align:center"><img src="codec-plot-10.png" /></p>
+		<p style="text-align:center"><img src="codec-plot-11.png" /></p>
+		<p style="text-align:center"><img src="codec-plot-12.png" /></p>
+ 	 <p style="text-align:center"><img src="codec-plot-13.png" /></p>
+		<p style="text-align:center"><img src="codec-plot-14.png" /></p>
+		<p style="text-align:center"><img src="codec-plot-15.png" /></p>
+											
 	<p><span style="font-weight:700;text-decoration:none;vertical-align:baseline;;font-style:normal">&ldquo;Voiced&rdquo; parameters</span></p>
-	<p><span>These do not show any consistent progression over time. Only one of the parameter charts is shown.</span></p>
-	
+	<p><span>These do not show any consistent progression over time. Only one of the parameter charts is shown as they appear identical.</span></p>
+		<p style="text-align:center"><img src="codec-plot-0.png" /></p>
 </body>
 </html>
