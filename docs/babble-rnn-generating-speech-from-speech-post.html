@@ -3,9 +3,17 @@
 <head>
 	<meta content="text/html; charset=utf-8" http-equiv="content-type">
 	<style type="text/css">
-   body {font-family: sans-serif; color: #555; font-size: 14pt;}
-   a, a:active, a:visited, a:visited, a:hover { color: #58A;}
-   a:hover { text-decoration: none;}
+
+   body {
+     font-family: sans-serif; 
+     color: #555; 
+     font-size: 14pt;
+   }
+
+   a { 
+     color: #42b3f4 !important;
+   }
+   
 	</style>
 	
 	<title>Babble-rnn: Generating speech from speech with LSTM networks</title>
@@ -17,55 +25,55 @@
 	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:right"><span style="font-weight:700;text-decoration:none;vertical-align:baseline;;font-style:normal">phil.ayres@consected.com</span></p>
 	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:right"><span style="font-weight:700;text-decoration:none;vertical-align:baseline;;font-style:normal">25 May 2017</span></p>
 	
-	<p><span>There seems to be persistent interest in recurrent neural networks (RNNs) for the generation of data that is meaningful, and even fascinating to humans. Popular examples generate everything from credible (but fabricated) passages from Shakespeare, incredible (but highly likely) fake-news clickbait, to completely simulated handwritten sentences that shadow the style of the original writer.</span></p>
+	<p>There seems to be persistent interest in recurrent neural networks (RNNs) for the generation of data that is meaningful, and even fascinating to humans. Popular examples generate everything from credible (but fabricated) passages from Shakespeare, incredible (but highly likely) fake-news clickbait, to completely simulated handwritten sentences that shadow the style of the original writer.</p>
 	
-	<p><span>These examples by prominent authors have helped many people, including myself, to see that there is more to deep-learning than just recognising cats and dogs in social media photos. These influential papers and posts include:</span></p>
+	<p>These examples by prominent authors have helped many people, including myself, to see that there is more to deep-learning than just recognising cats and dogs in social media photos. These influential papers and posts include:</p>
 	
 	<ul class="lst-kix_8xo8w4yl2i0y-0 start">
-		<li><a href="https://www.google.com/url?q=http://karpathy.github.io/2015/05/21/rnn-effectiveness/&amp;sa=D&amp;ust=1496085997835000&amp;usg=AFQjCNHROUmyrwLm1Z_p_LkyxUVZ2hurlA">The Unreasonable Effectiveness of Recurrent Neural Networks</a></span><span><br>
-		Andrej Karpathy</span></li>
-		<li><a href="https://www.google.com/url?q=https://arxiv.org/abs/1308.0850&amp;sa=D&amp;ust=1496085997836000&amp;usg=AFQjCNG9uR2_JmSbVsT2lSJRGqE8aOHYpw">Generating Sequences With Recurrent Neural Networks</a></span><span><br>
-		Alex Graves</span></li>
-		<li><a href="https://www.google.com/url?q=https://larseidnes.com/2015/10/13/auto-generating-clickbait-with-recurrent-neural-networks/&amp;sa=D&amp;ust=1496085997837000&amp;usg=AFQjCNGdhdWL7WdJKEhCc77wbxj6HHxlUg">Auto-Generating Clickbait With Recurrent Neural Networks</a></span><span><br>
-		Lars Eidnes</span></li>
+		<li><a href="https://www.google.com/url?q=http://karpathy.github.io/2015/05/21/rnn-effectiveness/&amp;sa=D&amp;ust=1496085997835000&amp;usg=AFQjCNHROUmyrwLm1Z_p_LkyxUVZ2hurlA">The Unreasonable Effectiveness of Recurrent Neural Networks</a><br>
+		Andrej Karpathy</li>
+		<li><a href="https://www.google.com/url?q=https://arxiv.org/abs/1308.0850&amp;sa=D&amp;ust=1496085997836000&amp;usg=AFQjCNG9uR2_JmSbVsT2lSJRGqE8aOHYpw">Generating Sequences With Recurrent Neural Networks</a><br>
+		Alex Graves</li>
+		<li><a href="https://www.google.com/url?q=https://larseidnes.com/2015/10/13/auto-generating-clickbait-with-recurrent-neural-networks/&amp;sa=D&amp;ust=1496085997837000&amp;usg=AFQjCNGdhdWL7WdJKEhCc77wbxj6HHxlUg">Auto-Generating Clickbait With Recurrent Neural Networks</a><br>
+		Lars Eidnes</li>
 	</ul>
 	
-	<p><span>It is these compelling examples that demonstrate the power of recurrent neural networks and deep neural networks (DNNs) for modelling human generated data, and recreating completely new data from those models. They are examples that can be understood by anybody, humanising the world of &ldquo;AI&rdquo;.</span></p>
+	<p>It is these compelling examples that demonstrate the power of recurrent neural networks and deep neural networks (DNNs) for modelling human generated data, and recreating completely new data from those models. They are examples that can be understood by anybody, humanising the world of &ldquo;AI&rdquo;.</p>
 	
-	<p><span>Inspired,</span> <span style="color:#1155cc;text-decoration:underline"><a href="https://www.google.com/url?q=https://www.consected.com/&amp;sa=D&amp;ust=1496085997840000&amp;usg=AFQjCNElHw-a4Ihfuh3HLvaXzTYo5ZuJng">Consected</a></span><span>, sponsored research into the use of machine learning to generate new speech by modelling human speech audio, without any intermediate text or word representations. The goal is to generate a babbling audio output that emulates the speech patterns of the original speaker, ideally incorporating real words into the output.</span></p>
+	<p>Inspired, <a href="https://www.google.com/url?q=https://www.consected.com/&amp;sa=D&amp;ust=1496085997840000&amp;usg=AFQjCNElHw-a4Ihfuh3HLvaXzTYo5ZuJng">Consected</a>, sponsored research into the use of machine learning to generate new speech by modelling human speech audio, without any intermediate text or word representations. The goal is to generate a babbling audio output that emulates the speech patterns of the original speaker, ideally incorporating real words into the output.</p>
 	
-	<p><span>A requirement of this project is to evaluate the use of commonly researched neural network architectures that can be implemented directly with the</span> <span style="color:#1155cc;text-decoration:underline"><a href="https://www.google.com/url?q=https://keras.io/&amp;sa=D&amp;ust=1496085997842000&amp;usg=AFQjCNGYC0lQI-lpDrdu4TSI0PBOP2gHYA">Keras</a></span><span>&nbsp;toolkit. Rather than merely being a simple implementation of existing research, our project investigates the use of an alternative form of audio encoding, which we are not aware of being used previously in machine learning. We also trial various training regimes to achieve faster or improved convergence of the model.</span></p>
+	<p>A requirement of this project is to evaluate the use of commonly researched neural network architectures that can be implemented directly with the <a href="https://www.google.com/url?q=https://keras.io/&amp;sa=D&amp;ust=1496085997842000&amp;usg=AFQjCNGYC0lQI-lpDrdu4TSI0PBOP2gHYA">Keras</a>&nbsp;toolkit. Rather than merely being a simple implementation of existing research, our project investigates the use of an alternative form of audio encoding, which we are not aware of being used previously in machine learning. We also trial various training regimes to achieve faster or improved convergence of the model.</p>
 	
-	<p><span>Of course, the</span> <span style="color:#1155cc;text-decoration:underline"><a href="https://www.google.com/url?q=https://github.com/philayres/c2gen&amp;sa=D&amp;ust=1496085997844000&amp;usg=AFQjCNEVG47XE_LYs0Ve8b7PkPCWgjd4SQ">source code</a></span><span>&nbsp;for the networks, generated models, plus Jupyter / iPython notebooks acting as a training / testing dashboard are provided for reference.</span></p>
-	<h2 id="h.ltylc9r84smm">Research</span></h2>
-	<p><span>The research we have found related to audio generation has provided some background to the problem and possible neural network architectures. These papers have taken various approaches to the actual representation of audio data or are focused on a more traditional text-to-speech problem. Key references are:</span></p>
+	<p>Of course, the <a href="https://www.google.com/url?q=https://github.com/philayres/c2gen&amp;sa=D&amp;ust=1496085997844000&amp;usg=AFQjCNEVG47XE_LYs0Ve8b7PkPCWgjd4SQ">source code</a>&nbsp;for the networks, generated models, plus Jupyter / iPython notebooks acting as a training / testing dashboard are provided for reference.</p>
+	<h2 id="h.ltylc9r84smm">Research</h2>
+	<p>The research we have found related to audio generation has provided some background to the problem and possible neural network architectures. These papers have taken various approaches to the actual representation of audio data or are focused on a more traditional text-to-speech problem. Key references are:</p>
 	
 	<ul class="lst-kix_4pukr7vfg0d0-0 start">
-		<li><a href="https://www.google.com/url?q=http://www.johnglover.net/blog/generating-sound-with-rnns.html&amp;sa=D&amp;ust=1496085997846000&amp;usg=AFQjCNGAGTikOnKsalOXQ8EKZRKznMj3PQ">Generating sound with recurrent neural networks</a></span><span><br>
-		John Glover</span></li>
-		<li><a href="https://www.google.com/url?q=https://research.google.com/pubs/pub43893.html&amp;sa=D&amp;ust=1496085997847000&amp;usg=AFQjCNEVbw91hwRzuDVtoM4IpzkXfx7vcg">Acoustic Modeling in Statistical Parametric Speech Synthesis - from HMM to LSTM-RNN</a></span><span><br>
-		Heiga Zen</span></li>
-		<li><a href="https://www.google.com/url?q=https://research.google.com/pubs/archive/38131.pdf&amp;sa=D&amp;ust=1496085997848000&amp;usg=AFQjCNHlKWq0DDgcoX68bRBF8QBIeCLzqw">Deep Neural Networks for Acoustic Modeling in Speech Recognition</a></span><span><br>
-		Geoffrey Hinton, Li Deng, Dong Yu, George Dahl, Abdel-rahman Mohamed, Navdeep Jaitly, Andrew Senior, Vincent Vanhoucke, Patrick Nguyen, Tara Sainath, and Brian Kingsbury</span></li>
-		<li><a href="https://www.google.com/url?q=https://cs224d.stanford.edu/reports/NayebiAran.pdf&amp;sa=D&amp;ust=1496085997849000&amp;usg=AFQjCNFTgOJo5grt5OXTLr0Kcyjl8amIwg">GRUV:Algorithmic Music Generation using Recurrent Neural Networks</a></span><span><br>
-		Aren Nayebi and Matt Vitelli</span></li>
+		<li><a href="https://www.google.com/url?q=http://www.johnglover.net/blog/generating-sound-with-rnns.html&amp;sa=D&amp;ust=1496085997846000&amp;usg=AFQjCNGAGTikOnKsalOXQ8EKZRKznMj3PQ">Generating sound with recurrent neural networks</a><br>
+		John Glover</li>
+		<li><a href="https://www.google.com/url?q=https://research.google.com/pubs/pub43893.html&amp;sa=D&amp;ust=1496085997847000&amp;usg=AFQjCNEVbw91hwRzuDVtoM4IpzkXfx7vcg">Acoustic Modeling in Statistical Parametric Speech Synthesis - from HMM to LSTM-RNN</a><br>
+		Heiga Zen</li>
+		<li><a href="https://www.google.com/url?q=https://research.google.com/pubs/archive/38131.pdf&amp;sa=D&amp;ust=1496085997848000&amp;usg=AFQjCNHlKWq0DDgcoX68bRBF8QBIeCLzqw">Deep Neural Networks for Acoustic Modeling in Speech Recognition</a><br>
+		Geoffrey Hinton, Li Deng, Dong Yu, George Dahl, Abdel-rahman Mohamed, Navdeep Jaitly, Andrew Senior, Vincent Vanhoucke, Patrick Nguyen, Tara Sainath, and Brian Kingsbury</li>
+		<li><a href="https://www.google.com/url?q=https://cs224d.stanford.edu/reports/NayebiAran.pdf&amp;sa=D&amp;ust=1496085997849000&amp;usg=AFQjCNFTgOJo5grt5OXTLr0Kcyjl8amIwg">GRUV:Algorithmic Music Generation using Recurrent Neural Networks</a><br>
+		Aren Nayebi and Matt Vitelli</li>
 	</ul>
-	<h2 id="h.v4y4okos56m9">Encoding Audio</span></h2>
-	<p><span>A significant hurdle in the generation of audio by a neural network is the learning of audio sequences over significant periods of time, when faced with the amount of data required to represent a coherent audio sequence.</span></p>
+	<h2 id="h.v4y4okos56m9">Encoding Audio</h2>
+	<p>A significant hurdle in the generation of audio by a neural network is the learning of audio sequences over significant periods of time, when faced with the amount of data required to represent a coherent audio sequence.</p>
 	
-	<p><span>When attempting to learn a network with a wide-spectrum waveform (CD quality) directly from the pulse coded modulation (PCM) digitised representation of the audio, the network would be required to learn a sequence of 44,100 samples of 16-bit data for a single second of audio. Add to this the desire to generate more than just a short burst of audio, and raw digitised audio data seems like an unrealistic source for learning. Surprisingly, Nayebi and Vitelli suggest that their GRUV network could generate some level of coherent audio despite this.</span></p>
+	<p>When attempting to learn a network with a wide-spectrum waveform (CD quality) directly from the pulse coded modulation (PCM) digitised representation of the audio, the network would be required to learn a sequence of 44,100 samples of 16-bit data for a single second of audio. Add to this the desire to generate more than just a short burst of audio, and raw digitised audio data seems like an unrealistic source for learning. Surprisingly, Nayebi and Vitelli suggest that their GRUV network could generate some level of coherent audio despite this.</p>
 	
-	<p><span>John Glover took a potentially more feasible approach when generating musical instrument sounds, by relying on a Phase Vocoder representing audio as short-time Fourier transforms. This represents the audio data in a significantly compressed form, reducing the length of sequences to be learned significantly. My observation would be that this is potentially a more meaningful audio representation. Rather than pushing continuous amplitude variations (which are highly affected by volume, noise and timing for even simple waveforms) directly into an RNN, sets of frequency-based values are instead used. These sets of digital Fourier representations would seem to be sequences that could be more easily learned by an RNN. I look at this as the difference between an RNN learning and generating text using ASCII characters, rather than attempting to learn to sequence raw bit streams as sequences from the text corpus.</span></p>
+	<p>John Glover took a potentially more feasible approach when generating musical instrument sounds, by relying on a Phase Vocoder representing audio as short-time Fourier transforms. This represents the audio data in a significantly compressed form, reducing the length of sequences to be learned significantly. My observation would be that this is potentially a more meaningful audio representation. Rather than pushing continuous amplitude variations (which are highly affected by volume, noise and timing for even simple waveforms) directly into an RNN, sets of frequency-based values are instead used. These sets of digital Fourier representations would seem to be sequences that could be more easily learned by an RNN. I look at this as the difference between an RNN learning and generating text using ASCII characters, rather than attempting to learn to sequence raw bit streams as sequences from the text corpus.</p>
 	
-	<p><span>For this research, I was hoping to rely on a more specialised encoder, specifically focused on speech data. Initially I considered the GSM &ldquo;mobile phone&rdquo; standard, recalling that its compression was based on vocal tract modelling. Looking at the</span> <span style="color:#1155cc;text-decoration:underline"><a href="https://www.google.com/url?q=http://www.etsi.org/deliver/etsi_gts/06/0610/03.02.00_60/gsmts_0610sv030200p.pdf&amp;sa=D&amp;ust=1496085997854000&amp;usg=AFQjCNEV3nmOxSPT37e3TXEF7-lxDEvbig">GSM 06.10 &ldquo;Full Rate Speech Transcoding&rdquo;</a></span><span>&nbsp;standard, I observed that the complexity of the codec was much greater than anticipated, and intuitively the data contained in each frame was less representative of a short segment of audio than expected.</span></p>
+	<p>For this research, I was hoping to rely on a more specialised encoder, specifically focused on speech data. Initially I considered the GSM &ldquo;mobile phone&rdquo; standard, recalling that its compression was based on vocal tract modelling. Looking at the <a href="https://www.google.com/url?q=http://www.etsi.org/deliver/etsi_gts/06/0610/03.02.00_60/gsmts_0610sv030200p.pdf&amp;sa=D&amp;ust=1496085997854000&amp;usg=AFQjCNEV3nmOxSPT37e3TXEF7-lxDEvbig">GSM 06.10 &ldquo;Full Rate Speech Transcoding&rdquo;</a>&nbsp;standard, I observed that the complexity of the codec was much greater than anticipated, and intuitively the data contained in each frame was less representative of a short segment of audio than expected.</p>
 	
-	<p><span>This led my to search for other encoding approaches. I fortunately found</span> <span style="color:#1155cc;text-decoration:underline"><a href="https://www.google.com/url?q=http://www.rowetel.com/?page_id%3D452&amp;sa=D&amp;ust=1496085997856000&amp;usg=AFQjCNFc7LCe3Ker7Oz7xpe3ktppj_ZFFg">Codec 2</a></span><span>, an open source model for</span> <span>digitising</span><span>&nbsp;speech audio for broadcast over HF/VHF and ham radio. The codec uses harmonic sinusoidal coding tuned to speech. In summary, it encodes a combination of primary pitch and energy of an audio frame, with a set of multiples of this primary frequency, plus some flags indicating voiced (vowels), or unvoiced (consonants) that can be recreated through random harmonics. The codec importantly captures the fundamentals of vocal audio as individual parameters for short audio segments (see</span> <span style="color:#1155cc;text-decoration:underline"><a href="#h.gfev4o4f20r1">Codec 2 Data Frame</a></span><span>&nbsp;for details).</span></p>
+	<p>This led my to search for other encoding approaches. I fortunately found <a href="https://www.google.com/url?q=http://www.rowetel.com/?page_id%3D452&amp;sa=D&amp;ust=1496085997856000&amp;usg=AFQjCNFc7LCe3Ker7Oz7xpe3ktppj_ZFFg">Codec 2</a>, an open source model for digitising&nbsp;speech audio for broadcast over HF/VHF and ham radio. The codec uses harmonic sinusoidal coding tuned to speech. In summary, it encodes a combination of primary pitch and energy of an audio frame, with a set of multiples of this primary frequency, plus some flags indicating voiced (vowels), or unvoiced (consonants) that can be recreated through random harmonics. The codec importantly captures the fundamentals of vocal audio as individual parameters for short audio segments (see <a href="#h.gfev4o4f20r1">Codec 2 Data Frame</a>&nbsp;for details).</p>
 	
-	<p><span>The appeal of Codec 2 for this research is that the codec utilises a vocal model for compression and a data representation that &nbsp;maintain the fundamental audio components. A single 16 parameter frame represents 40ms of audio, such that just 25 frames are required per second (a rate of symbols to be learned of approximately</span> <span style="vertical-align:super">1</span><span>/</span><span style="vertical-align:sub">1700</span><span>&nbsp;of 44.1kbps PCM), with more meaningful vocal representation. Based on this, it was assumed that an RNN could likely model audio sequences directly from the data.</span></p>
+	<p>The appeal of Codec 2 for this research is that the codec utilises a vocal model for compression and a data representation that &nbsp;maintain the fundamental audio components. A single 16 parameter frame represents 40ms of audio, such that just 25 frames are required per second (a rate of symbols to be learned of approximately <span style="vertical-align:super">1/<span style="vertical-align:sub">1700</span>&nbsp;of 44.1kbps PCM), with more meaningful vocal representation. Based on this, it was assumed that an RNN could likely model audio sequences directly from the data.</p>
 	
-	<p><span>In order to validate the likelihood of the model making reasonable predictions from one frame to the next, a rapid analysis of</span> <span style="color:#1155cc;text-decoration:underline"><a href="#h.1c0d9jetrhe2">Codec 2 Parameter Progression</a></span><span>&nbsp;was made, to show the spread of parameters and likely sensitivity to loss in the model.</span></p>
-	<h2 id="h.to7lw5gpf56">Neural Network Architecture</span></h2>
-	<p><span>The neural network architecture used in this project is quite common in the literature over the last few years. I selected it based on research of the most effective RNN architectures that can also be implemented using standard layers in the</span> <span style="color:#1155cc;text-decoration:underline"><a href="https://www.google.com/url?q=https://keras.io/&amp;sa=D&amp;ust=1496085997863000&amp;usg=AFQjCNEPG7uzV6aV34ezr9Ufvh5xVtQ0bA">Keras</a></span><span>&nbsp;toolset. Simply described, the network takes Codec 2 encoded audio as its input, and utilises three long short-term memory LSTM layers (</span><span style="color:#1155cc;text-decoration:underline"><a href="#h.fcgggf9hdrrr">ref: 10</a></span><span>) with a fully connected ReLU layer. In the figure below, the top-most orange components are used only during generation of new speech samples by the model.</span></p>
+	<p>In order to validate the likelihood of the model making reasonable predictions from one frame to the next, a rapid analysis of <a href="#h.1c0d9jetrhe2">Codec 2 Parameter Progression</a>&nbsp;was made, to show the spread of parameters and likely sensitivity to loss in the model.</p>
+	<h2 id="h.to7lw5gpf56">Neural Network Architecture</h2>
+	<p>The neural network architecture used in this project is quite common in the literature over the last few years. I selected it based on research of the most effective RNN architectures that can also be implemented using standard layers in the <a href="https://www.google.com/url?q=https://keras.io/&amp;sa=D&amp;ust=1496085997863000&amp;usg=AFQjCNEPG7uzV6aV34ezr9Ufvh5xVtQ0bA">Keras</a>&nbsp;toolset. Simply described, the network takes Codec 2 encoded audio as its input, and utilises three long short-term memory LSTM layers (<a href="#h.fcgggf9hdrrr">ref: 10</a>) with a fully connected ReLU layer. In the figure below, the top-most orange components are used only during generation of new speech samples by the model.</p>
 	
 	
 	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:center"><span style="color:#ff9900;">predicted Codec 2 encoded audio</span></p>
@@ -88,59 +96,59 @@
 	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:center"><span style="font-weight:400;text-decoration:none;vertical-align:baseline;;font-style:italic">|</span></p>
 	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:center"><span>Codec 2 encoded audio</span></p>
 	
-	<p><span>Prior to training the network, the raw audio data is encoded as a Codec 2 file, where each frame of data consists of 16 parameters of one byte each. Scaling of the Codec 2 frames was then performed to fit with the</span> <span style="font-style:italic">tanh</span> <span>activations of the LSTM units.</span></p>
+	<p>Prior to training the network, the raw audio data is encoded as a Codec 2 file, where each frame of data consists of 16 parameters of one byte each. Scaling of the Codec 2 frames was then performed to fit with the <span style="font-style:italic">tanh</span> activations of the LSTM units.</p>
 	
-	<p><span>Scaling simply takes each parameter and scales it to a floating point number between 0 and 1, based on a constant scaling factor for each parameter. Each scaled frame of 16 values now represents a single timestep input to</span> <span style="font-weight:700">LSTM 1</span><span>.</span></p>
+	<p>Scaling simply takes each parameter and scales it to a floating point number between 0 and 1, based on a constant scaling factor for each parameter. Each scaled frame of 16 values now represents a single timestep input to <span style="font-weight:700">LSTM 1</span>.</p>
 	
-	<p><span>Since our network is attempting to return real values rather than being</span> <span>structured for classification tasks with a final softmax layer (</span><span style="color:#1155cc;text-decoration:underline"><a href="#h.fcgggf9hdrrr">ref: 11</a></span><span>), it culminates in a single fully connected ReLU layer (named</span> <span style="font-weight:700">Dense 1</span><span>) on the output of the three layers of LSTMs. ReLU was selected based on its relative simplicity, a good fit to the data (positive, real numbers) and successful application in previous research.</span></p>
-	<h2 id="h.100ggq4b6k7j">Training the Network</span></h2>
-	<p><span>Various layer sizes, optimizers and training regimes were tested early on in the project. These included:</span></p>
+	<p>Since our network is attempting to return real values rather than being structured for classification tasks with a final softmax layer (<a href="#h.fcgggf9hdrrr">ref: 11</a>), it culminates in a single fully connected ReLU layer (named <span style="font-weight:700">Dense 1</span>) on the output of the three layers of LSTMs. ReLU was selected based on its relative simplicity, a good fit to the data (positive, real numbers) and successful application in previous research.</p>
+	<h2 id="h.100ggq4b6k7j">Training the Network</h2>
+	<p>Various layer sizes, optimizers and training regimes were tested early on in the project. These included:</p>
 	
 	<ul class="lst-kix_9964vpb2d50w-0 start">
-		<li><span>only one or two LSTM layers</span></li>
-		<li><span>short LSTM layers</span></li>
-		<li><span>GRU units</span></li>
-		<li><span>optimisers including SGD, RMSprop, Adam</span></li>
-		<li><span>multiple fully connected layers on top of the LSTM layers</span></li>
-		<li><span>a fully connected layer in between each LSTM</span></li>
-		<li><span>combinations of trainable and untrainable layers for several epochs</span></li>
+		<li>only one or two LSTM layers</li>
+		<li>short LSTM layers</li>
+		<li>GRU units</li>
+		<li>optimisers including SGD, RMSprop, Adam</li>
+		<li>multiple fully connected layers on top of the LSTM layers</li>
+		<li>a fully connected layer in between each LSTM</li>
+		<li>combinations of trainable and untrainable layers for several epochs</li>
 	</ul>
 	
-	<p><span>Three layers of LSTMs appears to be a common architecture for generator RNNs in the literature, and our preliminary testing confirmed this with medium-length LSTM layers. With a longer LSTM (320 units), two layers performed as effectively as three layers of 160 units.</span></p>
+	<p>Three layers of LSTMs appears to be a common architecture for generator RNNs in the literature, and our preliminary testing confirmed this with medium-length LSTM layers. With a longer LSTM (320 units), two layers performed as effectively as three layers of 160 units.</p>
 	
-	<p><span>Similar to Graves, we found that it was necessary to train LSTM layers independently from the bottom up. Intuitively this allows the lowest level LSTM to achieve its own convergence rapidly, then allow the higher layers to build off of this. Attempting to train all three LSTMs simultaneously led to a sub-optimal model.</span></p>
+	<p>Similar to Graves, we found that it was necessary to train LSTM layers independently from the bottom up. Intuitively this allows the lowest level LSTM to achieve its own convergence rapidly, then allow the higher layers to build off of this. Attempting to train all three LSTMs simultaneously led to a sub-optimal model.</p>
 	
-	<p><span>Our eventual regime trained</span> <span style="font-weight:700">LSTM 1</span> <span>for 60 epochs,</span> <span style="font-weight:700">LSTM 1</span><span>&nbsp;and</span> <span style="font-weight:700">LSTM 2</span><span>&nbsp;for the next 180 epochs, and</span> <span style="font-weight:700">LSTM 3</span><span>&nbsp;only thereafter. The number of epochs selected for each breakpoint was based purely on observation of loss during initial tests.</span></p>
+	<p>Our eventual regime trained <span style="font-weight:700">LSTM 1</span> for 60 epochs, <span style="font-weight:700">LSTM 1</span>&nbsp;and <span style="font-weight:700">LSTM 2</span>&nbsp;for the next 180 epochs, and <span style="font-weight:700">LSTM 3</span>&nbsp;only thereafter. The number of epochs selected for each breakpoint was based purely on observation of loss during initial tests.</p>
 	
-	<p><span>The optimiser we found most appropriate was Nadam, the version of Adam with Nesterov momentum (</span><span style="color:#1155cc;text-decoration:underline"><a href="#h.fcgggf9hdrrr">ref: 12</a></span><span>). This optimiser allowed us to focus on adjusting other architectural variables, rather than fine tuning hyperparameters such as learning rate.</span></p>
+	<p>The optimiser we found most appropriate was Nadam, the version of Adam with Nesterov momentum (<a href="#h.fcgggf9hdrrr">ref: 12</a>). This optimiser allowed us to focus on adjusting other architectural variables, rather than fine tuning hyperparameters such as learning rate.</p>
 	
-	<p><span>Losses measured during learning were handled by scaling each Codec 2 parameter back to its real scale prior to loss calculation. This allowed a one bit error in fundamental frequency (</span><span style="font-style:italic">W</span><span style="vertical-align:sub;font-style:italic">0</span><span>) for example to be considered equivalent in impact to a one bit error in a &ldquo;voiced&rdquo; flag, rather than</span> <span style="vertical-align:super">1</span><span style="font-style:italic">/</span><span style="vertical-align:sub">128</span><span>&nbsp;due to scaling.</span></p>
-	<h2 id="h.grp4onuyqofv">Corpus</span></h2>
-	<p><span>Training the networks only requires an extended set of clear speech, and does not need other tagging or classification.</span> <span style="color:#1155cc;text-decoration:underline"><a href="https://www.google.com/url?q=http://audio.verkaro.org/&amp;sa=D&amp;ust=1496085997896000&amp;usg=AFQjCNHbj72G6Vp7pP0q35ibj_uCJCspzQ">Verkaro Audiobooks</a></span><span>&nbsp;was the source of our corpus:</span> <span style="color:#1155cc;text-decoration:underline"><a href="https://www.google.com/url?q=http://audio.verkaro.org/audiobook/A-Tale-of-Two-Cities/&amp;sa=D&amp;ust=1496085997897000&amp;usg=AFQjCNGCBe0ppaGRyrJZ_UgKG4nFE18AjA">A Tale of Two Cities</a></span><span>. A narration with a female voice was selected, in order to be clearer under heavy compression.</span></p>
+	<p>Losses measured during learning were handled by scaling each Codec 2 parameter back to its real scale prior to loss calculation. This allowed a one bit error in fundamental frequency (<span style="font-style:italic">W</span><span style="vertical-align:sub;font-style:italic">0</span>) for example to be considered equivalent in impact to a one bit error in a &ldquo;voiced&rdquo; flag, rather than <span style="vertical-align:super">1</span><span style="font-style:italic">/</span><span style="vertical-align:sub">128</span>&nbsp;due to scaling.</p>
+	<h2 id="h.grp4onuyqofv">Corpus</h2>
+	<p>Training the networks only requires an extended set of clear speech, and does not need other tagging or classification. <a href="https://www.google.com/url?q=http://audio.verkaro.org/&amp;sa=D&amp;ust=1496085997896000&amp;usg=AFQjCNHbj72G6Vp7pP0q35ibj_uCJCspzQ">Verkaro Audiobooks</a>&nbsp;was the source of our corpus: <a href="https://www.google.com/url?q=http://audio.verkaro.org/audiobook/A-Tale-of-Two-Cities/&amp;sa=D&amp;ust=1496085997897000&amp;usg=AFQjCNGCBe0ppaGRyrJZ_UgKG4nFE18AjA">A Tale of Two Cities</a>. A narration with a female voice was selected, in order to be clearer under heavy compression.</p>
 	
-	<p><span>The chapters were concatenated to provide about 16 hours of speech from a single performer. The audio was converted to 8kbps 16-bit raw PCM data prior to Codec 2 encoding. The total length is approximately 1.5 million 16 byte Codec frames after conversion.</span></p>
+	<p>The chapters were concatenated to provide about 16 hours of speech from a single performer. The audio was converted to 8kbps 16-bit raw PCM data prior to Codec 2 encoding. The total length is approximately 1.5 million 16 byte Codec frames after conversion.</p>
 	
-	<p><span>Training used a batch length of 200 frames, equivalent to 8 seconds of speech, overlapping so that batches were picked starting every 20 frames.</span></p>
-	<h2 id="h.b6162exy2iq0">Sample Generation</span></h2>
-	<p><span>The proof of the performance of the</span> <span style="font-weight:700">babble-rnn</span> <span>is less in the measured loss and more in the observed quality of audio produced.</span> <span>Sample generation follows a standard RNN procedure:</span></p>
+	<p>Training used a batch length of 200 frames, equivalent to 8 seconds of speech, overlapping so that batches were picked starting every 20 frames.</p>
+	<h2 id="h.b6162exy2iq0">Sample Generation</h2>
+	<p>The proof of the performance of the <span style="font-weight:700">babble-rnn</span> is less in the measured loss and more in the observed quality of audio produced. Sample generation follows a standard RNN procedure:</p>
 	
 	<ul class="lst-kix_2x1png4tdnmy-0 start">
-		<li><span>a seed sequence is passed to the network, and a prediction sample is returned</span></li>
-		<li><span>the seed sequence is updated to append the new sample, pushing the initial value out of the list, maintaining a constant length</span></li>
-		<li><span>the new sequence is passed to the the network, repeating until a desired length has been fulfilled</span></li>
+		<li>a seed sequence is passed to the network, and a prediction sample is returned</li>
+		<li>the seed sequence is updated to append the new sample, pushing the initial value out of the list, maintaining a constant length</li>
+		<li>the new sequence is passed to the the network, repeating until a desired length has been fulfilled</li>
 	</ul>
 	
-	<p><span>Since the network prediction returns a full Codec 2 frame as the 16 output values, the network effectively generates 40ms of audio per sample.</span></p>
-	<h2 id="h.mpz3zqpcr82z">Results</span></h2>
-	<p><span>We generate 400 samples per test periodically through the training process. To evaluate performance we view both charts of Codec 2 data and PCM waveforms, and listen to generated audio. From an audible perspective we are looking for generated audio that follow the pace of the original narration, a natural pitch inflection and some proximity of tonal sequences to real words.</span></p>
+	<p>Since the network prediction returns a full Codec 2 frame as the 16 output values, the network effectively generates 40ms of audio per sample.</p>
+	<h2 id="h.mpz3zqpcr82z">Results</h2>
+	<p>We generate 400 samples per test periodically through the training process. To evaluate performance we view both charts of Codec 2 data and PCM waveforms, and listen to generated audio. From an audible perspective we are looking for generated audio that follow the pace of the original narration, a natural pitch inflection and some proximity of tonal sequences to real words.</p>
 	
-	<p><span>The overall loss the model converges to while learning is not entirely meaningful (there is no &lsquo;correct&rsquo; answer); despite this the results are interesting. The best mean absolute error per frame we achieved is better than 0.2. Intuitively this suggests that next sample predictions are close to the required fundamental frequency, harmonics and voicing, since each frame parameter is an integer.</span></p>
+	<p>The overall loss the model converges to while learning is not entirely meaningful (there is no &lsquo;correct&rsquo; answer); despite this the results are interesting. The best mean absolute error per frame we achieved is better than 0.2. Intuitively this suggests that next sample predictions are close to the required fundamental frequency, harmonics and voicing, since each frame parameter is an integer.</p>
 	
-	<p><span>Unfortunately, short LSTMs (40 units each) appear to be unable to converge on a meaningful result, instead producing a frame sequence of one continuous pitch, or a pulsating tone. Intuitively, the lowest LSTM layer may be unable to model sufficient variation in frame sequences, settling instead on a generalised but insufficiently complex output.</span></p>
+	<p>Unfortunately, short LSTMs (40 units each) appear to be unable to converge on a meaningful result, instead producing a frame sequence of one continuous pitch, or a pulsating tone. Intuitively, the lowest LSTM layer may be unable to model sufficient variation in frame sequences, settling instead on a generalised but insufficiently complex output.</p>
 	
-	<p><span>Medium sized LSTMs (160 units) converge on a mean absolute loss of about 0.55. The audio generated does manage to achieve some structure that has sequences of roughly word length. The pitch was variable and vaguely natural.</span></p>
+	<p>Medium sized LSTMs (160 units) converge on a mean absolute loss of about 0.55. The audio generated does manage to achieve some structure that has sequences of roughly word length. The pitch was variable and vaguely natural.</p>
 	
-	<p><span style="font-style:italic">Note: in the following examples, the initial 64000 samples (8 seconds of audio or 200 Codec 2 frames) are the seed sequence, included for reference. A plot of the generated audio waveform, and scaled plot of Codec 2 frame parameters are also shown to highlight the data being generated. </span></p>
+	<p><span style="font-style:italic">Note: in the following examples, the initial 64000 samples (8 seconds of audio or 200 Codec 2 frames) are the seed sequence, included for reference. A plot of the generated audio waveform, and scaled plot of Codec 2 frame parameters are also shown to highlight the data being generated. </p>
 	
 	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:center">
 	<audio controls>
@@ -151,9 +159,9 @@
 	</p>
 	
 	
-	<p><span>Since training is performed from lowest to highest layers, it is instructive to hear the results earlier in the training.</span></p>
+	<p>Since training is performed from lowest to highest layers, it is instructive to hear the results earlier in the training.</p>
 	
-	<p><span>First layer trained:</span></p>
+	<p>First layer trained:</p>
 	<p style="text-align:center">
 	<audio controls>
  <source src="320-1.wav" type="audio/wav">
@@ -164,7 +172,7 @@
 	
 
 	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;height:11pt;text-align:center">&nbsp;</p>
-	<p><span>Second layer trained:</span></p>
+	<p>Second layer trained:</p>
 	
 	<p style="text-align:center">
 	<audio controls>
@@ -175,9 +183,9 @@
 	<p style="text-align:center"><img src="320-2.png" /></p>
 
 	
-		<p><span>Long LSTMs (320 units) converge on a mean absolute loss below 0.2 with the original set of batches. To alleviate concerns over overfitting the network was further trained using a large set of batches from the original corpus.</span></p>
+		<p>Long LSTMs (320 units) converge on a mean absolute loss below 0.2 with the original set of batches. To alleviate concerns over overfitting the network was further trained using a large set of batches from the original corpus.</p>
 	
-	<p><span>The audio generated manages word and sentence length sequences. Occasional babblings could be construed as real words.</span></p>
+	<p>The audio generated manages word and sentence length sequences. Occasional babblings could be construed as real words.</p>
 	
 	<p style="text-align:center">
 	<audio controls>
@@ -189,60 +197,60 @@
 	
 
 	
-	<h2 id="h.dv78nfegys7">Conclusions</span></h2>
-	<p><span>A simple neural network architecture of deep LSTM layers has been shown to be able to learn to model speech-based audio when encoded by a codec adapted specifically for vocal compression. When run as a feed-forward generator, the network manages to predict samples that track the original pace of the corpus with natural sounding pitch inflections over the course of sentences, and short term sequences that might reflect the structure of words.</span></p>
+	<h2 id="h.dv78nfegys7">Conclusions</h2>
+	<p>A simple neural network architecture of deep LSTM layers has been shown to be able to learn to model speech-based audio when encoded by a codec adapted specifically for vocal compression. When run as a feed-forward generator, the network manages to predict samples that track the original pace of the corpus with natural sounding pitch inflections over the course of sentences, and short term sequences that might reflect the structure of words.</p>
 	
-	<p><span>Although we were unable to achieve a model that actually generated true words, the model could be considered to babble in a reasonably acceptable way.</span></p>
-	<h2 id="h.g8zy1pzg73ej">Opportunities for Future Research</span></h2>
-	<p><span>Listening to the corpus with the current Codec 2 compression rate does not provide quality speech in many segments. In future we would attempt training the most successful network with a higher bit-rate version of Codec 2. Although the codec data will be higher resolution and therefore may require more effort to learn, it is also possible that the resolution of data could result in less confusion between similar sounds and</span> <span>therefore flow to</span><span>&nbsp;a more coherent next sound during prediction. From a qualitative standpoint, it may be better for human evaluation to understand the results.</span></p>
+	<p>Although we were unable to achieve a model that actually generated true words, the model could be considered to babble in a reasonably acceptable way.</p>
+	<h2 id="h.g8zy1pzg73ej">Opportunities for Future Research</h2>
+	<p>Listening to the corpus with the current Codec 2 compression rate does not provide quality speech in many segments. In future we would attempt training the most successful network with a higher bit-rate version of Codec 2. Although the codec data will be higher resolution and therefore may require more effort to learn, it is also possible that the resolution of data could result in less confusion between similar sounds and therefore flow to&nbsp;a more coherent next sound during prediction. From a qualitative standpoint, it may be better for human evaluation to understand the results.</p>
 	
 	
-	<p><span>Intuitively, it seems that the ability to evaluate loss not just on the next frame, but several frames (one or two predictions ahead for example) could help guide learning more rapidly. Although equally, this may be considered double dipping from a formal standpoint. Understanding both the theoretical and practical implications of this deserve additional research.</span></p>
+	<p>Intuitively, it seems that the ability to evaluate loss not just on the next frame, but several frames (one or two predictions ahead for example) could help guide learning more rapidly. Although equally, this may be considered double dipping from a formal standpoint. Understanding both the theoretical and practical implications of this deserve additional research.</p>
 	
-	<p><span>Application of alternative neural network architectures should be considered in the future. Mixture Density Networks as used in Graves handwriting generation (ref: 2) and Glover musical instrument sound generation (ref: 4), based on the paper by Bishop (ref:15), seems to be worth evaluation. Similarly, HyperLSTM (ref: 14) and Diagonal LSTM (ref: 9) have shown some success in sequence generation and we would consider future research with these structures.</span></p>
+	<p>Application of alternative neural network architectures should be considered in the future. Mixture Density Networks as used in Graves handwriting generation (ref: 2) and Glover musical instrument sound generation (ref: 4), based on the paper by Bishop (ref:15), seems to be worth evaluation. Similarly, HyperLSTM (ref: 14) and Diagonal LSTM (ref: 9) have shown some success in sequence generation and we would consider future research with these structures.</p>
 	
-	<h2 id="h.fcgggf9hdrrr">Additional References</span></h2>
+	<h2 id="h.fcgggf9hdrrr">Additional References</h2>
 	<ol class="lst-kix_spfx41keudyh-0 start" start="1">
-		<li><a href="https://www.google.com/url?q=http://karpathy.github.io/2015/05/21/rnn-effectiveness/&amp;sa=D&amp;ust=1496085997924000&amp;usg=AFQjCNFGlh-swHpN2hWTwNVkVq__bi_aFA">The Unreasonable Effectiveness of Recurrent Neural Networks</a></span><span><br>
-		Andrej Karpathy</span></li>
-		<li><a href="https://www.google.com/url?q=https://arxiv.org/abs/1308.0850&amp;sa=D&amp;ust=1496085997925000&amp;usg=AFQjCNHkqz7opLk9YXRQ4BnSOkbiqYgcog">Generating Sequences With Recurrent Neural Networks</a></span><span><br>
-		Alex Graves</span></li>
-		<li><a href="https://www.google.com/url?q=https://larseidnes.com/2015/10/13/auto-generating-clickbait-with-recurrent-neural-networks/&amp;sa=D&amp;ust=1496085997926000&amp;usg=AFQjCNEbLihLLb6yu6dec_kvratTOpQ8GQ">Auto-Generating Clickbait With Recurrent Neural Networks</a></span><span><br>
-		Lars Eidnes</span></li>
-		<li><a href="https://www.google.com/url?q=http://www.johnglover.net/blog/generating-sound-with-rnns.html&amp;sa=D&amp;ust=1496085997927000&amp;usg=AFQjCNF27lH_XgvCS7jZt9PqBS8ReDP60Q">Generating sound with recurrent neural networks</a></span><span><br>
-		John Glover</span></li>
-		<li><a href="https://www.google.com/url?q=https://research.google.com/pubs/pub43893.html&amp;sa=D&amp;ust=1496085997928000&amp;usg=AFQjCNG2W56o1P4to8P9YmXAgmqp-Ij34g">Acoustic Modeling in Statistical Parametric Speech Synthesis - from HMM to LSTM-RNN</a></span><span><br>
-		Heiga Zen</span></li>
-		<li><a href="https://www.google.com/url?q=https://research.google.com/pubs/archive/38131.pdf&amp;sa=D&amp;ust=1496085997928000&amp;usg=AFQjCNGtKlCUHxEINCzQT689KmwvBvtddA">Deep Neural Networks for Acoustic Modeling in Speech Recognition</a></span><span><br>
-		Geoffrey Hinton, Li Deng, Dong Yu, George Dahl, Abdel-rahman Mohamed, Navdeep Jaitly, Andrew Senior, Vincent Vanhoucke, Patrick Nguyen, Tara Sainath, and Brian Kingsbury</span></li>
-		<li><a href="https://www.google.com/url?q=https://cs224d.stanford.edu/reports/NayebiAran.pdf&amp;sa=D&amp;ust=1496085997929000&amp;usg=AFQjCNFa1tFy-L566jZRdL1FhBpDGVMdfQ">GRUV:Algorithmic Music Generation using Recurrent Neural Networks</a></span><span><br>
-		Aren Nayebi and Matt Vitelli</span></li>
-		<li><a href="https://www.google.com/url?q=http://www.cc.gatech.edu/~hays/7476/projects/Avery_Wenchen/&amp;sa=D&amp;ust=1496085997930000&amp;usg=AFQjCNGAt_qAG0iF3XYHrlFbFCtxkoU6yA">Generative Adversarial Denoising Autoencoder for Face Completion</a></span><span><br>
-		Avery Allen, Wenchen Li</span></li>
-		<li><a href="https://www.google.com/url?q=https://arxiv.org/abs/1704.05420&amp;sa=D&amp;ust=1496085997931000&amp;usg=AFQjCNFBQBPJUCvoKQB-zj9C7cXYakvbAw">Diagonal RNNs in Symbolic Music Modeling</a></span><span><br>
-		Ellery Wulczyn, Clementine Jacoby</span></li>
-		<li><span>Long Short-Term Memory<br></span><span style="font-style:italic">Neural Computation, 9(8):1735&ndash;1780, 1997</span><span><br>
-		S. Hochreiter and J. Schmidhuber</span></li>
-		<li><a href="https://www.google.com/url?q=http://clementinejacoby.com/softmax_rnn_224.pdf&amp;sa=D&amp;ust=1496085997932000&amp;usg=AFQjCNFy0EqPOwVMtXDKfcgDbivjR8Mt_w">Softmax RNN for Short Text Classification</a></span><span><br>
-		Ellery Wulczyn, Clementine Jacoby</span></li>
-		<li><a href="https://www.google.com/url?q=http://cs229.stanford.edu/proj2015/054_report.pdf&amp;sa=D&amp;ust=1496085997933000&amp;usg=AFQjCNFV5h6zsb6YSDyzaOqxViDf58_aGQ">Incorporating Nesterov Momentum into Adam</a></span><span><br>
-		Timothy Dozat</span></li>
-		<li><a href="https://www.google.com/url?q=https://arxiv.org/abs/1409.3215&amp;sa=D&amp;ust=1496085997934000&amp;usg=AFQjCNHV1-64v-_44HugUISslX3bmcIk3g">Sequence to Sequence Learning with Neural Networks</a></span><span><br>
-		Ilya Sutskever, Oriol Vinyals, Quoc V. Le</span></li>
-		<li><a href="https://www.google.com/url?q=https://arxiv.org/abs/1609.09106&amp;sa=D&amp;ust=1496085997935000&amp;usg=AFQjCNHuQ6InkGrTjoAHUSPJo2Niw5BqwA">HyperNetworks</a></span><span><br>
-		David Ha, Andrew Dai, Quoc V. Le</span></li>
-		<li><a href="https://www.google.com/url?q=https://publications.aston.ac.uk/373/1/NCRG_94_004.pdf&amp;sa=D&amp;ust=1496085997936000&amp;usg=AFQjCNEh4rmoXEfjck6tUCcIqSjdyxxbPg">Mixture Density Networks</a></span><span><br>
-		Christopher M. Bishop</span></li>
-		<li><a href="https://www.google.com/url?q=http://www.etsi.org/deliver/etsi_gts/06/0610/03.02.00_60/gsmts_0610sv030200p.pdf&amp;sa=D&amp;ust=1496085997937000&amp;usg=AFQjCNHc4V25DJEToUe7ucGQi36ltXqDCg">GSM 06.10 &ldquo;Full Rate Speech Transcoding&rdquo;</a></span></li>
-		<li><a href="https://www.google.com/url?q=http://www.rowetel.com/?page_id%3D452&amp;sa=D&amp;ust=1496085997938000&amp;usg=AFQjCNFK8meRGkLVZiN5NKTZaWr0c8w24A">Codec 2 website</a></span><span><br>
-		David Rowe</span></li>
-		<li><a href="https://github.com/philayres/babble-rnn">Babbler-rnn c2gen Git repository on Github</a></span></li>
+		<li><a href="https://www.google.com/url?q=http://karpathy.github.io/2015/05/21/rnn-effectiveness/&amp;sa=D&amp;ust=1496085997924000&amp;usg=AFQjCNFGlh-swHpN2hWTwNVkVq__bi_aFA">The Unreasonable Effectiveness of Recurrent Neural Networks</a><br>
+		Andrej Karpathy</li>
+		<li><a href="https://www.google.com/url?q=https://arxiv.org/abs/1308.0850&amp;sa=D&amp;ust=1496085997925000&amp;usg=AFQjCNHkqz7opLk9YXRQ4BnSOkbiqYgcog">Generating Sequences With Recurrent Neural Networks</a><br>
+		Alex Graves</li>
+		<li><a href="https://www.google.com/url?q=https://larseidnes.com/2015/10/13/auto-generating-clickbait-with-recurrent-neural-networks/&amp;sa=D&amp;ust=1496085997926000&amp;usg=AFQjCNEbLihLLb6yu6dec_kvratTOpQ8GQ">Auto-Generating Clickbait With Recurrent Neural Networks</a><br>
+		Lars Eidnes</li>
+		<li><a href="https://www.google.com/url?q=http://www.johnglover.net/blog/generating-sound-with-rnns.html&amp;sa=D&amp;ust=1496085997927000&amp;usg=AFQjCNF27lH_XgvCS7jZt9PqBS8ReDP60Q">Generating sound with recurrent neural networks</a><br>
+		John Glover</li>
+		<li><a href="https://www.google.com/url?q=https://research.google.com/pubs/pub43893.html&amp;sa=D&amp;ust=1496085997928000&amp;usg=AFQjCNG2W56o1P4to8P9YmXAgmqp-Ij34g">Acoustic Modeling in Statistical Parametric Speech Synthesis - from HMM to LSTM-RNN</a><br>
+		Heiga Zen</li>
+		<li><a href="https://www.google.com/url?q=https://research.google.com/pubs/archive/38131.pdf&amp;sa=D&amp;ust=1496085997928000&amp;usg=AFQjCNGtKlCUHxEINCzQT689KmwvBvtddA">Deep Neural Networks for Acoustic Modeling in Speech Recognition</a><br>
+		Geoffrey Hinton, Li Deng, Dong Yu, George Dahl, Abdel-rahman Mohamed, Navdeep Jaitly, Andrew Senior, Vincent Vanhoucke, Patrick Nguyen, Tara Sainath, and Brian Kingsbury</li>
+		<li><a href="https://www.google.com/url?q=https://cs224d.stanford.edu/reports/NayebiAran.pdf&amp;sa=D&amp;ust=1496085997929000&amp;usg=AFQjCNFa1tFy-L566jZRdL1FhBpDGVMdfQ">GRUV:Algorithmic Music Generation using Recurrent Neural Networks</a><br>
+		Aren Nayebi and Matt Vitelli</li>
+		<li><a href="https://www.google.com/url?q=http://www.cc.gatech.edu/~hays/7476/projects/Avery_Wenchen/&amp;sa=D&amp;ust=1496085997930000&amp;usg=AFQjCNGAt_qAG0iF3XYHrlFbFCtxkoU6yA">Generative Adversarial Denoising Autoencoder for Face Completion</a><br>
+		Avery Allen, Wenchen Li</li>
+		<li><a href="https://www.google.com/url?q=https://arxiv.org/abs/1704.05420&amp;sa=D&amp;ust=1496085997931000&amp;usg=AFQjCNFBQBPJUCvoKQB-zj9C7cXYakvbAw">Diagonal RNNs in Symbolic Music Modeling</a><br>
+		Ellery Wulczyn, Clementine Jacoby</li>
+		<li>Long Short-Term Memory<br><span style="font-style:italic">Neural Computation, 9(8):1735&ndash;1780, 1997</span><br>
+		S. Hochreiter and J. Schmidhuber</li>
+		<li><a href="https://www.google.com/url?q=http://clementinejacoby.com/softmax_rnn_224.pdf&amp;sa=D&amp;ust=1496085997932000&amp;usg=AFQjCNFy0EqPOwVMtXDKfcgDbivjR8Mt_w">Softmax RNN for Short Text Classification</a><br>
+		Ellery Wulczyn, Clementine Jacoby</li>
+		<li><a href="https://www.google.com/url?q=http://cs229.stanford.edu/proj2015/054_report.pdf&amp;sa=D&amp;ust=1496085997933000&amp;usg=AFQjCNFV5h6zsb6YSDyzaOqxViDf58_aGQ">Incorporating Nesterov Momentum into Adam</a><br>
+		Timothy Dozat</li>
+		<li><a href="https://www.google.com/url?q=https://arxiv.org/abs/1409.3215&amp;sa=D&amp;ust=1496085997934000&amp;usg=AFQjCNHV1-64v-_44HugUISslX3bmcIk3g">Sequence to Sequence Learning with Neural Networks</a><br>
+		Ilya Sutskever, Oriol Vinyals, Quoc V. Le</li>
+		<li><a href="https://www.google.com/url?q=https://arxiv.org/abs/1609.09106&amp;sa=D&amp;ust=1496085997935000&amp;usg=AFQjCNHuQ6InkGrTjoAHUSPJo2Niw5BqwA">HyperNetworks</a><br>
+		David Ha, Andrew Dai, Quoc V. Le</li>
+		<li><a href="https://www.google.com/url?q=https://publications.aston.ac.uk/373/1/NCRG_94_004.pdf&amp;sa=D&amp;ust=1496085997936000&amp;usg=AFQjCNEh4rmoXEfjck6tUCcIqSjdyxxbPg">Mixture Density Networks</a><br>
+		Christopher M. Bishop</li>
+		<li><a href="https://www.google.com/url?q=http://www.etsi.org/deliver/etsi_gts/06/0610/03.02.00_60/gsmts_0610sv030200p.pdf&amp;sa=D&amp;ust=1496085997937000&amp;usg=AFQjCNHc4V25DJEToUe7ucGQi36ltXqDCg">GSM 06.10 &ldquo;Full Rate Speech Transcoding&rdquo;</a></li>
+		<li><a href="https://www.google.com/url?q=http://www.rowetel.com/?page_id%3D452&amp;sa=D&amp;ust=1496085997938000&amp;usg=AFQjCNFK8meRGkLVZiN5NKTZaWr0c8w24A">Codec 2 website</a><br>
+		David Rowe</li>
+		<li><a href="https://github.com/philayres/babble-rnn">Babbler-rnn c2gen Git repository on Github</a></li>
 	</ol>
 	
 	
 	<h2>Additional Resources</h2>
-	<h3 id="h.gfev4o4f20r1">Codec 2 Data Frame</span></h3>
-	<p><span>For reference, each frame of Codec 2 data is represented as:</span></p>
+	<h3 id="h.gfev4o4f20r1">Codec 2 Data Frame</h3>
+	<p>For reference, each frame of Codec 2 data is represented as:</p>
 	<a id="t.14a040d1a00c91f27a629d49514fce9bfa7b79e4"></a><a id="t.0"></a>
 	<table style="margin-left:;border-spacing:0;border-collapse:collapse;margin-right:auto">
 		<tbody>
@@ -256,52 +264,52 @@
 			</tr>
 			<tr style="height:0pt">
 				<td colspan="1" rowspan="1" style="border-right-style:solid;padding:5pt 5pt 5pt 5pt;border-bottom-border-top-width:1pt;border-right-width:1pt;border-left-vertical-align:top;border-right-border-left-width:1pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1pt;width:225.7pt;border-top-border-bottom-style:solid">
-					<p><span>1,1,1,1</span></p>
+					<p>1,1,1,1</p>
 				</td>
 				<td colspan="1" rowspan="1" style="border-right-style:solid;padding:5pt 5pt 5pt 5pt;border-bottom-border-top-width:1pt;border-right-width:1pt;border-left-vertical-align:top;border-right-border-left-width:1pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1pt;width:225.7pt;border-top-border-bottom-style:solid">
-					<p><span>voiced flags for 4 (10ms) PCM &lsquo;frames&rsquo;</span></p>
-				</td>
-			</tr>
-			<tr style="height:0pt">
-				<td colspan="1" rowspan="1" style="border-right-style:solid;padding:5pt 5pt 5pt 5pt;border-bottom-border-top-width:1pt;border-right-width:1pt;border-left-vertical-align:top;border-right-border-left-width:1pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1pt;width:225.7pt;border-top-border-bottom-style:solid">
-					<p style="padding:0;margin:0;;line-height:1.0;text-align:left"><span>7</span></p>
-				</td>
-				<td colspan="1" rowspan="1" style="border-right-style:solid;padding:5pt 5pt 5pt 5pt;border-bottom-border-top-width:1pt;border-right-width:1pt;border-left-vertical-align:top;border-right-border-left-width:1pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1pt;width:225.7pt;border-top-border-bottom-style:solid">
-					<p style="padding:0;margin:0;;line-height:1.0;text-align:left"><span>W</span><span style="vertical-align:sub">0</span><span>&nbsp;(fundamental frequency, &ldquo;pitch&rdquo;)</span></p>
+					<p>voiced flags for 4 (10ms) PCM &lsquo;frames&rsquo;</p>
 				</td>
 			</tr>
 			<tr style="height:0pt">
 				<td colspan="1" rowspan="1" style="border-right-style:solid;padding:5pt 5pt 5pt 5pt;border-bottom-border-top-width:1pt;border-right-width:1pt;border-left-vertical-align:top;border-right-border-left-width:1pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1pt;width:225.7pt;border-top-border-bottom-style:solid">
-					<p style="padding:0;margin:0;;line-height:1.0;text-align:left"><span>5</span></p>
+					<p style="padding:0;margin:0;;line-height:1.0;text-align:left">7</p>
 				</td>
 				<td colspan="1" rowspan="1" style="border-right-style:solid;padding:5pt 5pt 5pt 5pt;border-bottom-border-top-width:1pt;border-right-width:1pt;border-left-vertical-align:top;border-right-border-left-width:1pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1pt;width:225.7pt;border-top-border-bottom-style:solid">
-					<p style="padding:0;margin:0;;line-height:1.0;text-align:left"><span>E (energy of W</span><span style="vertical-align:sub">0</span><span>)</span></p>
+					<p style="padding:0;margin:0;;line-height:1.0;text-align:left">W<span style="vertical-align:sub">0</span>&nbsp;(fundamental frequency, &ldquo;pitch&rdquo;)</p>
 				</td>
 			</tr>
 			<tr style="height:0pt">
 				<td colspan="1" rowspan="1" style="border-right-style:solid;padding:5pt 5pt 5pt 5pt;border-bottom-border-top-width:1pt;border-right-width:1pt;border-left-vertical-align:top;border-right-border-left-width:1pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1pt;width:225.7pt;border-top-border-bottom-style:solid">
-					<p><span>4,4,4,4,4,4,4,3,3,2</span></p>
+					<p style="padding:0;margin:0;;line-height:1.0;text-align:left">5</p>
 				</td>
 				<td colspan="1" rowspan="1" style="border-right-style:solid;padding:5pt 5pt 5pt 5pt;border-bottom-border-top-width:1pt;border-right-width:1pt;border-left-vertical-align:top;border-right-border-left-width:1pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1pt;width:225.7pt;border-top-border-bottom-style:solid">
-					<p style="padding:0;margin:0;;line-height:1.0;text-align:left"><span>LSP (spectral magnitudes)</span></p>
+					<p style="padding:0;margin:0;;line-height:1.0;text-align:left">E (energy of W<span style="vertical-align:sub">0</span>)</p>
+				</td>
+			</tr>
+			<tr style="height:0pt">
+				<td colspan="1" rowspan="1" style="border-right-style:solid;padding:5pt 5pt 5pt 5pt;border-bottom-border-top-width:1pt;border-right-width:1pt;border-left-vertical-align:top;border-right-border-left-width:1pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1pt;width:225.7pt;border-top-border-bottom-style:solid">
+					<p>4,4,4,4,4,4,4,3,3,2</p>
+				</td>
+				<td colspan="1" rowspan="1" style="border-right-style:solid;padding:5pt 5pt 5pt 5pt;border-bottom-border-top-width:1pt;border-right-width:1pt;border-left-vertical-align:top;border-right-border-left-width:1pt;border-top-style:solid;border-left-style:solid;border-bottom-width:1pt;width:225.7pt;border-top-border-bottom-style:solid">
+					<p style="padding:0;margin:0;;line-height:1.0;text-align:left">LSP (spectral magnitudes)</p>
 				</td>
 			</tr>
 		</tbody>
 	</table>
 	
-	<h3 id="h.1c0d9jetrhe2">Codec 2 Parameter Progression</span></h3>
-	<p><span>A rapid graphical evaluation of the progression from one Codec 2 frame to the next was performed. The objective was to see the likely impact on audio output based on small errors in each value.</span></p>
+	<h3 id="h.1c0d9jetrhe2">Codec 2 Parameter Progression</h3>
+	<p>A rapid graphical evaluation of the progression from one Codec 2 frame to the next was performed. The objective was to see the likely impact on audio output based on small errors in each value.</p>
 	
-	<p><span>The charts each show a single Codec 2 parameter over a significant sample of the corpus. The charts show current value on the horizontal axis, against next value on vertical axis. This rapid visualisation shows how the progression from one frame to the next is generally clustered, although varies between parameters.</span></p>
+	<p>The charts each show a single Codec 2 parameter over a significant sample of the corpus. The charts show current value on the horizontal axis, against next value on vertical axis. This rapid visualisation shows how the progression from one frame to the next is generally clustered, although varies between parameters.</p>
 	
 	<p><span style="font-weight:700;text-decoration:none;vertical-align:baseline;;font-style:normal">Fundamental frequency</span></p>
-	<p><span>The strong cluster around</span> <span style="font-style:italic">x=y</span> <span>follows an expectation that the primary vocal pitch does not rapidly fluctuate over time. Interestingly, at the lower end there is more variation.</span></p>
+	<p>The strong cluster around <span style="font-style:italic">x=y</span> follows an expectation that the primary vocal pitch does not rapidly fluctuate over time. Interestingly, at the lower end there is more variation.</p>
 	<p style="text-align:center"><img src="codec-plot-4.png" /></p>
 	<p><span style="font-weight:700;text-decoration:none;vertical-align:baseline;;font-style:normal">Energy</span></p>
-	<p><span>Variations in energy vary more at the top end of the range. It is not expected that errors here will lead to incomprehensible speech.</span></p>
+	<p>Variations in energy vary more at the top end of the range. It is not expected that errors here will lead to incomprehensible speech.</p>
 		<p style="text-align:center"><img src="codec-plot-5.png" /></p>
 	<p><span style="font-weight:700;text-decoration:none;vertical-align:baseline;;font-style:normal">Spectral magnitudes</span></p>
-	<p><span>These vary significantly from one frame to the next. The parameters with the greatest range again follow</span> <span style="font-style:italic">x = y</span> <span>to a limited degree. Lower range parameters appear to have a greater spread of next values.</span></p>
+	<p>These vary significantly from one frame to the next. The parameters with the greatest range again follow <span style="font-style:italic">x = y</span> to a limited degree. Lower range parameters appear to have a greater spread of next values.</p>
 		<p style="text-align:center"><img src="codec-plot-6.png" /></p>
 		<p style="text-align:center"><img src="codec-plot-7.png" /></p>
 		<p style="text-align:center"><img src="codec-plot-8.png" /></p>
@@ -314,7 +322,7 @@
 		<p style="text-align:center"><img src="codec-plot-15.png" /></p>
 											
 	<p><span style="font-weight:700;text-decoration:none;vertical-align:baseline;;font-style:normal">&ldquo;Voiced&rdquo; parameters</span></p>
-	<p><span>These do not show any consistent progression over time. Only one of the parameter charts is shown as they appear identical.</span></p>
+	<p>These do not show any consistent progression over time. Only one of the parameter charts is shown as they appear identical.</p>
 		<p style="text-align:center"><img src="codec-plot-0.png" /></p>
 </body>
 </html>
