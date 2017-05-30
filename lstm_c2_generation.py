@@ -11,16 +11,17 @@ import signal
 from generator import Generator
 
 utils = ModelUtils()
+model_def = None
 
-  
 signal.signal(signal.SIGINT, utils.signal_handler)
 signal.signal(signal.SIGTERM, utils.signal_handler)
+
 # number of training iterations
 num_iterations = 600
-
+utils.log("num_iterations: ", num_iterations)
 start_iteration = 1
-
-fit_batch_size = 200 #128
+utils.log("start_iteration: ", start_iteration)
+fit_batch_size = 200 
 utils.log("fit_batch_size: ", fit_batch_size)
 
 # generate sample data every nth iteration
@@ -30,37 +31,25 @@ gen_every_nth = 5
 # note: one frame encodes 40ms of raw PCM audio
 framelen=16
 
-'''
-frame_property_bits = [
- 1,1,1,1, # voiced flags for 4 (10ms) PCM frames
- 7, #Wo
- 5, #E
- 4,4,4,4,4,4,4,3,3,2 #LSP
-]
-'''
-
 # length of frame sequence for learning
 frame_seq_len = 200 # 8 seconds of audio
 seed_seq_len = frame_seq_len
 utils.log("frame_seq_len: ", frame_seq_len)
 
+# pick overlapping frames every seq_step to add to the training set 
 #seq_step = int(frame_seq_len/1.2) 
 #seq_step = int(frame_seq_len/10)
 seq_step=15
 utils.log("seq_step: ", seq_step)
-
-model_def = None
 
 utils.log("loading test data from: ", utils.testdata_filename)
 testdata = np.fromfile(utils.testdata_filename, dtype=np.uint8)
 
 len_testdata = len(testdata)
 num_frames = int(len_testdata / framelen)
-utils.log('corpus length:', len_testdata)
+utils.log('corpus length (bytes):', len_testdata)
+utils.log('corpus length (frames):', num_frames)
 
-
-# cut the testdata into sequences of frame_seq_len characters
-print("scanning testdata into frames and frame sequences")
 
 frame_seqs = []
 next_frames = []
@@ -79,25 +68,26 @@ def normalize_input(frame):
 def gen_sequence(iteration):
   return (iteration % gen_every_nth == 0)
 
+utils.log("scanning testdata into frames and frame sequences")
 
 # step through the testdata, pulling those bytes into an array of all the the frames, all_frames
 for j in range(0, num_frames):
     i = j * framelen   
     all_frames.append(normalize_input(testdata[i: i + framelen]))
 
-utils.log('number of frames:', len(all_frames))
+utils.log('actual number of frames:', len(all_frames))
 
 # pull the frames into frame sequences (frame_seqs), each of frame_seq_len frames
-# pull a single frame following each frame sequence into an array of next_frames
+# pull a single frame following each frame sequence into a corresponding array of next_frames
 for i in range(0, num_frames - frame_seq_len, seq_step):
     frame_seqs.append(all_frames[i: i + frame_seq_len])
     next_frames.append(all_frames[i + frame_seq_len])
 
-
-
 utils.log('number of frame sequences:', len(frame_seqs))
 
 
+# make sure that the input and output frames are float32, rather than
+# the unsigned bytes that we load from the corpus
 print('initialising input and expected output arrays')
 X = np.zeros((len(frame_seqs), frame_seq_len, framelen), dtype=np.float32)
 y = np.zeros((len(frame_seqs), framelen), dtype=np.float32)
@@ -116,12 +106,16 @@ for i, frame_seq in enumerate(frame_seqs):
 generator = Generator(utils, all_frames, seed_seq_len, utils.generate_len)
 generator.frame_property_scaleup = model_def.frame_property_scaleup
 generator.framelen = framelen
+
+# generator seed can start at various positions in the frame set
+# command line parameters can force this in the following call
 utils.setup_seed_start(generator)
 
+# for generating a model, no training iterations are required
+# just generate the data from the model and exit 
 if utils.generate_mode():
   utils.log("Generating Samples")
-  generator.generate(0)
-  
+  generator.generate(0)  
   exit()
 
 # train the model
