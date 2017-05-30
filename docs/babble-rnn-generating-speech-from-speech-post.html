@@ -121,17 +121,17 @@
 	
 	<p>Our eventual regime trained <span style="font-weight:700">LSTM 1</span> for 60 epochs, <span style="font-weight:700">LSTM 1</span>&nbsp;and <span style="font-weight:700">LSTM 2</span>&nbsp;for the next 180 epochs, and <span style="font-weight:700">LSTM 3</span>&nbsp;only thereafter. The number of epochs selected for each breakpoint was based purely on observation of loss during initial tests. In future research we might evaluate this approach in more detail</p>
 	
-	<p>The optimiser we found most appropriate was Nadam, the version of Adam with Nesterov momentum (<a href="#h.fcgggf9hdrrr">ref: 12</a>). This optimiser allowed us to focus on adjusting other architectural variables, rather than fine tuning hyperparameters such as learning rate.</p>
+	<p>The optimiser we found most appropriate was Nadam, the version of Adam with Nesterov momentum (<a href="#h.fcgggf9hdrrr">ref: 12</a>). This optimiser allowed us to focus on adjusting other architectural variables, rather than fine tuning the learning rate hyperparameter.</p>
 	
 	<p>Losses measured during learning were handled by scaling each Codec 2 parameter back to its real scale prior to loss calculation. This allowed a one bit error in fundamental frequency (<span style="font-style:italic">W</span><span style="vertical-align:sub;font-style:italic">0</span>) for example to be considered equivalent in impact to a one bit error in a &ldquo;voiced&rdquo; flag, rather than <span style="vertical-align:super">1</span><span style="font-style:italic">/</span><span style="vertical-align:sub">128</span> if measuring loss on the 0-1 scaled data.</p>
 	<h2 id="h.grp4onuyqofv">Corpus</h2>
-	<p>Training the networks only requires an extended set of clear speech, and does not need other tagging or classification. <a href="http://audio.verkaro.org/">Verkaro Audiobooks</a>&nbsp;was the source of our corpus: <a href="http://audio.verkaro.org/audiobook/A-Tale-of-Two-Cities/">A Tale of Two Cities</a>. A narration with a female voice was selected, in order to be clearer under heavy compression.</p>
+	<p>Training our network only requires an extended set of clear speech, and does not need other tagging or classification. <a href="http://audio.verkaro.org/">Verkaro Audiobooks</a>&nbsp;was the source of our corpus: <a href="http://audio.verkaro.org/audiobook/A-Tale-of-Two-Cities/">A Tale of Two Cities</a>. A narration with a female voice was selected, in order to be clearer under heavy compression.</p>
 	
-	<p>The chapters were concatenated to provide about 16 hours of speech from a single performer. The audio was converted to 8kbps 16-bit raw PCM data prior to Codec 2 encoding. The total length is approximately 1.5 million 16 byte Codec frames after conversion.</p>
+	<p>The chapters were concatenated to provide about 16 hours of speech from a single performer. The audio was converted to 8kbps 16-bit raw PCM data prior to Codec 2 encoding. The total length is approximately 1.5 million 16 byte Codec 2 frames after conversion.</p>
 	
 	<p>Training used a batch length of 200 frames, equivalent to 8 seconds of speech, overlapping so that batches were picked starting every 20 frames.</p>
 	<h2 id="h.b6162exy2iq0">Sample Generation</h2>
-	<p>The proof of the performance of the <span style="font-weight:700">babble-rnn</span> is less in the measured loss and more in the observed quality of audio produced. Sample generation follows a standard feed-forward RNN procedure:</p>
+	<p>The proof of the performance of the <span style="font-weight:700">babble-rnn</span> is less about the measured loss and more in the observed quality of audio produced. Sample generation uses feed-forward of the network, a frame at a time, based on the Keras example LSTM text generation procedure:</p>
 	
 	<ul class="lst-kix_2x1png4tdnmy-0 start">
 		<li>a seed sequence is passed to the network, and a prediction sample is returned</li>
@@ -145,11 +145,14 @@
 	<h2 id="h.mpz3zqpcr82z">Results</h2>
 	<p>We generate 400 samples per test periodically through the training process. To evaluate performance we view both charts of Codec 2 data and PCM waveforms, and listen to generated audio. From an audible perspective we are looking for generated audio that follow the pace of the original narration, a natural pitch inflection and some proximity of tonal sequences to real words.</p>
 	
-	<p>The overall loss the model converges to while learning is not entirely meaningful (there is no &lsquo;correct&rsquo; answer); despite this the results are interesting. The best mean absolute error per frame we achieved is better than 0.2. Intuitively this suggests that next sample predictions are close to the required fundamental frequency, harmonics and voicing, since each frame parameter is an integer.</p>
+	<p>The overall loss the model converges to while learning is not entirely meaningful (there is no &lsquo;correct&rsquo; answer); despite this the results are interesting. The best mean absolute error per frame we achieved is close to 0.15 at best. Intuitively this suggests that next sample predictions are close to the required fundamental frequency, harmonics and voicing, since each frame parameter is an integer.</p>
 	
 	<p>Unfortunately, short LSTMs (40 units each) appear to be unable to converge on a meaningful result, instead producing a frame sequence of one continuous pitch, or a pulsating tone. Intuitively, the lowest LSTM layer may be unable to model sufficient variation in frame sequences, settling instead on a generalised but insufficiently complex output.</p>
 	
-	<p>Medium sized LSTMs (160 units) converge on a mean absolute loss of about 0.55. The audio generated does manage to achieve some structure that has sequences of roughly word length. The pitch was variable and vaguely natural.</p>
+	<p>Medium sized LSTMs (160 units) converge on a mean absolute loss of about 0.55. </p>
+	<p style="text-align:center"><img src="160-loss.png" /></p>
+
+	<p>The audio generated does manage to achieve some structure that has sequences of roughly word length. The pitch was variable and vaguely natural. Overfitting does not appear to be an issue.</p>
 	
 	<p><span style="font-style:italic">Note: in the following examples, the initial 64000 samples (8 seconds of audio or 200 Codec 2 frames) are the seed sequence, included for reference. A plot of the generated audio waveform, and scaled plot of Codec 2 frame parameters are also shown to highlight the data being generated. </p>
 	
@@ -162,16 +165,17 @@
 	</p>
 	
 	
-	<p>Since training is performed from lowest to highest layers, it is instructive to hear the results earlier in the training.</p>
+	<p>Since training is performed from lowest to highest layers, it is instructive to also hear the results earlier in the training.</p>
 	
 	<p>First layer trained:</p>
 	<p style="text-align:center">
 	<audio controls>
- <source src="320-1.wav" type="audio/wav">
+ <source src="160-1.wav" type="audio/wav">
  Your browser does not support the audio tag.
 </audio>
 	</p>
-	<p style="text-align:center"><img src="320-1.png" /></p>
+	<p style="text-align:center"><img src="160-1.png" /><img src="160-1-c2.png" />
+	</p>
 	
 
 	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;height:11pt;text-align:center">&nbsp;</p>
@@ -179,14 +183,16 @@
 	
 	<p style="text-align:center">
 	<audio controls>
- <source src="320-2.wav" type="audio/wav">
+ <source src="160-2.wav" type="audio/wav">
  Your browser does not support the audio tag.
 </audio>
 	</p>
-	<p style="text-align:center"><img src="320-2.png" /></p>
+	<p style="text-align:center"><img src="160-2.png" /><img src="160-2-c2.png" />
+	</p>
 
 	
-		<p>Long LSTMs (320 units) converge on a mean absolute loss below 0.2 with the original set of batches. To alleviate concerns over overfitting the network was further trained using a large set of batches from the original corpus.</p>
+	<p>Long LSTMs (320 units) converge on a mean absolute loss below 0.2 with the original set of batches.</p>
+ <p style="text-align:center"><img src="320-loss.png" /></p>
 	
 	<p>The audio generated manages word and sentence length sequences. Occasional babblings could be construed as real words.</p>
 	
@@ -196,19 +202,19 @@
  Your browser does not support the audio tag.
 </audio>
 	</p>
-	<p style="text-align:center"><img src="320-3.png" /></p>
+	<p style="text-align:center"><img src="320-3.png" /><img src="320-3-c2.png" /></p>
 	
 
 	
 	<h2 id="h.dv78nfegys7">Conclusions</h2>
-	<p>A simple neural network architecture of deep LSTM layers has been shown to be able to learn to model speech-based audio when encoded by a codec adapted specifically for vocal compression. When run as a feed-forward generator, the network manages to predict samples that track the original pace of the corpus with natural sounding pitch inflections over the course of sentences, and short term sequences that might reflect the structure of words.</p>
+	<p>A neural network architecture of deep LSTM layers has been shown to be able to learn to model speech-based audio when encoded by a codec designed specifically for vocal compression. When run as a feed-forward generator, the network manages to predict samples that track the original pace of the vocal performer with natural sounding pitch inflections over the course of sentences, and short term sequences that might reflect the structure of words.</p>
 	
 	<p>Although we were unable to achieve a model that actually generated true words, the model could be considered to babble in a reasonably acceptable way.</p>
 	<h2 id="h.g8zy1pzg73ej">Opportunities for Future Research</h2>
-	<p>Listening to the corpus with the current Codec 2 compression rate does not provide quality speech in many segments. In future we would attempt training the most successful network with a higher bit-rate version of Codec 2. Although the codec data will be higher resolution and therefore may require more effort to learn, it is also possible that the resolution of data could result in less confusion between similar sounds and therefore flow to&nbsp;a more coherent next sound during prediction. From a qualitative standpoint, it may be better for human evaluation to understand the results.</p>
+	<p>Listening to the corpus with the current Codec 2 compression rate (1300bps) reveals that the compression obscures many vocal phones significantly. In future we would attempt training a similar network with a higher bit-rate version of Codec 2. Although the codec data will be higher resolution and therefore may require more effort to learn, it is also possible that the resolution of data could result in less confusion between similar sounds and therefore make it easier for the model to flow to a more coherent next sound during prediction. From a qualitative standpoint, it is likely to also be better for human evaluation to understand the results.</p>
 	
 	
-	<p>Intuitively, it seems that the ability to evaluate loss not just on the next frame, but several frames (one or two predictions ahead for example) could help guide learning more rapidly. Although equally, this may be considered double dipping from a formal standpoint. Understanding both the theoretical and practical implications of this deserve additional research.</p>
+	<p>Intuitively, it seems that the ability to evaluate loss not just on the next frame, but several frames  ahead could help guide learning more rapidly. Although this may be considered double dipping from a formal standpoint, and increase complexity for learning with back propogation through time, understanding both the theoretical and practical implications of this deserve additional research.</p>
 	
 	<p>Application of alternative neural network architectures should be considered in the future. Mixture Density Networks as used in Graves handwriting generation (ref: 2) and Glover musical instrument sound generation (ref: 4), based on the paper by Bishop (ref:15), seems to be worth evaluation. Similarly, HyperLSTM (ref: 14) and Diagonal LSTM (ref: 9) have shown some success in sequence generation and we would consider future research with these structures.</p>
 	
