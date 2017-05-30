@@ -19,7 +19,7 @@
 	<title>Babble-rnn: Generating speech from speech with LSTM networks</title>
 </head>
 <body style="padding:72pt 72pt 72pt 72pt;max-width:451.4pt">
-	<p class="title" id="h.kb9f43w95koy" style="padding-top:0pt;margin:0;padding-left:0;font-size:26pt;padding-bottom:3pt;line-height:1.15;page-break-after:avoid;font-family:&quot;Arial&quot;;orphans:2;widows:2;text-align:left;padding-right:0"><span style="font-weight:400;text-decoration:none;vertical-align:baseline;font-size:26pt;font-family:&quot;Arial&quot;;font-style:normal">Babble-rnn: Generating speech from speech with LSTM networks</span></p>
+	<p class="title" id="top" style="padding-top:0pt;margin:0;padding-left:0;font-size:26pt;padding-bottom:3pt;line-height:1.15;page-break-after:avoid;font-family:&quot;Arial&quot;;orphans:2;widows:2;text-align:left;padding-right:0"><span style="font-weight:400;text-decoration:none;vertical-align:baseline;font-size:26pt;font-family:&quot;Arial&quot;;font-style:normal">Babble-rnn: Generating speech from speech with LSTM networks</span></p>
 	<p>&nbsp;</p>
 	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:right"><span style="font-weight:700;text-decoration:none;vertical-align:baseline;;font-style:normal">Phil Ayres</span></p>
 	<p style="padding:0;margin:0;;line-height:1.15;orphans:2;widows:2;text-align:right"><span style="font-weight:700;text-decoration:none;vertical-align:baseline;;font-style:normal">phil.ayres@consected.com</span></p>
@@ -27,7 +27,7 @@
 	
 	<p>There is plenty of interest in recurrent neural networks (RNNs) for the generation of data that is meaningful, and even fascinating to humans. Popular examples generate everything from credible (but fabricated) passages from Shakespeare, incredible (but highly likely) fake-news clickbait, to completely simulated handwritten sentences that shadow the style of the original writer.</p>
 	
-	<p>These examples by prominent authors have helped many people, including myself, to see that there is more to deep-learning than just recognising cats and dogs in social media photos. These influential papers and posts include:</p>
+	<p>These examples by prominent authors have helped many people, including myself, to see that there is more to deep-learning than just recognising cats and dogs in social media photos:</p>
 	
 	<ul class="lst-kix_8xo8w4yl2i0y-0 start">
 		<li><a href="http://karpathy.github.io/2015/05/21/rnn-effectiveness/">The Unreasonable Effectiveness of Recurrent Neural Networks</a><br>
@@ -38,16 +38,18 @@
 		Lars Eidnes</li>
 	</ul>
 	
-	<p>These compelling examples demonstrate the power of recurrent neural networks for modelling human generated data, and recreating completely new data from those models. They are examples that can be understood by anybody, humanising the world of &ldquo;AI&rdquo;.</p>
+	<p>Such compelling examples demonstrate the power of recurrent neural networks for modelling human generated data, and recreating completely new data from those models. They can be understood by anybody, humanising the world of &ldquo;AI&rdquo;.</p>
 	
-	<p>Inspired, <a href="https://www.consected.com/">Consected</a>, sponsored research into the use of machine learning to generate new speech by modelling human speech audio, without any intermediate text or word representations. The idea is to learn to speak through imitation, much like a baby would. The goal is to generate a babbling audio output that emulates the speech patterns of the original speaker, ideally incorporating real words into the output.</p>
+	<p>Inspired, <a href="https://www.consected.com/">Consected</a>, sponsored research into the use of machine learning to generate new speech by modelling human speech audio, without any intermediate text or word representations. The idea is to learn to speak through imitation, much like a baby might. The goal is to generate a babbling audio output that emulates the speech patterns of the original speaker, ideally incorporating real words into the output.</p>
 	
 	<p>A requirement of this project is to evaluate the use of commonly researched neural network architectures that can be implemented directly with the <a href="https://keras.io/">Keras</a>&nbsp;toolkit. Rather than merely being a simple implementation of existing research, our project investigates the use of an alternative form of audio encoding, which we are not aware of being used previously in machine learning. We also trial various training regimes to attempt to achieve faster or improved convergence of the model.</p>
 	
 	<p>Of course, the <a href="https://github.com/philayres/babble-rnn">source code</a> for the networks, generated models, plus Jupyter / iPython notebooks acting as a training / testing dashboard are provided for reference.</p>
 	
+	<p>If you want to skip the details and just hear the results, jump to <a href="additionalresults">Additional Generated Audio</a></p>
+	
 	<h2 id="h.ltylc9r84smm">Audio Generation Research</h2>
-	<p>The research we have found related to audio generation with RNNs has provided some background to the problem and possible neural network architectures. These papers have taken various approaches to the actual representation of audio data or are focused on a more traditional text-to-speech problem. Key references are:</p>
+	<p>The existing research we have found related to audio generation with RNNs has provided some background to the problem and possible neural network architectures. These papers have taken various approaches to the actual representation of audio data or are focused on a more traditional text-to-speech problem. Key references are:</p>
 	
 	<ul class="lst-kix_4pukr7vfg0d0-0 start">
 		<li><a href="http://www.johnglover.net/blog/generating-sound-with-rnns.html">Generating sound with recurrent neural networks</a><br>
@@ -333,5 +335,19 @@
 	<p><span style="font-weight:700;text-decoration:none;vertical-align:baseline;;font-style:normal">&ldquo;Voiced&rdquo; parameters</span></p>
 	<p>These do not show any consistent progression over time. Only one of the parameter charts is shown as they appear identical.</p>
 		<p style="text-align:center"><img src="codec-plot-0.png" /></p>
+		
+			<h2 id="additionalresults">Additional Generated Audio</h2>
+			<p>60 seconds of audio generated by a 3 x 320 unit LSTM. The initial 8 seconds are seed data from the original corpus.</p>
+			<audio controls>
+ <source src="longbabble505a.wav" type="audio/wav">
+ Your browser does not support the audio tag.
+</audio>
+			<p>60 seconds of audio generated by a 3 x 160 unit LSTM. The initial 8 seconds are seed data from the original corpus.</p>
+<audio controls>
+ <source src="longbabble540a.wav" type="audio/wav">
+ Your browser does not support the audio tag.
+</audio>
+
+<p><a href="#top">return to the introduction</a></p>
 </body>
 </html>
