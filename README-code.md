@@ -8,7 +8,7 @@ The implementation is based on Keras / Theano, generating an LSTM RNN. The resul
 
 The network relies on Codec 2, an open source audio compression and encoding codec that is designed to deliver low bitrate representations of the source, while maintaining a clear representation of the underlying attributes of the audio. 
 
-Read the [babble-rnn tech post](docs/babble-rnn-generating-speech-from-speech-post.html)
+Read the [babble-rnn tech post](http://babble-rnn.consected.com/docs/babble-rnn-generating-speech-from-speech-post.html)
 
 View the [babble-rnn code on Github](https://github.com/philayres/babble-rnn/blob/master/README-code.md)
 

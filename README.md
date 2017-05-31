@@ -6,7 +6,7 @@ babble-rnn: Generating speech from speech with LSTM networks
 The implementation is based on [Keras](https://keras.io) / [Theano](http://www.deeplearning.net/software/theano/), generating an LSTM RNN; and [Codec 2](http://www.rowetel.com/?page_id=452), an open source speech audio compression algorithm. The resulting models have learned the most common audio sequences of a 'performer', and can generate a probable babbling audio sequence when provided a seed sequence.
 
 
-Read the [babble-rnn tech post](docs/babble-rnn-generating-speech-from-speech-post.html)
+Read the [babble-rnn tech post](http://babble-rnn.consected.com/docs/babble-rnn-generating-speech-from-speech-post.html)
 
 View the [babble-rnn code on Github](https://github.com/philayres/babble-rnn/blob/master/README-code.md)
 
