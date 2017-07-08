@@ -32,7 +32,7 @@ gen_every_nth = 10
 framelen=16
 
 # length of frame sequence for learning
-frame_seq_len = 200 # 8 seconds of audio
+frame_seq_len = 50  #200 # 8 seconds of audio
 seed_seq_len = frame_seq_len
 utils.log("frame_seq_len: ", frame_seq_len)
 
