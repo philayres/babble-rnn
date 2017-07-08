@@ -155,6 +155,6 @@ class ModelDef(object):
     self.utils.log("Compiling model")
     optimizer = Nadam() #SGD() #Adam() #RMSprop(lr=0.01)
     #loss = CustomObjects.codec2_param_error
-    loss = 'mean_absolute_error'
+    loss = 'mean_squared_error'
     self.model.compile(loss=loss, optimizer=optimizer)
     
