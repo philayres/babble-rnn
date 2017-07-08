@@ -1,5 +1,5 @@
 from keras.models import Sequential
-from keras.layers import Dense, Activation, Dropout
+from keras.layers import Dense, Activation, Dropout, TimeDistributed
 from keras.layers import LSTM
 from keras.optimizers import Nadam # SGD #Adam #RMSprop
 
@@ -58,6 +58,7 @@ class ModelDef(object):
     self.add_layer(
       LSTM(
         160
+        , return_sequences=True
         , trainable=False
         ,dropout = 0.1
       )
@@ -65,9 +66,11 @@ class ModelDef(object):
     
     
     self.add_layer(
-      Dense(
-        framelen
-        ,activation="relu"
+      TimeDistributed(
+        Dense(
+          framelen
+          ,activation="relu"
+        )
       )
     )
     model.add(Dropout(0.1))
@@ -87,14 +90,14 @@ class ModelDef(object):
       self.model_updates_onstart()
       self.started = True
     
-    elif iteration == 61:
-      self.model_updates_lstm12_trainable()
-
-    elif iteration == 241:
-      self.model_updates_lstm3_trainable()
+#    elif iteration == 61:
+#      self.model_updates_lstm12_trainable()
+#
+#    elif iteration == 241:
+#      self.model_updates_lstm3_trainable()
       
   def model_updates_onstart(self):
-    self.model_updates_lstm1_trainable()
+    self.model_updates_lstm_123_trainable()
       
   
   def model_updates_lstm_123_trainable(self):

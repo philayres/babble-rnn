@@ -131,7 +131,7 @@ class ModelUtils(object):
       output_fn = self.output_fn+str(iteration)
     else:
       output_fn = self.output_fn
-    self.output_file = open(output_fn, "w")  
+    self.output_file = open(output_fn, "wb")  
     return output_fn
     
   def log(self, *inargs):

@@ -1,1 +1,1 @@
-ps aux |grep "python lstm_c2_generation.py"  
+ps aux |grep "python3 lstm_c2_generation.py"  

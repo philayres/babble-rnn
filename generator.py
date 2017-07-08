@@ -85,13 +85,15 @@ class Generator:
     
     # the output file should start with a copy of the seed frame sequence
     for frame in seed_frame_seq:
-      utils.output_file.write(self.sample(frame))
+      utils.output_file.write(self.sample(frame).tostring())
       
     generated = []
     print('----- Generating with seed (just showing first): ', str(seed_frame_seq[0]) )
     
 
-    for i in range(generate_len):
+    #for i in range(generate_len):
+    i = 0
+    if 1:  
       if utils.generate_mode():
         print("Generating", i, "of", generate_len)
       # setup seed input
@@ -103,25 +105,32 @@ class Generator:
       if utils.generate_mode() : utils.log("predicting",i)
       # run the prediction for the next frame
       predicted_frame_props = model_def.model.predict_on_batch(x)[0]
-      
-     # predicted_frame_props = model_def.model.predict(x,
-      # batch_size=self.generate_len, verbose=0)[0]
-      # generate a Codec 2 frame from the predicted frame property values
-      # we use the clumsy name predicted_frame_props to highlight that the frame properties are still
-      # continuous (float) estimated values, rather than discrete Codec 2 values
-      next_frame = predicted_frame_props
-        
-      # append the result to the generated set
-      generated.append(next_frame)
-      
-      # update the seed frame sequence to remove the oldest frame and add the new predicted frame
-      seed_frame_seq = seed_frame_seq[1:]
-      seed_frame_seq.append(next_frame)
+      print('LENGTH:',len(predicted_frame_props),len(predicted_frame_props[i]))
+      if len(predicted_frame_props) == 0:     
+        # predicted_frame_props = model_def.model.predict(x,
+        # batch_size=self.generate_len, verbose=0)[0]
+        # generate a Codec 2 frame from the predicted frame property values
+        # we use the clumsy name predicted_frame_props to highlight that the frame properties are still
+        # continuous (float) estimated values, rather than discrete Codec 2 values
+        next_frame = predicted_frame_props
 
+        # append the result to the generated set
+        generated.append(next_frame)
+
+        # update the seed frame sequence to remove the oldest frame and add the new predicted frame
+        seed_frame_seq = seed_frame_seq[1:]
+        seed_frame_seq.append(next_frame)
+      else:
+        for i in predicted_frame_props:
+#          i=0
+          generated.append(i)
+#          print('LENGTH:',len(predicted_frame_props),len(predicted_frame_props[i]))
+#        generated = np.concatenate(generated, predicted_frame_props)
+        
     # write the seed + generated data to the output file
     print("writing output file to disk")
     for frame in generated:
-      utils.output_file.write(self.sample(frame))
+      utils.output_file.write(self.sample(frame).tostring())
         
     utils.output_file.close()
     utils.log("wrote frames: ", len(generated))

@@ -25,7 +25,7 @@ fit_batch_size = 200
 utils.log("fit_batch_size: ", fit_batch_size)
 
 # generate sample data every nth iteration
-gen_every_nth = 5
+gen_every_nth = 10
 
 # number of bytes (unsigned 8 bit) in a Codec 2 frame
 # note: one frame encodes 40ms of raw PCM audio
@@ -53,6 +53,7 @@ utils.log('corpus length (frames):', num_frames)
 
 
 frame_seqs = []
+next_frame_seqs = []
 next_frames = []
 all_frames = []
 
@@ -80,9 +81,11 @@ utils.log('actual number of frames:', len(all_frames))
 
 # pull the frames into frame sequences (frame_seqs), each of frame_seq_len frames
 # pull a single frame following each frame sequence into a corresponding array of next_frames
-for i in range(0, num_frames - frame_seq_len, seq_step):
+for i in range(0, num_frames - 2*frame_seq_len, seq_step):
     frame_seqs.append(all_frames[i: i + frame_seq_len])
-    next_frames.append(all_frames[i + frame_seq_len])
+    j = i + frame_seq_len
+    next_frame_seqs.append(all_frames[j: j + frame_seq_len])
+    #next_frames.append(all_frames[i + frame_seq_len])
 
 utils.log('number of frame sequences:', len(frame_seqs))
 
@@ -91,12 +94,14 @@ utils.log('number of frame sequences:', len(frame_seqs))
 # the unsigned bytes that we load from the corpus
 print('initialising input and expected output arrays')
 X = np.zeros((len(frame_seqs), frame_seq_len, framelen), dtype=np.float32)
-y = np.zeros((len(frame_seqs), framelen), dtype=np.float32)
+y = np.zeros((len(frame_seqs), frame_seq_len, framelen), dtype=np.float32)
+#y = np.zeros((len(frame_seqs), framelen), dtype=np.float32)
 
 
 for i, frame_seq in enumerate(frame_seqs):
+    y[i] = next_frame_seqs[i]
     # expected output is always the next frame for corresponding frame_seq
-    y[i] = next_frames[i]
+    #y[i] = next_frames[i]
 
     # input is just each frame_seq 
     X[i] = frame_seq

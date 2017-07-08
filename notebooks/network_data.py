@@ -5,12 +5,12 @@ import pandas
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import matplotlib.colors as colors
+import os
 
-
-
+home = os.environ.get('HOME')
 
 def model_config(network_tag):
-  with open("/home/ec2-user/store/c2gen/out/" + network_tag + "/jmodel-0.json") as data_file:    
+  with open(home + "/store/c2gen/out/" + network_tag + "/jmodel-0.json") as data_file:    
     data = json.load(data_file)
   
   #pprint(data)
@@ -25,7 +25,7 @@ def model_config(network_tag):
     print()
     
 def plot_training_loss(network_tag):
-  dataframe = pandas.io.parsers.read_csv("/home/ec2-user/store/c2gen/out/" + network_tag + "/training.log")
+  dataframe = pandas.io.parsers.read_csv(home + "/store/c2gen/out/" + network_tag + "/training.log")
   data = dataframe.as_matrix(None)
   plt.plot(data)
   plt.xlabel('iteration')
@@ -41,7 +41,7 @@ def plot_training_loss(network_tag):
 
 def plot_codec_params(network_tag, iteration):
   iteration = str(iteration)
-  infilename = "/home/ec2-user/store/c2gen/out/" + network_tag + "/out-c2cb-" + iteration
+  infilename = home + "/store/c2gen/out/" + network_tag + "/out-c2cb-" + iteration
   indata = np.fromfile(infilename, dtype=np.uint8)
   
   data = np.reshape(indata, (-1,16))
@@ -58,7 +58,7 @@ def plot_codec_params(network_tag, iteration):
 
 def plot_audio_waveform(network_tag, iteration):
   iteration = str(iteration)
-  infilename = "/home/ec2-user/store/c2gen/out/" + network_tag + "/out-c2cb-" + iteration + ".raw"
+  infilename = home + "/store/c2gen/out/" + network_tag + "/out-c2cb-" + iteration + ".raw"
   data = np.fromfile(infilename, dtype=np.int16)
   
   plt.plot(data)
@@ -72,7 +72,7 @@ def plot_audio_waveform(network_tag, iteration):
 
 def plot_gen_audio_waveform(infilename):
 
-  infilename = "/home/ec2-user/store/c2gen/generated/"+infilename+".wav"
+  infilename = home + "/store/c2gen/generated/"+infilename+".wav"
   data = np.fromfile(infilename, dtype=np.int16)
   
   plt.plot(data)
