@@ -39,7 +39,7 @@ class ModelDef(object):
         160
         ,input_shape=(frame_seq_len, framelen) 
         ,return_sequences=True
-        ,dropout = 0.1
+    #    ,dropout = 0.1
       )
     )
     
@@ -49,7 +49,7 @@ class ModelDef(object):
         160
         , return_sequences=True
         , trainable=False
-        ,dropout = 0.1
+    #    ,dropout = 0.1
         
       )
     )
@@ -60,7 +60,7 @@ class ModelDef(object):
         160
         , return_sequences=True
         , trainable=False
-        ,dropout = 0.1
+    #    ,dropout = 0.1
       )
     )
     
