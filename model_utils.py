@@ -161,14 +161,14 @@ class ModelUtils(object):
 
     self.output_file.close()
 
-  def define_or_load_model(self, frame_seq_len, framelen):
+  def define_or_load_model(self, frame_seq_len, framelen, num_frame_seqs):
     self.model_def = ModelDef(self)
     if len(self.model_filename) > 0:
       model = self.load_model()   
       self.save_json_model()
     else:
       self.log("creating new model")
-      model = self.model_def.define_model(frame_seq_len, framelen)
+      model = self.model_def.define_model(frame_seq_len, framelen, num_frame_seqs)
       self.save_json_model()
     
     return self.model_def

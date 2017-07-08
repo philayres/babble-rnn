@@ -5,6 +5,8 @@ from subprocess import call
 
 class Generator:
 
+  generate_with_single_timestep = True
+
   utils = None
   all_frames = None
   seed_seq_len = None
@@ -14,13 +16,14 @@ class Generator:
   num_frames = None
   seed_start_index = 0
   
-  def __init__(self, utils, all_frames, seed_seq_len, generate_len):
+  def __init__(self, utils, all_frames, seed_seq_len, generate_len, generate_with_single_timestep):
     self.utils = utils  
     self.all_frames = all_frames
     self.seed_seq_len = seed_seq_len
     self.generate_len = generate_len
     utils.log("generate_len:", generate_len)
     self.num_frames = len(all_frames)
+    self.generate_with_single_timestep = generate_with_single_timestep
 
 
   def set_random_seed_start_index(self):
@@ -90,10 +93,14 @@ class Generator:
     generated = []
     print('----- Generating with seed (just showing first): ', str(seed_frame_seq[0]) )
     
-
-    #for i in range(generate_len):
-    i = 0
-    if 1:  
+    
+    if self.generate_with_single_timestep:
+        loop_len = generate_len
+    else:
+        loop_len = 1
+    
+    
+    for i in range(loop_len):
       if utils.generate_mode():
         print("Generating", i, "of", generate_len)
       # setup seed input
@@ -105,13 +112,14 @@ class Generator:
       if utils.generate_mode() : utils.log("predicting",i)
       # run the prediction for the next frame
       predicted_frame_props = model_def.model.predict_on_batch(x)[0]
-      print('LENGTH:',len(predicted_frame_props),len(predicted_frame_props[i]))
-      if len(predicted_frame_props) == 0:     
+      
+      if loop_len > 0:     
         # predicted_frame_props = model_def.model.predict(x,
         # batch_size=self.generate_len, verbose=0)[0]
         # generate a Codec 2 frame from the predicted frame property values
         # we use the clumsy name predicted_frame_props to highlight that the frame properties are still
         # continuous (float) estimated values, rather than discrete Codec 2 values
+        
         next_frame = predicted_frame_props
 
         # append the result to the generated set
@@ -121,11 +129,10 @@ class Generator:
         seed_frame_seq = seed_frame_seq[1:]
         seed_frame_seq.append(next_frame)
       else:
+        #print('LENGTH:',len(predicted_frame_props),len(predicted_frame_props[i]))  
         for i in predicted_frame_props:
-#          i=0
+          # take all the results and append them to the generated array
           generated.append(i)
-#          print('LENGTH:',len(predicted_frame_props),len(predicted_frame_props[i]))
-#        generated = np.concatenate(generated, predicted_frame_props)
         
     # write the seed + generated data to the output file
     print("writing output file to disk")
@@ -137,3 +144,5 @@ class Generator:
     
     if utils.generate_mode():
       call(["bash", "./c2towav.sh", utils.output_fn])
+      
+      

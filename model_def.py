@@ -1,6 +1,6 @@
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout, TimeDistributed
-from keras.layers import LSTM
+from keras.layers import GRU
 from keras.optimizers import Nadam # SGD #Adam #RMSprop
 
 from custom_objects import CustomObjects
@@ -21,6 +21,10 @@ class ModelDef(object):
   ]
 
 
+  stateful = False
+  shuffle = not stateful
+  
+
   def __init__(self, utils):
     self.utils = utils
     
@@ -29,27 +33,40 @@ class ModelDef(object):
     utils.log("frame_property_scaleup: ", self.frame_property_scaleup)
 
   
-  def define_model(self, frame_seq_len, framelen):
+  def define_model(self, frame_seq_len, framelen, num_frame_seqs):
     self.utils.log("Defining model")
     model =  Sequential()
     self.model = model
-    
-    self.add_layer(
-      LSTM(
-        160
-        , input_shape=(frame_seq_len, framelen) 
-        , return_sequences=True
-        , trainable=True
-    #    ,dropout = 0.1
-      )
-    )
-    
+
+    if self.stateful:
+        self.add_layer(
+          GRU(
+            160
+            , batch_input_shape=(num_frame_seqs , frame_seq_len, framelen) 
+            , return_sequences=True
+            , trainable=True
+            , stateful=self.stateful
+        #    ,dropout = 0.1
+          )
+        )
+    else:
+        self.add_layer(
+          GRU(
+            160
+            , input_shape=(frame_seq_len, framelen) 
+            , return_sequences=True
+            , trainable=True
+            , stateful=self.stateful
+        #    ,dropout = 0.1
+          )
+        )
 
     self.add_layer(
-      LSTM(
+      GRU(
         160
         , return_sequences=True
-        , trainable=True
+        , trainable=False
+        , stateful=self.stateful
     #    ,dropout = 0.1
         
       )
@@ -57,22 +74,24 @@ class ModelDef(object):
     
     
     self.add_layer(
-      LSTM(
+      GRU(
         160
-        , return_sequences=True
-        , trainable=True
+        , return_sequences=False
+        #, return_sequences=True
+        , trainable=False
+        , stateful=self.stateful
     #    ,dropout = 0.1
       )
     )
     
     
     self.add_layer(
-      TimeDistributed(
+      #TimeDistributed(
         Dense(
           framelen
           ,activation="relu"
         )
-      )
+      #)
     )
     model.add(Dropout(0.1))
     
@@ -85,21 +104,21 @@ class ModelDef(object):
     return layer
     
 
-  # start training LSTM 1, then 1&2, then 3 
+  # start training GRU 1, then 1&2, then 3 
   def before_iteration(self, iteration):
     if not self.started:
       self.model_updates_onstart()
       self.started = True
     
-#    elif iteration == 61:
-#      self.model_updates_lstm12_trainable()
+    elif iteration == 121:
+      self.model_updates_lstm12_trainable()
 #
-#    elif iteration == 241:
-#      self.model_updates_lstm3_trainable()
+    elif iteration == 481:
+      self.model_updates_lstm3_trainable()
       
   def model_updates_onstart(self):
-    self.model_updates_lstm_123_trainable()
-      
+    #self.model_updates_lstm_123_trainable()
+    self.model_updates_lstm1_trainable()  
   
   def model_updates_lstm_123_trainable(self):
     self.utils.log("Make lstm 1,2,3 trainable")
@@ -154,7 +173,10 @@ class ModelDef(object):
   def compile_model(self):
     self.utils.log("Compiling model")
     optimizer = Nadam() #SGD() #Adam() #RMSprop(lr=0.01)
-    #loss = CustomObjects.codec2_param_error
-    loss = 'mean_squared_error'
-    self.model.compile(loss=loss, optimizer=optimizer)
+    loss = CustomObjects.codec2_param_error
+    #loss = 'mean_absolute_error'
+    if self.shuffle:
+      self.model.compile(loss=loss, optimizer=optimizer)
+    else:  
+      self.model.compile(loss=loss, optimizer=optimizer, shuffle=False)
     
