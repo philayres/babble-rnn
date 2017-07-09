@@ -175,6 +175,7 @@ class ModelDef(object):
     optimizer = Nadam() #SGD() #Adam() #RMSprop(lr=0.01)
     loss = CustomObjects.codec2_param_error
     #loss = 'mean_absolute_error'
+    loss = 'cosine_proximity'
     if self.shuffle:
       self.model.compile(loss=loss, optimizer=optimizer)
     else:  
