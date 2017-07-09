@@ -39,22 +39,52 @@ def plot_training_loss(network_tag):
 
 
 
-def plot_codec_params(network_tag, iteration):
+def plot_codec_params(network_tag, iteration, scale_up='full'):
   iteration = str(iteration)
   infilename = home + "/store/c2gen/out/" + network_tag + "/out-c2cb-" + iteration
   indata = np.fromfile(infilename, dtype=np.uint8)
   
   data = np.reshape(indata, (-1,16))
-  data = np.multiply(data, [16,16,16,16,1,1,4,4,4,4,4,4,4,4,4,4])
+  if scale_up == 'full':
+    data = np.divide(data, [
+        1,1,1,1,
+        2**7,
+        2**5,
+        16,16,16,16,16,16,16,8,8,4
+       ])
+  elif scale_up == 'orig':    
+    data = np.multiply(data, [16,16,16,16,1,1,4,4,4,4,4,4,4,4,4,4])
   
   plt.plot(data)
   plt.xlabel('time (frames)')
   plt.ylabel('audio params (units)')
   plt.title('Codec Params\n' + network_tag + " @ iteration " + iteration)
   plt.grid(True)
-#  fn = "codec-plot-" + network_tag + "-" + iteration + ".png"
-#  plt.savefig(fn)
   plt.show()
+
+def plot_spec_params(network_tag, iteration, params='Voicing'):
+  iteration = str(iteration)
+  infilename = home + "/store/c2gen/out/" + network_tag + "/out-c2cb-" + iteration
+  indata = np.fromfile(infilename, dtype=np.uint8)
+  
+  data = np.reshape(indata, (-1,16))
+  if params == 'Voicing':
+    data = data[:, 0:4]
+  elif params == 'Wo':
+    data = data[:, 4]
+  elif params == 'E':
+    data = data[:, 5]
+  elif params == 'LSPs':
+    data = data[:, 6:]
+    
+    
+  plt.plot(data)
+  plt.xlabel('time (frames)')
+  plt.ylabel(params + ' (units)')
+  plt.title(params + '\n' + network_tag + " @ iteration " + iteration)
+  plt.grid(True)
+  plt.show()
+
 
 def plot_audio_waveform(network_tag, iteration):
   iteration = str(iteration)
