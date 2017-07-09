@@ -47,7 +47,8 @@ utils.log("frame_seq_len: ", frame_seq_len)
 # pick overlapping frames every seq_step to add to the training set 
 #seq_step = int(frame_seq_len/1.2) 
 #seq_step = int(frame_seq_len/10)
-seq_step=frame_seq_len
+seq_step = int(frame_seq_len/2.4) 
+#seq_step=frame_seq_len
 
 utils.log("seq_step: ", seq_step)
 

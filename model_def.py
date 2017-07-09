@@ -1,6 +1,6 @@
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout, TimeDistributed
-from keras.layers import GRU
+from keras.layers import GRU, LSTM
 from keras.optimizers import Nadam # SGD #Adam #RMSprop
 
 from custom_objects import CustomObjects
@@ -51,8 +51,8 @@ class ModelDef(object):
         )
     else:
         self.add_layer(
-          GRU(
-            160
+          LSTM(
+            480
             , input_shape=(frame_seq_len, framelen) 
             , return_sequences=True
             , trainable=True
@@ -63,7 +63,7 @@ class ModelDef(object):
 
     self.add_layer(
       GRU(
-        160
+        320
         , return_sequences=True
         , trainable=False
         , stateful=self.stateful
@@ -175,7 +175,7 @@ class ModelDef(object):
     optimizer = Nadam() #SGD() #Adam() #RMSprop(lr=0.01)
     loss = CustomObjects.codec2_param_error
     #loss = 'mean_absolute_error'
-    loss = 'cosine_proximity'
+    #loss = 'cosine_proximity'
     if self.shuffle:
       self.model.compile(loss=loss, optimizer=optimizer)
     else:  
