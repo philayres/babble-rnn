@@ -52,7 +52,7 @@ class ModelDef(object):
     else:
         self.add_layer(
           LSTM(
-            480
+            160
             , input_shape=(frame_seq_len, framelen) 
             , return_sequences=True
             , trainable=True
@@ -75,7 +75,7 @@ class ModelDef(object):
     
     self.add_layer(
       GRU(
-        160
+        480
         , return_sequences=False
         #, return_sequences=True
         , trainable=False
@@ -110,15 +110,15 @@ class ModelDef(object):
       self.model_updates_onstart()
       self.started = True
     
-#    elif iteration == 121:
-#      self.model_updates_lstm12_trainable()
-##
-#    elif iteration == 481:
-#      self.model_updates_lstm3_trainable()
+    elif iteration == 121:
+      self.model_updates_lstm12_trainable()
+
+    elif iteration == 481:
+      self.model_updates_lstm3_trainable()
       
   def model_updates_onstart(self):
-    self.model_updates_lstm_123_trainable()
-    #self.model_updates_lstm1_trainable()  
+#    self.model_updates_lstm_123_trainable()
+    self.model_updates_lstm1_trainable()  
   
   def model_updates_lstm_123_trainable(self):
     self.utils.log("Make lstm 1,2,3 trainable")
