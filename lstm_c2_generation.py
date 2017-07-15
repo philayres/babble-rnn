@@ -36,18 +36,25 @@ gen_every_nth = 20
 save_model_every_nth = 10
 
 # number of bytes (unsigned 8 bit) in a Codec 2 frame
-# note: one frame encodes 40ms of raw PCM audio
-framelen=16
+## for 1300 rate codec
+## note: one frame encodes 40ms of raw PCM audio
+#framelen=16
+#for 300 rate codec
+# note: one frame encodes 20ms of raw PCM audio
+framelen=13
 
 # length of frame sequence for learning
-frame_seq_len = 100  #200 # 8 seconds of audio
+#frame_seq_len = 200 # 8 seconds of audio for 1300 codec
+#frame_seq_len = 100 # 4 seconds of audio for 1300 codec
+frame_seq_len = 100 # 4 seconds of audio for 3200 codec
+
 seed_seq_len = frame_seq_len
 utils.log("frame_seq_len: ", frame_seq_len)
 
 # pick overlapping frames every seq_step to add to the training set 
 #seq_step = int(frame_seq_len/1.2) 
 #seq_step = int(frame_seq_len/10)
-seq_step = int(frame_seq_len/2.4) 
+seq_step = int(frame_seq_len/1.2) 
 #seq_step=frame_seq_len
 
 utils.log("seq_step: ", seq_step)

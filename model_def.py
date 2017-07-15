@@ -13,13 +13,22 @@ class ModelDef(object):
   model = None
   utils = None
   started = False
+  
+# for 1300 rate codec  
+#  frame_property_scaleup = [
+#   1,1,1,1,
+#   2**7,
+#   2**5,
+#   16,16,16,16,16,16,16,8,8,4
+#  ]
+
+# for 3200 rate codec
   frame_property_scaleup = [
-   1,1,1,1,
+   1,
    2**7,
    2**5,
-   16,16,16,16,16,16,16,8,8,4
+   32,32,32,32,32,32,32,32,32,32
   ]
-
 
   stateful = False
   shuffle = not stateful
@@ -52,7 +61,7 @@ class ModelDef(object):
     else:
         self.add_layer(
           LSTM(
-            160
+            320
             , input_shape=(frame_seq_len, framelen) 
             , return_sequences=True
             , trainable=True
@@ -62,7 +71,7 @@ class ModelDef(object):
         )
 
     self.add_layer(
-      GRU(
+      LSTM(
         320
         , return_sequences=True
         , trainable=False
@@ -74,8 +83,8 @@ class ModelDef(object):
     
     
     self.add_layer(
-      GRU(
-        480
+      LSTM(
+        320
         , return_sequences=False
         #, return_sequences=True
         , trainable=False
