@@ -98,7 +98,7 @@ class ModelDef(object):
       #TimeDistributed(
         Dense(
           framelen
-          ,activation="relu"
+          ,activation="linear"
         )
       #)
     )

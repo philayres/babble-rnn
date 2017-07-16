@@ -1,3 +1,6 @@
+codec3200 = True
+codec1300 = False
+
 import json
 from pprint import pprint
 import numpy as np
@@ -44,17 +47,29 @@ def plot_codec_params(network_tag, iteration, scale_up='full'):
   infilename = home + "/store/c2gen/out/" + network_tag + "/out-c2cb-" + iteration
   indata = np.fromfile(infilename, dtype=np.uint8)
   
-  data = np.reshape(indata, (-1,16))
-  if scale_up == 'full':
-    data = np.divide(data, [
-        1,1,1,1,
-        2**7,
-        2**5,
-        16,16,16,16,16,16,16,8,8,4
-       ])
-  elif scale_up == 'orig':    
-    data = np.multiply(data, [16,16,16,16,1,1,4,4,4,4,4,4,4,4,4,4])
-  
+  if codec1300:
+    data = np.reshape(indata, (-1,16))
+    if scale_up == 'full':
+      data = np.divide(data, [
+          1,1,1,1,
+          2**7,
+          2**5,
+          16,16,16,16,16,16,16,8,8,4
+         ])
+    elif scale_up == 'orig':    
+      data = np.multiply(data, [16,16,16,16,1,1,4,4,4,4,4,4,4,4,4,4])
+  elif codec3200:
+    data = np.reshape(indata, (-1,13))
+    if scale_up == 'full':
+      data = np.divide(data, [
+          1,
+          2**7,
+          2**5,
+          16,16,16,16,16,16,16,16,16,16
+         ])
+    elif scale_up == 'orig':    
+      data = np.multiply(data, [16,1,1,4,4,4,4,4,4,4,4,4,4])
+      
   plt.plot(data)
   plt.xlabel('time (frames)')
   plt.ylabel('audio params (units)')
@@ -67,16 +82,26 @@ def plot_spec_params(network_tag, iteration, params='Voicing'):
   infilename = home + "/store/c2gen/out/" + network_tag + "/out-c2cb-" + iteration
   indata = np.fromfile(infilename, dtype=np.uint8)
   
-  data = np.reshape(indata, (-1,16))
-  if params == 'Voicing':
-    data = data[:, 0:4]
-  elif params == 'Wo':
-    data = data[:, 4]
-  elif params == 'E':
-    data = data[:, 5]
-  elif params == 'LSPs':
-    data = data[:, 6:]
-    
+  if codec1300:
+    data = np.reshape(indata, (-1,16))
+    if params == 'Voicing':
+      data = data[:, 0:4]
+    elif params == 'Wo':
+      data = data[:, 4]
+    elif params == 'E':
+      data = data[:, 5]
+    elif params == 'LSPs':
+      data = data[:, 6:]
+  elif codec3200:  
+    data = np.reshape(indata, (-1,13))
+    if params == 'Voicing':
+      data = data[:, 0]
+    elif params == 'Wo':
+      data = data[:, 1]
+    elif params == 'E':
+      data = data[:, 2]
+    elif params == 'LSPs':
+      data = data[:, 3:]
     
   plt.plot(data)
   plt.xlabel('time (frames)')
