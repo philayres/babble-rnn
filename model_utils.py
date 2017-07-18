@@ -89,7 +89,7 @@ class ModelUtils(object):
     self.logfile = open(self.logfile_fn, "w")
     
     
-  def  setup_seed_start(self, generator):
+  def setup_seed_start(self, generator):
     if self.named_args.get('seed_index', None):
       seed_index = self.named_args['seed_index']
       if seed_index == 'random': 
@@ -152,7 +152,7 @@ class ModelUtils(object):
     return {"CustomObjects": CustomObjects, 
       "codec2_param_error":CustomObjects.codec2_param_error}
 
-  def test_seed_data(all_frames, start_index):
+  def test_seed_data(self, all_frames, start_index):
     self.open_output_file(0)
     seed_frame_seq = all_frames[start_index: start_index + frame_seq_len]
 
