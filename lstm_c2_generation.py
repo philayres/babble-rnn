@@ -49,7 +49,8 @@ utils.log('corpus length (bytes):', len_testdata)
 utils.log('corpus length (frames):', num_frames)
 
 config.log_attrs()
-config.save_config()
+if not utils.generate_mode():
+  config.save_config()
 
 frame_seqs = []
 next_frame_seqs = []
