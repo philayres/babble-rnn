@@ -59,17 +59,18 @@ def plot_codec_params(network_tag, iteration, scale_up='full'):
     elif scale_up == 'orig':    
       data = np.multiply(data, [16,16,16,16,1,1,4,4,4,4,4,4,4,4,4,4])
   elif codec3200:
+    print("3200 rate codec\n")
     data = np.reshape(indata, (-1,13))
     if scale_up == 'full':
       data = np.divide(data, [
           1,
-          2**7,
-          2**5,
-          16,16,16,16,16,16,16,16,16,16
+            2**7,
+            2**5,
+            32,32,32,32,32,32,32,32,32,32
          ])
     elif scale_up == 'orig':    
-      data = np.multiply(data, [16,1,1,4,4,4,4,4,4,4,4,4,4])
-      
+      data 
+  
   plt.plot(data)
   plt.xlabel('time (frames)')
   plt.ylabel('audio params (units)')
@@ -102,7 +103,7 @@ def plot_spec_params(network_tag, iteration, params='Voicing'):
       data = data[:, 2]
     elif params == 'LSPs':
       data = data[:, 3:]
-    
+      
   plt.plot(data)
   plt.xlabel('time (frames)')
   plt.ylabel(params + ' (units)')
@@ -113,7 +114,10 @@ def plot_spec_params(network_tag, iteration, params='Voicing'):
 
 def plot_audio_waveform(network_tag, iteration):
   iteration = str(iteration)
-  infilename = home + "/store/c2gen/out/" + network_tag + "/out-c2cb-" + iteration + ".raw"
+  if codec1300:
+    infilename = home + "/store/c2gen/out/" + network_tag + "/out-c2cb-" + iteration + ".raw"
+  elif codec3200:
+    infilename = home + "/store/c2gen/out/" + network_tag + "/out-c2cb-" + iteration + "-3200.raw"
   data = np.fromfile(infilename, dtype=np.int16)
   
   plt.plot(data)

@@ -26,6 +26,8 @@ class ModelUtils(object):
   csv_logger = None
   logfile_fn = ""
   logfile = None
+  iteration_counter_fn = "iteration"
+  iteration_counter = None
   model_def = None
   generate_len = 200
   
@@ -71,7 +73,7 @@ class ModelUtils(object):
         os.makedirs(self.output_dir)
       except OSError:
         print("the tag ", self.model_tag, " has been used")
-        exit()  
+        print("continuing where we left off")
     else:
       self.output_dir="generated/"
       self.output_fn=self.output_dir+str(self.model_tag)
@@ -86,7 +88,7 @@ class ModelUtils(object):
     self.csv_logger_fn = self.output_dir + 'training.log'
     self.csv_logger = CSVLogger(self.csv_logger_fn, append=True)
     self.logfile_fn = self.output_dir + "log"
-    self.logfile = open(self.logfile_fn, "w")
+    self.logfile = open(self.logfile_fn, "a")
     
     
   def setup_seed_start(self, generator):
@@ -133,7 +135,29 @@ class ModelUtils(object):
       output_fn = self.output_fn
     self.output_file = open(output_fn, "wb")  
     return output_fn
+  
+  def after_iteration(self, iteration):
+    #self.write_iteration_count(self, iteration)
+    return
     
+  def write_iteration_count(self, iteration):
+    self.iteration_counter = open(self.iteration_counter_fn, "w")
+    self.iteration_counter.write(str(iteration))
+    self.iteration_counter.close()
+  
+  def read_iteration_count(self):
+    res = []
+    if os.path.isfile(self.iteration_counter_fn):
+      with open(self.iteration_counter_fn) as f:
+        res = f.readlines()
+
+    if len(res) == 1:
+      i = int(res[0])
+      self.log("Continuing from a previous run at iteration: ", i)
+      return i
+    else:
+      return 0
+  
   def log(self, *inargs):
     
     for arg in inargs: 

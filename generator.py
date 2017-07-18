@@ -59,7 +59,9 @@ class Generator:
     # representation of a floating point number
     intpreds = []
     for p in preds:
-      intpreds.append(int(p))
+      # rectify, just in case the final dense layer produces negatives  
+      q = max(int(p), 0)
+      intpreds.append(q)
     return np.array([intpreds], dtype=np.uint8) 
 
 

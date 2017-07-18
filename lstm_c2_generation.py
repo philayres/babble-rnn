@@ -2,6 +2,7 @@ from __future__ import print_function
 
 from model_utils import ModelUtils
 from model_def import ModelDef
+from run_config import RunConfig
 from keras.utils.data_utils import get_file
 from keras import backend as K
 import numpy as np
@@ -14,59 +15,41 @@ from generator import Generator
 utils = ModelUtils()
 model_def = None
 
+config = RunConfig(utils)
+config.load_config()
+
 signal.signal(signal.SIGINT, utils.signal_handler)
 signal.signal(signal.SIGTERM, utils.signal_handler)
 
-# number of training iterations
-num_iterations = 1200
-utils.log("num_iterations: ", num_iterations)
-start_iteration = 1
-utils.log("start_iteration: ", start_iteration)
-fit_batch_size = 200 
-utils.log("fit_batch_size: ", fit_batch_size)
+# read an existing iteration counter if it exists
+start_iteration = utils.read_iteration_count() or config.start_iteration
+config.start_iteration = start_iteration
 
-# learn and generate with just a single timestep (True) or 
-# use a block (and a TimeDistributed output)
-learn_next_step = True
+num_iterations = config.num_iterations
+fit_batch_size = config.fit_batch_size
+learn_next_step = config.learn_next_step
+gen_every_nth = config.gen_every_nth
+save_model_every_nth = config.save_model_every_nth
+framelen=config.framelen
+frame_seq_len = config.frame_seq_len
+seed_seq_len = config.seed_seq_len
 
-# generate sample data every nth iteration
-gen_every_nth = 20
+seq_step = config.seq_step or frame_seq_len
+config.seq_step = seq_step
 
-# save model every nth iteration
-save_model_every_nth = 10
+test_data_fn = utils.testdata_filename or config.test_data_fn
+config.test_data_fn = test_data_fn
 
-# number of bytes (unsigned 8 bit) in a Codec 2 frame
-## for 1300 rate codec
-## note: one frame encodes 40ms of raw PCM audio
-#framelen=16
-#for 300 rate codec
-# note: one frame encodes 20ms of raw PCM audio
-framelen=13
-
-# length of frame sequence for learning
-#frame_seq_len = 200 # 8 seconds of audio for 1300 codec
-#frame_seq_len = 100 # 4 seconds of audio for 1300 codec
-frame_seq_len = 100 # 4 seconds of audio for 3200 codec
-
-seed_seq_len = frame_seq_len
-utils.log("frame_seq_len: ", frame_seq_len)
-
-# pick overlapping frames every seq_step to add to the training set 
-#seq_step = int(frame_seq_len/1.2) 
-#seq_step = int(frame_seq_len/10)
-seq_step = int(frame_seq_len/1.2) 
-#seq_step=frame_seq_len
-
-utils.log("seq_step: ", seq_step)
-
-utils.log("loading test data from: ", utils.testdata_filename)
-testdata = np.fromfile(utils.testdata_filename, dtype=np.uint8)
+utils.log("loading test data from: ", test_data_fn)
+testdata = np.fromfile(test_data_fn, dtype=np.uint8)
 
 len_testdata = len(testdata)
 num_frames = int(len_testdata / framelen)
 utils.log('corpus length (bytes):', len_testdata)
 utils.log('corpus length (frames):', num_frames)
 
+config.log_attrs()
+config.save_config()
 
 frame_seqs = []
 next_frame_seqs = []
@@ -167,7 +150,7 @@ for iteration in range(start_iteration, num_iterations + 1):
   model_def.model.fit(X, y, batch_size=fit_batch_size, nb_epoch=1,
    callbacks=[utils.csv_logger]
   )
-
+  
   if gen_sequence(iteration):
     # every nth iteration generate sample data as a Codec 2 file
 
@@ -181,7 +164,7 @@ for iteration in range(start_iteration, num_iterations + 1):
     utils.save_h5_model(iteration)
     print("saving .h5 weights file")      
     utils.save_weights(iteration)
-    
+    utils.write_iteration_count(iteration)
   else:
     print("not saving models this iteration")  
 
