@@ -26,8 +26,7 @@ class ModelUtils(object):
   csv_logger = None
   logfile_fn = ""
   logfile = None
-  iteration_counter_fn = "iteration"
-  iteration_counter = None
+  iteration_counter_fn = None
   model_def = None
   generate_len = 200
   
@@ -89,7 +88,7 @@ class ModelUtils(object):
     self.csv_logger = CSVLogger(self.csv_logger_fn, append=True)
     self.logfile_fn = self.output_dir + "log"
     self.logfile = open(self.logfile_fn, "a")
-    
+    self.iteration_counter_fn = self.output_dir + "iteration_counter"
     
   def setup_seed_start(self, generator):
     if self.named_args.get('seed_index', None):
@@ -141,9 +140,9 @@ class ModelUtils(object):
     return
     
   def write_iteration_count(self, iteration):
-    self.iteration_counter = open(self.iteration_counter_fn, "w")
-    self.iteration_counter.write(str(iteration))
-    self.iteration_counter.close()
+    with open(self.iteration_counter_fn, "w") as f:
+      f.write(str(iteration))
+    
   
   def read_iteration_count(self):
     res = []
@@ -156,6 +155,7 @@ class ModelUtils(object):
       self.log("Continuing from a previous run at iteration: ", i)
       return i
     else:
+      self.log("No iteration file found. Setting to 0.")
       return 0
   
   def log(self, *inargs):

@@ -23,12 +23,13 @@ class ModelDef(object):
 #  ]
 
 # for 3200 rate codec
-  frame_property_scaleup = [
-   1,
-   2**7,
-   2**5,
-   32,32,32,32,32,32,32,32,32,32
-  ]
+  frame_property_scaleup = CustomObjects.frame_prop_loss_scale
+#  [
+#   1,
+#   2**7,
+#   2**5,
+#   32,32,32,32,32,32,32,32,32,32
+#  ]
 
   stateful = False
   shuffle = not stateful
