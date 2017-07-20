@@ -32,11 +32,11 @@ class ModelDef(object):
 #  ]
 
   stateful = False
-  shuffle = not stateful
   
 
-  def __init__(self, utils):
+  def __init__(self, utils, config):
     self.utils = utils
+    self.config = config
     
     self.layers=[]
     
@@ -50,8 +50,8 @@ class ModelDef(object):
 
     if self.stateful:
         self.add_layer(
-          GRU(
-            160
+          LSTM(
+            320
             , batch_input_shape=(num_frame_seqs , frame_seq_len, framelen) 
             , return_sequences=True
             , trainable=True
@@ -86,8 +86,7 @@ class ModelDef(object):
     self.add_layer(
       LSTM(
         320
-        , return_sequences=False
-        #, return_sequences=True
+        , return_sequences=True
         , trainable=False
         , stateful=self.stateful
     #    ,dropout = 0.1
@@ -96,12 +95,12 @@ class ModelDef(object):
     
     
     self.add_layer(
-      #TimeDistributed(
+      TimeDistributed(
         Dense(
           framelen
           ,activation="elu"
         )
-      #)
+      )
     )
     #model.add(Dropout(0.1))
     
@@ -178,7 +177,11 @@ class ModelDef(object):
     self.model.layers[2].trainable=False
     self.compile_model()
     self.utils.save_json_model(3)
+
     
+  def load_weights(self, fn, by_name=False):
+    self.utils.log("Loading weights")
+    self.model.load_weights(fn, by_name=by_name)
     
   def compile_model(self):
     self.utils.log("Compiling model")
@@ -186,8 +189,5 @@ class ModelDef(object):
     loss = CustomObjects.codec2_param_error
     #loss = 'mean_absolute_error'
     #loss = 'cosine_proximity'
-    if self.shuffle:
-      self.model.compile(loss=loss, optimizer=optimizer)
-    else:  
-      self.model.compile(loss=loss, optimizer=optimizer, shuffle=False)
+    self.model.compile(loss=loss, optimizer=optimizer)
     

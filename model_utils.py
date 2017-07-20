@@ -4,7 +4,7 @@ import os
 from keras.models import load_model
 from custom_objects import CustomObjects
 from model_def import ModelDef
-  
+from run_config import RunConfig  
 
 
 Train=1
@@ -12,7 +12,7 @@ Generate=2
 
 class ModelUtils(object):
 
-  
+  config = None
   mode = Train
   model_filename = ""
   model_tag = ""
@@ -29,6 +29,7 @@ class ModelUtils(object):
   iteration_counter_fn = None
   model_def = None
   generate_len = 200
+  load_weights = None
   
   def __init__(self):
   
@@ -79,6 +80,10 @@ class ModelUtils(object):
       
     if named_args.get('generate-len', None):
       self.generate_len = int(named_args['generate-len'])
+      
+    if named_args.get('load-weights', None):
+      self.load_weights = named_args['load-weights']
+      
           
     self.h5_model_filename=self.output_dir+"model-"
     self.h5_weights_filename=self.output_dir+"weights-"
@@ -87,7 +92,7 @@ class ModelUtils(object):
     self.csv_logger_fn = self.output_dir + 'training.log'
     self.csv_logger = CSVLogger(self.csv_logger_fn, append=True)
     self.logfile_fn = self.output_dir + "log"
-    self.logfile = open(self.logfile_fn, "a")
+    self.logfile = open(self.logfile_fn, "a", 1)
     self.iteration_counter_fn = self.output_dir + "iteration_counter"
     
   def setup_seed_start(self, generator):
@@ -152,9 +157,11 @@ class ModelUtils(object):
 
     if len(res) == 1:
       i = int(res[0])
+      self.iteration = i
       self.log("Continuing from a previous run at iteration: ", i)
       return i
     else:
+      self.iteration = 0
       self.log("No iteration file found. Setting to 0.")
       return 0
   
@@ -170,6 +177,13 @@ class ModelUtils(object):
   def signal_handler(self, signal, frame): 
     self.log('Interrupt signal caught. Closing gracefully.') 
     self.logfile.close()
+    utils.write_iteration_count(self.iteration)
+
+    print("saving .h5 model file")
+    utils.save_h5_model(self.iteration)
+    print("saving .h5 weights file")      
+    utils.save_weights(self.iteration)
+    
     sys.exit(0)
   
   def custom_objects(self):
@@ -186,7 +200,8 @@ class ModelUtils(object):
     self.output_file.close()
 
   def define_or_load_model(self, frame_seq_len, framelen, num_frame_seqs):
-    self.model_def = ModelDef(self)
+    self.model_def = ModelDef(self, self.config)
+    
     if len(self.model_filename) > 0:
       model = self.load_model()   
       self.save_json_model()
@@ -195,6 +210,9 @@ class ModelUtils(object):
       model = self.model_def.define_model(frame_seq_len, framelen, num_frame_seqs)
       self.save_json_model()
     
+    if self.load_weights != None:
+      self.model_def.load_weights(self.load_weights)
+      
     return self.model_def
     
 
@@ -203,4 +221,10 @@ class ModelUtils(object):
       
   def generate_mode(self):
       return self.mode == Generate
-      
+  
+  def setup_config(self):
+    self.config = RunConfig(self)
+    return self.config
+  
+  def log_model_summary(self):
+    self.log(self.model_def.model.summary())

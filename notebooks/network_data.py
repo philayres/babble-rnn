@@ -25,6 +25,7 @@ def model_config(network_tag):
     print(c.get('units',""), "units")
     print(c.get('activation', ""), "activation")
     print(c.get('dropout',""), "dropout")
+    print("stateful", c.get('stateful',""))
     print()
     
 def plot_training_loss(network_tag):

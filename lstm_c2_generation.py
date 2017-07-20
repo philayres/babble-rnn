@@ -10,12 +10,13 @@ import time
 import sys
 import os
 import signal
+import math
 from generator import Generator
 
 utils = ModelUtils()
 model_def = None
 
-config = RunConfig(utils)
+config = utils.setup_config()
 config.load_config()
 
 signal.signal(signal.SIGINT, utils.signal_handler)
@@ -27,7 +28,10 @@ config.start_iteration = start_iteration
 
 num_iterations = config.num_iterations
 fit_batch_size = config.fit_batch_size
-learn_next_step = config.learn_next_step
+if config.stateful:
+  learn_next_step = False
+else:
+  learn_next_step = config.learn_next_step
 gen_every_nth = config.gen_every_nth
 save_model_every_nth = config.save_model_every_nth
 framelen=config.framelen
@@ -47,6 +51,8 @@ len_testdata = len(testdata)
 num_frames = int(len_testdata / framelen)
 utils.log('corpus length (bytes):', len_testdata)
 utils.log('corpus length (frames):', num_frames)
+
+limit_frames = int(config.limit_frames)
 
 config.log_attrs()
 if not utils.generate_mode():
@@ -73,6 +79,8 @@ def save_model(iteration):
 
 utils.log("scanning testdata into frames and frame sequences")
 
+
+
 # step through the testdata, pulling those bytes into an array of all the the frames, all_frames
 for j in range(0, num_frames):
     i = j * framelen   
@@ -89,7 +97,12 @@ for i in range(0, num_frames - 2*frame_seq_len, seq_step):
     else:
         j = i + frame_seq_len
         next_frame_seqs.append(all_frames[j: j + frame_seq_len])
-    
+
+if config.stateful and (len(frame_seqs) % fit_batch_size > 0):
+  excess_frameseqs = len(frame_seqs) % fit_batch_size
+  print("Stateful operation. Reducing frame sequences by:", excess_frameseqs)
+  for i in range(excess_frameseqs):
+    frame_seqs.pop(-1)
 
 utils.log('number of frame sequences:', len(frame_seqs))
 
@@ -137,20 +150,46 @@ if utils.generate_mode():
   generator.generate(0)  
   exit()
 
+utils.log_model_summary()
+
+frame_rotate = 0
+
 # train the model
 # output generated frames after nth iteration
 for iteration in range(start_iteration, num_iterations + 1):
   print('-' * 50)
+
   
   
+  utils.iteration = iteration
   utils.log('Training Iteration', iteration)
   
   model_def.before_iteration(iteration)
+  
+  if limit_frames and limit_frames > 0:
     
-
-  model_def.model.fit(X, y, batch_size=fit_batch_size, nb_epoch=1,
+    if (frame_rotate+1)*limit_frames > num_frames:
+      frame_rotate=0
+    else:
+      frame_rotate+=1
+      
+    utils.log("Frame rotate:", frame_rotate)
+    utils.log("From frame:", frame_rotate*limit_frames)
+    utils.log("To frame:", (frame_rotate+1)*limit_frames)
+    
+    Xl = X[frame_rotate*limit_frames : (frame_rotate+1)*limit_frames]
+    yl = y[frame_rotate*limit_frames : (frame_rotate+1)*limit_frames]
+  else:
+    Xl = X
+    yl = y
+  
+  model_def.model.fit(Xl, yl, batch_size=fit_batch_size, nb_epoch=1, shuffle=config.shuffle,
    callbacks=[utils.csv_logger]
   )
+  
+  if config.stateful:
+    utils.log("Reset states")
+    model_def.model.reset_states()
   
   if gen_sequence(iteration):
     # every nth iteration generate sample data as a Codec 2 file

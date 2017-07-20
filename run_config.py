@@ -1,5 +1,7 @@
 import os
 import json
+from model_def import ModelDef
+from custom_objects import CustomObjects
 
 class RunConfig(object):
 
@@ -37,6 +39,12 @@ class RunConfig(object):
   seq_step = 80
   test_data_fn = None  
   
+  
+  stateful = True
+  shuffle = not stateful
+  
+  limit_frames = int(4845288/2)
+  
   frame_prop_loss_scale = [
    1,
    2**7,
@@ -57,7 +65,11 @@ class RunConfig(object):
     "seed_seq_len",
     "seq_step",
     "test_data_fn",
-    "frame_prop_loss_scale"
+    "frame_prop_loss_scale",
+    "stateful",
+    "shuffle",
+    "limit_frames"
+    
   ]
   
   utils = None
@@ -90,6 +102,8 @@ class RunConfig(object):
   
   def after_load(self):
     CustomObjects.frame_prop_loss_scale = self.frame_prop_loss_scale
+    if self.stateful != None:
+      ModelDef.stateful = self.stateful
   
   def save_config(self):
     
