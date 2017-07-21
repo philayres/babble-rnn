@@ -45,6 +45,11 @@ class RunConfig(object):
   
   limit_frames = int(4845288/2)
   
+  optimizer = {
+    "name": "RMSprop",
+    "params": {}
+  }
+  
   frame_prop_loss_scale = [
    1,
    2**7,
@@ -68,7 +73,8 @@ class RunConfig(object):
     "frame_prop_loss_scale",
     "stateful",
     "shuffle",
-    "limit_frames"
+    "limit_frames",
+    "optimizer"
     
   ]
   

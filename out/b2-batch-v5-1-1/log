@@ -962,3 +962,37 @@ Training Iteration 755
 Interrupt signal caught. Closing gracefully. 
 Using default config 
 Using default config 
+Using default config 
+No iteration file found. Setting to 0. 
+loading test data from:  test/TaleOfTwoCities.c2cb 
+corpus length (bytes): 23324560 
+corpus length (frames): 1794196 
+start_iteration: 0 
+num_iterations: 1200 
+fit_batch_size: 200 
+learn_next_step: True 
+gen_every_nth: 20 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 100 
+seed_seq_len: 100 
+seq_step: 80 
+test_data_fn: test/TaleOfTwoCities.c2cb 
+frame_prop_loss_scale: [1, 128, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] 
+stateful: True 
+shuffle: False 
+limit_frames: 2422644 
+scanning testdata into frames and frame sequences 
+actual number of frames: 1794196 
+number of frame sequences: 22400 
+frame_property_scaleup:  [1, 128, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] 
+creating new model 
+Defining model 
+generate_len: 200 
+None 
+Training Iteration 0 
+Make lstm 1,2,3 trainable 
+Compiling model 
+Frame rotate: 0 
+From frame: 0 
+To frame: 2422644 

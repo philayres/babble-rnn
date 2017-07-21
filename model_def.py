@@ -1,7 +1,7 @@
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout, TimeDistributed
 from keras.layers import GRU, LSTM
-from keras.optimizers import Nadam # SGD #Adam #RMSprop
+import keras.optimizers as optimizers
 
 from custom_objects import CustomObjects
 
@@ -185,7 +185,13 @@ class ModelDef(object):
     
   def compile_model(self):
     self.utils.log("Compiling model")
-    optimizer = Nadam() #SGD() #Adam() #RMSprop(lr=0.01)
+    
+    optimizer_name = self.config.optimizer["name"]
+    
+    optimizer = getattr(optimizers, optimizer_name)(*self.config.optimizer["params"])
+      #optimizer = Nadam() #SGD() #Adam() #RMSprop(lr=0.01)
+    
+    
     loss = CustomObjects.codec2_param_error
     #loss = 'mean_absolute_error'
     #loss = 'cosine_proximity'

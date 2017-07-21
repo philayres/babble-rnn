@@ -584,3 +584,202 @@ None
 Training Iteration 410 
 Make lstm 1,2,3 trainable 
 Compiling model 
+Training Iteration 411 
+Training Iteration 412 
+Training Iteration 413 
+Training Iteration 414 
+Training Iteration 415 
+Training Iteration 416 
+Training Iteration 417 
+Training Iteration 418 
+Training Iteration 419 
+Training Iteration 420 
+Generating samples 
+saving generated sample output to:  out/c2-3200-v4-1-3/out-c2cb-420 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+Training Iteration 421 
+Training Iteration 422 
+Training Iteration 423 
+Training Iteration 424 
+Training Iteration 425 
+Training Iteration 426 
+Training Iteration 427 
+Training Iteration 428 
+Training Iteration 429 
+Training Iteration 430 
+Training Iteration 431 
+Training Iteration 432 
+Training Iteration 433 
+Training Iteration 434 
+Training Iteration 435 
+Training Iteration 436 
+Training Iteration 437 
+Training Iteration 438 
+Training Iteration 439 
+Training Iteration 440 
+Generating samples 
+saving generated sample output to:  out/c2-3200-v4-1-3/out-c2cb-440 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+Training Iteration 441 
+Training Iteration 442 
+Training Iteration 443 
+Training Iteration 444 
+Training Iteration 445 
+Training Iteration 446 
+Training Iteration 447 
+Training Iteration 448 
+Training Iteration 449 
+Training Iteration 450 
+Training Iteration 451 
+Training Iteration 452 
+Training Iteration 453 
+Training Iteration 454 
+Training Iteration 455 
+Training Iteration 456 
+Training Iteration 457 
+Training Iteration 458 
+Training Iteration 459 
+Training Iteration 460 
+Generating samples 
+saving generated sample output to:  out/c2-3200-v4-1-3/out-c2cb-460 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+Training Iteration 461 
+Training Iteration 462 
+Training Iteration 463 
+Interrupt signal caught. Closing gracefully. 
+Using JSON configuration from: out/c2-3200-v4-1-3/config.json 
+Continuing from a previous run at iteration:  460 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 460 
+num_iterations: 1200 
+fit_batch_size: 200 
+learn_next_step: True 
+gen_every_nth: 20 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 100 
+seed_seq_len: 100 
+seq_step: 80 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 128, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 60564 
+frame_property_scaleup:  [1, 128, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] 
+loading model: out/c2-3200-v4-1-3/model-410.h5 
+generate_len: 200 
+None 
+Training Iteration 460 
+Make lstm 1,2,3 trainable 
+Compiling model 
+Generating samples 
+saving generated sample output to:  out/c2-3200-v4-1-3/out-c2cb-460 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+Training Iteration 461 
+Interrupt signal caught. Closing gracefully. 
+Using JSON configuration from: out/c2-3200-v4-1-3/config.json 
+Continuing from a previous run at iteration:  460 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 460 
+num_iterations: 1200 
+fit_batch_size: 200 
+learn_next_step: True 
+gen_every_nth: 20 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 100 
+seed_seq_len: 100 
+seq_step: 80 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 128, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 60564 
+frame_property_scaleup:  [1, 128, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] 
+loading model: out/c2-3200-v4-1-3/model-400.h5 
+generate_len: 200 
+None 
+Training Iteration 460 
+Make lstm 1,2,3 trainable 
+Compiling model 
+Interrupt signal caught. Closing gracefully. 
+Using JSON configuration from: out/c2-3200-v4-1-3/config.json 
+Continuing from a previous run at iteration:  460 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 460 
+num_iterations: 1200 
+fit_batch_size: 200 
+learn_next_step: True 
+gen_every_nth: 20 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 100 
+seed_seq_len: 100 
+seq_step: 80 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 128, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'params': {}, 'name': 'RMSprop'} 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 60564 
+frame_property_scaleup:  [1, 128, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] 
+loading model: out/c2-3200-v4-1-3/model-410.h5 
+generate_len: 200 
+None 
+Training Iteration 460 
+Make lstm 1,2,3 trainable 
+Compiling model 
+Using JSON configuration from: out/c2-3200-v4-1-3/config.json 
+Continuing from a previous run at iteration:  460 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 460 
+num_iterations: 1200 
+fit_batch_size: 200 
+learn_next_step: True 
+gen_every_nth: 20 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 100 
+seed_seq_len: 100 
+seq_step: 80 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 128, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'params': {}, 'name': 'RMSprop'} 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 60564 
+frame_property_scaleup:  [1, 128, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32] 
+loading model: out/c2-3200-v4-1-3/model-410.h5 
+generate_len: 200 
+None 
+Training Iteration 460 
+Make lstm 1,2,3 trainable 
+Compiling model 
