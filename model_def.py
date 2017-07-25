@@ -6,30 +6,13 @@ import keras.optimizers as optimizers
 from custom_objects import CustomObjects
 
 class ModelDef(object):
-  custom_objects = CustomObjects()
-
+  
   layers=[]
 
   model = None
   utils = None
   started = False
   
-# for 1300 rate codec  
-#  frame_property_scaleup = [
-#   1,1,1,1,
-#   2**7,
-#   2**5,
-#   16,16,16,16,16,16,16,8,8,4
-#  ]
-
-# for 3200 rate codec
-  frame_property_scaleup = CustomObjects.frame_prop_loss_scale
-#  [
-#   1,
-#   2**7,
-#   2**5,
-#   32,32,32,32,32,32,32,32,32,32
-#  ]
 
   stateful = False
   
@@ -39,15 +22,17 @@ class ModelDef(object):
     self.config = config
     
     self.layers=[]
-    
-    utils.log("frame_property_scaleup: ", self.frame_property_scaleup)
 
   
   def define_model(self, frame_seq_len, framelen, num_frame_seqs):
     self.utils.log("Defining model")
     model =  Sequential()
     self.model = model
-
+    
+    self.utils.log("Stateful:", self.stateful)
+    
+    time_distributed = False
+    
     if self.stateful:
         self.add_layer(
           LSTM(
@@ -62,7 +47,7 @@ class ModelDef(object):
     else:
         self.add_layer(
           LSTM(
-            320
+            160
             , input_shape=(frame_seq_len, framelen) 
             , return_sequences=True
             , trainable=True
@@ -73,7 +58,7 @@ class ModelDef(object):
 
     self.add_layer(
       LSTM(
-        320
+        160
         , return_sequences=True
         , trainable=False
         , stateful=self.stateful
@@ -82,26 +67,44 @@ class ModelDef(object):
       )
     )
     
-    
     self.add_layer(
       LSTM(
-        320
+        160
         , return_sequences=True
+        , trainable=False
+        , stateful=self.stateful
+    #    ,dropout = 0.1
+        
+      )
+    )
+        
+    self.add_layer(
+      LSTM(
+        160
+        , return_sequences= time_distributed
         , trainable=False
         , stateful=self.stateful
     #    ,dropout = 0.1
       )
     )
     
-    
-    self.add_layer(
-      TimeDistributed(
-        Dense(
-          framelen
-          ,activation="elu"
+    if time_distributed:
+      self.add_layer(
+        TimeDistributed(
+          Dense(
+            framelen
+            ,activation="relu"
+          )
         )
       )
-    )
+    else:
+      self.add_layer(
+        Dense(
+          framelen
+          ,activation="relu"
+        )
+      )
+
     #model.add(Dropout(0.1))
     
     return model
@@ -115,19 +118,49 @@ class ModelDef(object):
 
   # start training GRU 1, then 1&2, then 3 
   def before_iteration(self, iteration):
+#    if iteration == 541:
+#      self.utils.log("Adding frame rotation to reduce memory usage")
+#      self.config.limit_frames = self.config.num_frames / 100
+#      self.model_updates_lstm_1234_trainable()
+#      self.config.log_attrs()
+
+
     if not self.started:
       self.model_updates_onstart()
-      self.started = True
     
-#    elif iteration == 121:
-#      self.model_updates_lstm12_trainable()
 #
 #    elif iteration == 481:
 #      self.model_updates_lstm3_trainable()
 #      
+
+    self.started = True
+    
   def model_updates_onstart(self):
-    self.model_updates_lstm_123_trainable()
-    #self.model_updates_lstm1_trainable()  
+    self.utils.log("Make all lstms trainable")
+    self.model.layers[0].trainable=True
+    self.model.layers[1].trainable=True
+    self.model.layers[2].trainable=True
+    self.model.layers[3].trainable=True
+    self.compile_model()
+    self.utils.save_json_model(0)
+
+
+  def model_updates_lstm_1234_trainable(self):
+    self.utils.log("Make lstm 1,2,3,4 trainable")
+    self.model.layers[0].trainable=True
+    self.model.layers[1].trainable=True
+    self.model.layers[2].trainable=True
+    self.model.layers[3].trainable=True
+    self.compile_model()
+    self.utils.save_json_model(4)
+
+  def model_updates_lstm_123_untrainable(self):
+    self.utils.log("Make lstm 1,2,3 untrainable ")
+    self.model.layers[0].trainable=False
+    self.model.layers[1].trainable=False
+    self.model.layers[2].trainable=False
+    self.compile_model()
+    self.utils.save_json_model(5) 
   
   def model_updates_lstm_123_trainable(self):
     self.utils.log("Make lstm 1,2,3 trainable")
@@ -187,8 +220,8 @@ class ModelDef(object):
     self.utils.log("Compiling model")
     
     optimizer_name = self.config.optimizer["name"]
-    
-    optimizer = getattr(optimizers, optimizer_name)(*self.config.optimizer["params"])
+    args = []
+    optimizer = getattr(optimizers, optimizer_name)(*args, **self.config.optimizer["params"])
       #optimizer = Nadam() #SGD() #Adam() #RMSprop(lr=0.01)
     
     
@@ -196,4 +229,4 @@ class ModelDef(object):
     #loss = 'mean_absolute_error'
     #loss = 'cosine_proximity'
     self.model.compile(loss=loss, optimizer=optimizer)
-    
+    self.utils.log_model_summary()

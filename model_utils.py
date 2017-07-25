@@ -5,13 +5,14 @@ from keras.models import load_model
 from custom_objects import CustomObjects
 from model_def import ModelDef
 from run_config import RunConfig  
-
+import datetime
 
 Train=1
 Generate=2
 
 class ModelUtils(object):
 
+  iteration = 0
   config = None
   mode = Train
   model_filename = ""
@@ -28,10 +29,16 @@ class ModelUtils(object):
   logfile = None
   iteration_counter_fn = None
   model_def = None
-  generate_len = 200
+  one_off_generate_len = None
   load_weights = None
   
   def __init__(self):
+    self.buffered_logs = []
+    self.log("====================================================")
+    self.log("Started New Run at:",  datetime.datetime.now())
+    self.log("PID:", os.getpid())
+    self.log("====================================================")
+    
   
     if len(sys.argv) < 3:
       print("training usage: lstm_c2_generation <tagname> <test data filename> [load model filename]")
@@ -46,6 +53,8 @@ class ModelUtils(object):
     self.named_args = named_args
     self.basic_args = basic_args
     for i, arg in enumerate(sys.argv[1:]):
+      
+      
       if arg[0:2] == "--":
         a = arg.split("=")
         key = a[0][2:]
@@ -57,15 +66,12 @@ class ModelUtils(object):
       self.model_tag = named_args['generate']
       self.mode = Generate
       basic_args.insert(0, None)
+      self.log("mode: Generate")
     else:
       self.model_tag = basic_args[0]
       self.mode = Train
-    
-      
-    self.testdata_filename = basic_args[1]
-    if len(basic_args) > 2:
-      self.model_filename = basic_args[2]  
-    
+      self.log("mode: Train")
+        
     if self.training_mode():
       self.output_dir="out/"+str(self.model_tag)+"/"
       self.output_fn=self.output_dir+"out-c2cb-"    
@@ -77,9 +83,24 @@ class ModelUtils(object):
     else:
       self.output_dir="generated/"
       self.output_fn=self.output_dir+str(self.model_tag)
+
+
+
+    self.config = RunConfig(self)      
+
+    self.testdata_filename = basic_args[1]
+      
+    if len(basic_args) > 2:
+      self.model_filename = basic_args[2]  
+      self.log("Using command line model_filename:",self.model_filename)
+    else:
+      self.model_filename = self.config.model_filename
+      self.log("Using configured model_filename:",self.config.model_filename)
+      
+      
       
     if named_args.get('generate-len', None):
-      self.generate_len = int(named_args['generate-len'])
+      self.one_off_generate_len = int(named_args['generate-len'])
       
     if named_args.get('load-weights', None):
       self.load_weights = named_args['load-weights']
@@ -94,6 +115,8 @@ class ModelUtils(object):
     self.logfile_fn = self.output_dir + "log"
     self.logfile = open(self.logfile_fn, "a", 1)
     self.iteration_counter_fn = self.output_dir + "iteration_counter"
+    
+    
     
   def setup_seed_start(self, generator):
     if self.named_args.get('seed_index', None):
@@ -113,6 +136,14 @@ class ModelUtils(object):
     
     self.log("loading model: " + self.model_filename)
     self.model_def.model = load_model(self.model_filename, custom_objects=self.custom_objects())
+    
+    if self.training_mode():
+      self.log("saving config after loading model")
+      self.config.model_filename = self.model_filename
+      self.config.save_config()
+    else:
+      self.log("not saving config after loading model")
+    
     return self.model_def.model
 
   def save_json_model(self, update_num=0):
@@ -126,7 +157,14 @@ class ModelUtils(object):
 
   def save_h5_model(self, iteration):
     model = self.model_def.model
-    return model.save(self.h5_model_filename+str(iteration)+".h5")
+    fn = self.h5_model_filename+str(iteration)+".h5"
+    res = model.save(fn)
+    
+    if self.training_mode():
+      self.config.model_filename = fn
+      self.config.save_config()
+
+    return res
 
   def save_weights(self, iteration):
     model = self.model_def.model
@@ -167,6 +205,19 @@ class ModelUtils(object):
   
   def log(self, *inargs):
     
+    if self.logfile == None:
+      args = []
+      for a in inargs:
+        args.append(str(a))
+      self.buffered_logs.append(str.join(" ", args) + "\n")
+      return
+    elif len(self.buffered_logs) > 0:
+      for s in self.buffered_logs:
+        print(s)
+        self.logfile.write(s)
+        self.logfile.flush()
+        self.buffered_logs = []
+    
     for arg in inargs: 
       self.logfile.write(str(arg)+" ")
       print(str(arg)),
@@ -175,15 +226,16 @@ class ModelUtils(object):
     self.logfile.flush()
  
   def signal_handler(self, signal, frame): 
+    
     self.log('Interrupt signal caught. Closing gracefully.') 
     self.logfile.close()
-    utils.write_iteration_count(self.iteration)
+    self.write_iteration_count(self.iteration)
 
     print("saving .h5 model file")
-    utils.save_h5_model(self.iteration)
+    self.save_h5_model(self.iteration)
     print("saving .h5 weights file")      
-    utils.save_weights(self.iteration)
-    
+    self.save_weights(self.iteration)
+    print("exiting now")
     sys.exit(0)
   
   def custom_objects(self):
@@ -211,7 +263,7 @@ class ModelUtils(object):
       self.save_json_model()
     
     if self.load_weights != None:
-      self.model_def.load_weights(self.load_weights)
+      self.model_def.load_weights(self.load_weights, by_name=True)
       
     return self.model_def
     
@@ -223,8 +275,8 @@ class ModelUtils(object):
       return self.mode == Generate
   
   def setup_config(self):
-    self.config = RunConfig(self)
     return self.config
   
   def log_model_summary(self):
-    self.log(self.model_def.model.summary())
+    self.model_def.model.summary()
+    

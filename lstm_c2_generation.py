@@ -17,7 +17,7 @@ utils = ModelUtils()
 model_def = None
 
 config = utils.setup_config()
-config.load_config()
+
 
 signal.signal(signal.SIGINT, utils.signal_handler)
 signal.signal(signal.SIGTERM, utils.signal_handler)
@@ -51,6 +51,7 @@ len_testdata = len(testdata)
 num_frames = int(len_testdata / framelen)
 utils.log('corpus length (bytes):', len_testdata)
 utils.log('corpus length (frames):', num_frames)
+config.num_frames = num_frames
 
 limit_frames = int(config.limit_frames)
 
@@ -68,7 +69,7 @@ all_frames = []
 
 def normalize_input(frame):
   normframe = np.array(frame, dtype=np.float32)
-  normframe = np.divide(normframe, ModelDef.frame_property_scaleup)
+  normframe = np.divide(normframe, config.frame_prop_loss_scale)
   return normframe
 
 def gen_sequence(iteration):
@@ -135,8 +136,7 @@ for i, frame_seq in enumerate(frame_seqs):
 model_def = utils.define_or_load_model(frame_seq_len, framelen, num_frame_seqs)
 
 
-generator = Generator(utils, all_frames, seed_seq_len, utils.generate_len, learn_next_step)
-generator.frame_property_scaleup = model_def.frame_property_scaleup
+generator = Generator(utils, all_frames, seed_seq_len, utils.one_off_generate_len, learn_next_step)
 generator.framelen = framelen
 
 # generator seed can start at various positions in the frame set
@@ -150,7 +150,7 @@ if utils.generate_mode():
   generator.generate(0)  
   exit()
 
-utils.log_model_summary()
+
 
 frame_rotate = 0
 
@@ -166,26 +166,31 @@ for iteration in range(start_iteration, num_iterations + 1):
   
   model_def.before_iteration(iteration)
   
+  limit_frames = int(config.limit_frames)
   if limit_frames and limit_frames > 0:
     
-    if (frame_rotate+1)*limit_frames > num_frames:
-      frame_rotate=0
-    else:
-      frame_rotate+=1
-      
-    utils.log("Frame rotate:", frame_rotate)
-    utils.log("From frame:", frame_rotate*limit_frames)
-    utils.log("To frame:", (frame_rotate+1)*limit_frames)
+    utils.log("frame rotate:", frame_rotate)
+    utils.log("from frame:", frame_rotate*limit_frames)
+    utils.log("to frame:", (frame_rotate+1)*limit_frames)
     
     Xl = X[frame_rotate*limit_frames : (frame_rotate+1)*limit_frames]
     yl = y[frame_rotate*limit_frames : (frame_rotate+1)*limit_frames]
+    utils.log("starting model fit with frames:", len(Xl))
   else:
     Xl = X
     yl = y
   
-  model_def.model.fit(Xl, yl, batch_size=fit_batch_size, nb_epoch=1, shuffle=config.shuffle,
+  
+  model_def.model.fit(Xl, yl, batch_size=fit_batch_size, epochs=1, shuffle=config.shuffle,
    callbacks=[utils.csv_logger]
   )
+  
+  if limit_frames and limit_frames > 0:
+    if (frame_rotate+1)*limit_frames > num_frames:
+      frame_rotate=0
+    else:
+      utils.log("Rotate input to next frame set")
+      frame_rotate+=1
   
   if config.stateful:
     utils.log("Reset states")

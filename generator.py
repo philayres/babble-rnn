@@ -2,15 +2,13 @@ import random
 import numpy as np
 from subprocess import call
 
-
 class Generator:
 
   generate_with_single_timestep = True
-
+  config = None
   utils = None
   all_frames = None
   seed_seq_len = None
-  frame_property_scaleup = None
   generate_len = None
   framelen = None
   num_frames = None
@@ -18,12 +16,17 @@ class Generator:
   
   def __init__(self, utils, all_frames, seed_seq_len, generate_len, generate_with_single_timestep):
     self.utils = utils  
+    self.config = utils.config
     self.all_frames = all_frames
     self.seed_seq_len = seed_seq_len
-    self.generate_len = generate_len
+    if generate_len != None:
+      self.generate_len = generate_len
+    else:
+      self.generate_len = self.config.generate_len
     utils.log("generate_len:", generate_len)
     self.num_frames = len(all_frames)
     self.generate_with_single_timestep = generate_with_single_timestep
+    
 
 
   def set_random_seed_start_index(self):
@@ -49,11 +52,11 @@ class Generator:
   def sample(self, preds, no_scale=False):
     preds = np.asarray(preds).astype('float32')
     if not no_scale:
-      preds = np.multiply(preds,self.frame_property_scaleup)
-    
+      preds = [min(1, a) for a in preds]
+      preds = np.multiply(preds, self.config.frame_prop_loss_scale)    
     
     preds = np.round(preds)
-
+    
     # it is necessary to cast to int before attempting to write to a file
     # to ensure that a real byte value is stored, not a byte 
     # representation of a floating point number
@@ -69,9 +72,9 @@ class Generator:
   def generate(self, iteration):
     utils = self.utils
     all_frames = self.all_frames
-    seed_seq_len = self.seed_seq_len
+    seed_seq_len = self.config.seed_seq_len
     generate_len = self.generate_len
-    framelen = self.framelen
+    framelen = self.config.framelen
     num_frames = self.num_frames
     
     model_def = utils.model_def

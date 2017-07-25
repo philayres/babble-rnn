@@ -19,7 +19,7 @@ class RunConfig(object):
   learn_next_step = True
   
   # generate sample data every nth iteration
-  gen_every_nth = 20
+  gen_every_nth = 10
   
   # save model every nth iteration
   save_model_every_nth = 10 
@@ -30,31 +30,35 @@ class RunConfig(object):
   # for 300 rate codec one frame encodes 20ms of raw PCM audio
   framelen = 13
   # length of frame sequence for learning
-  frame_seq_len = 100 # 2 seconds of audio for 3200 codec 
+  frame_seq_len = 200 # 2 seconds of audio for 3200 codec 
   #frame_seq_len = 100 # 4 seconds of audio for 1300 codec  
   
   # pick overlapping frames every seq_step to add to the training set 
-  seed_seq_len = 100 
+  seed_seq_len = 200 
   
-  seq_step = 80
+  seq_step = 200
   test_data_fn = None  
   
+  generate_len = 200
   
-  stateful = True
-  shuffle = not stateful
+  stateful = False
+  shuffle = False
+  if stateful:
+    shuffle = False
   
-  limit_frames = int(4845288/2)
+  limit_frames = 0 #int(4845288/2)
+  model_filename = ""
   
   optimizer = {
-    "name": "RMSprop",
+    "name": "Nadam",
     "params": {}
   }
   
   frame_prop_loss_scale = [
    1,
-   2**7,
-   2**5,
-   32,32,32,32,32,32,32,32,32,32
+   2**7 - 1,
+   2**5 - 1 ,
+   31,31,31,31,31,31,31,31,31,31
   ]
   
   
@@ -74,17 +78,25 @@ class RunConfig(object):
     "stateful",
     "shuffle",
     "limit_frames",
-    "optimizer"
+    "optimizer",
+    "generate_len",
+    "model_filename"
     
   ]
   
+  # Unsaved items and state
   utils = None
   config_json_fn = "config.json"
+  num_frames = None
   
   def __init__(self, utils):
     self.utils = utils or self
+    
+    assert (self.utils.output_dir != None and self.utils.output_dir != '')
+    
     if self.utils:
       self.config_json_fn  = self.utils.output_dir + self.config_json_fn
+      self.load_config()
     return
   
   def log(self, x):
@@ -92,7 +104,6 @@ class RunConfig(object):
   
   def load_config(self):
     res = None
-    
     if os.path.isfile(self.config_json_fn):
       with open(self.config_json_fn) as f:
         res = json.load(f)
@@ -112,7 +123,7 @@ class RunConfig(object):
       ModelDef.stateful = self.stateful
   
   def save_config(self):
-    
+    self.utils.log("saving config")
     with open(self.config_json_fn, "w") as f:
       res = {}
       for a in self.config_attrs:
