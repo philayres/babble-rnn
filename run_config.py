@@ -11,7 +11,10 @@ class RunConfig(object):
   # number of training iterations
   num_iterations = 1200
   
-  # number of frames to use during learning with .fit()
+  # number of frame sequences (each of length frame_seq_len) that make up a batch during .fit()
+  # gradients are updated after each of these batches
+  # some research suggests reducing the size of batches to increase generalisation during learning,
+  # although at the expense of slower training
   fit_batch_size = 200
   
   # learn and generate with just a single timestep (True) or 
@@ -29,39 +32,71 @@ class RunConfig(object):
   # framelen=16
   # for 300 rate codec one frame encodes 20ms of raw PCM audio
   framelen = 13
+  
   # length of frame sequence for learning
   frame_seq_len = 200 # 2 seconds of audio for 3200 codec 
   #frame_seq_len = 100 # 4 seconds of audio for 1300 codec  
-  
-  # pick overlapping frames every seq_step to add to the training set 
+
+  # the seed sequence length is the number of frames the generator expects to be input
+  # as the seed. This must match the frame_seq_len currently
   seed_seq_len = 200 
-  
+
+  # number of frames between the start of each sequence of frames used during learning in a batch
+  # if this equals frame_seq_len, then the frame sequences will be contiguous and will not overlap
+  # picking a number less than frame_seq_len provides overlapping frames every seq_step to add to the training set 
+  # picking a number larger than frame_seq_len means that frames from the corpus will be skipped
+  # note that overlapping frame sequences may be considered a way to augment data, but also increases memory requirements,
+  # since a single batch of data will actually be larger than the original corpus
   seq_step = 200
+  
+  # filename including relative path to the test data
+  # this filename may be overridden by setting on the command line, in which case this setting will be updated to match
   test_data_fn = None  
   
+  # number of frames generated after the seed when generating new data during training iterations
+  # when using --generate=audiofile on the command line, this setting is ignored
   generate_len = 200
   
+  # flag to indicate use of Stateful LSTMs. shuffle should be set to False when using stateful=True
   stateful = False
-  shuffle = False
-  if stateful:
-    shuffle = False
   
+  # shuffle frame sequences within each batch. Stateful LSTMs should not receive shuffled data if they
+  # are to learn long time sequences successfully.
+  # Some evidence suggests that not shuffling time series data even in non-stateful operation can aid 
+  # learning, although this is not well recognised.
+  shuffle = False
+  
+  # in order to handle a large corpus, each iteration the fit function can be passed the next subset of corpus
+  # data. This enables the whole batch to fit into the GPU, avoiding out of memory issues.
+  # The limit_frames setting is the maximum number of frames to be used in a batch each iteration.
+  # Note that the final subset will be unused if it does not match exactly the limit_frames size
   limit_frames = 0 #int(4845288/2)
+  
+  # filename of the model. This will be overridden by the command line, and updated appropriately.
+  # During training, the model_filename setting will be updated when a new model .h5 file is successfully saved
   model_filename = ""
   
+  # the Keras optimizer to be used
+  # name: exact case-sensitive name to match the class of the optimizer
+  # params: the optional parameters to be used by the optimizer, e.g. {"lr": 0.01,...}
   optimizer = {
     "name": "Nadam",
     "params": {}
   }
   
+  # the scaling factors used for normalising frame parameters to range 0..1 and calculating losses fairly
   frame_prop_loss_scale = [
    1,
-   2**7 - 1,
-   2**5 - 1 ,
+   127,
+   31 ,
    31,31,31,31,31,31,31,31,31,31
   ]
   
   
+  
+  ##### No more user config variables to change #####
+  
+  # the attributes to be loaded and saved to the config.json file
   config_attrs = [
     "start_iteration",
     "num_iterations",
