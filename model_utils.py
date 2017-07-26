@@ -166,11 +166,12 @@ class ModelUtils(object):
     fn = self.h5_model_filename+str(iteration)+".h5"
     res = model.save(fn)
     
-    if self.training_mode():
-      self.config.model_filename = fn
-      self.config.save_config()
+    
+    self.config.model_filename = fn
+    self.write_iteration_count(iteration)
+    self.config.save_config()
 
-    plot_model(model, to_file=self.output_dir+'vis-model-'+str(iteration)+'.png')
+    #plot_model(model, to_file=self.output_dir+'vis-model-'+str(iteration)+'.png')
 
     return res
 
@@ -191,6 +192,7 @@ class ModelUtils(object):
     return
     
   def write_iteration_count(self, iteration):
+    self.config.start_iteration = iteration
     with open(self.iteration_counter_fn, "w") as f:
       f.write(str(iteration))
     
