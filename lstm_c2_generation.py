@@ -41,8 +41,7 @@ seed_seq_len = config.seed_seq_len
 seq_step = config.seq_step or frame_seq_len
 config.seq_step = seq_step
 
-test_data_fn = utils.testdata_filename or config.test_data_fn
-config.test_data_fn = test_data_fn
+test_data_fn = config.test_data_fn
 
 utils.log("loading test data from: ", test_data_fn)
 testdata = np.fromfile(test_data_fn, dtype=np.uint8)

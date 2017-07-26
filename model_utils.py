@@ -2,6 +2,7 @@ import sys
 import os
 
 from keras.models import load_model
+from keras.utils import plot_model
 from custom_objects import CustomObjects
 from model_def import ModelDef
 from run_config import RunConfig  
@@ -40,9 +41,10 @@ class ModelUtils(object):
     self.log("====================================================")
     
   
-    if len(sys.argv) < 3:
-      print("training usage: lstm_c2_generation <tagname> <test data filename> [load model filename]")
+    if len(sys.argv) < 2:
+      print("training usage: lstm_c2_generation <tagname> [test data filename>] [load model filename]")
       print("for example\n lstm_c2_generation test1 test/LDC97S44-8k.c2cb")
+      print("if test data filename or load model filename are excluded, the settings in config.json will be used if it exists\n")
       print("generator usage: lstm_c2_generation --generate=<base filename> [--seed_index=<'random'|frame num|time in seconds>] [--generate-len=<frames>] <test data filename> <load model filename>")
       print("for example\n lstm_c2_generation --generate=audiofile --seed_index=60s --generate-len=500 test/LDC97S44-8k.c2cb out/realmodel/model-600.h5")
       exit()
@@ -88,14 +90,18 @@ class ModelUtils(object):
 
     self.config = RunConfig(self)      
 
-    self.testdata_filename = basic_args[1]
+    if len(basic_args) > 1:
+      self.testdata_filename = basic_args[1]
+      self.config.test_data_fn = self.testdata_filename
+      self.log("using command line test data filename:",self.model_filename)
+
       
     if len(basic_args) > 2:
       self.model_filename = basic_args[2]  
-      self.log("Using command line model_filename:",self.model_filename)
+      self.log("using command line model filename:",self.model_filename)
     else:
       self.model_filename = self.config.model_filename
-      self.log("Using configured model_filename:",self.config.model_filename)
+      self.log("using configured model_filename:",self.config.model_filename)
       
       
       
@@ -163,6 +169,8 @@ class ModelUtils(object):
     if self.training_mode():
       self.config.model_filename = fn
       self.config.save_config()
+
+    plot_model(model, to_file=self.output_dir+'vis-model-'+str(iteration)+'.png')
 
     return res
 
