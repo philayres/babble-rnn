@@ -77,7 +77,16 @@ class ModelDef(object):
         
       )
     )
+    self.add_layer(
+      LSTM(
+        160
+        , return_sequences=True
+        , trainable=False
+        , stateful=self.stateful
+    #    ,dropout = 0.1
         
+      )
+    )   
     self.add_layer(
       LSTM(
         160
@@ -137,10 +146,12 @@ class ModelDef(object):
     
   def model_updates_onstart(self):
     self.utils.log("Make all lstms trainable")
-    self.model.layers[0].trainable=True
-    self.model.layers[1].trainable=True
-    self.model.layers[2].trainable=True
-    self.model.layers[3].trainable=True
+    self.model.layers[0].trainable=False
+    self.model.layers[1].trainable=False
+    self.model.layers[2].trainable=False
+    self.model.layers[3].trainable=False
+    self.model.layers[4].trainable=True
+    
     self.compile_model()
     self.utils.save_json_model(0)
 

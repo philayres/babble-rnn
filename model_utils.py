@@ -93,7 +93,7 @@ class ModelUtils(object):
     if len(basic_args) > 1:
       self.testdata_filename = basic_args[1]
       self.config.test_data_fn = self.testdata_filename
-      self.log("using command line test data filename:",self.model_filename)
+      self.log("using command line test data filename:", self.config.test_data_fn)
 
       
     if len(basic_args) > 2:
@@ -264,7 +264,7 @@ class ModelUtils(object):
   def define_or_load_model(self, frame_seq_len, framelen, num_frame_seqs):
     self.model_def = ModelDef(self, self.config)
     
-    if len(self.model_filename) > 0:
+    if len(self.model_filename) > 0 and self.model_filename != 'none': 
       model = self.load_model()   
       self.save_json_model()
     else:

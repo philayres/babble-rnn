@@ -178,6 +178,7 @@ for iteration in range(start_iteration, num_iterations + 1):
   else:
     Xl = X
     yl = y
+    utils.log('using full set of frames')
   
   
   model_def.model.fit(Xl, yl, batch_size=fit_batch_size, epochs=1, shuffle=config.shuffle,
