@@ -227,18 +227,25 @@ class ModelUtils(object):
         self.logfile.write(s)
         self.logfile.flush()
         self.buffered_logs = []
-    
-    for arg in inargs: 
-      self.logfile.write(str(arg)+" ")
-      print(str(arg)),
-    print
-    self.logfile.write("\n")
-    self.logfile.flush()
+
+    try:
+      for arg in inargs: 
+        self.logfile.write(str(arg)+" ")
+        print(str(arg)),
+      print
+
+      self.logfile.write("\n")
+      self.logfile.flush()
+    except IOError:
+      print("* Logging Failed *")
+      for arg in inargs: 
+        print(str(arg)),
+      print
+
  
   def signal_handler(self, signal, frame): 
     
     self.log('Interrupt signal caught. Closing gracefully.') 
-    self.logfile.close()
     self.write_iteration_count(self.iteration)
 
     print("saving .h5 model file")
@@ -246,6 +253,7 @@ class ModelUtils(object):
     print("saving .h5 weights file")      
     self.save_weights(self.iteration)
     print("exiting now")
+    self.logfile.close()
     sys.exit(0)
   
   def custom_objects(self):
