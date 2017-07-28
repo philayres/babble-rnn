@@ -186,7 +186,7 @@ for iteration in range(start_iteration, num_iterations + 1):
   )
   
   if limit_frames and limit_frames > 0:
-    if (frame_rotate+1)*limit_frames > num_frames:
+    if (frame_rotate+1)*limit_frames > num_frame_seqs:
       frame_rotate=0
     else:
       utils.log("Rotate input to next frame set")

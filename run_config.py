@@ -68,7 +68,7 @@ class RunConfig(object):
   
   # in order to handle a large corpus, each iteration the fit function can be passed the next subset of corpus
   # data. This enables the whole batch to fit into the GPU, avoiding out of memory issues.
-  # The limit_frames setting is the maximum number of frames to be used in a batch each iteration.
+  # The limit_frames setting is the maximum number of *frame sequences* to be used in a batch each iteration.
   # Note that the final subset will be unused if it does not match exactly the limit_frames size
   limit_frames = 0 #int(4845288/2)
   
