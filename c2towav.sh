@@ -1,5 +1,6 @@
 fn=$1
-path_to_c2=~/personal_projects/codec2-babble/build_linux/src
+path_to_c2=./codec2
+#path_to_c2=~/personal_projects/codec2-babble/build_linux/src
 #path_to_c2=~/store/codec2/Vocoder1300/test
 
 #$path_to_c2/c2dec $fn  $fn.raw charbits
