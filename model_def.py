@@ -146,10 +146,10 @@ class ModelDef(object):
     
   def model_updates_onstart(self):
     self.utils.log("Make all lstms trainable")
-    self.model.layers[0].trainable=False
-    self.model.layers[1].trainable=False
-    self.model.layers[2].trainable=False
-    self.model.layers[3].trainable=False
+    self.model.layers[0].trainable=True
+    self.model.layers[1].trainable=True
+    self.model.layers[2].trainable=True
+    self.model.layers[3].trainable=True
     self.model.layers[4].trainable=True
     
     self.compile_model()

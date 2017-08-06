@@ -1,0 +1,5646 @@
+==========================================
+Started New Run at 
+==========================================
+Using JSON configuration from: config.json
+mode: Train
+No iteration file found. Setting to 0. 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 606 
+num_iterations: 1200 
+fit_batch_size: 200 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'params': {}, 'name': 'Nadam'} 
+generate_len: 200 
+model_filename: out/c2-3200-v5-4-1/model-600.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+loading model: out/c2-3200-v5-4-1/model-606.h5 
+==========================================
+Started New Run at 
+==========================================
+Using JSON configuration from: config.json
+mode: Train
+No iteration file found. Setting to 0. 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 606 
+num_iterations: 1200 
+fit_batch_size: 200 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'params': {}, 'name': 'Nadam'} 
+generate_len: 200 
+model_filename: out/c2-3200-v5-4-1/model-600.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+loading model: out/c2-3200-v5-4-1/model-606.h5 
+saving config after loading model 
+saving config 
+generate_len: None 
+Training Iteration 606 
+Make lstm 1,2 trainable 3,4 untrainable 
+Compiling model 
+====================================================
+Started New Run at: 2017-07-24 17:47:40.704587
+====================================================
+Using JSON configuration from: config.json
+mode: Train
+No iteration file found. Setting to 0. 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 606 
+num_iterations: 1200 
+fit_batch_size: 200 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'name': 'Nadam', 'params': {}} 
+generate_len: 200 
+model_filename: out/c2-3200-v5-4-1/model-606.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+loading model: out/c2-3200-v5-4-1/model-606.h5 
+saving config after loading model 
+saving config 
+generate_len: None 
+Training Iteration 606 
+Make lstm 1,2 trainable 3,4 untrainable 
+Compiling model 
+====================================================
+Started New Run at: 2017-07-24 17:56:28.950453
+====================================================
+Using JSON configuration from: config.json
+mode: Train
+Using configured model_filename: out/c2-3200-v5-4-1/model-606.h5
+No iteration file found. Setting to 0. 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 606 
+num_iterations: 1200 
+fit_batch_size: 200 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'params': {}, 'name': 'Nadam'} 
+generate_len: 200 
+model_filename: out/c2-3200-v5-4-1/model-606.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+loading model: out/c2-3200-v5-4-1/model-606.h5 
+Interrupt signal caught. Closing gracefully. 
+====================================================
+Started New Run at: 2017-07-24 18:07:03.246598
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+Using configured model_filename: 
+Continuing from a previous run at iteration:  0 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 525 
+num_iterations: 1200 
+fit_batch_size: 200 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'params': {}, 'name': 'Nadam'} 
+generate_len: 200 
+model_filename:  
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+creating new model 
+Defining model 
+Stateful: False 
+generate_len: None 
+Training Iteration 525 
+Make lstm 1,2 trainable 3,4 untrainable 
+Compiling model 
+Interrupt signal caught. Closing gracefully. 
+====================================================
+Started New Run at: 2017-07-24 18:13:16.137371
+PID: 7223
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+Using configured model_filename: 
+No iteration file found. Setting to 0. 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 0 
+num_iterations: 1200 
+fit_batch_size: 200 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'params': {}, 'name': 'Nadam'} 
+generate_len: 200 
+model_filename:  
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+creating new model 
+Defining model 
+Stateful: False 
+generate_len: None 
+Training Iteration 0 
+Make lstm 1,2 trainable 3,4 untrainable 
+Compiling model 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-0 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1 
+Training Iteration 2 
+Training Iteration 3 
+Training Iteration 4 
+Training Iteration 5 
+Training Iteration 6 
+Training Iteration 7 
+Training Iteration 8 
+Training Iteration 9 
+Training Iteration 10 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-10 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 11 
+Training Iteration 12 
+Training Iteration 13 
+Training Iteration 14 
+Training Iteration 15 
+Training Iteration 16 
+Training Iteration 17 
+Training Iteration 18 
+Training Iteration 19 
+Training Iteration 20 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-20 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 21 
+Training Iteration 22 
+Interrupt signal caught. Closing gracefully. 
+====================================================
+Started New Run at: 2017-07-24 20:14:09.901685
+PID: 10961
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+Using configured model_filename: out/d2-3200-v1-1-1/model-20.h5
+Continuing from a previous run at iteration:  22 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 22 
+num_iterations: 1200 
+fit_batch_size: 200 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'name': 'Nadam', 'params': {}} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-20.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+loading model: out/d2-3200-v1-1-1/model-20.h5 
+saving config after loading model 
+saving config 
+generate_len: None 
+Training Iteration 22 
+Make lstm 1,2 trainable 3,4 untrainable 
+Compiling model 
+Training Iteration 23 
+Training Iteration 24 
+Training Iteration 25 
+Training Iteration 26 
+Training Iteration 27 
+Training Iteration 28 
+Training Iteration 29 
+Training Iteration 30 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-30 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 31 
+Training Iteration 32 
+Training Iteration 33 
+Training Iteration 34 
+Training Iteration 35 
+Training Iteration 36 
+Training Iteration 37 
+Training Iteration 38 
+Training Iteration 39 
+Training Iteration 40 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-40 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 41 
+Training Iteration 42 
+Training Iteration 43 
+Training Iteration 44 
+Training Iteration 45 
+Training Iteration 46 
+Training Iteration 47 
+Training Iteration 48 
+Training Iteration 49 
+Training Iteration 50 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-50 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 51 
+Training Iteration 52 
+Training Iteration 53 
+Training Iteration 54 
+Training Iteration 55 
+Training Iteration 56 
+Training Iteration 57 
+Training Iteration 58 
+Training Iteration 59 
+Training Iteration 60 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-60 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 61 
+Training Iteration 62 
+Training Iteration 63 
+Training Iteration 64 
+Training Iteration 65 
+Training Iteration 66 
+Training Iteration 67 
+Training Iteration 68 
+Training Iteration 69 
+Training Iteration 70 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-70 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 71 
+Training Iteration 72 
+Training Iteration 73 
+Training Iteration 74 
+Training Iteration 75 
+Training Iteration 76 
+Training Iteration 77 
+Training Iteration 78 
+Training Iteration 79 
+Training Iteration 80 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-80 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 81 
+Training Iteration 82 
+Training Iteration 83 
+Training Iteration 84 
+Training Iteration 85 
+Training Iteration 86 
+Training Iteration 87 
+Training Iteration 88 
+Training Iteration 89 
+Training Iteration 90 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-90 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 91 
+Training Iteration 92 
+Training Iteration 93 
+Training Iteration 94 
+Training Iteration 95 
+Training Iteration 96 
+Training Iteration 97 
+Training Iteration 98 
+Training Iteration 99 
+Training Iteration 100 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-100 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 101 
+Training Iteration 102 
+Training Iteration 103 
+Training Iteration 104 
+Training Iteration 105 
+Training Iteration 106 
+Training Iteration 107 
+Training Iteration 108 
+Training Iteration 109 
+Training Iteration 110 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-110 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 111 
+Training Iteration 112 
+Training Iteration 113 
+Training Iteration 114 
+Training Iteration 115 
+Training Iteration 116 
+Training Iteration 117 
+Training Iteration 118 
+Training Iteration 119 
+Training Iteration 120 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-120 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 121 
+Training Iteration 122 
+Training Iteration 123 
+Training Iteration 124 
+Training Iteration 125 
+Training Iteration 126 
+Training Iteration 127 
+Training Iteration 128 
+Training Iteration 129 
+Training Iteration 130 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-130 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 131 
+Training Iteration 132 
+Training Iteration 133 
+Training Iteration 134 
+Training Iteration 135 
+Training Iteration 136 
+Training Iteration 137 
+Training Iteration 138 
+Training Iteration 139 
+Training Iteration 140 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-140 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 141 
+Training Iteration 142 
+Training Iteration 143 
+Training Iteration 144 
+Training Iteration 145 
+Training Iteration 146 
+Training Iteration 147 
+Training Iteration 148 
+Training Iteration 149 
+Training Iteration 150 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-150 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 151 
+Training Iteration 152 
+Training Iteration 153 
+Training Iteration 154 
+Training Iteration 155 
+Training Iteration 156 
+Training Iteration 157 
+Training Iteration 158 
+Training Iteration 159 
+Training Iteration 160 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-160 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 161 
+Training Iteration 162 
+Training Iteration 163 
+Training Iteration 164 
+Training Iteration 165 
+Training Iteration 166 
+Training Iteration 167 
+Training Iteration 168 
+Training Iteration 169 
+Training Iteration 170 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-170 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 171 
+Training Iteration 172 
+Training Iteration 173 
+Training Iteration 174 
+Training Iteration 175 
+Training Iteration 176 
+Training Iteration 177 
+Training Iteration 178 
+Training Iteration 179 
+Training Iteration 180 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-180 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 181 
+Training Iteration 182 
+Training Iteration 183 
+Training Iteration 184 
+Training Iteration 185 
+Training Iteration 186 
+Training Iteration 187 
+Training Iteration 188 
+Training Iteration 189 
+Training Iteration 190 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-190 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 191 
+Training Iteration 192 
+Training Iteration 193 
+Training Iteration 194 
+Training Iteration 195 
+Training Iteration 196 
+Training Iteration 197 
+Training Iteration 198 
+Training Iteration 199 
+Training Iteration 200 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-200 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 201 
+Training Iteration 202 
+Training Iteration 203 
+Training Iteration 204 
+Training Iteration 205 
+Training Iteration 206 
+Training Iteration 207 
+Training Iteration 208 
+Training Iteration 209 
+Training Iteration 210 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-210 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 211 
+Training Iteration 212 
+Training Iteration 213 
+Training Iteration 214 
+Training Iteration 215 
+Training Iteration 216 
+Training Iteration 217 
+Training Iteration 218 
+Training Iteration 219 
+Training Iteration 220 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-220 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 221 
+Training Iteration 222 
+Training Iteration 223 
+Training Iteration 224 
+Training Iteration 225 
+Training Iteration 226 
+Training Iteration 227 
+Training Iteration 228 
+Training Iteration 229 
+Training Iteration 230 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-230 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 231 
+Training Iteration 232 
+Training Iteration 233 
+Training Iteration 234 
+Training Iteration 235 
+Training Iteration 236 
+Interrupt signal caught. Closing gracefully. 
+====================================================
+Started New Run at: 2017-07-25 23:49:03.722143
+PID: 20127
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+Using configured model_filename: out/d2-3200-v1-1-1/model-230.h5
+Continuing from a previous run at iteration:  236 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 236 
+num_iterations: 1200 
+fit_batch_size: 200 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'params': {}, 'name': 'RMSprop'} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-230.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+loading model: out/d2-3200-v1-1-1/model-230.h5 
+Interrupt signal caught. Closing gracefully. 
+====================================================
+Started New Run at: 2017-07-25 23:52:19.492167
+PID: 20255
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+Using configured model_filename: out/d2-3200-v1-1-1/model-230.h5
+Continuing from a previous run at iteration:  236 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 236 
+num_iterations: 1200 
+fit_batch_size: 100 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'params': {}, 'name': 'RMSprop'} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-230.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+loading model: out/d2-3200-v1-1-1/model-230.h5 
+saving config after loading model 
+saving config 
+generate_len: None 
+Training Iteration 236 
+Make all lstms trainable 
+Compiling model 
+Interrupt signal caught. Closing gracefully. 
+====================================================
+Started New Run at: 2017-07-25 23:56:36.673771
+PID: 20407
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+Using configured model_filename: out/d2-3200-v1-1-1/model-230.h5
+Continuing from a previous run at iteration:  236 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 236 
+num_iterations: 1200 
+fit_batch_size: 100 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 100 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'params': {}, 'name': 'RMSprop'} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-230.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+loading model: out/d2-3200-v1-1-1/model-230.h5 
+Interrupt signal caught. Closing gracefully. 
+====================================================
+Started New Run at: 2017-07-25 23:58:44.395522
+PID: 20523
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+Using configured model_filename: out/d2-3200-v1-1-1/model-230.h5
+Continuing from a previous run at iteration:  236 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 236 
+num_iterations: 1200 
+fit_batch_size: 100 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 100 
+seq_step: 100 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'params': {}, 'name': 'RMSprop'} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-230.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 48449 
+loading model: out/d2-3200-v1-1-1/model-230.h5 
+saving config after loading model 
+saving config 
+generate_len: None 
+Training Iteration 236 
+Make all lstms trainable 
+Compiling model 
+Training Iteration 237 
+Training Iteration 238 
+Training Iteration 239 
+Training Iteration 240 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-240 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+====================================================
+Started New Run at: 2017-07-26 08:43:13.246492
+PID: 26167
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+Using command line model_filename: out/d2-3200-v1-1-1/model-236.h5
+Continuing from a previous run at iteration:  236 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 236 
+num_iterations: 1200 
+fit_batch_size: 200 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 100 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'params': {}, 'name': 'RMSprop'} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-236.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+loading model: out/d2-3200-v1-1-1/model-236.h5 
+saving config after loading model 
+saving config 
+generate_len: None 
+Training Iteration 236 
+Make all lstms trainable 
+Compiling model 
+Training Iteration 237 
+Training Iteration 238 
+Training Iteration 239 
+Training Iteration 240 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-240 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+====================================================
+Started New Run at: 2017-07-26 10:16:46.706382
+PID: 26993
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+using configured model_filename: out/d2-3200-v1-1-1/model-236.h5
+Continuing from a previous run at iteration:  236 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 236 
+num_iterations: 1200 
+fit_batch_size: 200 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'name': 'RMSprop', 'params': {}} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-236.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+loading model: out/d2-3200-v1-1-1/model-236.h5 
+saving config after loading model 
+saving config 
+generate_len: None 
+Training Iteration 236 
+Make all lstms trainable 
+Compiling model 
+Training Iteration 237 
+Training Iteration 238 
+Training Iteration 239 
+Training Iteration 240 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-240 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+====================================================
+Started New Run at: 2017-07-26 11:12:26.904056
+PID: 27674
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+using configured model_filename: out/d2-3200-v1-1-1/model-240.h5
+Continuing from a previous run at iteration:  236 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 236 
+num_iterations: 1200 
+fit_batch_size: 200 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'name': 'RMSprop', 'params': {}} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-240.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+loading model: out/d2-3200-v1-1-1/model-240.h5 
+saving config after loading model 
+saving config 
+generate_len: None 
+Training Iteration 236 
+Make all lstms trainable 
+Compiling model 
+Training Iteration 237 
+Training Iteration 238 
+Training Iteration 239 
+Training Iteration 240 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-240 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+====================================================
+Started New Run at: 2017-07-26 12:19:29.506825
+PID: 1168
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+using configured model_filename: out/d2-3200-v1-1-1/model-240.h5
+Continuing from a previous run at iteration:  236 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 236 
+num_iterations: 1200 
+fit_batch_size: 200 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'params': {}, 'name': 'RMSprop'} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-240.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+Interrupt signal caught. Closing gracefully. 
+====================================================
+Started New Run at: 2017-07-26 12:21:42.916412
+PID: 1300
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+using configured model_filename: out/d2-3200-v1-1-1/model-240.h5
+Continuing from a previous run at iteration:  240 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 240 
+num_iterations: 1200 
+fit_batch_size: 200 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'params': {}, 'name': 'RMSprop'} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-240.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+loading model: out/d2-3200-v1-1-1/model-240.h5 
+saving config after loading model 
+saving config 
+generate_len: None 
+Training Iteration 240 
+Make all lstms trainable 
+Compiling model 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-240 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 241 
+Training Iteration 242 
+Training Iteration 243 
+Training Iteration 244 
+Training Iteration 245 
+Training Iteration 246 
+Training Iteration 247 
+Training Iteration 248 
+Training Iteration 249 
+Training Iteration 250 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-250 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 251 
+Training Iteration 252 
+Training Iteration 253 
+Training Iteration 254 
+Training Iteration 255 
+Training Iteration 256 
+Training Iteration 257 
+Training Iteration 258 
+Training Iteration 259 
+Training Iteration 260 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-260 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 261 
+Training Iteration 262 
+Training Iteration 263 
+Training Iteration 264 
+Training Iteration 265 
+Training Iteration 266 
+Training Iteration 267 
+Training Iteration 268 
+Training Iteration 269 
+Training Iteration 270 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-270 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 271 
+Training Iteration 272 
+Training Iteration 273 
+Training Iteration 274 
+Training Iteration 275 
+Training Iteration 276 
+Training Iteration 277 
+Training Iteration 278 
+Training Iteration 279 
+Training Iteration 280 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-280 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 281 
+Training Iteration 282 
+Training Iteration 283 
+Training Iteration 284 
+Training Iteration 285 
+Training Iteration 286 
+Training Iteration 287 
+Training Iteration 288 
+Training Iteration 289 
+Training Iteration 290 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-290 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 291 
+Training Iteration 292 
+Training Iteration 293 
+Training Iteration 294 
+Training Iteration 295 
+Training Iteration 296 
+Training Iteration 297 
+Training Iteration 298 
+Training Iteration 299 
+Training Iteration 300 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-300 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 301 
+Training Iteration 302 
+Training Iteration 303 
+Training Iteration 304 
+Training Iteration 305 
+Training Iteration 306 
+Training Iteration 307 
+Training Iteration 308 
+Training Iteration 309 
+Training Iteration 310 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-310 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 311 
+Training Iteration 312 
+Training Iteration 313 
+Training Iteration 314 
+Training Iteration 315 
+Training Iteration 316 
+Training Iteration 317 
+Training Iteration 318 
+Training Iteration 319 
+Training Iteration 320 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-320 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 321 
+Training Iteration 322 
+Training Iteration 323 
+Training Iteration 324 
+Training Iteration 325 
+Training Iteration 326 
+Training Iteration 327 
+Training Iteration 328 
+Training Iteration 329 
+Training Iteration 330 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-330 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 331 
+Training Iteration 332 
+Training Iteration 333 
+Training Iteration 334 
+Training Iteration 335 
+Training Iteration 336 
+Training Iteration 337 
+Training Iteration 338 
+Training Iteration 339 
+Training Iteration 340 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-340 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 341 
+Training Iteration 342 
+Training Iteration 343 
+Training Iteration 344 
+Training Iteration 345 
+Training Iteration 346 
+Training Iteration 347 
+Training Iteration 348 
+Training Iteration 349 
+Training Iteration 350 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-350 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 351 
+Training Iteration 352 
+Training Iteration 353 
+Training Iteration 354 
+Training Iteration 355 
+Training Iteration 356 
+Training Iteration 357 
+Training Iteration 358 
+Training Iteration 359 
+Training Iteration 360 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-360 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 361 
+Training Iteration 362 
+Training Iteration 363 
+Training Iteration 364 
+Training Iteration 365 
+Training Iteration 366 
+Training Iteration 367 
+Training Iteration 368 
+Training Iteration 369 
+Training Iteration 370 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-370 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 371 
+Training Iteration 372 
+Training Iteration 373 
+Training Iteration 374 
+Training Iteration 375 
+Training Iteration 376 
+Training Iteration 377 
+Training Iteration 378 
+Training Iteration 379 
+Training Iteration 380 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-380 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 381 
+Training Iteration 382 
+Training Iteration 383 
+Training Iteration 384 
+Training Iteration 385 
+Training Iteration 386 
+Training Iteration 387 
+Training Iteration 388 
+Training Iteration 389 
+Training Iteration 390 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-390 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 391 
+Training Iteration 392 
+Training Iteration 393 
+Training Iteration 394 
+Training Iteration 395 
+Training Iteration 396 
+Training Iteration 397 
+Training Iteration 398 
+Training Iteration 399 
+Training Iteration 400 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-400 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 401 
+Training Iteration 402 
+Training Iteration 403 
+Training Iteration 404 
+Training Iteration 405 
+Training Iteration 406 
+Training Iteration 407 
+Training Iteration 408 
+Training Iteration 409 
+Training Iteration 410 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-410 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 411 
+Training Iteration 412 
+Training Iteration 413 
+Training Iteration 414 
+Training Iteration 415 
+Training Iteration 416 
+Training Iteration 417 
+Training Iteration 418 
+Training Iteration 419 
+Training Iteration 420 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-420 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 421 
+Training Iteration 422 
+Training Iteration 423 
+Training Iteration 424 
+Training Iteration 425 
+Training Iteration 426 
+Training Iteration 427 
+Training Iteration 428 
+Training Iteration 429 
+Training Iteration 430 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-430 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 431 
+Training Iteration 432 
+Training Iteration 433 
+Training Iteration 434 
+Training Iteration 435 
+Training Iteration 436 
+Training Iteration 437 
+Training Iteration 438 
+Training Iteration 439 
+Training Iteration 440 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-440 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 441 
+Training Iteration 442 
+Training Iteration 443 
+Training Iteration 444 
+Training Iteration 445 
+Training Iteration 446 
+Training Iteration 447 
+Training Iteration 448 
+Training Iteration 449 
+Training Iteration 450 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-450 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 451 
+Training Iteration 452 
+Training Iteration 453 
+Training Iteration 454 
+Training Iteration 455 
+Training Iteration 456 
+Training Iteration 457 
+Training Iteration 458 
+Training Iteration 459 
+Training Iteration 460 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-460 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 461 
+Training Iteration 462 
+Training Iteration 463 
+Training Iteration 464 
+Training Iteration 465 
+Training Iteration 466 
+Training Iteration 467 
+Training Iteration 468 
+Training Iteration 469 
+Training Iteration 470 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-470 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 471 
+Training Iteration 472 
+Training Iteration 473 
+Training Iteration 474 
+Training Iteration 475 
+Training Iteration 476 
+Training Iteration 477 
+Training Iteration 478 
+Training Iteration 479 
+Training Iteration 480 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-480 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 481 
+Training Iteration 482 
+Training Iteration 483 
+Training Iteration 484 
+Training Iteration 485 
+Training Iteration 486 
+Training Iteration 487 
+Training Iteration 488 
+Training Iteration 489 
+Training Iteration 490 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-490 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 491 
+Training Iteration 492 
+Training Iteration 493 
+Training Iteration 494 
+Training Iteration 495 
+Training Iteration 496 
+Training Iteration 497 
+Training Iteration 498 
+Training Iteration 499 
+Training Iteration 500 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-500 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 501 
+Training Iteration 502 
+Training Iteration 503 
+Training Iteration 504 
+Training Iteration 505 
+Training Iteration 506 
+Training Iteration 507 
+Training Iteration 508 
+Training Iteration 509 
+Training Iteration 510 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-510 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 511 
+Training Iteration 512 
+Training Iteration 513 
+Training Iteration 514 
+Training Iteration 515 
+Training Iteration 516 
+Training Iteration 517 
+Training Iteration 518 
+Training Iteration 519 
+Training Iteration 520 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-520 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 521 
+Training Iteration 522 
+Training Iteration 523 
+Training Iteration 524 
+Training Iteration 525 
+Training Iteration 526 
+Training Iteration 527 
+Training Iteration 528 
+Training Iteration 529 
+Training Iteration 530 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-530 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 531 
+Training Iteration 532 
+Training Iteration 533 
+Training Iteration 534 
+Training Iteration 535 
+Training Iteration 536 
+Training Iteration 537 
+Training Iteration 538 
+Training Iteration 539 
+Training Iteration 540 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-540 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 541 
+Training Iteration 542 
+Training Iteration 543 
+Training Iteration 544 
+Training Iteration 545 
+Training Iteration 546 
+Training Iteration 547 
+Training Iteration 548 
+Training Iteration 549 
+Training Iteration 550 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-550 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 551 
+Training Iteration 552 
+Training Iteration 553 
+Training Iteration 554 
+Training Iteration 555 
+Training Iteration 556 
+Training Iteration 557 
+Training Iteration 558 
+Training Iteration 559 
+Training Iteration 560 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-560 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 561 
+Training Iteration 562 
+Training Iteration 563 
+Training Iteration 564 
+Training Iteration 565 
+Training Iteration 566 
+Training Iteration 567 
+Training Iteration 568 
+Training Iteration 569 
+Training Iteration 570 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-570 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 571 
+Training Iteration 572 
+Training Iteration 573 
+Training Iteration 574 
+Training Iteration 575 
+Training Iteration 576 
+Training Iteration 577 
+Training Iteration 578 
+Training Iteration 579 
+Training Iteration 580 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-580 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 581 
+Training Iteration 582 
+Training Iteration 583 
+Training Iteration 584 
+Training Iteration 585 
+Training Iteration 586 
+Training Iteration 587 
+Training Iteration 588 
+Training Iteration 589 
+Training Iteration 590 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-590 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 591 
+Training Iteration 592 
+Training Iteration 593 
+Training Iteration 594 
+Training Iteration 595 
+Training Iteration 596 
+Training Iteration 597 
+Training Iteration 598 
+Training Iteration 599 
+Training Iteration 600 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-600 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 601 
+Training Iteration 602 
+Training Iteration 603 
+Training Iteration 604 
+Training Iteration 605 
+Training Iteration 606 
+Training Iteration 607 
+Training Iteration 608 
+Training Iteration 609 
+Training Iteration 610 
+Interrupt signal caught. Closing gracefully. 
+====================================================
+Started New Run at: 2017-07-27 22:33:28.085237
+PID: 13442
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+using configured model_filename: out/d2-3200-v1-1-1/model-600.h5
+Continuing from a previous run at iteration:  610 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 610 
+num_iterations: 1200 
+fit_batch_size: 100 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 2422144 
+optimizer: {'name': 'RMSprop', 'params': {}} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-600.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+loading model: out/d2-3200-v1-1-1/model-600.h5 
+Interrupt signal caught. Closing gracefully. 
+====================================================
+Started New Run at: 2017-07-27 22:36:37.508573
+PID: 13550
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+using configured model_filename: out/d2-3200-v1-1-1/model-600.h5
+Continuing from a previous run at iteration:  610 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 610 
+num_iterations: 1200 
+fit_batch_size: 100 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 2422144 
+optimizer: {'name': 'RMSprop', 'params': {}} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-600.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+Interrupt signal caught. Closing gracefully. 
+====================================================
+Started New Run at: 2017-07-27 22:37:35.681649
+PID: 13597
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+using command line test data filename: 
+using configured model_filename: out/d2-3200-v1-1-1/model-600.h5
+Continuing from a previous run at iteration:  610 
+loading test data from:  none 
+====================================================
+Started New Run at: 2017-07-27 22:38:15.047385
+PID: 13633
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+using command line test data filename: 
+using command line model filename: none
+Continuing from a previous run at iteration:  610 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 610 
+num_iterations: 1200 
+fit_batch_size: 100 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 2422144 
+optimizer: {'name': 'RMSprop', 'params': {}} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-600.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+Interrupt signal caught. Closing gracefully. 
+====================================================
+Started New Run at: 2017-07-27 22:43:08.513798
+PID: 13775
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+using command line test data filename: test/criticalpracticalreason.c2-3200
+using command line model filename: none
+Continuing from a previous run at iteration:  610 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 610 
+num_iterations: 1200 
+fit_batch_size: 100 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 2422144 
+optimizer: {'params': {}, 'name': 'RMSprop'} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-600.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+creating new model 
+Defining model 
+Stateful: False 
+generate_len: None 
+Training Iteration 610 
+Make all lstms trainable 
+Compiling model 
+frame rotate: 0 
+from frame: 0 
+to frame: 2422144 
+starting model fit with frames: 24225 
+Interrupt signal caught. Closing gracefully. 
+====================================================
+Started New Run at: 2017-07-27 22:49:37.561062
+PID: 14000
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+using command line test data filename: test/criticalpracticalreason.c2-3200
+using command line model filename: none
+Continuing from a previous run at iteration:  610 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 610 
+num_iterations: 1200 
+fit_batch_size: 100 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 12113 
+optimizer: {'params': {}, 'name': 'RMSprop'} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-600.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+creating new model 
+Defining model 
+Stateful: False 
+generate_len: None 
+Training Iteration 610 
+Make all lstms trainable 
+Compiling model 
+frame rotate: 0 
+from frame: 0 
+to frame: 12113 
+starting model fit with frames: 12113 
+Interrupt signal caught. Closing gracefully. 
+====================================================
+Started New Run at: 2017-07-27 22:53:03.357723
+PID: 14151
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+using command line test data filename: test/criticalpracticalreason.c2-3200
+using command line model filename: none
+Continuing from a previous run at iteration:  610 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 610 
+num_iterations: 1200 
+fit_batch_size: 100 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'name': 'RMSprop', 'params': {}} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-600.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+creating new model 
+Defining model 
+Stateful: False 
+generate_len: None 
+Training Iteration 610 
+Make all lstms trainable 
+Compiling model 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-610 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 611 
+using full set of frames 
+Training Iteration 612 
+using full set of frames 
+Training Iteration 613 
+using full set of frames 
+Training Iteration 614 
+using full set of frames 
+Interrupt signal caught. Closing gracefully. 
+====================================================
+Started New Run at: 2017-07-27 23:11:16.232218
+PID: 14690
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+using configured model_filename: out/d2-3200-v1-1-1/model-614.h5
+Continuing from a previous run at iteration:  614 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 614 
+num_iterations: 1200 
+fit_batch_size: 100 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'params': {}, 'name': 'RMSprop'} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-614.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+loading model: out/d2-3200-v1-1-1/model-614.h5 
+saving config after loading model 
+saving config 
+generate_len: None 
+Training Iteration 614 
+Make all lstms trainable 
+Compiling model 
+using full set of frames 
+Training Iteration 615 
+using full set of frames 
+Training Iteration 616 
+using full set of frames 
+Training Iteration 617 
+using full set of frames 
+Training Iteration 618 
+using full set of frames 
+Training Iteration 619 
+using full set of frames 
+Training Iteration 620 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-620 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 621 
+using full set of frames 
+Training Iteration 622 
+using full set of frames 
+Training Iteration 623 
+using full set of frames 
+Training Iteration 624 
+using full set of frames 
+Training Iteration 625 
+using full set of frames 
+Training Iteration 626 
+using full set of frames 
+Training Iteration 627 
+using full set of frames 
+Training Iteration 628 
+using full set of frames 
+Training Iteration 629 
+using full set of frames 
+Training Iteration 630 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-630 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 631 
+using full set of frames 
+Training Iteration 632 
+using full set of frames 
+Training Iteration 633 
+using full set of frames 
+Training Iteration 634 
+using full set of frames 
+Training Iteration 635 
+using full set of frames 
+Training Iteration 636 
+using full set of frames 
+Training Iteration 637 
+using full set of frames 
+Training Iteration 638 
+using full set of frames 
+Training Iteration 639 
+using full set of frames 
+Training Iteration 640 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-640 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 641 
+using full set of frames 
+Training Iteration 642 
+using full set of frames 
+Training Iteration 643 
+using full set of frames 
+Training Iteration 644 
+using full set of frames 
+Training Iteration 645 
+using full set of frames 
+Training Iteration 646 
+using full set of frames 
+Training Iteration 647 
+using full set of frames 
+Training Iteration 648 
+using full set of frames 
+Training Iteration 649 
+using full set of frames 
+Training Iteration 650 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-650 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 651 
+using full set of frames 
+Training Iteration 652 
+using full set of frames 
+Training Iteration 653 
+using full set of frames 
+Training Iteration 654 
+using full set of frames 
+Training Iteration 655 
+using full set of frames 
+Training Iteration 656 
+using full set of frames 
+Training Iteration 657 
+using full set of frames 
+Training Iteration 658 
+using full set of frames 
+Training Iteration 659 
+using full set of frames 
+Training Iteration 660 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-660 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 661 
+using full set of frames 
+Training Iteration 662 
+using full set of frames 
+Training Iteration 663 
+using full set of frames 
+Training Iteration 664 
+using full set of frames 
+Training Iteration 665 
+using full set of frames 
+Training Iteration 666 
+using full set of frames 
+Training Iteration 667 
+using full set of frames 
+Training Iteration 668 
+using full set of frames 
+Training Iteration 669 
+using full set of frames 
+Training Iteration 670 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-670 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 671 
+using full set of frames 
+Training Iteration 672 
+using full set of frames 
+Training Iteration 673 
+using full set of frames 
+Training Iteration 674 
+using full set of frames 
+Training Iteration 675 
+using full set of frames 
+Training Iteration 676 
+using full set of frames 
+Training Iteration 677 
+using full set of frames 
+Training Iteration 678 
+using full set of frames 
+Training Iteration 679 
+using full set of frames 
+Training Iteration 680 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-680 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 681 
+using full set of frames 
+Training Iteration 682 
+using full set of frames 
+Training Iteration 683 
+using full set of frames 
+Training Iteration 684 
+using full set of frames 
+Training Iteration 685 
+using full set of frames 
+Training Iteration 686 
+using full set of frames 
+Training Iteration 687 
+using full set of frames 
+Training Iteration 688 
+using full set of frames 
+Training Iteration 689 
+using full set of frames 
+Training Iteration 690 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-690 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 691 
+using full set of frames 
+Training Iteration 692 
+using full set of frames 
+Training Iteration 693 
+using full set of frames 
+Training Iteration 694 
+using full set of frames 
+Training Iteration 695 
+using full set of frames 
+Training Iteration 696 
+using full set of frames 
+Training Iteration 697 
+using full set of frames 
+Training Iteration 698 
+using full set of frames 
+Training Iteration 699 
+using full set of frames 
+Training Iteration 700 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-700 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 701 
+using full set of frames 
+Training Iteration 702 
+using full set of frames 
+Training Iteration 703 
+using full set of frames 
+Training Iteration 704 
+using full set of frames 
+Training Iteration 705 
+using full set of frames 
+Training Iteration 706 
+using full set of frames 
+Training Iteration 707 
+using full set of frames 
+Training Iteration 708 
+using full set of frames 
+Training Iteration 709 
+using full set of frames 
+Training Iteration 710 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-710 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 711 
+using full set of frames 
+Training Iteration 712 
+using full set of frames 
+Training Iteration 713 
+using full set of frames 
+Training Iteration 714 
+using full set of frames 
+Training Iteration 715 
+using full set of frames 
+Training Iteration 716 
+using full set of frames 
+Training Iteration 717 
+using full set of frames 
+Training Iteration 718 
+using full set of frames 
+Training Iteration 719 
+using full set of frames 
+Training Iteration 720 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-720 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 721 
+using full set of frames 
+Training Iteration 722 
+using full set of frames 
+Training Iteration 723 
+using full set of frames 
+Training Iteration 724 
+using full set of frames 
+Training Iteration 725 
+using full set of frames 
+Training Iteration 726 
+using full set of frames 
+Training Iteration 727 
+using full set of frames 
+Training Iteration 728 
+using full set of frames 
+Training Iteration 729 
+using full set of frames 
+Training Iteration 730 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-730 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 731 
+using full set of frames 
+Training Iteration 732 
+using full set of frames 
+Training Iteration 733 
+using full set of frames 
+Training Iteration 734 
+using full set of frames 
+Training Iteration 735 
+using full set of frames 
+Training Iteration 736 
+using full set of frames 
+Training Iteration 737 
+using full set of frames 
+Training Iteration 738 
+using full set of frames 
+Training Iteration 739 
+using full set of frames 
+Training Iteration 740 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-740 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 741 
+using full set of frames 
+Training Iteration 742 
+using full set of frames 
+Training Iteration 743 
+using full set of frames 
+Training Iteration 744 
+using full set of frames 
+Training Iteration 745 
+using full set of frames 
+Training Iteration 746 
+using full set of frames 
+Training Iteration 747 
+using full set of frames 
+Training Iteration 748 
+using full set of frames 
+Training Iteration 749 
+using full set of frames 
+Training Iteration 750 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-750 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 751 
+using full set of frames 
+Training Iteration 752 
+using full set of frames 
+Training Iteration 753 
+using full set of frames 
+Training Iteration 754 
+using full set of frames 
+Training Iteration 755 
+using full set of frames 
+Training Iteration 756 
+using full set of frames 
+Training Iteration 757 
+using full set of frames 
+Training Iteration 758 
+using full set of frames 
+Training Iteration 759 
+using full set of frames 
+Training Iteration 760 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-760 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 761 
+using full set of frames 
+Training Iteration 762 
+using full set of frames 
+Training Iteration 763 
+using full set of frames 
+Training Iteration 764 
+using full set of frames 
+Training Iteration 765 
+using full set of frames 
+Training Iteration 766 
+using full set of frames 
+Training Iteration 767 
+using full set of frames 
+Training Iteration 768 
+using full set of frames 
+Training Iteration 769 
+using full set of frames 
+Training Iteration 770 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-770 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 771 
+using full set of frames 
+Training Iteration 772 
+using full set of frames 
+Training Iteration 773 
+using full set of frames 
+Training Iteration 774 
+using full set of frames 
+Training Iteration 775 
+using full set of frames 
+Training Iteration 776 
+using full set of frames 
+Training Iteration 777 
+using full set of frames 
+Training Iteration 778 
+using full set of frames 
+Training Iteration 779 
+using full set of frames 
+Training Iteration 780 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-780 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 781 
+using full set of frames 
+Training Iteration 782 
+using full set of frames 
+Training Iteration 783 
+using full set of frames 
+Training Iteration 784 
+using full set of frames 
+Training Iteration 785 
+using full set of frames 
+Training Iteration 786 
+using full set of frames 
+Training Iteration 787 
+using full set of frames 
+Training Iteration 788 
+using full set of frames 
+Training Iteration 789 
+using full set of frames 
+Training Iteration 790 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-790 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 791 
+using full set of frames 
+Training Iteration 792 
+using full set of frames 
+Training Iteration 793 
+using full set of frames 
+Training Iteration 794 
+using full set of frames 
+Training Iteration 795 
+using full set of frames 
+Training Iteration 796 
+using full set of frames 
+Training Iteration 797 
+using full set of frames 
+Training Iteration 798 
+using full set of frames 
+Training Iteration 799 
+using full set of frames 
+Training Iteration 800 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-800 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 801 
+using full set of frames 
+Training Iteration 802 
+using full set of frames 
+Training Iteration 803 
+using full set of frames 
+Training Iteration 804 
+using full set of frames 
+Training Iteration 805 
+using full set of frames 
+Training Iteration 806 
+using full set of frames 
+Training Iteration 807 
+using full set of frames 
+Training Iteration 808 
+using full set of frames 
+Training Iteration 809 
+using full set of frames 
+Training Iteration 810 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-810 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 811 
+using full set of frames 
+Training Iteration 812 
+using full set of frames 
+Training Iteration 813 
+using full set of frames 
+Training Iteration 814 
+using full set of frames 
+Training Iteration 815 
+using full set of frames 
+Training Iteration 816 
+using full set of frames 
+Training Iteration 817 
+using full set of frames 
+Training Iteration 818 
+using full set of frames 
+Training Iteration 819 
+using full set of frames 
+Training Iteration 820 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-820 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 821 
+using full set of frames 
+Training Iteration 822 
+using full set of frames 
+Training Iteration 823 
+using full set of frames 
+Training Iteration 824 
+using full set of frames 
+Training Iteration 825 
+using full set of frames 
+Training Iteration 826 
+using full set of frames 
+Training Iteration 827 
+using full set of frames 
+Training Iteration 828 
+using full set of frames 
+Training Iteration 829 
+using full set of frames 
+Training Iteration 830 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-830 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 831 
+using full set of frames 
+Training Iteration 832 
+using full set of frames 
+Training Iteration 833 
+using full set of frames 
+Training Iteration 834 
+using full set of frames 
+Training Iteration 835 
+using full set of frames 
+Training Iteration 836 
+using full set of frames 
+Training Iteration 837 
+using full set of frames 
+Training Iteration 838 
+using full set of frames 
+Training Iteration 839 
+using full set of frames 
+Training Iteration 840 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-840 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 841 
+using full set of frames 
+Training Iteration 842 
+using full set of frames 
+Training Iteration 843 
+using full set of frames 
+Training Iteration 844 
+using full set of frames 
+Training Iteration 845 
+using full set of frames 
+Training Iteration 846 
+using full set of frames 
+Training Iteration 847 
+using full set of frames 
+Training Iteration 848 
+using full set of frames 
+Training Iteration 849 
+using full set of frames 
+Training Iteration 850 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-850 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 851 
+using full set of frames 
+Training Iteration 852 
+using full set of frames 
+Training Iteration 853 
+using full set of frames 
+Training Iteration 854 
+using full set of frames 
+Training Iteration 855 
+using full set of frames 
+Training Iteration 856 
+using full set of frames 
+Training Iteration 857 
+using full set of frames 
+Training Iteration 858 
+using full set of frames 
+Training Iteration 859 
+using full set of frames 
+Training Iteration 860 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-860 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 861 
+using full set of frames 
+Training Iteration 862 
+using full set of frames 
+Training Iteration 863 
+using full set of frames 
+Training Iteration 864 
+using full set of frames 
+Training Iteration 865 
+using full set of frames 
+Training Iteration 866 
+using full set of frames 
+Training Iteration 867 
+using full set of frames 
+Training Iteration 868 
+using full set of frames 
+Training Iteration 869 
+using full set of frames 
+Training Iteration 870 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-870 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 871 
+using full set of frames 
+Training Iteration 872 
+using full set of frames 
+Training Iteration 873 
+using full set of frames 
+Training Iteration 874 
+using full set of frames 
+Training Iteration 875 
+using full set of frames 
+Training Iteration 876 
+using full set of frames 
+Training Iteration 877 
+using full set of frames 
+Training Iteration 878 
+using full set of frames 
+Training Iteration 879 
+using full set of frames 
+Training Iteration 880 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-880 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 881 
+using full set of frames 
+Training Iteration 882 
+using full set of frames 
+Training Iteration 883 
+using full set of frames 
+Training Iteration 884 
+using full set of frames 
+Training Iteration 885 
+using full set of frames 
+Training Iteration 886 
+using full set of frames 
+Training Iteration 887 
+using full set of frames 
+Training Iteration 888 
+using full set of frames 
+Training Iteration 889 
+using full set of frames 
+Training Iteration 890 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-890 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 891 
+using full set of frames 
+Training Iteration 892 
+using full set of frames 
+Training Iteration 893 
+using full set of frames 
+Training Iteration 894 
+using full set of frames 
+Training Iteration 895 
+using full set of frames 
+Training Iteration 896 
+using full set of frames 
+Training Iteration 897 
+using full set of frames 
+Training Iteration 898 
+using full set of frames 
+Training Iteration 899 
+using full set of frames 
+Training Iteration 900 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-900 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 901 
+using full set of frames 
+Training Iteration 902 
+using full set of frames 
+Training Iteration 903 
+using full set of frames 
+Training Iteration 904 
+using full set of frames 
+Training Iteration 905 
+using full set of frames 
+Training Iteration 906 
+using full set of frames 
+Training Iteration 907 
+using full set of frames 
+Training Iteration 908 
+using full set of frames 
+Training Iteration 909 
+using full set of frames 
+Training Iteration 910 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-910 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 911 
+using full set of frames 
+Training Iteration 912 
+using full set of frames 
+Training Iteration 913 
+using full set of frames 
+Training Iteration 914 
+using full set of frames 
+Training Iteration 915 
+using full set of frames 
+Training Iteration 916 
+using full set of frames 
+Training Iteration 917 
+using full set of frames 
+Training Iteration 918 
+using full set of frames 
+Training Iteration 919 
+using full set of frames 
+Training Iteration 920 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-920 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 921 
+using full set of frames 
+Training Iteration 922 
+using full set of frames 
+Training Iteration 923 
+using full set of frames 
+Training Iteration 924 
+using full set of frames 
+Training Iteration 925 
+using full set of frames 
+Training Iteration 926 
+using full set of frames 
+Training Iteration 927 
+using full set of frames 
+Training Iteration 928 
+using full set of frames 
+Training Iteration 929 
+using full set of frames 
+Training Iteration 930 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-930 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 931 
+using full set of frames 
+Training Iteration 932 
+using full set of frames 
+Training Iteration 933 
+using full set of frames 
+Training Iteration 934 
+using full set of frames 
+Training Iteration 935 
+using full set of frames 
+Training Iteration 936 
+using full set of frames 
+Training Iteration 937 
+using full set of frames 
+Training Iteration 938 
+using full set of frames 
+Training Iteration 939 
+using full set of frames 
+Training Iteration 940 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-940 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 941 
+using full set of frames 
+Training Iteration 942 
+using full set of frames 
+Training Iteration 943 
+using full set of frames 
+Training Iteration 944 
+using full set of frames 
+Training Iteration 945 
+using full set of frames 
+Training Iteration 946 
+using full set of frames 
+Training Iteration 947 
+using full set of frames 
+Training Iteration 948 
+using full set of frames 
+Training Iteration 949 
+using full set of frames 
+Training Iteration 950 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-950 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 951 
+using full set of frames 
+Training Iteration 952 
+using full set of frames 
+Training Iteration 953 
+using full set of frames 
+Training Iteration 954 
+using full set of frames 
+Training Iteration 955 
+using full set of frames 
+Training Iteration 956 
+using full set of frames 
+Training Iteration 957 
+using full set of frames 
+Training Iteration 958 
+using full set of frames 
+Training Iteration 959 
+using full set of frames 
+Training Iteration 960 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-960 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 961 
+using full set of frames 
+Training Iteration 962 
+using full set of frames 
+Training Iteration 963 
+using full set of frames 
+Training Iteration 964 
+using full set of frames 
+Training Iteration 965 
+using full set of frames 
+Training Iteration 966 
+using full set of frames 
+Training Iteration 967 
+using full set of frames 
+Training Iteration 968 
+using full set of frames 
+Training Iteration 969 
+using full set of frames 
+Training Iteration 970 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-970 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 971 
+using full set of frames 
+Training Iteration 972 
+using full set of frames 
+Training Iteration 973 
+using full set of frames 
+Training Iteration 974 
+using full set of frames 
+Training Iteration 975 
+using full set of frames 
+Training Iteration 976 
+using full set of frames 
+Training Iteration 977 
+using full set of frames 
+Training Iteration 978 
+using full set of frames 
+Training Iteration 979 
+using full set of frames 
+Training Iteration 980 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-980 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 981 
+using full set of frames 
+Training Iteration 982 
+using full set of frames 
+Training Iteration 983 
+using full set of frames 
+Training Iteration 984 
+using full set of frames 
+Training Iteration 985 
+using full set of frames 
+Training Iteration 986 
+using full set of frames 
+Training Iteration 987 
+using full set of frames 
+Training Iteration 988 
+using full set of frames 
+Training Iteration 989 
+using full set of frames 
+Training Iteration 990 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-990 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 991 
+using full set of frames 
+Training Iteration 992 
+using full set of frames 
+Training Iteration 993 
+using full set of frames 
+Training Iteration 994 
+using full set of frames 
+Training Iteration 995 
+using full set of frames 
+Training Iteration 996 
+using full set of frames 
+Training Iteration 997 
+using full set of frames 
+Training Iteration 998 
+using full set of frames 
+Training Iteration 999 
+using full set of frames 
+Training Iteration 1000 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1000 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1001 
+using full set of frames 
+Training Iteration 1002 
+using full set of frames 
+Training Iteration 1003 
+using full set of frames 
+Training Iteration 1004 
+using full set of frames 
+Training Iteration 1005 
+using full set of frames 
+Training Iteration 1006 
+using full set of frames 
+Training Iteration 1007 
+using full set of frames 
+Training Iteration 1008 
+using full set of frames 
+Training Iteration 1009 
+using full set of frames 
+Training Iteration 1010 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1010 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1011 
+using full set of frames 
+Training Iteration 1012 
+using full set of frames 
+Training Iteration 1013 
+using full set of frames 
+Training Iteration 1014 
+using full set of frames 
+Training Iteration 1015 
+using full set of frames 
+Training Iteration 1016 
+using full set of frames 
+Training Iteration 1017 
+using full set of frames 
+Training Iteration 1018 
+using full set of frames 
+Training Iteration 1019 
+using full set of frames 
+Training Iteration 1020 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1020 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1021 
+using full set of frames 
+Training Iteration 1022 
+using full set of frames 
+Training Iteration 1023 
+using full set of frames 
+Training Iteration 1024 
+using full set of frames 
+Training Iteration 1025 
+using full set of frames 
+Training Iteration 1026 
+using full set of frames 
+Training Iteration 1027 
+using full set of frames 
+Training Iteration 1028 
+using full set of frames 
+Training Iteration 1029 
+using full set of frames 
+Training Iteration 1030 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1030 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1031 
+using full set of frames 
+Training Iteration 1032 
+using full set of frames 
+Training Iteration 1033 
+using full set of frames 
+Training Iteration 1034 
+using full set of frames 
+Training Iteration 1035 
+using full set of frames 
+Training Iteration 1036 
+using full set of frames 
+Training Iteration 1037 
+using full set of frames 
+Training Iteration 1038 
+using full set of frames 
+Training Iteration 1039 
+using full set of frames 
+Training Iteration 1040 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1040 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1041 
+using full set of frames 
+Training Iteration 1042 
+using full set of frames 
+Training Iteration 1043 
+using full set of frames 
+Training Iteration 1044 
+using full set of frames 
+Training Iteration 1045 
+using full set of frames 
+Training Iteration 1046 
+using full set of frames 
+Training Iteration 1047 
+using full set of frames 
+Training Iteration 1048 
+using full set of frames 
+Training Iteration 1049 
+using full set of frames 
+Training Iteration 1050 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1050 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1051 
+using full set of frames 
+Training Iteration 1052 
+using full set of frames 
+Training Iteration 1053 
+using full set of frames 
+Training Iteration 1054 
+using full set of frames 
+Training Iteration 1055 
+using full set of frames 
+Training Iteration 1056 
+using full set of frames 
+Training Iteration 1057 
+using full set of frames 
+Training Iteration 1058 
+using full set of frames 
+Training Iteration 1059 
+using full set of frames 
+Training Iteration 1060 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1060 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1061 
+using full set of frames 
+Training Iteration 1062 
+using full set of frames 
+Training Iteration 1063 
+using full set of frames 
+Training Iteration 1064 
+using full set of frames 
+Training Iteration 1065 
+using full set of frames 
+Training Iteration 1066 
+using full set of frames 
+Training Iteration 1067 
+using full set of frames 
+Training Iteration 1068 
+using full set of frames 
+Training Iteration 1069 
+using full set of frames 
+Training Iteration 1070 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1070 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1071 
+using full set of frames 
+Training Iteration 1072 
+using full set of frames 
+Training Iteration 1073 
+using full set of frames 
+Training Iteration 1074 
+using full set of frames 
+Training Iteration 1075 
+using full set of frames 
+Training Iteration 1076 
+using full set of frames 
+Training Iteration 1077 
+using full set of frames 
+Training Iteration 1078 
+using full set of frames 
+Training Iteration 1079 
+using full set of frames 
+Training Iteration 1080 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1080 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1081 
+using full set of frames 
+Training Iteration 1082 
+using full set of frames 
+Training Iteration 1083 
+using full set of frames 
+Training Iteration 1084 
+using full set of frames 
+Training Iteration 1085 
+using full set of frames 
+Training Iteration 1086 
+using full set of frames 
+Training Iteration 1087 
+using full set of frames 
+Training Iteration 1088 
+using full set of frames 
+Training Iteration 1089 
+using full set of frames 
+Training Iteration 1090 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1090 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1091 
+using full set of frames 
+Training Iteration 1092 
+using full set of frames 
+Training Iteration 1093 
+using full set of frames 
+Training Iteration 1094 
+using full set of frames 
+Training Iteration 1095 
+using full set of frames 
+Training Iteration 1096 
+using full set of frames 
+Training Iteration 1097 
+using full set of frames 
+Training Iteration 1098 
+using full set of frames 
+Training Iteration 1099 
+using full set of frames 
+Training Iteration 1100 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1100 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1101 
+using full set of frames 
+Training Iteration 1102 
+using full set of frames 
+Training Iteration 1103 
+using full set of frames 
+Training Iteration 1104 
+using full set of frames 
+Training Iteration 1105 
+using full set of frames 
+Training Iteration 1106 
+using full set of frames 
+Training Iteration 1107 
+using full set of frames 
+Training Iteration 1108 
+using full set of frames 
+Training Iteration 1109 
+using full set of frames 
+Training Iteration 1110 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1110 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1111 
+using full set of frames 
+Training Iteration 1112 
+using full set of frames 
+Training Iteration 1113 
+using full set of frames 
+Training Iteration 1114 
+using full set of frames 
+Training Iteration 1115 
+using full set of frames 
+Training Iteration 1116 
+using full set of frames 
+Training Iteration 1117 
+using full set of frames 
+Training Iteration 1118 
+using full set of frames 
+Training Iteration 1119 
+using full set of frames 
+Training Iteration 1120 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1120 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1121 
+using full set of frames 
+Training Iteration 1122 
+using full set of frames 
+Training Iteration 1123 
+using full set of frames 
+Training Iteration 1124 
+using full set of frames 
+Training Iteration 1125 
+using full set of frames 
+Training Iteration 1126 
+using full set of frames 
+Training Iteration 1127 
+using full set of frames 
+Training Iteration 1128 
+using full set of frames 
+Training Iteration 1129 
+using full set of frames 
+Training Iteration 1130 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1130 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1131 
+using full set of frames 
+Training Iteration 1132 
+using full set of frames 
+Training Iteration 1133 
+using full set of frames 
+Training Iteration 1134 
+using full set of frames 
+Training Iteration 1135 
+using full set of frames 
+Training Iteration 1136 
+using full set of frames 
+Training Iteration 1137 
+using full set of frames 
+Training Iteration 1138 
+using full set of frames 
+Training Iteration 1139 
+using full set of frames 
+Training Iteration 1140 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1140 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1141 
+using full set of frames 
+Training Iteration 1142 
+using full set of frames 
+Training Iteration 1143 
+using full set of frames 
+Training Iteration 1144 
+using full set of frames 
+Training Iteration 1145 
+using full set of frames 
+Training Iteration 1146 
+using full set of frames 
+Training Iteration 1147 
+using full set of frames 
+Training Iteration 1148 
+using full set of frames 
+Training Iteration 1149 
+using full set of frames 
+Training Iteration 1150 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1150 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1151 
+using full set of frames 
+Training Iteration 1152 
+using full set of frames 
+Training Iteration 1153 
+using full set of frames 
+Training Iteration 1154 
+using full set of frames 
+Training Iteration 1155 
+using full set of frames 
+Training Iteration 1156 
+using full set of frames 
+Training Iteration 1157 
+using full set of frames 
+Training Iteration 1158 
+using full set of frames 
+Training Iteration 1159 
+using full set of frames 
+Training Iteration 1160 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1160 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1161 
+using full set of frames 
+Training Iteration 1162 
+using full set of frames 
+Training Iteration 1163 
+using full set of frames 
+Training Iteration 1164 
+using full set of frames 
+Training Iteration 1165 
+using full set of frames 
+Training Iteration 1166 
+using full set of frames 
+Training Iteration 1167 
+using full set of frames 
+Interrupt signal caught. Closing gracefully. 
+====================================================
+Started New Run at: 2017-07-29 11:53:59.577229
+PID: 19027
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+using configured model_filename: out/d2-3200-v1-1-1/model-1160.h5
+Continuing from a previous run at iteration:  1167 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 1167 
+num_iterations: 2000 
+fit_batch_size: 100 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'params': {}, 'name': 'RMSprop'} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-1160.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+loading model: out/d2-3200-v1-1-1/model-1160.h5 
+saving config after loading model 
+saving config 
+generate_len: None 
+Training Iteration 1167 
+Make all lstms trainable 
+Compiling model 
+using full set of frames 
+Training Iteration 1168 
+using full set of frames 
+Training Iteration 1169 
+using full set of frames 
+Training Iteration 1170 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1170 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1171 
+using full set of frames 
+Training Iteration 1172 
+using full set of frames 
+Training Iteration 1173 
+using full set of frames 
+Training Iteration 1174 
+using full set of frames 
+Training Iteration 1175 
+using full set of frames 
+Training Iteration 1176 
+using full set of frames 
+Training Iteration 1177 
+using full set of frames 
+Training Iteration 1178 
+using full set of frames 
+Training Iteration 1179 
+using full set of frames 
+Training Iteration 1180 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1180 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1181 
+using full set of frames 
+Training Iteration 1182 
+using full set of frames 
+Training Iteration 1183 
+using full set of frames 
+Training Iteration 1184 
+using full set of frames 
+Training Iteration 1185 
+using full set of frames 
+Training Iteration 1186 
+using full set of frames 
+Training Iteration 1187 
+using full set of frames 
+Training Iteration 1188 
+using full set of frames 
+Training Iteration 1189 
+using full set of frames 
+Training Iteration 1190 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1190 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1191 
+using full set of frames 
+Training Iteration 1192 
+using full set of frames 
+Training Iteration 1193 
+using full set of frames 
+Training Iteration 1194 
+using full set of frames 
+Training Iteration 1195 
+using full set of frames 
+Training Iteration 1196 
+using full set of frames 
+Training Iteration 1197 
+using full set of frames 
+Training Iteration 1198 
+using full set of frames 
+Training Iteration 1199 
+using full set of frames 
+Training Iteration 1200 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1200 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1201 
+using full set of frames 
+Training Iteration 1202 
+using full set of frames 
+Training Iteration 1203 
+using full set of frames 
+Training Iteration 1204 
+using full set of frames 
+Training Iteration 1205 
+using full set of frames 
+Training Iteration 1206 
+using full set of frames 
+Training Iteration 1207 
+using full set of frames 
+Training Iteration 1208 
+using full set of frames 
+Training Iteration 1209 
+using full set of frames 
+Training Iteration 1210 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1210 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1211 
+using full set of frames 
+Training Iteration 1212 
+using full set of frames 
+Training Iteration 1213 
+using full set of frames 
+Training Iteration 1214 
+using full set of frames 
+Training Iteration 1215 
+using full set of frames 
+Training Iteration 1216 
+using full set of frames 
+Training Iteration 1217 
+using full set of frames 
+Training Iteration 1218 
+using full set of frames 
+Training Iteration 1219 
+using full set of frames 
+Training Iteration 1220 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1220 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1221 
+using full set of frames 
+Training Iteration 1222 
+using full set of frames 
+Training Iteration 1223 
+using full set of frames 
+Training Iteration 1224 
+using full set of frames 
+Training Iteration 1225 
+using full set of frames 
+Training Iteration 1226 
+using full set of frames 
+Training Iteration 1227 
+using full set of frames 
+Training Iteration 1228 
+using full set of frames 
+Training Iteration 1229 
+using full set of frames 
+Training Iteration 1230 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1230 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1231 
+using full set of frames 
+Training Iteration 1232 
+using full set of frames 
+Training Iteration 1233 
+using full set of frames 
+Training Iteration 1234 
+using full set of frames 
+Training Iteration 1235 
+using full set of frames 
+Training Iteration 1236 
+using full set of frames 
+Training Iteration 1237 
+using full set of frames 
+Training Iteration 1238 
+using full set of frames 
+Training Iteration 1239 
+using full set of frames 
+Training Iteration 1240 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1240 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1241 
+using full set of frames 
+Training Iteration 1242 
+using full set of frames 
+Training Iteration 1243 
+using full set of frames 
+Training Iteration 1244 
+using full set of frames 
+Training Iteration 1245 
+using full set of frames 
+Training Iteration 1246 
+using full set of frames 
+Training Iteration 1247 
+using full set of frames 
+Training Iteration 1248 
+using full set of frames 
+Training Iteration 1249 
+using full set of frames 
+Training Iteration 1250 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1250 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1251 
+using full set of frames 
+Training Iteration 1252 
+using full set of frames 
+Training Iteration 1253 
+using full set of frames 
+Training Iteration 1254 
+using full set of frames 
+Training Iteration 1255 
+using full set of frames 
+Training Iteration 1256 
+using full set of frames 
+Training Iteration 1257 
+using full set of frames 
+Training Iteration 1258 
+using full set of frames 
+Training Iteration 1259 
+using full set of frames 
+Training Iteration 1260 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1260 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1261 
+using full set of frames 
+Training Iteration 1262 
+using full set of frames 
+Training Iteration 1263 
+using full set of frames 
+Training Iteration 1264 
+using full set of frames 
+Training Iteration 1265 
+using full set of frames 
+Training Iteration 1266 
+using full set of frames 
+Training Iteration 1267 
+using full set of frames 
+Training Iteration 1268 
+using full set of frames 
+Training Iteration 1269 
+using full set of frames 
+Training Iteration 1270 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1270 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1271 
+using full set of frames 
+Training Iteration 1272 
+using full set of frames 
+Training Iteration 1273 
+using full set of frames 
+Training Iteration 1274 
+using full set of frames 
+Training Iteration 1275 
+using full set of frames 
+Training Iteration 1276 
+using full set of frames 
+Training Iteration 1277 
+using full set of frames 
+Training Iteration 1278 
+using full set of frames 
+Training Iteration 1279 
+using full set of frames 
+Training Iteration 1280 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1280 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1281 
+using full set of frames 
+Training Iteration 1282 
+using full set of frames 
+Training Iteration 1283 
+using full set of frames 
+Training Iteration 1284 
+using full set of frames 
+Training Iteration 1285 
+using full set of frames 
+Training Iteration 1286 
+using full set of frames 
+Training Iteration 1287 
+using full set of frames 
+Training Iteration 1288 
+using full set of frames 
+Training Iteration 1289 
+using full set of frames 
+Training Iteration 1290 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1290 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1291 
+using full set of frames 
+Training Iteration 1292 
+using full set of frames 
+Training Iteration 1293 
+using full set of frames 
+Training Iteration 1294 
+using full set of frames 
+Training Iteration 1295 
+using full set of frames 
+Training Iteration 1296 
+using full set of frames 
+Training Iteration 1297 
+using full set of frames 
+Training Iteration 1298 
+using full set of frames 
+Training Iteration 1299 
+using full set of frames 
+Training Iteration 1300 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1300 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1301 
+using full set of frames 
+Training Iteration 1302 
+using full set of frames 
+Training Iteration 1303 
+using full set of frames 
+Training Iteration 1304 
+using full set of frames 
+Training Iteration 1305 
+using full set of frames 
+Training Iteration 1306 
+using full set of frames 
+Training Iteration 1307 
+using full set of frames 
+Training Iteration 1308 
+using full set of frames 
+Training Iteration 1309 
+using full set of frames 
+Training Iteration 1310 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1310 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1311 
+using full set of frames 
+Training Iteration 1312 
+using full set of frames 
+Training Iteration 1313 
+using full set of frames 
+Training Iteration 1314 
+using full set of frames 
+Training Iteration 1315 
+using full set of frames 
+Training Iteration 1316 
+using full set of frames 
+Training Iteration 1317 
+using full set of frames 
+Training Iteration 1318 
+using full set of frames 
+Training Iteration 1319 
+using full set of frames 
+Training Iteration 1320 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1320 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1321 
+using full set of frames 
+Training Iteration 1322 
+using full set of frames 
+Training Iteration 1323 
+using full set of frames 
+Training Iteration 1324 
+using full set of frames 
+Training Iteration 1325 
+using full set of frames 
+Training Iteration 1326 
+using full set of frames 
+Training Iteration 1327 
+using full set of frames 
+Training Iteration 1328 
+using full set of frames 
+Training Iteration 1329 
+using full set of frames 
+Training Iteration 1330 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1330 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1331 
+using full set of frames 
+Training Iteration 1332 
+using full set of frames 
+Training Iteration 1333 
+using full set of frames 
+Training Iteration 1334 
+using full set of frames 
+Training Iteration 1335 
+using full set of frames 
+Training Iteration 1336 
+using full set of frames 
+Training Iteration 1337 
+using full set of frames 
+Training Iteration 1338 
+using full set of frames 
+Training Iteration 1339 
+using full set of frames 
+Training Iteration 1340 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1340 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1341 
+using full set of frames 
+Training Iteration 1342 
+using full set of frames 
+Training Iteration 1343 
+using full set of frames 
+Training Iteration 1344 
+using full set of frames 
+Training Iteration 1345 
+using full set of frames 
+Training Iteration 1346 
+using full set of frames 
+Training Iteration 1347 
+using full set of frames 
+Training Iteration 1348 
+using full set of frames 
+Training Iteration 1349 
+using full set of frames 
+Training Iteration 1350 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1350 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1351 
+using full set of frames 
+Training Iteration 1352 
+using full set of frames 
+Training Iteration 1353 
+using full set of frames 
+Training Iteration 1354 
+using full set of frames 
+Training Iteration 1355 
+using full set of frames 
+Training Iteration 1356 
+using full set of frames 
+Training Iteration 1357 
+using full set of frames 
+Training Iteration 1358 
+using full set of frames 
+Training Iteration 1359 
+using full set of frames 
+Training Iteration 1360 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1360 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1361 
+using full set of frames 
+Training Iteration 1362 
+using full set of frames 
+Training Iteration 1363 
+using full set of frames 
+Training Iteration 1364 
+using full set of frames 
+Training Iteration 1365 
+using full set of frames 
+Training Iteration 1366 
+using full set of frames 
+Training Iteration 1367 
+using full set of frames 
+Training Iteration 1368 
+using full set of frames 
+Training Iteration 1369 
+using full set of frames 
+Training Iteration 1370 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1370 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1371 
+using full set of frames 
+Training Iteration 1372 
+using full set of frames 
+Training Iteration 1373 
+using full set of frames 
+Training Iteration 1374 
+using full set of frames 
+Training Iteration 1375 
+using full set of frames 
+Training Iteration 1376 
+using full set of frames 
+Training Iteration 1377 
+using full set of frames 
+Training Iteration 1378 
+using full set of frames 
+Training Iteration 1379 
+using full set of frames 
+Training Iteration 1380 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1380 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1381 
+using full set of frames 
+Training Iteration 1382 
+using full set of frames 
+Training Iteration 1383 
+using full set of frames 
+Training Iteration 1384 
+using full set of frames 
+Training Iteration 1385 
+using full set of frames 
+Training Iteration 1386 
+using full set of frames 
+Training Iteration 1387 
+using full set of frames 
+Training Iteration 1388 
+using full set of frames 
+Training Iteration 1389 
+using full set of frames 
+Training Iteration 1390 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1390 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1391 
+using full set of frames 
+Training Iteration 1392 
+using full set of frames 
+Training Iteration 1393 
+using full set of frames 
+Training Iteration 1394 
+using full set of frames 
+Training Iteration 1395 
+using full set of frames 
+Training Iteration 1396 
+using full set of frames 
+Training Iteration 1397 
+using full set of frames 
+Training Iteration 1398 
+using full set of frames 
+Training Iteration 1399 
+using full set of frames 
+Training Iteration 1400 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1400 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1401 
+using full set of frames 
+Training Iteration 1402 
+using full set of frames 
+Training Iteration 1403 
+using full set of frames 
+Training Iteration 1404 
+using full set of frames 
+Training Iteration 1405 
+using full set of frames 
+Training Iteration 1406 
+using full set of frames 
+Training Iteration 1407 
+using full set of frames 
+Training Iteration 1408 
+using full set of frames 
+Training Iteration 1409 
+using full set of frames 
+Training Iteration 1410 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1410 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1411 
+using full set of frames 
+Training Iteration 1412 
+using full set of frames 
+Training Iteration 1413 
+using full set of frames 
+Training Iteration 1414 
+using full set of frames 
+Training Iteration 1415 
+using full set of frames 
+Training Iteration 1416 
+using full set of frames 
+Training Iteration 1417 
+using full set of frames 
+Training Iteration 1418 
+using full set of frames 
+Training Iteration 1419 
+using full set of frames 
+Training Iteration 1420 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1420 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1421 
+using full set of frames 
+Training Iteration 1422 
+using full set of frames 
+Training Iteration 1423 
+using full set of frames 
+Training Iteration 1424 
+using full set of frames 
+Training Iteration 1425 
+using full set of frames 
+Training Iteration 1426 
+using full set of frames 
+Training Iteration 1427 
+using full set of frames 
+Training Iteration 1428 
+using full set of frames 
+Training Iteration 1429 
+using full set of frames 
+Training Iteration 1430 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1430 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1431 
+using full set of frames 
+Training Iteration 1432 
+using full set of frames 
+Training Iteration 1433 
+using full set of frames 
+Training Iteration 1434 
+using full set of frames 
+Training Iteration 1435 
+using full set of frames 
+Training Iteration 1436 
+using full set of frames 
+Training Iteration 1437 
+using full set of frames 
+Training Iteration 1438 
+using full set of frames 
+Training Iteration 1439 
+using full set of frames 
+Training Iteration 1440 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1440 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1441 
+using full set of frames 
+Training Iteration 1442 
+using full set of frames 
+Training Iteration 1443 
+using full set of frames 
+Training Iteration 1444 
+using full set of frames 
+Training Iteration 1445 
+using full set of frames 
+Training Iteration 1446 
+using full set of frames 
+Training Iteration 1447 
+using full set of frames 
+Training Iteration 1448 
+using full set of frames 
+Training Iteration 1449 
+using full set of frames 
+Training Iteration 1450 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1450 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1451 
+using full set of frames 
+Training Iteration 1452 
+using full set of frames 
+Training Iteration 1453 
+using full set of frames 
+Training Iteration 1454 
+using full set of frames 
+Training Iteration 1455 
+using full set of frames 
+Training Iteration 1456 
+using full set of frames 
+Training Iteration 1457 
+using full set of frames 
+Training Iteration 1458 
+using full set of frames 
+Training Iteration 1459 
+using full set of frames 
+Training Iteration 1460 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1460 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1461 
+using full set of frames 
+Training Iteration 1462 
+using full set of frames 
+Training Iteration 1463 
+using full set of frames 
+Training Iteration 1464 
+using full set of frames 
+Training Iteration 1465 
+using full set of frames 
+Training Iteration 1466 
+using full set of frames 
+Training Iteration 1467 
+using full set of frames 
+Training Iteration 1468 
+using full set of frames 
+Training Iteration 1469 
+using full set of frames 
+Training Iteration 1470 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1470 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1471 
+using full set of frames 
+Training Iteration 1472 
+using full set of frames 
+Training Iteration 1473 
+using full set of frames 
+Training Iteration 1474 
+using full set of frames 
+Training Iteration 1475 
+using full set of frames 
+Training Iteration 1476 
+using full set of frames 
+Training Iteration 1477 
+using full set of frames 
+Training Iteration 1478 
+using full set of frames 
+Training Iteration 1479 
+using full set of frames 
+Training Iteration 1480 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1480 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1481 
+using full set of frames 
+Training Iteration 1482 
+using full set of frames 
+Training Iteration 1483 
+using full set of frames 
+Training Iteration 1484 
+using full set of frames 
+Training Iteration 1485 
+using full set of frames 
+Training Iteration 1486 
+using full set of frames 
+Training Iteration 1487 
+using full set of frames 
+Training Iteration 1488 
+using full set of frames 
+Training Iteration 1489 
+using full set of frames 
+Training Iteration 1490 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1490 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1491 
+using full set of frames 
+Training Iteration 1492 
+using full set of frames 
+Training Iteration 1493 
+using full set of frames 
+Training Iteration 1494 
+using full set of frames 
+Training Iteration 1495 
+using full set of frames 
+Training Iteration 1496 
+using full set of frames 
+Training Iteration 1497 
+using full set of frames 
+Training Iteration 1498 
+using full set of frames 
+Training Iteration 1499 
+using full set of frames 
+Training Iteration 1500 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1500 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1501 
+using full set of frames 
+Training Iteration 1502 
+using full set of frames 
+Training Iteration 1503 
+using full set of frames 
+Training Iteration 1504 
+using full set of frames 
+Training Iteration 1505 
+using full set of frames 
+Training Iteration 1506 
+using full set of frames 
+Training Iteration 1507 
+using full set of frames 
+Training Iteration 1508 
+using full set of frames 
+Training Iteration 1509 
+using full set of frames 
+Training Iteration 1510 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1510 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1511 
+using full set of frames 
+Training Iteration 1512 
+using full set of frames 
+Training Iteration 1513 
+using full set of frames 
+Training Iteration 1514 
+using full set of frames 
+Training Iteration 1515 
+using full set of frames 
+Training Iteration 1516 
+using full set of frames 
+Training Iteration 1517 
+using full set of frames 
+Training Iteration 1518 
+using full set of frames 
+Training Iteration 1519 
+using full set of frames 
+Training Iteration 1520 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1520 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1521 
+using full set of frames 
+Training Iteration 1522 
+using full set of frames 
+Training Iteration 1523 
+using full set of frames 
+Training Iteration 1524 
+using full set of frames 
+Training Iteration 1525 
+using full set of frames 
+Training Iteration 1526 
+using full set of frames 
+Training Iteration 1527 
+using full set of frames 
+Training Iteration 1528 
+using full set of frames 
+Training Iteration 1529 
+using full set of frames 
+Training Iteration 1530 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1530 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1531 
+using full set of frames 
+Training Iteration 1532 
+using full set of frames 
+Training Iteration 1533 
+using full set of frames 
+Training Iteration 1534 
+using full set of frames 
+Training Iteration 1535 
+using full set of frames 
+Training Iteration 1536 
+using full set of frames 
+Training Iteration 1537 
+using full set of frames 
+Training Iteration 1538 
+using full set of frames 
+Training Iteration 1539 
+using full set of frames 
+Training Iteration 1540 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1540 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1541 
+using full set of frames 
+Training Iteration 1542 
+using full set of frames 
+Training Iteration 1543 
+using full set of frames 
+Training Iteration 1544 
+using full set of frames 
+Training Iteration 1545 
+using full set of frames 
+Training Iteration 1546 
+using full set of frames 
+Training Iteration 1547 
+using full set of frames 
+Training Iteration 1548 
+using full set of frames 
+Training Iteration 1549 
+using full set of frames 
+Training Iteration 1550 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1550 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1551 
+using full set of frames 
+Training Iteration 1552 
+using full set of frames 
+Training Iteration 1553 
+using full set of frames 
+Training Iteration 1554 
+using full set of frames 
+Training Iteration 1555 
+using full set of frames 
+Training Iteration 1556 
+using full set of frames 
+Training Iteration 1557 
+using full set of frames 
+Training Iteration 1558 
+using full set of frames 
+Training Iteration 1559 
+using full set of frames 
+Training Iteration 1560 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1560 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1561 
+using full set of frames 
+Training Iteration 1562 
+using full set of frames 
+Training Iteration 1563 
+using full set of frames 
+Training Iteration 1564 
+using full set of frames 
+Training Iteration 1565 
+using full set of frames 
+Training Iteration 1566 
+using full set of frames 
+Training Iteration 1567 
+using full set of frames 
+Training Iteration 1568 
+using full set of frames 
+Training Iteration 1569 
+using full set of frames 
+Training Iteration 1570 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1570 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1571 
+using full set of frames 
+Training Iteration 1572 
+using full set of frames 
+Training Iteration 1573 
+using full set of frames 
+Training Iteration 1574 
+using full set of frames 
+Training Iteration 1575 
+using full set of frames 
+Training Iteration 1576 
+using full set of frames 
+Training Iteration 1577 
+using full set of frames 
+Training Iteration 1578 
+using full set of frames 
+Training Iteration 1579 
+using full set of frames 
+Training Iteration 1580 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1580 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1581 
+using full set of frames 
+Training Iteration 1582 
+using full set of frames 
+Training Iteration 1583 
+using full set of frames 
+Training Iteration 1584 
+using full set of frames 
+Training Iteration 1585 
+using full set of frames 
+Training Iteration 1586 
+using full set of frames 
+Training Iteration 1587 
+using full set of frames 
+Training Iteration 1588 
+using full set of frames 
+Training Iteration 1589 
+using full set of frames 
+Training Iteration 1590 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1590 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1591 
+using full set of frames 
+Training Iteration 1592 
+using full set of frames 
+Training Iteration 1593 
+using full set of frames 
+Training Iteration 1594 
+using full set of frames 
+Training Iteration 1595 
+using full set of frames 
+Training Iteration 1596 
+using full set of frames 
+Training Iteration 1597 
+using full set of frames 
+Training Iteration 1598 
+using full set of frames 
+Training Iteration 1599 
+using full set of frames 
+Training Iteration 1600 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1600 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1601 
+using full set of frames 
+Training Iteration 1602 
+using full set of frames 
+Training Iteration 1603 
+using full set of frames 
+Training Iteration 1604 
+using full set of frames 
+Training Iteration 1605 
+using full set of frames 
+Training Iteration 1606 
+using full set of frames 
+Training Iteration 1607 
+using full set of frames 
+Training Iteration 1608 
+using full set of frames 
+Training Iteration 1609 
+using full set of frames 
+Training Iteration 1610 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1610 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1611 
+using full set of frames 
+Training Iteration 1612 
+using full set of frames 
+Training Iteration 1613 
+using full set of frames 
+Training Iteration 1614 
+using full set of frames 
+Training Iteration 1615 
+using full set of frames 
+Training Iteration 1616 
+using full set of frames 
+Training Iteration 1617 
+using full set of frames 
+Training Iteration 1618 
+using full set of frames 
+Training Iteration 1619 
+using full set of frames 
+Training Iteration 1620 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1620 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1621 
+using full set of frames 
+Training Iteration 1622 
+using full set of frames 
+Training Iteration 1623 
+using full set of frames 
+Training Iteration 1624 
+using full set of frames 
+Training Iteration 1625 
+using full set of frames 
+Training Iteration 1626 
+using full set of frames 
+Training Iteration 1627 
+using full set of frames 
+Training Iteration 1628 
+using full set of frames 
+Training Iteration 1629 
+using full set of frames 
+Training Iteration 1630 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1630 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1631 
+using full set of frames 
+Training Iteration 1632 
+using full set of frames 
+Training Iteration 1633 
+using full set of frames 
+Training Iteration 1634 
+using full set of frames 
+Training Iteration 1635 
+using full set of frames 
+Training Iteration 1636 
+using full set of frames 
+Training Iteration 1637 
+using full set of frames 
+Training Iteration 1638 
+using full set of frames 
+Training Iteration 1639 
+using full set of frames 
+Training Iteration 1640 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1640 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1641 
+using full set of frames 
+Training Iteration 1642 
+using full set of frames 
+Training Iteration 1643 
+using full set of frames 
+Training Iteration 1644 
+using full set of frames 
+Training Iteration 1645 
+using full set of frames 
+Training Iteration 1646 
+using full set of frames 
+Training Iteration 1647 
+using full set of frames 
+Training Iteration 1648 
+using full set of frames 
+Training Iteration 1649 
+using full set of frames 
+Training Iteration 1650 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1650 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1651 
+using full set of frames 
+Training Iteration 1652 
+using full set of frames 
+Training Iteration 1653 
+using full set of frames 
+Training Iteration 1654 
+using full set of frames 
+Training Iteration 1655 
+using full set of frames 
+Training Iteration 1656 
+using full set of frames 
+Training Iteration 1657 
+using full set of frames 
+Training Iteration 1658 
+using full set of frames 
+Training Iteration 1659 
+using full set of frames 
+Training Iteration 1660 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1660 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1661 
+using full set of frames 
+Training Iteration 1662 
+using full set of frames 
+Training Iteration 1663 
+using full set of frames 
+Training Iteration 1664 
+using full set of frames 
+Training Iteration 1665 
+using full set of frames 
+Training Iteration 1666 
+using full set of frames 
+Training Iteration 1667 
+using full set of frames 
+Training Iteration 1668 
+using full set of frames 
+Training Iteration 1669 
+using full set of frames 
+Training Iteration 1670 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1670 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1671 
+using full set of frames 
+Training Iteration 1672 
+using full set of frames 
+Training Iteration 1673 
+using full set of frames 
+Training Iteration 1674 
+using full set of frames 
+Training Iteration 1675 
+using full set of frames 
+Training Iteration 1676 
+using full set of frames 
+Training Iteration 1677 
+using full set of frames 
+Training Iteration 1678 
+using full set of frames 
+Training Iteration 1679 
+using full set of frames 
+Training Iteration 1680 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1680 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1681 
+using full set of frames 
+Training Iteration 1682 
+using full set of frames 
+Training Iteration 1683 
+using full set of frames 
+Training Iteration 1684 
+using full set of frames 
+Training Iteration 1685 
+using full set of frames 
+Training Iteration 1686 
+using full set of frames 
+Training Iteration 1687 
+using full set of frames 
+Training Iteration 1688 
+using full set of frames 
+Training Iteration 1689 
+using full set of frames 
+Training Iteration 1690 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1690 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1691 
+using full set of frames 
+Training Iteration 1692 
+using full set of frames 
+Training Iteration 1693 
+using full set of frames 
+Training Iteration 1694 
+using full set of frames 
+Training Iteration 1695 
+using full set of frames 
+Training Iteration 1696 
+using full set of frames 
+Training Iteration 1697 
+using full set of frames 
+Training Iteration 1698 
+using full set of frames 
+Training Iteration 1699 
+using full set of frames 
+Training Iteration 1700 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1700 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1701 
+using full set of frames 
+Training Iteration 1702 
+using full set of frames 
+Training Iteration 1703 
+using full set of frames 
+Training Iteration 1704 
+using full set of frames 
+Training Iteration 1705 
+using full set of frames 
+Training Iteration 1706 
+using full set of frames 
+Training Iteration 1707 
+using full set of frames 
+Training Iteration 1708 
+using full set of frames 
+Training Iteration 1709 
+using full set of frames 
+Training Iteration 1710 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1710 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1711 
+using full set of frames 
+Training Iteration 1712 
+using full set of frames 
+Training Iteration 1713 
+using full set of frames 
+Training Iteration 1714 
+using full set of frames 
+Training Iteration 1715 
+using full set of frames 
+Training Iteration 1716 
+using full set of frames 
+Training Iteration 1717 
+using full set of frames 
+Training Iteration 1718 
+using full set of frames 
+Training Iteration 1719 
+using full set of frames 
+Training Iteration 1720 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1720 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1721 
+using full set of frames 
+Training Iteration 1722 
+using full set of frames 
+Training Iteration 1723 
+using full set of frames 
+Training Iteration 1724 
+using full set of frames 
+Training Iteration 1725 
+using full set of frames 
+Interrupt signal caught. Closing gracefully. 
+saving config 
+====================================================
+Started New Run at: 2017-08-04 21:11:48.196419
+PID: 25733
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+using configured model_filename: out/d2-3200-v1-1-1/model-1725.h5
+Continuing from a previous run at iteration:  1725 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 1725 
+num_iterations: 2000 
+fit_batch_size: 100 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'params': {}, 'name': 'RMSprop'} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-1725.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+loading model: out/d2-3200-v1-1-1/model-1725.h5 
+saving config after loading model 
+saving config 
+generate_len: None 
+Training Iteration 1725 
+Make all lstms trainable 
+Compiling model 
+using full set of frames 
+Training Iteration 1726 
+using full set of frames 
+Training Iteration 1727 
+using full set of frames 
+Training Iteration 1728 
+using full set of frames 
+Training Iteration 1729 
+using full set of frames 
+Training Iteration 1730 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1730 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1731 
+using full set of frames 
+Training Iteration 1732 
+using full set of frames 
+Training Iteration 1733 
+using full set of frames 
+Training Iteration 1734 
+using full set of frames 
+Training Iteration 1735 
+using full set of frames 
+Training Iteration 1736 
+using full set of frames 
+Training Iteration 1737 
+using full set of frames 
+Training Iteration 1738 
+using full set of frames 
+Training Iteration 1739 
+using full set of frames 
+Training Iteration 1740 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1740 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1741 
+using full set of frames 
+Training Iteration 1742 
+using full set of frames 
+Training Iteration 1743 
+using full set of frames 
+Training Iteration 1744 
+using full set of frames 
+Training Iteration 1745 
+using full set of frames 
+Training Iteration 1746 
+using full set of frames 
+Training Iteration 1747 
+using full set of frames 
+Training Iteration 1748 
+using full set of frames 
+Training Iteration 1749 
+using full set of frames 
+Training Iteration 1750 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1750 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1751 
+using full set of frames 
+Training Iteration 1752 
+using full set of frames 
+Training Iteration 1753 
+using full set of frames 
+Training Iteration 1754 
+using full set of frames 
+Training Iteration 1755 
+using full set of frames 
+Training Iteration 1756 
+using full set of frames 
+Training Iteration 1757 
+using full set of frames 
+Training Iteration 1758 
+using full set of frames 
+Training Iteration 1759 
+using full set of frames 
+Training Iteration 1760 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1760 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1761 
+using full set of frames 
+Training Iteration 1762 
+using full set of frames 
+Training Iteration 1763 
+using full set of frames 
+Training Iteration 1764 
+using full set of frames 
+Training Iteration 1765 
+using full set of frames 
+Training Iteration 1766 
+using full set of frames 
+Training Iteration 1767 
+using full set of frames 
+Training Iteration 1768 
+using full set of frames 
+Training Iteration 1769 
+using full set of frames 
+Training Iteration 1770 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1770 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1771 
+using full set of frames 
+Training Iteration 1772 
+using full set of frames 
+Training Iteration 1773 
+using full set of frames 
+Training Iteration 1774 
+using full set of frames 
+Training Iteration 1775 
+using full set of frames 
+Training Iteration 1776 
+using full set of frames 
+Training Iteration 1777 
+using full set of frames 
+Training Iteration 1778 
+using full set of frames 
+Training Iteration 1779 
+using full set of frames 
+Training Iteration 1780 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1780 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1781 
+using full set of frames 
+Training Iteration 1782 
+using full set of frames 
+Training Iteration 1783 
+using full set of frames 
+Training Iteration 1784 
+using full set of frames 
+Training Iteration 1785 
+using full set of frames 
+Training Iteration 1786 
+using full set of frames 
+Training Iteration 1787 
+using full set of frames 
+Training Iteration 1788 
+using full set of frames 
+Training Iteration 1789 
+using full set of frames 
+Training Iteration 1790 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1790 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1791 
+using full set of frames 
+Training Iteration 1792 
+using full set of frames 
+Training Iteration 1793 
+using full set of frames 
+Training Iteration 1794 
+using full set of frames 
+Training Iteration 1795 
+using full set of frames 
+Training Iteration 1796 
+using full set of frames 
+Training Iteration 1797 
+using full set of frames 
+Training Iteration 1798 
+using full set of frames 
+Training Iteration 1799 
+using full set of frames 
+Training Iteration 1800 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1800 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1801 
+using full set of frames 
+Training Iteration 1802 
+using full set of frames 
+Training Iteration 1803 
+using full set of frames 
+Training Iteration 1804 
+using full set of frames 
+Training Iteration 1805 
+using full set of frames 
+Training Iteration 1806 
+using full set of frames 
+Training Iteration 1807 
+using full set of frames 
+Training Iteration 1808 
+using full set of frames 
+Training Iteration 1809 
+using full set of frames 
+Training Iteration 1810 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1810 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1811 
+using full set of frames 
+Training Iteration 1812 
+using full set of frames 
+Training Iteration 1813 
+using full set of frames 
+Training Iteration 1814 
+using full set of frames 
+Training Iteration 1815 
+using full set of frames 
+Training Iteration 1816 
+using full set of frames 
+Training Iteration 1817 
+using full set of frames 
+Training Iteration 1818 
+using full set of frames 
+Training Iteration 1819 
+using full set of frames 
+Training Iteration 1820 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1820 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1821 
+using full set of frames 
+Training Iteration 1822 
+using full set of frames 
+Interrupt signal caught. Closing gracefully. 
+saving config 
+====================================================
+Started New Run at: 2017-08-05 12:11:10.859213
+PID: 3931
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+using configured model_filename: out/d2-3200-v1-1-1/model-1822.h5
+Continuing from a previous run at iteration:  1822 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 1822 
+num_iterations: 2000 
+fit_batch_size: 100 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'name': 'RMSprop', 'params': {}} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-1822.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+Interrupt signal caught. Closing gracefully. 
+====================================================
+Started New Run at: 2017-08-05 12:12:06.168018
+PID: 3986
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+using configured model_filename: out/d2-3200-v1-1-1/model-1822.h5
+Continuing from a previous run at iteration:  1822 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 1822 
+num_iterations: 2400 
+fit_batch_size: 100 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'name': 'RMSprop', 'params': {}} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-1822.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+loading model: out/d2-3200-v1-1-1/model-1822.h5 
+saving config after loading model 
+saving config 
+generate_len: None 
+Training Iteration 1822 
+Make all lstms trainable 
+Compiling model 
+using full set of frames 
+Training Iteration 1823 
+using full set of frames 
+Training Iteration 1824 
+using full set of frames 
+Training Iteration 1825 
+using full set of frames 
+Training Iteration 1826 
+using full set of frames 
+Training Iteration 1827 
+using full set of frames 
+Training Iteration 1828 
+using full set of frames 
+Training Iteration 1829 
+using full set of frames 
+Training Iteration 1830 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1830 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1831 
+using full set of frames 
+Training Iteration 1832 
+using full set of frames 
+Training Iteration 1833 
+using full set of frames 
+Training Iteration 1834 
+using full set of frames 
+Training Iteration 1835 
+using full set of frames 
+Training Iteration 1836 
+using full set of frames 
+Training Iteration 1837 
+using full set of frames 
+Training Iteration 1838 
+using full set of frames 
+Training Iteration 1839 
+using full set of frames 
+Training Iteration 1840 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1840 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1841 
+using full set of frames 
+Training Iteration 1842 
+using full set of frames 
+Training Iteration 1843 
+using full set of frames 
+Training Iteration 1844 
+using full set of frames 
+Training Iteration 1845 
+using full set of frames 
+Training Iteration 1846 
+using full set of frames 
+Training Iteration 1847 
+using full set of frames 
+Training Iteration 1848 
+using full set of frames 
+Training Iteration 1849 
+using full set of frames 
+Training Iteration 1850 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1850 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1851 
+using full set of frames 
+Training Iteration 1852 
+using full set of frames 
+Training Iteration 1853 
+using full set of frames 
+Training Iteration 1854 
+using full set of frames 
+Training Iteration 1855 
+using full set of frames 
+Training Iteration 1856 
+using full set of frames 
+Training Iteration 1857 
+using full set of frames 
+Training Iteration 1858 
+using full set of frames 
+Training Iteration 1859 
+using full set of frames 
+Training Iteration 1860 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1860 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1861 
+using full set of frames 
+Training Iteration 1862 
+using full set of frames 
+Training Iteration 1863 
+using full set of frames 
+Training Iteration 1864 
+using full set of frames 
+Training Iteration 1865 
+using full set of frames 
+Training Iteration 1866 
+using full set of frames 
+Training Iteration 1867 
+using full set of frames 
+Training Iteration 1868 
+using full set of frames 
+Training Iteration 1869 
+using full set of frames 
+Training Iteration 1870 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1870 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1871 
+using full set of frames 
+Training Iteration 1872 
+using full set of frames 
+Training Iteration 1873 
+using full set of frames 
+Training Iteration 1874 
+using full set of frames 
+Training Iteration 1875 
+using full set of frames 
+Training Iteration 1876 
+using full set of frames 
+Training Iteration 1877 
+using full set of frames 
+Training Iteration 1878 
+using full set of frames 
+Training Iteration 1879 
+using full set of frames 
+Training Iteration 1880 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1880 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1881 
+using full set of frames 
+Training Iteration 1882 
+using full set of frames 
+Training Iteration 1883 
+using full set of frames 
+Training Iteration 1884 
+using full set of frames 
+Training Iteration 1885 
+using full set of frames 
+Training Iteration 1886 
+using full set of frames 
+Training Iteration 1887 
+using full set of frames 
+Training Iteration 1888 
+using full set of frames 
+Training Iteration 1889 
+using full set of frames 
+Training Iteration 1890 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1890 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1891 
+using full set of frames 
+Training Iteration 1892 
+using full set of frames 
+Training Iteration 1893 
+using full set of frames 
+Training Iteration 1894 
+using full set of frames 
+Training Iteration 1895 
+using full set of frames 
+Training Iteration 1896 
+using full set of frames 
+Training Iteration 1897 
+using full set of frames 
+Training Iteration 1898 
+using full set of frames 
+Training Iteration 1899 
+using full set of frames 
+Training Iteration 1900 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1900 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1901 
+using full set of frames 
+Training Iteration 1902 
+using full set of frames 
+Training Iteration 1903 
+using full set of frames 
+Training Iteration 1904 
+using full set of frames 
+Training Iteration 1905 
+using full set of frames 
+Training Iteration 1906 
+using full set of frames 
+Training Iteration 1907 
+using full set of frames 
+Training Iteration 1908 
+using full set of frames 
+Training Iteration 1909 
+using full set of frames 
+Training Iteration 1910 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1910 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1911 
+using full set of frames 
+Training Iteration 1912 
+using full set of frames 
+Training Iteration 1913 
+using full set of frames 
+Training Iteration 1914 
+using full set of frames 
+Training Iteration 1915 
+using full set of frames 
+Training Iteration 1916 
+using full set of frames 
+Training Iteration 1917 
+using full set of frames 
+Training Iteration 1918 
+using full set of frames 
+Training Iteration 1919 
+using full set of frames 
+Training Iteration 1920 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1920 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1921 
+using full set of frames 
+Training Iteration 1922 
+using full set of frames 
+Training Iteration 1923 
+using full set of frames 
+Training Iteration 1924 
+using full set of frames 
+Training Iteration 1925 
+using full set of frames 
+Training Iteration 1926 
+using full set of frames 
+Training Iteration 1927 
+using full set of frames 
+Training Iteration 1928 
+using full set of frames 
+Training Iteration 1929 
+using full set of frames 
+Training Iteration 1930 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1930 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1931 
+using full set of frames 
+Training Iteration 1932 
+using full set of frames 
+Training Iteration 1933 
+using full set of frames 
+Training Iteration 1934 
+using full set of frames 
+Training Iteration 1935 
+using full set of frames 
+Training Iteration 1936 
+using full set of frames 
+Training Iteration 1937 
+using full set of frames 
+Training Iteration 1938 
+using full set of frames 
+Training Iteration 1939 
+using full set of frames 
+Training Iteration 1940 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1940 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1941 
+using full set of frames 
+Training Iteration 1942 
+using full set of frames 
+Training Iteration 1943 
+using full set of frames 
+Training Iteration 1944 
+using full set of frames 
+Training Iteration 1945 
+using full set of frames 
+Training Iteration 1946 
+using full set of frames 
+Training Iteration 1947 
+using full set of frames 
+Training Iteration 1948 
+using full set of frames 
+Training Iteration 1949 
+using full set of frames 
+Training Iteration 1950 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1950 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1951 
+using full set of frames 
+Training Iteration 1952 
+using full set of frames 
+Training Iteration 1953 
+using full set of frames 
+Training Iteration 1954 
+using full set of frames 
+Training Iteration 1955 
+using full set of frames 
+Training Iteration 1956 
+using full set of frames 
+Training Iteration 1957 
+using full set of frames 
+Training Iteration 1958 
+using full set of frames 
+Training Iteration 1959 
+using full set of frames 
+Training Iteration 1960 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1960 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1961 
+using full set of frames 
+Training Iteration 1962 
+using full set of frames 
+Training Iteration 1963 
+using full set of frames 
+Training Iteration 1964 
+using full set of frames 
+Training Iteration 1965 
+using full set of frames 
+Training Iteration 1966 
+using full set of frames 
+Training Iteration 1967 
+using full set of frames 
+Training Iteration 1968 
+using full set of frames 
+Training Iteration 1969 
+using full set of frames 
+Training Iteration 1970 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1970 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1971 
+using full set of frames 
+Training Iteration 1972 
+using full set of frames 
+Training Iteration 1973 
+using full set of frames 
+Training Iteration 1974 
+using full set of frames 
+Training Iteration 1975 
+using full set of frames 
+Training Iteration 1976 
+using full set of frames 
+Training Iteration 1977 
+using full set of frames 
+Training Iteration 1978 
+using full set of frames 
+Training Iteration 1979 
+using full set of frames 
+Training Iteration 1980 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1980 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1981 
+using full set of frames 
+Training Iteration 1982 
+using full set of frames 
+Training Iteration 1983 
+using full set of frames 
+Training Iteration 1984 
+using full set of frames 
+Training Iteration 1985 
+using full set of frames 
+Training Iteration 1986 
+using full set of frames 
+Training Iteration 1987 
+using full set of frames 
+Interrupt signal caught. Closing gracefully. 
+saving config 
