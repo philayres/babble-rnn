@@ -1,6 +1,6 @@
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout, TimeDistributed
-from keras.layers import GRU, LSTM
+from keras.layers import GRU, LSTM, Conv2D, Conv1D, Reshape, Flatten, Permute
 import keras.optimizers as optimizers
 
 from custom_objects import CustomObjects
@@ -33,65 +33,102 @@ class ModelDef(object):
     
     time_distributed = False
     
-    if self.stateful:
-        self.add_layer(
-          LSTM(
-            320
-            , batch_input_shape=(num_frame_seqs , frame_seq_len, framelen) 
-            , return_sequences=True
-            , trainable=True
-            , stateful=self.stateful
-        #    ,dropout = 0.1
-          )
-        )
-    else:
-        self.add_layer(
-          LSTM(
-            160
-            , input_shape=(frame_seq_len, framelen) 
-            , return_sequences=True
-            , trainable=True
-            , stateful=self.stateful
-        #    ,dropout = 0.1
-          )
-        )
-
     self.add_layer(
-      LSTM(
-        160
-        , return_sequences=True
-        , trainable=False
-        , stateful=self.stateful
-    #    ,dropout = 0.1
-        
-      )
+      Reshape((-1, frame_seq_len, 13), input_shape=(frame_seq_len, framelen))
     )
     
     self.add_layer(
-      LSTM(
-        160
-        , return_sequences=True
-        , trainable=False
-        , stateful=self.stateful
-    #    ,dropout = 0.1
+          #TimeDistributed(
+            Conv2D(
+              framelen, kernel_size=(1,3), activation='relu'
+            , input_shape=(frame_seq_len, framelen, 1)
+            , padding='same'
+            )
+          )
         
-      )
+    l0 = self.add_layer(
+          #TimeDistributed(
+            Conv2D(
+              framelen, kernel_size=(1,3), activation='relu'
+              , padding='same'
+            #, input_shape=(num_frame_seqs, frame_seq_len, framelen)
+            )
+          )
+        
+    print(l0.output_shape)
+    l1 = self.add_layer(
+      Permute((3,2,1))
     )
+    
+    print(l1.output_shape)
+    l2=self.add_layer(
+      Reshape((frame_seq_len, framelen))
+    )
+    print(l2.output_shape)
+    
+#    
+#    self.add_layer(AveragePooling1D())
+    
+#    if self.stateful:
+#        self.add_layer(
+#          LSTM(
+#            320
+#            , batch_input_shape=(num_frame_seqs , frame_seq_len, framelen) 
+#            , return_sequences=True
+#            , trainable=True
+#            , stateful=self.stateful
+#        #    ,dropout = 0.1
+#          )
+#        )
+#    else:
+#        self.add_layer(
+#          LSTM(
+#            160
+#            , input_shape=(frame_seq_len, framelen) 
+#            , return_sequences=True
+#            , trainable=True
+#            , stateful=self.stateful
+#        #    ,dropout = 0.1
+#          )
+#        )
+#
+#    self.add_layer(
+#      LSTM(
+#        160
+#        , return_sequences=True
+#        , trainable=False
+#        , stateful=self.stateful
+#    #    ,dropout = 0.1
+#        
+#      )
+#    )
+#    
+#    self.add_layer(
+#      LSTM(
+#        160
+#        , return_sequences=True
+#        , trainable=False
+#        , stateful=self.stateful
+#    #    ,dropout = 0.1
+#        
+#      )
+#    )
+#    self.add_layer(
+#      LSTM(
+#        160
+#        , return_sequences=True
+#        , trainable=False
+#        , stateful=self.stateful
+#    #    ,dropout = 0.1
+#        
+#      )
+#    )   
     self.add_layer(
       LSTM(
-        160
-        , return_sequences=True
-        , trainable=False
-        , stateful=self.stateful
-    #    ,dropout = 0.1
-        
-      )
-    )   
-    self.add_layer(
-      LSTM(
-        160
+        160        
+        , input_shape=(frame_seq_len, framelen) 
         , return_sequences= time_distributed
-        , trainable=False
+        , trainable=True
         , stateful=self.stateful
     #    ,dropout = 0.1
       )

@@ -3,10 +3,10 @@ Codec2 Binaries
 
 The adapted **Codec 2** binaries have been included here for convenience. Note the license in COPYING.
 
-This version of Codec 2 has been adapted to allow 'charbits' output from c2enc and c2dec utilities, when 
+This version of Codec 2 has been adapted to allow 'plainbytes' output from c2enc and c2dec utilities, when 
 running the 3200 bit rate. Other bit rates have not been tested.
 
-**charbits** outputs each parameter of a Codec 2 frame as an unsigned char (a single byte), for easy 
+**plainbytes** outputs each parameter of a Codec 2 frame as an unsigned char (a single byte), for easy 
 reading by babble-rnn.
 
 Full credit for Codec 2 goes to David Rowe, and all rights to the Codec 2 project are unchanged. Full details at: http://www.rowetel.com/?page_id=452

@@ -15,7 +15,7 @@ class RunConfig(object):
   # gradients are updated after each of these batches
   # some research suggests reducing the size of batches to increase generalisation during learning,
   # although at the expense of slower training
-  fit_batch_size = 200
+  fit_batch_size = 20
   
   # learn and generate with just a single timestep (True) or 
   # use a block (and a TimeDistributed output)
