@@ -1,6 +1,6 @@
 from keras.models import Sequential
 from keras.layers import Dense, Activation, Dropout, TimeDistributed
-from keras.layers import GRU, LSTM, Conv2D, Conv1D, Reshape, Flatten, Permute
+from keras.layers import GRU, LSTM, Conv2D, Conv1D, Reshape, Flatten, Permute, AveragePooling2D, MaxPooling2D
 import keras.optimizers as optimizers
 
 from custom_objects import CustomObjects
@@ -40,32 +40,39 @@ class ModelDef(object):
     self.add_layer(
           #TimeDistributed(
             Conv2D(
-              framelen, kernel_size=(1,3), activation='relu'
+              4 * framelen, kernel_size=(1,3), activation='relu'
             , input_shape=(frame_seq_len, framelen, 1)
             , padding='same'
             )
           )
         
-    l0 = self.add_layer(
-          #TimeDistributed(
-            Conv2D(
-              framelen, kernel_size=(1,3), activation='relu'
-              , padding='same'
-            #, input_shape=(num_frame_seqs, frame_seq_len, framelen)
-            )
-          )
-        
-    print(l0.output_shape)
+#    l0 = self.add_layer(
+#          #TimeDistributed(
+#            Conv2D(
+#              framelen, kernel_size=(1,3), activation='relu'
+#              , padding='same'
+#            #, input_shape=(num_frame_seqs, frame_seq_len, framelen)
+#            )
+#          )
+#        
+#    print(l0.output_shape)
     l1 = self.add_layer(
       Permute((3,2,1))
     )
+
+ 
+    self.add_layer(
+        MaxPooling2D(
+          ((4,1))
+        )
+    )
+    
     
     print(l1.output_shape)
     l2=self.add_layer(
       Reshape((frame_seq_len, framelen))
     )
     print(l2.output_shape)
-    
 #    
 #    self.add_layer(AveragePooling1D())
     
@@ -113,16 +120,17 @@ class ModelDef(object):
 #        
 #      )
 #    )
-#    self.add_layer(
-#      LSTM(
-#        160
-#        , return_sequences=True
-#        , trainable=False
-#        , stateful=self.stateful
-#    #    ,dropout = 0.1
-#        
-#      )
-#    )   
+    self.add_layer(
+      LSTM(
+        160
+        , return_sequences=True
+        , input_shape=(frame_seq_len, framelen)
+        , trainable=True
+        , stateful=self.stateful
+    #    ,dropout = 0.1
+        
+      )
+    )   
     self.add_layer(
       LSTM(
         160        
@@ -182,12 +190,12 @@ class ModelDef(object):
     self.started = True
     
   def model_updates_onstart(self):
-    self.utils.log("Make all lstms trainable")
-    self.model.layers[0].trainable=True
-    self.model.layers[1].trainable=True
-    self.model.layers[2].trainable=True
-    self.model.layers[3].trainable=True
-    self.model.layers[4].trainable=True
+#    self.utils.log("Make all lstms trainable")
+#    self.model.layers[0].trainable=True
+#    self.model.layers[1].trainable=True
+#    self.model.layers[2].trainable=True
+#    self.model.layers[3].trainable=True
+#    self.model.layers[4].trainable=True
     
     self.compile_model()
     self.utils.save_json_model(0)
@@ -273,7 +281,7 @@ class ModelDef(object):
       #optimizer = Nadam() #SGD() #Adam() #RMSprop(lr=0.01)
     
     
-    loss = CustomObjects.codec2_param_error
+    loss = CustomObjects.codec2_param_mean_square_error
     #loss = 'mean_absolute_error'
     #loss = 'cosine_proximity'
     self.model.compile(loss=loss, optimizer=optimizer)
