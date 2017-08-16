@@ -5644,3 +5644,55 @@ Training Iteration 1987
 using full set of frames 
 Interrupt signal caught. Closing gracefully. 
 saving config 
+====================================================
+Started New Run at: 2017-08-15 09:06:22.097384
+PID: 7633
+====================================================
+mode: Train
+Using JSON configuration from: out/d2-3200-v1-1-1/config.json
+using configured model_filename: out/d2-3200-v1-1-1/model-1987.h5
+No iteration file found. Setting to 0. 
+loading test data from:  test/criticalpracticalreason.c2-3200 
+corpus length (bytes): 62988744 
+corpus length (frames): 4845288 
+start_iteration: 1970 
+num_iterations: 2400 
+fit_batch_size: 100 
+learn_next_step: True 
+gen_every_nth: 10 
+save_model_every_nth: 10 
+framelen: 13 
+frame_seq_len: 200 
+seed_seq_len: 200 
+seq_step: 200 
+test_data_fn: test/criticalpracticalreason.c2-3200 
+frame_prop_loss_scale: [1, 127, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31, 31] 
+stateful: False 
+shuffle: False 
+limit_frames: 0 
+optimizer: {'name': 'RMSprop', 'params': {}} 
+generate_len: 200 
+model_filename: out/d2-3200-v1-1-1/model-1987.h5 
+saving config 
+scanning testdata into frames and frame sequences 
+actual number of frames: 4845288 
+number of frame sequences: 24225 
+loading model: out/d2-3200-v1-1-1/model-1987.h5 
+saving config after loading model 
+saving config 
+generate_len: None 
+Training Iteration 1970 
+Compiling model 
+using full set of frames 
+Generating samples 
+saving generated sample output to:  out/d2-3200-v1-1-1/out-c2cb-1970 
+generating sample data of length:  200 
+seed sequence for generation starts at frame index:  0  (approx.  0 : 0 ) 
+wrote frames:  200 
+saving config 
+Training Iteration 1971 
+using full set of frames 
+Training Iteration 1972 
+using full set of frames 
+Interrupt signal caught. Closing gracefully. 
+saving config 

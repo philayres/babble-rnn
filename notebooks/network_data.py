@@ -28,12 +28,12 @@ def model_config(network_tag):
     print("stateful", c.get('stateful',""))
     print()
     
-def plot_training_loss(network_tag):
+def plot_training_loss(network_tag, ln):
   dataframe = pandas.io.parsers.read_csv(home + "/store/c2gen/out/" + network_tag + "/training.log")
   data = dataframe.as_matrix(None)
   plt.plot(data)
   plt.xlabel('iteration')
-  plt.ylabel('loss (mean absolute)')
+  plt.ylabel('loss ('+ln+')')
   plt.title('Training Loss for\nnetwork: ' + network_tag)
   plt.grid(True)
 #  fn = "loss-plot-" + network_tag + ".png"

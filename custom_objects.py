@@ -35,3 +35,4 @@ class CustomObjects:
     diff_pred = y_pred - y_true
     # perform a basic mean absolute error calculation
     return K.mean(K.square(diff_pred), axis=-1)
+

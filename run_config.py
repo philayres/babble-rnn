@@ -15,6 +15,10 @@ class RunConfig(object):
   # gradients are updated after each of these batches
   # some research suggests reducing the size of batches to increase generalisation during learning,
   # although at the expense of slower training
+  # Note: for TimeDensity (and maybe stateful) learning, the fit_batch_size acts more like
+  # a counter of the number of complete frame sequences. Therefore if you retain a high number
+  # there are very few updates happening (one every frame_seq_len * fit_batch_size)
+  # and learning stalls 
   fit_batch_size = 20
   
   # learn and generate with just a single timestep (True) or 
@@ -57,7 +61,8 @@ class RunConfig(object):
   # when using --generate=audiofile on the command line, this setting is ignored
   generate_len = 200
   
-  # flag to indicate use of Stateful LSTMs. shuffle should be set to False when using stateful=True
+  # flag to indicate use of Stateful LSTMs. shuffle should be set to False  when using stateful=True
+  # learn_next_step = False is probably also required
   stateful = False
   
   # shuffle frame sequences within each batch. Stateful LSTMs should not receive shuffled data if they

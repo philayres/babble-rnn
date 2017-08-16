@@ -142,8 +142,18 @@ class Generator:
     # write the seed + generated data to the output file
     print("writing output file to disk")
     for frame in generated:
-      utils.output_file.write(self.sample(frame).tostring())
-        
+      # if we are passing multiple frames 
+      #(stateful or time distributed operation with learn_next_step = False)
+      if len(frame.shape) > 1:
+        utils.log("Generated multiple frames in one action:", frame.shape[0])
+        for f in frame:
+          s = self.sample(f).tostring()
+          utils.output_file.write(s)
+      else:
+        # just one frame at a time
+        s = self.sample(frame).tostring()
+        utils.output_file.write(s)
+              
     utils.output_file.close()
     utils.log("wrote frames: ", len(generated))
     

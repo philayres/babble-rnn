@@ -72,7 +72,7 @@ def normalize_input(frame):
   return normframe
 
 def gen_sequence(iteration):
-  return (iteration % gen_every_nth == 0)
+  return (iteration > 0) and (iteration % gen_every_nth == 0)
 
 def save_model(iteration):
   return (iteration % save_model_every_nth == 0)
@@ -88,8 +88,12 @@ for j in range(0, num_frames):
 
 utils.log('actual number of frames:', len(all_frames))
 
-# pull the frames into frame sequences (frame_seqs), each of frame_seq_len frames
-for i in range(0, num_frames - 2*frame_seq_len, seq_step):
+if utils.generate_mode():
+  num_frame_seqs = seed_seq_len
+else:
+
+  # pull the frames into frame sequences (frame_seqs), each of frame_seq_len frames
+  for i in range(0, num_frames - 2*frame_seq_len, seq_step):
     frame_seqs.append(all_frames[i: i + frame_seq_len])
     if learn_next_step:
         # pull a single frame following each frame sequence into a corresponding array of next_frames
@@ -98,37 +102,37 @@ for i in range(0, num_frames - 2*frame_seq_len, seq_step):
         j = i + frame_seq_len
         next_frame_seqs.append(all_frames[j: j + frame_seq_len])
 
-if config.stateful and (len(frame_seqs) % fit_batch_size > 0):
-  excess_frameseqs = len(frame_seqs) % fit_batch_size
-  print("Stateful operation. Reducing frame sequences by:", excess_frameseqs)
-  for i in range(excess_frameseqs):
-    frame_seqs.pop(-1)
+  if config.stateful and (len(frame_seqs) % fit_batch_size > 0):
+    excess_frameseqs = len(frame_seqs) % fit_batch_size
+    print("Stateful operation. Reducing frame sequences by:", excess_frameseqs)
+    for i in range(excess_frameseqs):
+      frame_seqs.pop(-1)
 
-utils.log('number of frame sequences:', len(frame_seqs))
-
-
-# make sure that the input and output frames are float32, rather than
-# the unsigned bytes that we load from the corpus
-print('initialising input and expected output arrays')
-num_frame_seqs = len(frame_seqs)
-X = np.zeros((num_frame_seqs, frame_seq_len, framelen), dtype=np.float32)
-if learn_next_step:
-    y = np.zeros((num_frame_seqs, framelen), dtype=np.float32)
-else:
-    y = np.zeros((num_frame_seqs, frame_seq_len, framelen), dtype=np.float32)
+  utils.log('number of frame sequences:', len(frame_seqs))
 
 
+  # make sure that the input and output frames are float32, rather than
+  # the unsigned bytes that we load from the corpus
+  print('initialising input and expected output arrays')
+  num_frame_seqs = len(frame_seqs)
+  X = np.zeros((num_frame_seqs, frame_seq_len, framelen), dtype=np.float32)
+  if learn_next_step:
+      y = np.zeros((num_frame_seqs, framelen), dtype=np.float32)
+  else:
+      y = np.zeros((num_frame_seqs, frame_seq_len, framelen), dtype=np.float32)
 
-for i, frame_seq in enumerate(frame_seqs):
-    if learn_next_step:
-        # expected output is always the next frame for corresponding frame_seq
-        y[i] = next_frames[i]
-    else:
-        y[i] = next_frame_seqs[i]
-    
-    
-    # input is just each frame_seq 
-    X[i] = frame_seq
+
+
+  for i, frame_seq in enumerate(frame_seqs):
+      if learn_next_step:
+          # expected output is always the next frame for corresponding frame_seq
+          y[i] = next_frames[i]
+      else:
+          y[i] = next_frame_seqs[i]
+
+
+      # input is just each frame_seq 
+      X[i] = frame_seq
 
 
 ####  Setup the model

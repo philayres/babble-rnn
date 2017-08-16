@@ -44,7 +44,8 @@ class ModelUtils(object):
     if len(sys.argv) < 2:
       print("training usage: lstm_c2_generation <tagname> [test data filename>] [load model filename]")
       print("for example\n lstm_c2_generation test1 test/LDC97S44-8k.c2cb")
-      print("if test data filename or load model filename are excluded, the settings in config.json will be used if it exists\n")
+      print("if test data filename or load model filename are excluded, the settings in config.json will be used if it exists")
+      print("if load model filename is set to 'none' then the coded model definition will be used, regardless of what is set in the config.json file.\n")
       print("generator usage: lstm_c2_generation --generate=<base filename> [--seed_index=<'random'|frame num|time in seconds>] [--generate-len=<frames>] <test data filename> <load model filename>")
       print("for example\n lstm_c2_generation --generate=audiofile --seed_index=60s --generate-len=500 test/LDC97S44-8k.c2cb out/realmodel/model-600.h5")
       exit()
@@ -65,9 +66,9 @@ class ModelUtils(object):
         basic_args.append(arg)  
     
     if named_args.get('generate', None):
-      self.model_tag = named_args['generate']
+      self.generate_name = named_args['generate']
       self.mode = Generate
-      basic_args.insert(0, None)
+      self.model_tag = basic_args[0]
       self.log("mode: Generate")
     else:
       self.model_tag = basic_args[0]
@@ -83,8 +84,8 @@ class ModelUtils(object):
         print("the tag ", self.model_tag, " has been used")
         print("continuing where we left off")
     else:
-      self.output_dir="generated/"
-      self.output_fn=self.output_dir+str(self.model_tag)
+      self.output_dir="out/"+str(self.model_tag)+"/"
+      self.output_fn="generated/"+str(self.generate_name)
 
 
 
@@ -115,12 +116,14 @@ class ModelUtils(object):
     self.h5_model_filename=self.output_dir+"model-"
     self.h5_weights_filename=self.output_dir+"weights-"
   
-    from keras.callbacks import CSVLogger
-    self.csv_logger_fn = self.output_dir + 'training.log'
-    self.csv_logger = CSVLogger(self.csv_logger_fn, append=True)
+    if self.training_mode():
+      from keras.callbacks import CSVLogger
+      self.csv_logger_fn = self.output_dir + 'training.log'
+      self.csv_logger = CSVLogger(self.csv_logger_fn, append=True)
+      self.iteration_counter_fn = self.output_dir + "iteration_counter"
     self.logfile_fn = self.output_dir + "log"
     self.logfile = open(self.logfile_fn, "a", 1)
-    self.iteration_counter_fn = self.output_dir + "iteration_counter"
+    
     
     
     
@@ -199,7 +202,7 @@ class ModelUtils(object):
   
   def read_iteration_count(self):
     res = []
-    if os.path.isfile(self.iteration_counter_fn):
+    if self.iteration_counter_fn and os.path.isfile(self.iteration_counter_fn):
       with open(self.iteration_counter_fn) as f:
         res = f.readlines()
 
