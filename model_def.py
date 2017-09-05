@@ -36,7 +36,7 @@ class ModelDef(object):
     self.add_layer(
       TimeDistributed(
         Dense(
-          framelen * 10
+          framelen * 50
           , activation="relu"
         )
         , batch_input_shape=(1 , frame_seq_len, framelen) 
@@ -88,6 +88,23 @@ class ModelDef(object):
     #    ,dropout = 0.1
       )
     )
+
+    if time_distributed:
+      self.add_layer(
+        TimeDistributed(
+          Dense(
+            framelen * 50
+            ,activation="relu"
+          )
+        )
+      )
+    else:
+      self.add_layer(
+        Dense(
+          framelen * 50
+          ,activation="relu"
+        )
+      )    
     
     if time_distributed:
       self.add_layer(
