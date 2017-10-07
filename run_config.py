@@ -19,7 +19,7 @@ class RunConfig(object):
   # a counter of the number of complete frame sequences. Therefore if you retain a high number
   # there are very few updates happening (one every frame_seq_len * fit_batch_size)
   # and learning stalls 
-  fit_batch_size = 20
+  fit_batch_size = 100
   
   # learn and generate with just a single timestep (True) or 
   # use a block (and a TimeDistributed output)
@@ -37,13 +37,16 @@ class RunConfig(object):
   # for 300 rate codec one frame encodes 20ms of raw PCM audio
   framelen = 13
   
+  # time length of a frame in ms
+  frame_len_ms = 20
+  
   # length of frame sequence for learning
-  frame_seq_len = 200 # 2 seconds of audio for 3200 codec 
+  frame_seq_len = 400 # 2 seconds of audio for 3200 codec 
   #frame_seq_len = 100 # 4 seconds of audio for 1300 codec  
 
   # the seed sequence length is the number of frames the generator expects to be input
   # as the seed. This must match the frame_seq_len currently
-  seed_seq_len = 200 
+  seed_seq_len = 400 
 
   # number of frames between the start of each sequence of frames used during learning in a batch
   # if this equals frame_seq_len, then the frame sequences will be contiguous and will not overlap
@@ -51,7 +54,7 @@ class RunConfig(object):
   # picking a number larger than frame_seq_len means that frames from the corpus will be skipped
   # note that overlapping frame sequences may be considered a way to augment data, but also increases memory requirements,
   # since a single batch of data will actually be larger than the original corpus
-  seq_step = 200
+  seq_step = 1
   
   # filename including relative path to the test data
   # this filename may be overridden by setting on the command line, in which case this setting will be updated to match
@@ -59,7 +62,7 @@ class RunConfig(object):
   
   # number of frames generated after the seed when generating new data during training iterations
   # when using --generate=audiofile on the command line, this setting is ignored
-  generate_len = 200
+  generate_len = 400
   
   # flag to indicate use of Stateful LSTMs. shuffle should be set to False  when using stateful=True
   # learn_next_step = False is probably also required
@@ -120,8 +123,8 @@ class RunConfig(object):
     "limit_frames",
     "optimizer",
     "generate_len",
-    "model_filename"
-    
+    "model_filename",
+    "frame_len_ms"
   ]
   
   # Unsaved items and state

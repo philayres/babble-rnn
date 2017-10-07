@@ -13,6 +13,7 @@ class Generator:
   framelen = None
   num_frames = None
   seed_start_index = 0
+  frame_len_ms = None
   
   def __init__(self, utils, all_frames, seed_seq_len, generate_len, generate_with_single_timestep):
     self.utils = utils  
@@ -26,6 +27,7 @@ class Generator:
     utils.log("generate_len:", generate_len)
     self.num_frames = len(all_frames)
     self.generate_with_single_timestep = generate_with_single_timestep
+    self.frame_len_ms = self.config.frame_len_ms
     
 
 
@@ -35,7 +37,8 @@ class Generator:
     self.fix_seed_start_index()
 
   def set_time_seed_start_index(self, seconds):
-    self.seed_start_index = int(float(seconds) / 0.04)
+    
+    self.seed_start_index = int(float(seconds) / self.frame_len_ms)
     self.fix_seed_start_index()
 
   def set_frame_seed_start_index(self, index):
@@ -84,10 +87,10 @@ class Generator:
   
     utils.log("generating sample data of length: ", generate_len)
     start_index = self.seed_start_index 
-    start_time = 1.0 * start_index / 40
+    start_time = 1.0 * start_index / self.frame_len_ms
     
     utils.log("seed sequence for generation starts at frame index: ", start_index, " (approx. ", int(start_time / 60), ":", int(start_time % 60), ")" )
-
+    utils.log("seed sequence length:",  seed_seq_len)
     # pick the seed frame sequence starting at the random start index, with seed_seq_len frames
     seed_frame_seq = all_frames[start_index: start_index + seed_seq_len]
     
@@ -102,7 +105,7 @@ class Generator:
     if self.generate_with_single_timestep:
         loop_len = generate_len
     else:
-        loop_len = 1
+        loop_len = int(generate_len /  self.config.frame_seq_len)
     
     
     for i in range(loop_len):
@@ -130,9 +133,14 @@ class Generator:
         # append the result to the generated set
         generated.append(next_frame)
 
-        # update the seed frame sequence to remove the oldest frame and add the new predicted frame
-        seed_frame_seq = seed_frame_seq[1:]
-        seed_frame_seq.append(next_frame)
+        if self.generate_with_single_timestep:
+          # update the seed frame sequence to remove the oldest frame and add the new predicted frame
+          seed_frame_seq = seed_frame_seq[1:]
+          seed_frame_seq.append(next_frame)
+        else:
+          utils.log("using generated frames as seed_seq:", next_frame.shape)
+          seed_frame_seq = next_frame
+        
       else:
         #print('LENGTH:',len(predicted_frame_props),len(predicted_frame_props[i]))  
         for i in predicted_frame_props:
@@ -158,6 +166,7 @@ class Generator:
     utils.log("wrote frames: ", len(generated))
     
     if utils.generate_mode():
+      utils.log("converting:", utils.output_fn)
       call(["bash", "./c2towav.sh", utils.output_fn])
       
       

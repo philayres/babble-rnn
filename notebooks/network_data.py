@@ -43,9 +43,15 @@ def plot_training_loss(network_tag, ln):
 
 
 
-def plot_codec_params(network_tag, iteration, scale_up='full'):
+def plot_codec_params(network_tag, iteration, scale_up='full', loc='out'):
   iteration = str(iteration)
-  infilename = home + "/store/c2gen/out/" + network_tag + "/out-c2cb-" + iteration
+  
+  if loc=='out':
+    fn = "/out-c2cb-" + iteration
+  else:
+    fn = ""
+  
+  infilename = home + "/store/c2gen/"+loc+"/" + network_tag + fn
   indata = np.fromfile(infilename, dtype=np.uint8)
   
   if codec1300:
@@ -79,9 +85,14 @@ def plot_codec_params(network_tag, iteration, scale_up='full'):
   plt.grid(True)
   plt.show()
 
-def plot_spec_params(network_tag, iteration, params='Voicing'):
+def plot_spec_params(network_tag, iteration, params='Voicing', loc='out'):
   iteration = str(iteration)
-  infilename = home + "/store/c2gen/out/" + network_tag + "/out-c2cb-" + iteration
+  if loc=='out':
+    fn = "/out-c2cb-" + iteration
+  else:
+    fn = ""
+  
+  infilename = home + "/store/c2gen/"+loc+"/" + network_tag + fn
   indata = np.fromfile(infilename, dtype=np.uint8)
   
   if codec1300:
