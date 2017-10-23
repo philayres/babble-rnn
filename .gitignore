@@ -7,3 +7,7 @@
 /nbproject/
 *.pyc
 /nohup.out
+/C:*
+/out/*/out-c2cb*
+/out/*/weights-*
+/.tags

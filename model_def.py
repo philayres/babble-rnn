@@ -46,7 +46,7 @@ class ModelDef(object):
     if self.stateful:
         self.add_layer(
           LSTM(
-            5
+            13
             , batch_input_shape=(num_frame_seqs , frame_seq_len, framelen)
             , return_sequences=True
             , trainable=True
@@ -57,7 +57,7 @@ class ModelDef(object):
     else:
         self.add_layer(
           LSTM(
-            5
+            13
             , input_shape=(frame_seq_len, framelen)
             , return_sequences=True
             , trainable=True
@@ -70,7 +70,7 @@ class ModelDef(object):
 
     self.add_layer(
       LSTM(
-        50
+        130
         , return_sequences=True
         , trainable=True
         , stateful=self.stateful
@@ -83,7 +83,7 @@ class ModelDef(object):
 
     self.add_layer(
       LSTM(
-        20
+        13
         , return_sequences=True
         , trainable=True
         , stateful=self.stateful
@@ -91,20 +91,6 @@ class ModelDef(object):
 
       )
     )
-
-
-    self.add_layer(
-      LSTM(
-        200
-        , return_sequences=True
-        , trainable=True
-        , stateful=self.stateful
-    #    ,dropout = 0.1
-
-      )
-    )
-
-
 
     self.add_layer(
       TimeDistributed(
@@ -118,7 +104,7 @@ class ModelDef(object):
 
     self.add_layer(
       LSTM(
-        5
+        13
         , return_sequences=True
         , trainable=True
         , stateful=self.stateful
@@ -128,19 +114,34 @@ class ModelDef(object):
     )
 
 
-    self.add_layer(
-      TimeDistributed(
-        Dense(
-          framelen * 50
-          , activation="relu"
-        )
-        , batch_input_shape=(1 , frame_seq_len, framelen)
-      )
-    )
+
+
 
     self.add_layer(
       LSTM(
-        160
+        130
+        , return_sequences=True
+        , trainable=True
+        , stateful=self.stateful
+    #    ,dropout = 0.1
+
+      )
+    )
+
+
+    # self.add_layer(
+    #   TimeDistributed(
+    #     Dense(
+    #       framelen * 50
+    #       , activation="relu"
+    #     )
+    #     , batch_input_shape=(1 , frame_seq_len, framelen)
+    #   )
+    # )
+
+    self.add_layer(
+      LSTM(
+        13
         , input_shape=(frame_seq_len, framelen)
         , return_sequences= time_distributed
         , trainable=True
@@ -290,8 +291,8 @@ class ModelDef(object):
 
 
     #loss = CustomObjects.codec2_param_mean_square_error
-    loss = CustomObjects.codec2_param_error
-    #loss = 'mean_absolute_error'
+    #loss = CustomObjects.codec2_param_error
+    loss = 'mean_absolute_error'
     #loss = 'cosine_proximity'
     self.model.compile(loss=loss, optimizer=optimizer)
     self.utils.log_model_summary()
