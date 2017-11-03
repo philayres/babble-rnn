@@ -1,5 +1,6 @@
-from keras.models import Sequential
-from keras.layers import Dense, Activation, Dropout, TimeDistributed
+import keras as keras
+from keras.models import Sequential, Model
+from keras.layers import Dense, Activation, Dropout, TimeDistributed, Concatenate, Input
 from keras.layers import GRU, LSTM, Conv2D, Conv1D, Reshape, Flatten, Permute, AveragePooling2D, MaxPooling2D
 import keras.optimizers as optimizers
 
@@ -23,8 +24,80 @@ class ModelDef(object):
 
     self.layers=[]
 
-
   def define_model(self, frame_seq_len, framelen, num_frame_seqs):
+    self.utils.log("Defining model")
+
+    main_input = Input(shape=(frame_seq_len, framelen), dtype='float32', name="main_input")
+
+    d0 = Dense(
+      framelen
+      ,activation="relu"
+    )(main_input)
+
+    lout = []
+    l0 = []
+
+    for i in range(0,13):
+
+        d = Dense(
+          3
+          ,activation="relu"
+        )(d0)
+
+        l0.append(
+            LSTM(
+                3
+                , return_sequences=True
+            )(d)
+        )
+
+    for i in range(0,13):
+        j = i - 1
+        if j < 0:
+            j = 12
+        cl = keras.layers.concatenate([l0[j], l0[i]])
+        l01= LSTM(
+            6
+            , return_sequences=True
+        )(cl)
+
+        lout.append(
+            TimeDistributed(
+                Dense(1, activation="relu")
+                )(l01)
+        )
+
+# I'd like to pull out individual, intermediate outputs here, to play with additional loss calculations on each,
+# targeting different parts of the overall frame
+# Also need to feed the original input in back at this level...
+
+    c = keras.layers.concatenate(lout)
+
+    l20 = LSTM(
+        framelen * 5
+        , return_sequences=True
+    )(c)
+
+    l2 = LSTM(
+        framelen * 10
+        , return_sequences=False
+    )(l20)
+
+
+    main_output = Dense(
+      framelen
+      ,activation="relu"
+    )(l2)
+
+    model = Model(inputs=[main_input], outputs=[main_output])
+    self.model = model
+    return model
+
+
+
+
+
+  def define_sequential_model(self, frame_seq_len, framelen, num_frame_seqs):
     self.utils.log("Defining model")
     model =  Sequential()
     self.model = model
@@ -291,8 +364,8 @@ class ModelDef(object):
 
 
     #loss = CustomObjects.codec2_param_mean_square_error
-    #loss = CustomObjects.codec2_param_error
-    loss = 'mean_absolute_error'
+    loss = CustomObjects.codec2_param_error
+    #loss = 'mean_absolute_error'
     #loss = 'cosine_proximity'
     self.model.compile(loss=loss, optimizer=optimizer)
     self.utils.log_model_summary()
