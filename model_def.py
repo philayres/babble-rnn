@@ -29,41 +29,46 @@ class ModelDef(object):
 
     main_input = Input(shape=(frame_seq_len, framelen), dtype='float32', name="main_input")
 
-    d0 = Dense(
-      framelen
-      ,activation="relu"
-    )(main_input)
+    # d0 = TimeDistributed(
+    #     Dense(
+    #       framelen
+    #       ,activation="relu"
+    #     )(main_input)
+    # )
 
     lout = []
     l0 = []
 
     for i in range(0,13):
 
-        d = Dense(
-          3
-          ,activation="relu"
-        )(d0)
+        TimeDistributed(
+            Dense(
+              3
+              ,activation="relu"
+            )
+        )(main_input)
 
         l0.append(
             LSTM(
                 3
                 , return_sequences=True
-            )(d)
+            )(d0)
         )
+
 
     for i in range(0,13):
         j = i - 1
         if j < 0:
             j = 12
         cl = keras.layers.concatenate([l0[j], l0[i]])
-        l01= LSTM(
+        l01 = LSTM(
             6
             , return_sequences=True
         )(cl)
 
         lout.append(
             TimeDistributed(
-                Dense(1, activation="relu")
+                Dense(6, activation="relu")
                 )(l01)
         )
 
@@ -74,14 +79,20 @@ class ModelDef(object):
     c = keras.layers.concatenate(lout)
 
     l20 = LSTM(
-        framelen * 5
+        framelen * 10
         , return_sequences=True
     )(c)
+
+    l21 = LSTM(
+        framelen * 10
+        , return_sequences=True
+    )(l20)
+
 
     l2 = LSTM(
         framelen * 10
         , return_sequences=False
-    )(l20)
+    )(l21)
 
 
     main_output = Dense(

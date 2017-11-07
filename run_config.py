@@ -46,7 +46,7 @@ class RunConfig(object):
 
   # the seed sequence length is the number of frames the generator expects to be input
   # as the seed. This must match the frame_seq_len currently
-  seed_seq_len = 100 
+  seed_seq_len = 100
 
   # number of frames between the start of each sequence of frames used during learning in a batch
   # if this equals frame_seq_len, then the frame sequences will be contiguous and will not overlap
@@ -54,7 +54,7 @@ class RunConfig(object):
   # picking a number larger than frame_seq_len means that frames from the corpus will be skipped
   # note that overlapping frame sequences may be considered a way to augment data, but also increases memory requirements,
   # since a single batch of data will actually be larger than the original corpus
-  seq_step = 1
+  seq_step = 10
 
   # filename including relative path to the test data
   # this filename may be overridden by setting on the command line, in which case this setting will be updated to match
