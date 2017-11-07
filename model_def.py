@@ -41,7 +41,7 @@ class ModelDef(object):
 
     for i in range(0,13):
 
-        TimeDistributed(
+        d0 = TimeDistributed(
             Dense(
               3
               ,activation="relu"
