@@ -54,7 +54,7 @@ class RunConfig(object):
   # picking a number larger than frame_seq_len means that frames from the corpus will be skipped
   # note that overlapping frame sequences may be considered a way to augment data, but also increases memory requirements,
   # since a single batch of data will actually be larger than the original corpus
-  seq_step = 10
+  seq_step = 5
 
   # filename including relative path to the test data
   # this filename may be overridden by setting on the command line, in which case this setting will be updated to match
