@@ -98,7 +98,7 @@ class ModelDef(object):
 
 
     main_output = Dense(
-      framelen * 5
+      framelen 
       ,activation="relu"
     )(l2)
 
