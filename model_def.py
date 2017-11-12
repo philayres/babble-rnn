@@ -78,10 +78,12 @@ class ModelDef(object):
 
     c = keras.layers.concatenate(lout)
 
+    cd = Dense(framelen * 3)(lout)
+
     l20 = LSTM(
         framelen * 10
         , return_sequences=True
-    )(c)
+    )(cd)
 
     l21 = LSTM(
         framelen * 10
@@ -96,7 +98,7 @@ class ModelDef(object):
 
 
     main_output = Dense(
-      framelen
+      framelen * 5
       ,activation="relu"
     )(l2)
 

@@ -41,12 +41,12 @@ class RunConfig(object):
   frame_len_ms = 20
 
   # length of frame sequence for learning
-  frame_seq_len = 100 # 2 seconds of audio for 3200 codec
+  frame_seq_len = 5 # 2 seconds of audio for 3200 codec
   #frame_seq_len = 100 # 4 seconds of audio for 1300 codec
 
   # the seed sequence length is the number of frames the generator expects to be input
   # as the seed. This must match the frame_seq_len currently
-  seed_seq_len = 100
+  seed_seq_len = frame_seq_len
 
   # number of frames between the start of each sequence of frames used during learning in a batch
   # if this equals frame_seq_len, then the frame sequences will be contiguous and will not overlap
