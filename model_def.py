@@ -78,7 +78,7 @@ class ModelDef(object):
 
     c = keras.layers.concatenate(lout)
 
-    cd = Dense(framelen * 3)(lout)
+    cd = Dense(framelen * 3)(c)
 
     l20 = LSTM(
         framelen * 10
