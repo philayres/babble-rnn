@@ -5,7 +5,7 @@ from keras.models import load_model
 from keras.utils import plot_model
 from custom_objects import CustomObjects
 from model_def import ModelDef
-from run_config import RunConfig  
+from run_config import RunConfig
 import datetime
 
 Train=1
@@ -22,7 +22,7 @@ class ModelUtils(object):
   output_dir = ""
   h5_model_filename = ""
   h5_weights_filename = ""
-  output_fn = ""  
+  output_fn = ""
   output_file = None
   csv_logger_fn = ""
   csv_logger = None
@@ -32,15 +32,15 @@ class ModelUtils(object):
   model_def = None
   one_off_generate_len = None
   load_weights = None
-  
+
   def __init__(self):
     self.buffered_logs = []
     self.log("====================================================")
     self.log("Started New Run at:",  datetime.datetime.now())
     self.log("PID:", os.getpid())
     self.log("====================================================")
-    
-  
+
+
     if len(sys.argv) < 2:
       print("training usage: lstm_c2_generation <tagname> [test data filename>] [load model filename]")
       print("for example\n lstm_c2_generation test1 test/LDC97S44-8k.c2cb")
@@ -49,22 +49,22 @@ class ModelUtils(object):
       print("generator usage: lstm_c2_generation [tagname] --generate=<base filename> [--seed_index=<'random'|frame num|time in seconds>] [--generate-len=<frames>] <test data filename> <load model filename>")
       print("for example\n lstm_c2_generation --generate=audiofile --seed_index=60s --generate-len=500 test/LDC97S44-8k.c2cb out/realmodel/model-600.h5")
       exit()
-    
+
     named_args = {}
     basic_args = []
-    
+
     self.named_args = named_args
     self.basic_args = basic_args
     for i, arg in enumerate(sys.argv[1:]):
-      
-      
+
+
       if arg[0:2] == "--":
         a = arg.split("=")
         key = a[0][2:]
         named_args[key] = a[1]
       else:
-        basic_args.append(arg)  
-    
+        basic_args.append(arg)
+
     if named_args.get('generate', None):
       self.generate_name = named_args['generate']
       self.mode = Generate
@@ -74,10 +74,10 @@ class ModelUtils(object):
       self.model_tag = basic_args[0]
       self.mode = Train
       self.log("mode: Train")
-        
+
     if self.training_mode():
       self.output_dir="out/"+str(self.model_tag)+"/"
-      self.output_fn=self.output_dir+"out-c2cb-"    
+      self.output_fn=self.output_dir+"out-c2cb-"
       try:
         os.makedirs(self.output_dir)
       except OSError:
@@ -89,33 +89,37 @@ class ModelUtils(object):
 
 
 
-    self.config = RunConfig(self)      
+    self.config = RunConfig(self)
 
     if len(basic_args) > 1:
       self.testdata_filename = basic_args[1]
       self.config.test_data_fn = self.testdata_filename
       self.log("using command line test data filename:", self.config.test_data_fn)
 
-      
+
     if len(basic_args) > 2:
-      self.model_filename = basic_args[2]  
+      self.model_filename = basic_args[2]
       self.log("using command line model filename:",self.model_filename)
     else:
       self.model_filename = self.config.model_filename
       self.log("using configured model_filename:",self.config.model_filename)
-      
-      
-      
+
+
+
     if named_args.get('generate-len', None):
       self.one_off_generate_len = int(named_args['generate-len'])
-      
+
     if named_args.get('load-weights', None):
       self.load_weights = named_args['load-weights']
-      
-          
+      self.log("loading weights from a weights file:", self.load_weights)
+    else:
+      self.log("not loading weights from a weights file")
+
+
+
     self.h5_model_filename=self.output_dir+"model-"
     self.h5_weights_filename=self.output_dir+"weights-"
-  
+
     if self.training_mode():
       from keras.callbacks import CSVLogger
       self.csv_logger_fn = self.output_dir + 'training.log'
@@ -123,14 +127,14 @@ class ModelUtils(object):
       self.iteration_counter_fn = self.output_dir + "iteration_counter"
     self.logfile_fn = self.output_dir + "log"
     self.logfile = open(self.logfile_fn, "a", 1)
-    
-    
-    
-    
+
+
+
+
   def setup_seed_start(self, generator):
     if self.named_args.get('seed_index', None):
       seed_index = self.named_args['seed_index']
-      if seed_index == 'random': 
+      if seed_index == 'random':
         self.log("Setting seed start index to 'random'")
         generator.set_random_seed_start_index()
       elif seed_index.find('s') > 0:
@@ -142,10 +146,10 @@ class ModelUtils(object):
         generator.set_frame_seed_start_index(int(seed_index))
 
   def load_model(self):
-    
+
     self.log("loading model: " + self.model_filename)
     self.model_def.model = load_model(self.model_filename, custom_objects=self.custom_objects())
-    
+
     if self.training_mode():
       self.log("saving config after loading model")
       self.config.model_filename = self.model_filename
@@ -168,8 +172,8 @@ class ModelUtils(object):
     model = self.model_def.model
     fn = self.h5_model_filename+str(iteration)+".h5"
     res = model.save(fn)
-    
-    
+
+
     self.config.model_filename = fn
     self.write_iteration_count(iteration)
     self.config.save_config()
@@ -187,19 +191,19 @@ class ModelUtils(object):
       output_fn = self.output_fn+str(iteration)
     else:
       output_fn = self.output_fn
-    self.output_file = open(output_fn, "wb")  
+    self.output_file = open(output_fn, "wb")
     return output_fn
-  
+
   def after_iteration(self, iteration):
     #self.write_iteration_count(self, iteration)
     return
-    
+
   def write_iteration_count(self, iteration):
     self.config.start_iteration = iteration
     with open(self.iteration_counter_fn, "w") as f:
       f.write(str(iteration))
-    
-  
+
+
   def read_iteration_count(self):
     res = []
     if self.iteration_counter_fn and os.path.isfile(self.iteration_counter_fn):
@@ -215,9 +219,9 @@ class ModelUtils(object):
       self.iteration = 0
       self.log("No iteration file found. Setting to 0.")
       return 0
-  
+
   def log(self, *inargs):
-    
+
     if self.logfile == None:
       args = []
       for a in inargs:
@@ -232,7 +236,7 @@ class ModelUtils(object):
         self.buffered_logs = []
 
     try:
-      for arg in inargs: 
+      for arg in inargs:
         self.logfile.write(str(arg)+" ")
         print(str(arg)),
       print
@@ -241,26 +245,26 @@ class ModelUtils(object):
       self.logfile.flush()
     except IOError:
       print("* Logging Failed *")
-      for arg in inargs: 
+      for arg in inargs:
         print(str(arg)),
       print
 
- 
-  def signal_handler(self, signal, frame): 
-    
-    self.log('Interrupt signal caught. Closing gracefully.') 
+
+  def signal_handler(self, signal, frame):
+
+    self.log('Interrupt signal caught. Closing gracefully.')
     self.write_iteration_count(self.iteration)
 
     print("saving .h5 model file")
     self.save_h5_model(self.iteration)
-    print("saving .h5 weights file")      
+    print("saving .h5 weights file")
     self.save_weights(self.iteration)
     print("exiting now")
     self.logfile.close()
     sys.exit(0)
-  
+
   def custom_objects(self):
-    return {"CustomObjects": CustomObjects, 
+    return {"CustomObjects": CustomObjects,
       "codec2_param_error":CustomObjects.codec2_param_error}
 
   def test_seed_data(self, all_frames, start_index):
@@ -274,30 +278,29 @@ class ModelUtils(object):
 
   def define_or_load_model(self, frame_seq_len, framelen, num_frame_seqs):
     self.model_def = ModelDef(self, self.config)
-    
-    if len(self.model_filename) > 0 and self.model_filename != 'none': 
-      model = self.load_model()   
+
+    if len(self.model_filename) > 0 and self.model_filename != 'none':
+      model = self.load_model()
       self.save_json_model()
     else:
       self.log("creating new model")
       model = self.model_def.define_model(frame_seq_len, framelen, num_frame_seqs)
       self.save_json_model()
-    
+
     if self.load_weights != None:
       self.model_def.load_weights(self.load_weights, by_name=True)
-      
+
     return self.model_def
-    
+
 
   def training_mode(self):
       return self.mode == Train
-      
+
   def generate_mode(self):
       return self.mode == Generate
-  
+
   def setup_config(self):
     return self.config
-  
+
   def log_model_summary(self):
     self.model_def.model.summary()
-    
