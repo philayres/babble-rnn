@@ -47,6 +47,7 @@ class ModelUtils(object):
       print("if test data filename or load model filename are excluded, the settings in config.json will be used if it exists")
       print("if load model filename is set to 'none' then the coded model definition will be used, regardless of what is set in the config.json file.\n")
       print("generator usage: lstm_c2_generation [tagname] --generate=<base filename> [--seed_index=<'random'|frame num|time in seconds>] [--generate-len=<frames>] <test data filename> <load model filename>")
+      PRINT("loading weights: lstm_c2_generation [tagname] --load-weights=<path to .h5 file> <test data filename> <load model filename>")
       print("for example\n lstm_c2_generation --generate=audiofile --seed_index=60s --generate-len=500 test/LDC97S44-8k.c2cb out/realmodel/model-600.h5")
       exit()
 
