@@ -38,7 +38,7 @@ class ModelDef(object):
             Dense(
                     3
                     , activation="relu"
-                    , trainable=True
+                    , trainable=False
             )
         )(main_input)
 
@@ -46,7 +46,7 @@ class ModelDef(object):
             LSTM(
                     3
                     , return_sequences=True
-                    , trainable=True
+                    , trainable=False
             )(d0)
         )
 
@@ -59,7 +59,7 @@ class ModelDef(object):
         l01 = LSTM(
                     6
                     , return_sequences=True
-                    , trainable=True
+                    , trainable=False
         )(cl)
 
         lout.append(
@@ -67,7 +67,7 @@ class ModelDef(object):
                 Dense(
                     6
                     , activation="relu"
-                    , trainable=True
+                    , trainable=False
                     )
                 )(l01)
         )
@@ -80,13 +80,13 @@ class ModelDef(object):
 
     cd = Dense(
         framelen * 3
-        , trainable=True
+        , trainable=False
     )(c)
 
     l20 = LSTM(
         framelen * 10
         , return_sequences=True
-        , trainable=False
+        , trainable=True
     )(cd)
 
     l21 = LSTM(
