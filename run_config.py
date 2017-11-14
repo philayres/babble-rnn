@@ -41,7 +41,7 @@ class RunConfig(object):
   frame_len_ms = 20
 
   # length of frame sequence for learning
-  frame_seq_len = 50
+  frame_seq_len = 5
    # 2 seconds of audio for 3200 codec
   #frame_seq_len = 100 # 4 seconds of audio for 1300 codec
 
@@ -55,7 +55,7 @@ class RunConfig(object):
   # picking a number larger than frame_seq_len means that frames from the corpus will be skipped
   # note that overlapping frame sequences may be considered a way to augment data, but also increases memory requirements,
   # since a single batch of data will actually be larger than the original corpus
-  seq_step = 50
+  seq_step = frame_seq_len
 
   # filename including relative path to the test data
   # this filename may be overridden by setting on the command line, in which case this setting will be updated to match
@@ -63,7 +63,7 @@ class RunConfig(object):
 
   # number of frames generated after the seed when generating new data during training iterations
   # when using --generate=audiofile on the command line, this setting is ignored
-  generate_len = 400
+  generate_len = 200
 
   # flag to indicate use of Stateful LSTMs. shuffle should be set to False  when using stateful=True
   # learn_next_step = False is probably also required
