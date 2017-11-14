@@ -80,7 +80,7 @@ class ModelDef(object):
 
     cd = Dense(
         framelen * 3
-        , trainable=False
+        , trainable=True
     )(c)
 
     l20 = LSTM(
