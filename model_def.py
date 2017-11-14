@@ -67,7 +67,7 @@ class ModelDef(object):
                 Dense(
                     6
                     , activation="relu"
-                    , trainable=False
+                    , trainable=True
                     )
                 )(l01)
         )
@@ -80,13 +80,13 @@ class ModelDef(object):
 
     cd = Dense(
         framelen * 3
-        , trainable=False
+        , trainable=True
     )(c)
 
     l20 = LSTM(
         framelen * 10
         , return_sequences=True
-        , trainable=True
+        , trainable=False
     )(cd)
 
     l21 = LSTM(

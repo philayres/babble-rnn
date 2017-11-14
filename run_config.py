@@ -41,9 +41,8 @@ class RunConfig(object):
   frame_len_ms = 20
 
   # length of frame sequence for learning
-  frame_seq_len = 5
-   # 2 seconds of audio for 3200 codec
-  #frame_seq_len = 100 # 4 seconds of audio for 1300 codec
+  frame_seq_len = 10
+
 
   # the seed sequence length is the number of frames the generator expects to be input
   # as the seed. This must match the frame_seq_len currently
