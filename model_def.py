@@ -92,7 +92,7 @@ class ModelDef(object):
     l21 = LSTM(
         framelen * 10
         , return_sequences=True
-        , trainable=False
+        , trainable=True
     )(l20)
 
 

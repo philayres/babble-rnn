@@ -41,7 +41,7 @@ class RunConfig(object):
   frame_len_ms = 20
 
   # length of frame sequence for learning
-  frame_seq_len = 50
+  frame_seq_len = 100
 
 
   # the seed sequence length is the number of frames the generator expects to be input
