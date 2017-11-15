@@ -67,7 +67,7 @@ class ModelDef(object):
                 Dense(
                     6
                     , activation="relu"
-                    , trainable=False
+                    , trainable=True
                     )
                 )(l01)
         )
