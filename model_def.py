@@ -38,7 +38,7 @@ class ModelDef(object):
             Dense(
                     3
                     , activation="relu"
-                    , trainable=False
+                    , trainable=True
             )
         )(main_input)
 
@@ -46,7 +46,7 @@ class ModelDef(object):
             LSTM(
                     3
                     , return_sequences=True
-                    , trainable=False
+                    , trainable=True
             )(d0)
         )
 
