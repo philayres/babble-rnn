@@ -17,3 +17,5 @@ wait_file "./out/$1/config.json" && {
   git add out/$1/training.log
   git commit -a -m "Learning $1 $2 $3"
 }
+
+tail -f -n 100 out/$1/log

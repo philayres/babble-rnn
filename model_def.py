@@ -59,7 +59,7 @@ class ModelDef(object):
         l01 = LSTM(
                     6
                     , return_sequences=True
-                    , trainable=False
+                    , trainable=True
         )(cl)
 
         lout.append(
@@ -92,7 +92,7 @@ class ModelDef(object):
     l21 = LSTM(
         framelen * 10
         , return_sequences=True
-        , trainable=True
+        , trainable=False
     )(l20)
 
 
