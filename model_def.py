@@ -76,7 +76,10 @@ class ModelDef(object):
 # targeting different parts of the overall frame
 # Also need to feed the original input in back at this level...
 
-    c = keras.layers.concatenate(lout, name="mid_output")
+    c = keras.layers.concatenate(lout)
+
+    mid_out = Dense(framelen, name="mid_output")(c)
+
 
     cd = Dense(
         framelen * 12
