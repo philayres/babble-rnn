@@ -79,7 +79,7 @@ class ModelDef(object):
     c = keras.layers.concatenate(lout)
 
     cd = Dense(
-        framelen * 3
+        framelen * 12
         , trainable=True
     )(c)
 
