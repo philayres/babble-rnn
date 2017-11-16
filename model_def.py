@@ -76,7 +76,7 @@ class ModelDef(object):
 # targeting different parts of the overall frame
 # Also need to feed the original input in back at this level...
 
-    c = keras.layers.concatenate(lout)
+    c = keras.layers.concatenate(lout, name="mid_output")
 
     cd = Dense(
         framelen * 12
@@ -107,9 +107,10 @@ class ModelDef(object):
       framelen
       ,activation="relu"
       , trainable=True
+      , name="main_output"
     )(l2)
 
-    model = Model(inputs=[main_input], outputs=[main_output])
+    model = Model(inputs=[main_input], outputs=[main_output, c])
     self.model = model
     return model
 
@@ -117,153 +118,7 @@ class ModelDef(object):
 
 
 
-  def define_sequential_model(self, frame_seq_len, framelen, num_frame_seqs):
-    self.utils.log("Defining model")
-    model =  Sequential()
-    self.model = model
 
-    self.utils.log("Stateful:", self.stateful)
-
-    time_distributed = False
-
-#    self.add_layer(
-#      TimeDistributed(
-#        Dense(
-#          framelen * 50
-#          , activation="relu"
-#        )
-#        , batch_input_shape=(1 , frame_seq_len, framelen)
-#      )
-#    )
-
-    if self.stateful:
-        self.add_layer(
-          LSTM(
-            13
-            , batch_input_shape=(num_frame_seqs , frame_seq_len, framelen)
-            , return_sequences=True
-            , trainable=True
-            , stateful=self.stateful
-        #    ,dropout = 0.1
-          )
-        )
-    else:
-        self.add_layer(
-          LSTM(
-            13
-            , input_shape=(frame_seq_len, framelen)
-            , return_sequences=True
-            , trainable=True
-            , stateful=self.stateful
-        #    ,dropout = 0.1
-          )
-        )
-
-
-
-    self.add_layer(
-      LSTM(
-        130
-        , return_sequences=True
-        , trainable=True
-        , stateful=self.stateful
-    #    ,dropout = 0.1
-
-      )
-    )
-
-
-
-    self.add_layer(
-      LSTM(
-        13
-        , return_sequences=True
-        , trainable=True
-        , stateful=self.stateful
-    #    ,dropout = 0.1
-
-      )
-    )
-
-    self.add_layer(
-      TimeDistributed(
-        Dense(
-          framelen * 50
-          , activation="relu"
-        )
-        , batch_input_shape=(1 , frame_seq_len, framelen)
-      )
-    )
-
-    self.add_layer(
-      LSTM(
-        13
-        , return_sequences=True
-        , trainable=True
-        , stateful=self.stateful
-    #    ,dropout = 0.1
-
-      )
-    )
-
-
-
-
-
-    self.add_layer(
-      LSTM(
-        130
-        , return_sequences=True
-        , trainable=True
-        , stateful=self.stateful
-    #    ,dropout = 0.1
-
-      )
-    )
-
-
-    # self.add_layer(
-    #   TimeDistributed(
-    #     Dense(
-    #       framelen * 50
-    #       , activation="relu"
-    #     )
-    #     , batch_input_shape=(1 , frame_seq_len, framelen)
-    #   )
-    # )
-
-    self.add_layer(
-      LSTM(
-        13
-        , input_shape=(frame_seq_len, framelen)
-        , return_sequences= time_distributed
-        , trainable=True
-        , stateful=self.stateful
-    #    ,dropout = 0.1
-      )
-    )
-
-
-    if time_distributed:
-      self.add_layer(
-        TimeDistributed(
-          Dense(
-            framelen
-            ,activation="relu"
-          )
-        )
-      )
-    else:
-      self.add_layer(
-        Dense(
-          framelen
-          ,activation="relu"
-        )
-      )
-
-    #model.add(Dropout(0.1))
-
-    return model
 
   # we wrap the model.add method, since in the future we may wish to
   # provide additional processing at this level
@@ -387,5 +242,15 @@ class ModelDef(object):
     loss = CustomObjects.codec2_param_error
     #loss = 'mean_absolute_error'
     #loss = 'cosine_proximity'
-    self.model.compile(loss=loss, optimizer=optimizer)
+    self.model.compile(
+        loss={'main_output': loss, 'mid_output': loss},
+        loss_weights={'main_output': 1., 'mid_output': 0.2},
+        optimizer=optimizer)
     self.utils.log_model_summary()
+
+  def fit(self, input_seq, output_seq, batch_size=None, epochs=1, shuffle=False, callbacks=None):
+      inputs = input_seq
+      outputs = {'main_output': output_seq, 'mid_output': output_seq}
+      self.model.fit(inputs, outputs, batch_size=batch_size, epochs=epochs, shuffle=shuffle,
+       callbacks=callbacks
+      )
