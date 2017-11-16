@@ -78,7 +78,12 @@ class ModelDef(object):
 
     c = keras.layers.concatenate(lout)
 
-    mid_output = Dense(framelen, name="mid_output")(c)
+    lmid = LSTM(
+        framelen
+        , return_sequences=False
+        , trainable=False
+    )(c)
+    mid_output = Dense(framelen, name="mid_output")(lmid)
 
 
     cd = Dense(
