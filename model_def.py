@@ -78,7 +78,7 @@ class ModelDef(object):
 
     c = keras.layers.concatenate(lout)
 
-    mid_out = Dense(framelen, name="mid_output")(c)
+    mid_output = Dense(framelen, name="mid_output")(c)
 
 
     cd = Dense(
@@ -113,7 +113,7 @@ class ModelDef(object):
       , name="main_output"
     )(l2)
 
-    model = Model(inputs=[main_input], outputs=[main_output, c])
+    model = Model(inputs=[main_input], outputs=[main_output, mid_output])
     self.model = model
     return model
 
