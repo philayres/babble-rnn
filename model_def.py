@@ -42,13 +42,22 @@ class ModelDef(object):
             )
         )(main_input)
 
-        l0.append(
-            LSTM(
+        d01 = TimeDistributed(
+            Dense(
                     3
-                    , return_sequences=True
+                    , activation="relu"
                     , trainable=True
-            )(d0)
-        )
+            )
+        )(d0)
+
+        l0.append(d01)
+        # l0.append(
+        #     LSTM(
+        #             3
+        #             , return_sequences=True
+        #             , trainable=True
+        #     )(d0)
+        # )
 
 
     for i in range(0,13):
@@ -56,11 +65,19 @@ class ModelDef(object):
         if j < 0:
             j = 12
         cl = keras.layers.concatenate([l0[j], l0[i]])
-        l01 = LSTM(
-                    6
-                    , return_sequences=True
-                    , trainable=True
-        )(cl)
+        # l01 = LSTM(
+        #             6
+        #             , return_sequences=True
+        #             , trainable=True
+        # )(cl)
+
+        l01 = TimeDistributed(
+            Dense(
+                6
+                , activation="relu"
+                , trainable=True
+                )
+            )(cl)
 
         lout.append(
             TimeDistributed(
@@ -117,7 +134,13 @@ class ModelDef(object):
       , name="main_output"
     )(l2)
 
-    model = Model(inputs=[main_input], outputs=[main_output, mid_output])
+    
+
+    model = Model(
+        inputs=[main_input],
+        outputs=[main_output, mid_output]
+    )
+
     self.model = model
     return model
 
