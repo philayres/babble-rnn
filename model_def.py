@@ -72,9 +72,6 @@ class ModelDef(object):
                 )(l01)
         )
 
-# I'd like to pull out individual, intermediate outputs here, to play with additional loss calculations on each,
-# targeting different parts of the overall frame
-# Also need to feed the original input in back at this level...
 
     c = keras.layers.concatenate(lout)
 
@@ -86,16 +83,17 @@ class ModelDef(object):
     mid_output = Dense(framelen, name="mid_output")(lmid)
 
 
-    cd = Dense(
-        framelen * 12
-        , trainable=True
-    )(c)
 
     l20 = LSTM(
         framelen * 10
-        , return_sequences=True
+        , return_sequences=False
         , trainable=True
-    )(cd)
+    )(c)
+
+    cd = Dense(
+    framelen * 12
+    , trainable=True
+    )(l20)
 
     l21 = LSTM(
         framelen * 10
@@ -123,12 +121,30 @@ class ModelDef(object):
     return model
 
 
+  def compile_model(self):
+    self.utils.log("Compiling model")
+
+    loss = CustomObjects.codec2_param_error
+    # other loss options: CustomObjects.codec2_param_mean_square_error; 'mean_absolute_error'; 'cosine_proximity'
+
+    self.model.compile(
+        loss={'main_output': loss, 'mid_output': loss},
+        loss_weights={'main_output': 1., 'mid_output': 0.2},
+        optimizer=self.optimizer)
+    self.utils.log_model_summary()
+
+  def fit(self, input_seq, output_seq, batch_size=None, epochs=1, shuffle=False, callbacks=None):
+      inputs = input_seq
+      outputs = {'main_output': output_seq, 'mid_output': output_seq}
+      self.model.fit(inputs, outputs, batch_size=batch_size, epochs=epochs, shuffle=shuffle,
+       callbacks=callbacks
+      )
 
 
 
 
 
-  # we wrap the model.add method, since in the future we may wish to
+  # we can wrap the model.add method, since in the future we may wish to
   # provide additional processing at this level
   def add_layer(self, layer):
     self.model.add(layer)
@@ -142,15 +158,15 @@ class ModelDef(object):
 #      self.config.limit_frames = self.config.num_frames / 100
 #      self.model_updates_lstm_1234_trainable()
 #      self.config.log_attrs()
+#
+#    elif iteration == 481:
+#      self.model_updates_lstm3_trainable()
+#
 
 
     if not self.started:
       self.model_updates_onstart()
 
-#
-#    elif iteration == 481:
-#      self.model_updates_lstm3_trainable()
-#
 
     self.started = True
 
@@ -166,99 +182,13 @@ class ModelDef(object):
     self.utils.save_json_model(0)
 
 
-  def model_updates_lstm_1234_trainable(self):
-    self.utils.log("Make lstm 1,2,3,4 trainable")
-    self.model.layers[0].trainable=True
-    self.model.layers[1].trainable=True
-    self.model.layers[2].trainable=True
-    self.model.layers[3].trainable=True
-    self.compile_model()
-    self.utils.save_json_model(4)
-
-  def model_updates_lstm_123_untrainable(self):
-    self.utils.log("Make lstm 1,2,3 untrainable ")
-    self.model.layers[0].trainable=False
-    self.model.layers[1].trainable=False
-    self.model.layers[2].trainable=False
-    self.compile_model()
-    self.utils.save_json_model(5)
-
-  def model_updates_lstm_123_trainable(self):
-    self.utils.log("Make lstm 1,2,3 trainable")
-    self.model.layers[0].trainable=True
-    self.model.layers[1].trainable=True
-    self.model.layers[2].trainable=True
-    self.compile_model()
-    self.utils.save_json_model(4)
-
-  def model_updates_lstm_23_trainable(self):
-    self.utils.log("Make lstm 2,3 trainable")
-    self.model.layers[0].trainable=False
-    self.model.layers[1].trainable=True
-    self.model.layers[2].trainable=True
-    self.compile_model()
-    self.utils.save_json_model(4)
-
-
-  def model_updates_lstm2_trainable(self):
-    self.utils.log("Make lstm 2 trainable")
-    self.model.layers[0].trainable=False
-    self.model.layers[1].trainable=True
-    self.model.layers[2].trainable=False
-    self.compile_model()
-    self.utils.save_json_model(1)
-
-  def model_updates_lstm3_trainable(self):
-    self.utils.log("Make lstm 3 trainable")
-    self.model.layers[0].trainable=False
-    self.model.layers[1].trainable=False
-    self.model.layers[2].trainable=True
-    self.compile_model()
-    self.utils.save_json_model(2)
-
-  def model_updates_lstm1_trainable(self):
-    self.utils.log("Make lstm 1 trainable")
-    self.model.layers[0].trainable=True
-    self.model.layers[1].trainable=False
-    self.model.layers[2].trainable=False
-    self.compile_model()
-    self.utils.save_json_model(3)
-
-  def model_updates_lstm12_trainable(self):
-    self.utils.log("Make lstm 1 & 2 trainable")
-    self.model.layers[0].trainable=True
-    self.model.layers[1].trainable=True
-    self.model.layers[2].trainable=False
-    self.compile_model()
-    self.utils.save_json_model(3)
 
 
   def load_weights(self, fn, by_name=False):
     self.utils.log("Loading weights")
     self.model.load_weights(fn, by_name=by_name)
 
-  def compile_model(self):
-    self.utils.log("Compiling model")
-
-    optimizer_name = self.config.optimizer["name"]
-    args = []
-    optimizer = getattr(optimizers, optimizer_name)(*args, **self.config.optimizer["params"])
-      #optimizer = Nadam() #SGD() #Adam() #RMSprop(lr=0.01)
-
-
-    #loss = CustomObjects.codec2_param_mean_square_error
-    loss = CustomObjects.codec2_param_error
-    #loss = 'mean_absolute_error'
-    #loss = 'cosine_proximity'
-    self.model.compile(
-        loss={'main_output': loss, 'mid_output': loss},
-        loss_weights={'main_output': 1., 'mid_output': 0.2},
-        optimizer=optimizer)
-    self.utils.log_model_summary()
-
-  def fit(self, input_seq, output_seq, batch_size=None, epochs=1, shuffle=False, callbacks=None):
-      inputs = input_seq
-      outputs = {'main_output': output_seq, 'mid_output': output_seq}
-      self.model.fit(inputs, outputs, batch_size=batch_size, epochs=epochs, shuffle=shuffle,
-       callbacks=callbacks
-      )
+  def get_optimizer_from_config(self):
+      optimizer_name = self.config.optimizer["name"]
+      args = []
+      self.optimizer = getattr(optimizers, optimizer_name)(*args, **self.config.optimizer["params"])
