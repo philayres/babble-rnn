@@ -131,7 +131,7 @@ class ModelDef(object):
     self.model.compile(
         loss={'main_output': loss, 'mid_output': loss},
         loss_weights={'main_output': 1., 'mid_output': 0.2},
-        optimizer=self.optimizer)
+        optimizer=self.get_optimizer_from_config())
     self.utils.log_model_summary()
 
   def fit(self, input_seq, output_seq, batch_size=None, epochs=1, shuffle=False, callbacks=None):
@@ -193,3 +193,4 @@ class ModelDef(object):
       optimizer_name = self.config.optimizer["name"]
       args = []
       self.optimizer = getattr(optimizers, optimizer_name)(*args, **self.config.optimizer["params"])
+      return self.optimzer
