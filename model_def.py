@@ -193,4 +193,4 @@ class ModelDef(object):
       optimizer_name = self.config.optimizer["name"]
       args = []
       self.optimizer = getattr(optimizers, optimizer_name)(*args, **self.config.optimizer["params"])
-      return self.optimzer
+      return self.optimizer
