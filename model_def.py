@@ -42,13 +42,21 @@ class ModelDef(object):
             )
         )(main_input)
 
+        d005 = TimeDistributed(
+            Dense(
+                    15
+                    , activation="relu"
+                    , trainable=True
+            )
+        )(d0)
+
         d01 = TimeDistributed(
             Dense(
                     3
                     , activation="relu"
                     , trainable=True
             )
-        )(d0)
+        )(d005)
 
         l0.append(d01)
         # l0.append(
@@ -71,13 +79,21 @@ class ModelDef(object):
         #             , trainable=True
         # )(cl)
 
-        l01 = TimeDistributed(
+        l001 = TimeDistributed(
             Dense(
                 6
                 , activation="relu"
                 , trainable=True
                 )
             )(cl)
+
+        l01 = TimeDistributed(
+            Dense(
+                25
+                , activation="relu"
+                , trainable=True
+                )
+            )(l001)
 
         lout.append(
             TimeDistributed(
@@ -108,10 +124,10 @@ class ModelDef(object):
         , name='LSTM_post_mid_1'
     )(c)
 
-    cd = TimeDistributed(Dense(
-    framelen * 12
-    , trainable=True
-    ))(l20)
+    # cd = TimeDistributed(Dense(
+    # framelen * 12
+    # , trainable=True
+    # ))(l20)
 
     l21 = LSTM(
         framelen * 10
@@ -134,7 +150,7 @@ class ModelDef(object):
       , name="main_output"
     )(l2)
 
-    
+
 
     model = Model(
         inputs=[main_input],
