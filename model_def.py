@@ -86,7 +86,7 @@ class ModelDef(object):
 
     l20 = LSTM(
         framelen * 10
-        , return_sequences=False
+        , return_sequences=True
         , trainable=True
         , name='LSTM_post_mid_1'
     )(c)
