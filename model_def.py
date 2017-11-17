@@ -91,10 +91,10 @@ class ModelDef(object):
         , name='LSTM_post_mid_1'
     )(c)
 
-    cd = Dense(
+    cd = TimeDistributed(Dense(
     framelen * 12
     , trainable=True
-    )(l20)
+    ))(l20)
 
     l21 = LSTM(
         framelen * 10

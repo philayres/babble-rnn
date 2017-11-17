@@ -18,14 +18,16 @@ kill $(ps a |grep 'tail -f -n 100 out' | awk '{ print $1; }')
 wait_file "./out/$1/config.json" && {
   touch out/$1/training.log
   NOTES_FILE=out/$1/notes.md
-  echo "# $1 Notes" > $NOTES_FILE
-  echo "" >> $NOTES_FILE
-  dt=$(date '+%F %H:%M:%S'); echo "$dt" >> $NOTES_FILE
-  echo "" >> $NOTES_FILE
-  echo "Run with arguments $2 $3" >> $NOTES_FILE
-  echo "" >> $NOTES_FILE
-  echo "## Description" >> $NOTES_FILE
-  echo "" >> $NOTES_FILE
+  if [ ! -f $NOTES_FILE ]; then
+    echo "# $1 Notes" > $NOTES_FILE
+    echo "" >> $NOTES_FILE
+    dt=$(date '+%F %H:%M:%S'); echo "$dt" >> $NOTES_FILE
+    echo "" >> $NOTES_FILE
+    echo "Run with arguments $2 $3" >> $NOTES_FILE
+    echo "" >> $NOTES_FILE
+    echo "## Description" >> $NOTES_FILE
+    echo "" >> $NOTES_FILE
+  fi
   editor $NOTES_FILE
   git add out/$1/config.json
   git add out/$1/training.log
