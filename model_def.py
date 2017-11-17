@@ -132,14 +132,14 @@ class ModelDef(object):
     l21 = LSTM(
         framelen * 10
         , return_sequences=True
-        , trainable=False
+        , trainable=True
     )(l20)
 
 
     l2 = LSTM(
         framelen * 10
         , return_sequences=False
-        , trainable=False
+        , trainable=True
     )(l21)
 
 
