@@ -88,6 +88,7 @@ class ModelDef(object):
         framelen * 10
         , return_sequences=False
         , trainable=True
+        , name='LSTM_post_mid_1'
     )(c)
 
     cd = Dense(

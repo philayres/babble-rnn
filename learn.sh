@@ -10,6 +10,10 @@ wait_file() {
 }
 
 nohup python3 lstm_c2_generation.py $1 $2 $3 > nohup/$1.out &
+
+# Get rid of floating tail commands from previous runs
+kill $(ps a |grep 'tail -f -n 100 out' | awk '{ print $1; }')
+
 # Wait for up to 10 seconds then commit the new config and model def
 wait_file "./out/$1/config.json" && {
   touch out/$1/training.log
