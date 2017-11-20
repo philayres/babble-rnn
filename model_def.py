@@ -38,7 +38,7 @@ class ModelDef(object):
             Dense(
                     3
                     , activation="relu"
-                    , trainable=False
+                    , trainable=True
             )
         )(main_input)
 
@@ -46,7 +46,7 @@ class ModelDef(object):
             Dense(
                     15
                     , activation="relu"
-                    , trainable=False
+                    , trainable=True
             )
         )(d0)
 
@@ -54,7 +54,7 @@ class ModelDef(object):
             Dense(
                     3
                     , activation="relu"
-                    , trainable=False
+                    , trainable=True
             )
         )(d005)
 
@@ -83,7 +83,7 @@ class ModelDef(object):
             Dense(
                 6
                 , activation="relu"
-                , trainable=False
+                , trainable=True
                 )
             )(cl)
 
@@ -91,7 +91,7 @@ class ModelDef(object):
             Dense(
                 25
                 , activation="relu"
-                , trainable=False
+                , trainable=True
                 )
             )(l001)
 
@@ -100,7 +100,7 @@ class ModelDef(object):
                 Dense(
                     6
                     , activation="relu"
-                    , trainable=False
+                    , trainable=True
                     )
                 )(l01)
         )
