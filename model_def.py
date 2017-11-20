@@ -140,12 +140,14 @@ class ModelDef(object):
         framelen * 10
         , return_sequences=True
         , trainable=True
+        , name="LSTM_final_1"
     )(l21)
 
     l2 = LSTM(
         framelen * 20
         , return_sequences=False
         , trainable=True
+        , name="LSTM_final_2"
     )(l22)
 
     main_output = Dense(
