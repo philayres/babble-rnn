@@ -38,7 +38,7 @@ class ModelDef(object):
             Dense(
                     3
                     , activation="relu"
-                    , trainable=True
+                    , trainable=False
             )
         )(main_input)
 
@@ -46,7 +46,7 @@ class ModelDef(object):
             Dense(
                     15
                     , activation="relu"
-                    , trainable=True
+                    , trainable=False
             )
         )(d0)
 
@@ -54,7 +54,7 @@ class ModelDef(object):
             Dense(
                     3
                     , activation="relu"
-                    , trainable=True
+                    , trainable=False
             )
         )(d005)
 
@@ -83,7 +83,7 @@ class ModelDef(object):
             Dense(
                 6
                 , activation="relu"
-                , trainable=True
+                , trainable=False
                 )
             )(cl)
 
@@ -91,7 +91,7 @@ class ModelDef(object):
             Dense(
                 25
                 , activation="relu"
-                , trainable=True
+                , trainable=False
                 )
             )(l001)
 
@@ -100,7 +100,7 @@ class ModelDef(object):
                 Dense(
                     6
                     , activation="relu"
-                    , trainable=True
+                    , trainable=False
                     )
                 )(l01)
         )
@@ -120,7 +120,7 @@ class ModelDef(object):
     l20 = LSTM(
         framelen * 10
         , return_sequences=True
-        , trainable=True
+        , trainable=False
         , name='LSTM_post_mid_1'
     )(c)
 
@@ -132,16 +132,21 @@ class ModelDef(object):
     l21 = LSTM(
         framelen * 10
         , return_sequences=True
-        , trainable=True
+        , trainable=False
     )(l20)
 
 
-    l2 = LSTM(
+    l22 = LSTM(
         framelen * 10
         , return_sequences=False
         , trainable=True
     )(l21)
 
+    l2 = LSTM(
+        framelen * 20
+        , return_sequences=False
+        , trainable=True
+    )(l22)
 
     main_output = Dense(
       framelen
