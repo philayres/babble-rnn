@@ -138,7 +138,7 @@ class ModelDef(object):
 
     l22 = LSTM(
         framelen * 10
-        , return_sequences=False
+        , return_sequences=True
         , trainable=True
     )(l21)
 
