@@ -105,6 +105,7 @@ class ModelDef(object):
                 )(l01)
         )
 
+    lout.append(main_input)
 
     c = keras.layers.concatenate(lout)
 
@@ -120,7 +121,7 @@ class ModelDef(object):
     l20 = LSTM(
         framelen * 10
         , return_sequences=True
-        , trainable=False
+        , trainable=True
         , name='LSTM_post_mid_1'
     )(c)
 
@@ -132,23 +133,16 @@ class ModelDef(object):
     l21 = LSTM(
         framelen * 10
         , return_sequences=True
-        , trainable=False
+        , trainable=True
     )(l20)
 
 
-    l22 = LSTM(
-        framelen * 10
-        , return_sequences=True
-        , trainable=True
-        , name="LSTM_final_1"
-    )(l21)
-
     l2 = LSTM(
-        framelen * 20
+        framelen * 10
         , return_sequences=False
         , trainable=True
-        , name="LSTM_final_2"
-    )(l22)
+    )(l21)
+
 
     main_output = Dense(
       framelen
