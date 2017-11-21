@@ -68,7 +68,7 @@ all_frames = []
 
 def normalize_input(frame):
   normframe = np.array(frame, dtype=np.float32)
-  normframe = np.divide(normframe, config.frame_prop_loss_scale)
+  normframe = np.divide(normframe, config.frame_prop_orig_scale)
   return normframe
 
 def gen_sequence(iteration):
