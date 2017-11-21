@@ -11,3 +11,4 @@
 /out/*/out-c2cb*
 /out/*/weights-*
 /.tags
+/venv

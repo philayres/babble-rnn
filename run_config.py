@@ -92,14 +92,21 @@ class RunConfig(object):
     "params": {}
   }
 
-  # the scaling factors used for normalising frame parameters to range 0..1 and calculating losses fairly
-  frame_prop_loss_scale = [
+  # the scaling factors used for normalising frame parameters to range 0..1
+  frame_prop_orig_scale = [
    1,
    127,
    31 ,
    31,31,31,31,31,31,31,31,31,31
   ]
 
+  # allow different weightings for loss calculation
+  frame_prop_loss_scale = [
+     10.0,
+     127.0,
+     127.0,
+     31.0,31.0,31.0,31.0,31.0,31.0,31.0,31.0,31.0,31.0
+  ]
 
 
   ##### No more user config variables to change #####
@@ -117,6 +124,7 @@ class RunConfig(object):
     "seed_seq_len",
     "seq_step",
     "test_data_fn",
+    "frame_prop_orig_scale",
     "frame_prop_loss_scale",
     "stateful",
     "shuffle",

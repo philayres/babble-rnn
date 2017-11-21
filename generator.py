@@ -56,7 +56,7 @@ class Generator:
     preds = np.asarray(preds).astype('float32')
     if not no_scale:
       preds = [min(1, a) for a in preds]
-      preds = np.multiply(preds, self.config.frame_prop_loss_scale)
+      preds = np.multiply(preds, self.config.frame_prop_orig_scale)
 
     preds = np.round(preds)
 
