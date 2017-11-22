@@ -165,7 +165,7 @@ class ModelDef(object):
   def compile_model(self):
     self.utils.log("Compiling model")
 
-    loss = CustomObjects.codec2_param_error
+    loss = CustomObjects.codec2_weighted_param_error
     # other loss options: CustomObjects.codec2_param_mean_square_error; 'mean_absolute_error'; 'cosine_proximity'
 
     self.model.compile(
