@@ -36,7 +36,7 @@ class ModelDef(object):
 
         d0 = TimeDistributed(
             Dense(
-                    3
+                    7
                     , activation="relu"
                     , trainable=True
             )
@@ -44,7 +44,7 @@ class ModelDef(object):
 
         d005 = TimeDistributed(
             Dense(
-                    15
+                    35
                     , activation="relu"
                     , trainable=True
             )
@@ -52,7 +52,7 @@ class ModelDef(object):
 
         d01 = TimeDistributed(
             Dense(
-                    3
+                    7
                     , activation="relu"
                     , trainable=True
             )
@@ -81,7 +81,7 @@ class ModelDef(object):
 
         l001 = TimeDistributed(
             Dense(
-                6
+                13
                 , activation="relu"
                 , trainable=True
                 )
@@ -89,7 +89,7 @@ class ModelDef(object):
 
         l01 = TimeDistributed(
             Dense(
-                25
+                67
                 , activation="relu"
                 , trainable=True
                 )
@@ -98,7 +98,7 @@ class ModelDef(object):
         lout.append(
             TimeDistributed(
                 Dense(
-                    6
+                    13
                     , activation="relu"
                     , trainable=True
                     )
@@ -130,18 +130,18 @@ class ModelDef(object):
     # , trainable=True
     # ))(l20)
 
-    l21 = LSTM(
-        framelen * 10
-        , return_sequences=True
-        , trainable=True
-    )(l20)
+    # l21 = LSTM(
+    #     framelen * 10
+    #     , return_sequences=True
+    #     , trainable=True
+    # )(l20)
 
 
     l2 = LSTM(
         framelen * 10
         , return_sequences=False
         , trainable=True
-    )(l21)
+    )(l20)
 
 
     main_output = Dense(
