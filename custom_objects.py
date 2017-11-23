@@ -35,14 +35,3 @@ class CustomObjects:
     diff_pred = y_pred - y_true
     # perform a basic mean absolute error calculation
     return K.mean(K.square(diff_pred), axis=-1)
-
-
-  @staticmethod
-  def codec2_weighted_param_error(y_true, y_pred):
-
-    y_pred = y_pred * CustomObjects.frame_prop_loss_scale
-    y_true = y_true * CustomObjects.frame_prop_loss_scale
-    diff_pred = (y_pred - y_true) * y_pred[:][2] * CustomObjects.frame_prop_loss_scale[2]
-
-    # perform a basic mean absolute error calculation
-    return K.mean(K.abs(diff_pred), axis=-1)

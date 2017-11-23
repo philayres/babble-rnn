@@ -102,10 +102,10 @@ class RunConfig(object):
 
   # allow different weightings for loss calculation
   frame_prop_loss_scale = [
-     10.0,
-     127.0,
-     127.0,
-     31.0,31.0,31.0,31.0,31.0,31.0,31.0,31.0,31.0,31.0
+     1000.0,
+     1000.0,
+     1000.0,
+     700.0,600.0,500.0,400.0,300.0,200.0,100.0,60.0,31.0,16.0
   ]
 
 
