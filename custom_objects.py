@@ -42,7 +42,7 @@ class CustomObjects:
 
     y_pred = y_pred * CustomObjects.frame_prop_loss_scale
     y_true = y_true * CustomObjects.frame_prop_loss_scale
-    diff_pred = y_pred - y_true
+    diff_pred = (y_pred - y_true) * y_pred[:][2]
 
     # perform a basic mean absolute error calculation
-    return K.mean(K.abs(diff_pred), axis=-1) * y_pred[2]
+    return K.mean(K.abs(diff_pred), axis=-1)
