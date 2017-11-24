@@ -32,11 +32,11 @@ class ModelDef(object):
     lout = []
     l0 = []
 
-    for i in range(0,13):
+    for i in range(0,framelen * 5):
 
         d0 = TimeDistributed(
             Dense(
-                    7
+                    3
                     , activation="relu"
                     , trainable=True
             )
@@ -44,7 +44,7 @@ class ModelDef(object):
 
         d005 = TimeDistributed(
             Dense(
-                    35
+                    13
                     , activation="relu"
                     , trainable=True
             )
@@ -52,7 +52,7 @@ class ModelDef(object):
 
         d01 = TimeDistributed(
             Dense(
-                    7
+                    3
                     , activation="relu"
                     , trainable=True
             )
@@ -68,7 +68,7 @@ class ModelDef(object):
         # )
 
 
-    for i in range(0,13):
+    for i in range(0, framelen):
         j = i - 1
         if j < 0:
             j = 12
@@ -81,7 +81,7 @@ class ModelDef(object):
 
         l001 = TimeDistributed(
             Dense(
-                13
+                framelen
                 , activation="relu"
                 , trainable=True
                 )
@@ -89,7 +89,7 @@ class ModelDef(object):
 
         l01 = TimeDistributed(
             Dense(
-                67
+                framelen * 6
                 , activation="relu"
                 , trainable=True
                 )
@@ -98,7 +98,7 @@ class ModelDef(object):
         lout.append(
             TimeDistributed(
                 Dense(
-                    13
+                    framelen
                     , activation="relu"
                     , trainable=True
                     )
