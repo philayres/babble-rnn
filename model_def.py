@@ -73,7 +73,7 @@ class ModelDef(object):
     for i in range(0, in_count):
         j = i - 1
         if j < 0:
-            j = 12
+            j = in_count - 1
         cl = keras.layers.concatenate([l0[j], l0[i]])
         # l01 = LSTM(
         #             6
