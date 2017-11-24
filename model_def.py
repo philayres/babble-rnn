@@ -32,7 +32,9 @@ class ModelDef(object):
     lout = []
     l0 = []
 
-    for i in range(0,framelen * 5):
+    in_count = framelen * 5
+
+    for i in range(0, in_count):
 
         d0 = TimeDistributed(
             Dense(
@@ -68,7 +70,7 @@ class ModelDef(object):
         # )
 
 
-    for i in range(0, framelen):
+    for i in range(0, in_count):
         j = i - 1
         if j < 0:
             j = 12
