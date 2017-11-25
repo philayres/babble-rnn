@@ -119,17 +119,17 @@ class ModelDef(object):
     mid_output = Dense(framelen, name="mid_output")(lmid)
 
     # # bring this back down to size...
-    # cd0 = TimeDistributed(
-    #     Dense(
-    #         framelen
-    #         , activation="relu"
-    #         , trainable=True
-    #     )
-    # )(c)
-
-    # bring this back down to size...
-    cd0 = Conv1D(in_count, 5, padding='causal'
+    cd0 = TimeDistributed(
+        Dense(
+            framelen
+            , activation="relu"
+            , trainable=True
+        )
     )(c)
+
+    # # bring this back down to size...
+    # cd0 = Conv1D(in_count, 5, padding='causal'
+    # )(c)
 
     l20 = LSTM(
         framelen * 10
