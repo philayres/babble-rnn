@@ -128,7 +128,7 @@ class ModelDef(object):
     # )(c)
 
     # bring this back down to size...
-    cd0 = Conv1D(in_count, 5, data_format='channels_last', padding='valid'
+    cd0 = Conv1D(in_count, 5, padding='causal'
     )(c)
 
     l20 = LSTM(
