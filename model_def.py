@@ -118,14 +118,25 @@ class ModelDef(object):
     )(c)
     mid_output = Dense(framelen, name="mid_output")(lmid)
 
+    # # bring this back down to size...
+    # cd0 = TimeDistributed(
+    #     Dense(
+    #         framelen
+    #         , activation="relu"
+    #         , trainable=True
+    #     )
+    # )(c)
 
+    # bring this back down to size...
+    cd0 = Conv2D(in_count, 5, data_format='channels_last', padding='valid'
+    )(c)
 
     l20 = LSTM(
         framelen * 10
         , return_sequences=True
         , trainable=True
         , name='LSTM_post_mid_1'
-    )(c)
+    )(cd0)
 
     # cd = TimeDistributed(Dense(
     # framelen * 12
