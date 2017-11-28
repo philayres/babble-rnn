@@ -108,7 +108,7 @@ class ModelDef(object):
                 )(l01)
         )
 
-    lout.append(main_input)
+    #lout.append(main_input)
 
     c = keras.layers.concatenate(lout)
 
@@ -128,7 +128,7 @@ class ModelDef(object):
     #     )
     # )(c)
 
-    cr = Reshape((-1, framelen, 1))
+    cr = Reshape((in_count, 1))
 
     # # bring this back down to size...
     conv0 = Conv2D(in_count, 5, padding='same', data_format='channels_last', use_bias=True
@@ -137,11 +137,11 @@ class ModelDef(object):
     cd0 = MaxPooling2D(in_scale, padding='same')(conv0)
 
     # Need to repeat here
-    rs1 = Reshape((-1, framelen))(cd0)
+    rs1 = Reshape((framelen))(cd0)
 
-    rp0 = RepeatVector(in_scale)(rs1)
+    rp = RepeatVector(in_scale)(rs1)
 
-    rp = Reshape(-1, framelen)(rp0)
+    # rp = Reshape(-1, framelen)(rp0)
 
     recomb = concatenate([rp, main_input])
 
