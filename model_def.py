@@ -135,6 +135,8 @@ class ModelDef(object):
 
     mp = MaxPooling2D(in_scale, padding='same', data_format='channels_last')
     print(mp.get_config())
+    print(mp.output_shape)
+    print(mp.output_shape)
     mp0 = mp(conv0)
 
     rs1 = TimeDistributed(keras.layers.Reshape((framelen,)))(mp0)
