@@ -139,7 +139,7 @@ class ModelDef(object):
     print(mp.input_shape)
     print(mp.output_shape)
 
-    rs1 = TimeDistributed(keras.layers.Reshape((framelen*in_count)))(mp0)
+    rs1 = TimeDistributed(keras.layers.Reshape((framelen*in_count,)))(mp0)
 
     rsd1 = TimeDistributed(Dense(in_count))(rs1)
     # Need to repeat here
