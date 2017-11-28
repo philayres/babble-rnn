@@ -135,10 +135,11 @@ class ModelDef(object):
 
     mp = MaxPooling2D(in_scale, padding='same', data_format='channels_last')
     print(mp.get_config())
-    print(mp.input_shape)
     mp0 = mp(conv0)
-    rs1 = TimeDistributed(keras.layers.Reshape((framelen,)))(mp0)
+    print(mp0.input_shape)
     print(mp0.output_shape)
+
+    rs1 = TimeDistributed(keras.layers.Reshape((framelen,)))(mp0)
 
     # Need to repeat here
     rp0 = RepeatVector(in_scale)(rs1)
