@@ -128,7 +128,7 @@ class ModelDef(object):
         )
     )(conc)
 
-    cr = keras.layers.Reshape((in_count, 1))(cd0)
+    cr = TimeDistributed(keras.layers.Reshape((in_count, 1)))(cd0)
 
 
     conv0 = Conv2D(in_count, 5, padding='same', data_format='channels_last', use_bias=True
