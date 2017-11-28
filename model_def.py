@@ -1,7 +1,7 @@
 import keras as keras
 from keras.models import Sequential, Model
 from keras.layers import Dense, Activation, Dropout, TimeDistributed, Concatenate, Input
-from keras.layers import GRU, LSTM, Conv2D, Conv1D, Reshape, Flatten, Permute, AveragePooling2D, MaxPooling2D
+from keras.layers import GRU, LSTM, Conv2D, Conv1D, Reshape, Flatten, Permute, AveragePooling2D, MaxPooling2D, RepeatVector
 import keras.optimizers as optimizers
 
 from custom_objects import CustomObjects
@@ -32,7 +32,8 @@ class ModelDef(object):
     lout = []
     l0 = []
 
-    in_count = framelen * 5
+    in_scale = 5
+    in_count = framelen * in_scale
 
     for i in range(0, in_count):
 
@@ -46,7 +47,7 @@ class ModelDef(object):
 
         d005 = TimeDistributed(
             Dense(
-                    13
+                    5
                     , activation="relu"
                     , trainable=True
             )
@@ -91,7 +92,7 @@ class ModelDef(object):
 
         l01 = TimeDistributed(
             Dense(
-                framelen * 6
+                framelen * 19
                 , activation="relu"
                 , trainable=True
                 )
@@ -119,24 +120,37 @@ class ModelDef(object):
     mid_output = Dense(framelen, name="mid_output")(lmid)
 
     # # bring this back down to size...
-    cd0 = TimeDistributed(
-        Dense(
-            framelen
-            , activation="relu"
-            , trainable=True
-        )
-    )(c)
+    # cd0 = TimeDistributed(
+    #     Dense(
+    #         framelen
+    #         , activation="relu"
+    #         , trainable=True
+    #     )
+    # )(c)
+
+    cr = Reshape((-1, framelen, 1))
 
     # # bring this back down to size...
-    # cd0 = Conv1D(in_count, 5, padding='causal'
-    # )(c)
+    conv0 = Conv2D(in_count, 5, padding='same', data_format='channels_last', use_bias=True
+    )(cr)
+
+    cd0 = MaxPooling2D(in_scale, padding='same')(conv0)
+
+    # Need to repeat here
+    rs1 = Reshape((-1, framelen))(cd0)
+
+    rp0 = RepeatVector(in_scale)(rs1)
+
+    rp = Reshape(-1, framelen)(rp0)
+
+    recomb = concatenate([rp, main_input])
 
     l20 = LSTM(
         framelen * 10
         , return_sequences=True
         , trainable=True
         , name='LSTM_post_mid_1'
-    )(cd0)
+    )(recomb)
 
     # cd = TimeDistributed(Dense(
     # framelen * 12
