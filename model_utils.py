@@ -280,7 +280,7 @@ class ModelUtils(object):
   def define_or_load_model(self, frame_seq_len, framelen, num_frame_seqs):
     self.model_def = ModelDef(self, self.config)
 
-    if len(self.model_filename) > 0 and self.model_filename != 'none':
+    if len(self.model_filename) > 0 and self.model_filename != 'none' and self.model_filename != 'None':
       model = self.load_model()
       self.save_json_model()
     else:
