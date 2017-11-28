@@ -145,8 +145,13 @@ class ModelDef(object):
     print(tdl.input_shape)
     print(tdl.output_shape)
 
+
+    rpl = TimeDistributed(RepeatVector(in_scale))
     # Need to repeat here
-    rp0 = TimeDistributed(RepeatVector(in_scale))(rs1)
+    rp0 = rpl(rs1)
+    print(rpl.get_config())
+    print(rpl.input_shape)
+    print(rpl.output_shape)
 
     rp = TimeDistributed(keras.layers.Reshape((100, in_count)))(rp0)
 
