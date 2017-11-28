@@ -133,10 +133,8 @@ class ModelDef(object):
     conv0 = Conv2D(in_count, 5, padding='same', data_format='channels_last', use_bias=True
     )(cr)
 
-    mp0 = MaxPooling2D(in_scale, padding='valid', data_format='channels_last')(conv0)
+    mp0 = MaxPooling2D(in_scale, padding='same', data_format='channels_last')(conv0)
 
-
-    print(mp0.get_config())
     rs1 = TimeDistributed(keras.layers.Reshape((framelen,)))(mp0)
 
     # Need to repeat here
