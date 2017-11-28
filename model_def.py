@@ -155,9 +155,9 @@ class ModelDef(object):
 
     rp = keras.layers.Reshape((100, in_count*framelen))(rp0)
 
-    rpd = TimeDistributed(Dense(framelen))(rp)
+    rpd = TimeDistributed(Dense(in_count))(rp)
 
-    recomb = concatenate([rpd, main_input])
+    recomb = keras.layers.concatenate([rpd, main_input])
 
     l20 = LSTM(
         framelen * 10
