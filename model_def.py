@@ -139,14 +139,17 @@ class ModelDef(object):
     print(mp.input_shape)
     print(mp.output_shape)
 
-    rs1 = TimeDistributed(keras.layers.Reshape((framelen,)))(mp0)
+    rs1 = TimeDistributed(keras.layers.Reshape((framelen*in_count)))(mp0)
 
+    rsd1 = TimeDistributed(Dense(in_count))(rs1)
     # Need to repeat here
-    rp0 = RepeatVector(in_scale)(rs1)
+    rp0 = RepeatVector(in_scale)(rsd1)
 
-    rp = TimeDistributed(keras.layers.Reshape((framelen,)))(rp0)
+    rp = TimeDistributed(keras.layers.Reshape((100, in_count)))(rp0)
 
-    recomb = concatenate([rp, main_input])
+    rpd = TimeDistributed(Dense(framelen))(rp)
+
+    recomb = concatenate([rpd, main_input])
 
     l20 = LSTM(
         framelen * 10
