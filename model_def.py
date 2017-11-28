@@ -139,8 +139,11 @@ class ModelDef(object):
     print(mp.input_shape)
     print(mp.output_shape)
 
-    rs1 = TimeDistributed(keras.layers.Reshape((framelen*in_count,)))(mp0)
-
+    tdl =  TimeDistributed(keras.layers.Reshape((framelen*in_count,)))
+    rs1 = tdl(mp0)
+    print(tdl.get_config())
+    print(tdl.input_shape)
+    print(tdl.output_shape)
 
     # Need to repeat here
     rp0 = RepeatVector(in_scale)(rs1)
