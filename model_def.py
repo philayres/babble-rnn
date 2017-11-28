@@ -108,40 +108,40 @@ class ModelDef(object):
                 )(l01)
         )
 
-    #lout.append(main_input)
+    lout.append(main_input)
 
-    c = keras.layers.concatenate(lout)
+    conc = keras.layers.concatenate(lout)
 
     lmid = LSTM(
         framelen
         , return_sequences=False
         , trainable=False
-    )(c)
+    )(conc)
     mid_output = Dense(framelen, name="mid_output")(lmid)
 
-    # # bring this back down to size...
-    # cd0 = TimeDistributed(
-    #     Dense(
-    #         framelen
-    #         , activation="relu"
-    #         , trainable=True
-    #     )
-    # )(c)
+    # bring this back down to size...
+    cd0 = TimeDistributed(
+        Dense(
+            in_count
+            , activation="relu"
+            , trainable=True
+        )
+    )(conc)
 
-    cr = keras.layers.Reshape((in_count, 1))
+    cr = keras.layers.Reshape((in_count, 1))(cd0)
 
-    # # bring this back down to size...
+
     conv0 = Conv2D(in_count, 5, padding='same', data_format='channels_last', use_bias=True
     )(cr)
 
-    cd0 = MaxPooling2D(in_scale, padding='same')(conv0)
+    mp0 = MaxPooling2D(in_scale, padding='same')(conv0)
 
     # Need to repeat here
-    rs1 = keras.layers.Reshape((framelen))(cd0)
+    rs1 = keras.layers.Reshape((framelen))(mp0)
 
     rp0 = RepeatVector(in_scale)(rs1)
 
-    rp = keras.layers.Reshape(-1, framelen)(rp0)
+    rp = keras.layers.Reshape((framelen))(rp0)
 
     recomb = concatenate([rp, main_input])
 
