@@ -141,9 +141,9 @@ class ModelDef(object):
 
     rs1 = TimeDistributed(keras.layers.Reshape((framelen*in_count,)))(mp0)
 
-    rsd1 = TimeDistributed(Dense(in_count))(rs1)
+
     # Need to repeat here
-    rp0 = RepeatVector(in_scale)(rsd1)
+    rp0 = RepeatVector(in_scale)(rs1)
 
     rp = TimeDistributed(keras.layers.Reshape((100, in_count)))(rp0)
 
