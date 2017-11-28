@@ -130,14 +130,13 @@ class ModelDef(object):
 
     cr = TimeDistributed(keras.layers.Reshape((in_count, 1)))(cd0)
 
-
     conv0 = Conv2D(in_count, 5, padding='same', data_format='channels_last', use_bias=True
     )(cr)
 
-    mp0 = MaxPooling2D(in_scale, padding='same')(conv0)
+    mp0 = MaxPooling2D(in_scale, padding='valid', data_format='channels_last')(conv0)
 
     # Need to repeat here
-    rs1 = keras.layers.Reshape((framelen))(mp0)
+    rs1 = TimeDistributed(keras.layers.Reshape((framelen)))(mp0)
 
     rp0 = RepeatVector(in_scale)(rs1)
 
