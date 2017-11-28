@@ -153,7 +153,7 @@ class ModelDef(object):
     print(rpl.input_shape)
     print(rpl.output_shape)
 
-    rp = TimeDistributed(keras.layers.Reshape((100, in_count)))(rp0)
+    rp = TimeDistributed(keras.layers.Reshape((100, in_count*framelen)))(rp0)
 
     rpd = TimeDistributed(Dense(framelen))(rp)
 
