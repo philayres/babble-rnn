@@ -133,9 +133,9 @@ class ModelDef(object):
     conv0 = Conv2D(in_count, 5, padding='same', data_format='channels_last', use_bias=True
     )(cr)
 
-    mp = MaxPooling2D(in_scale, padding='same', data_format='channels_last')
-    print(mp.get_config())
+    mp = MaxPooling2D(in_scale, padding='valid', data_format='channels_last')
     mp0 = mp(conv0)
+    print(mp.get_config())
     print(mp.input_shape)
     print(mp.output_shape)
 
