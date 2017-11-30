@@ -34,103 +34,113 @@ class ModelDef(object):
 
     in_scale = 5
     in_count = framelen * in_scale
+    conv_count = 65
 
-    for i in range(0, in_count):
+    # for i in range(0, in_count):
+    #
+    #     d0 = TimeDistributed(
+    #         Dense(
+    #                 3
+    #                 , activation="relu"
+    #                 , trainable=True
+    #         )
+    #     )(main_input)
+    #
+    #     d005 = TimeDistributed(
+    #         Dense(
+    #                 5
+    #                 , activation="relu"
+    #                 , trainable=True
+    #         )
+    #     )(d0)
+    #
+    #     d01 = TimeDistributed(
+    #         Dense(
+    #                 3
+    #                 , activation="relu"
+    #                 , trainable=True
+    #         )
+    #     )(d005)
+    #
+    #     l0.append(d01)
+    #     # l0.append(
+    #     #     LSTM(
+    #     #             3
+    #     #             , return_sequences=True
+    #     #             , trainable=True
+    #     #     )(d0)
+    #     # )
+    #
+    #
+    # for i in range(0, in_count):
+    #     j = i - 1
+    #     if j < 0:
+    #         j = in_count - 1
+    #     cl = keras.layers.concatenate([l0[j], l0[i]])
+    #     # l01 = LSTM(
+    #     #             6
+    #     #             , return_sequences=True
+    #     #             , trainable=True
+    #     # )(cl)
+    #
+    #     l001 = TimeDistributed(
+    #         Dense(
+    #             framelen
+    #             , activation="relu"
+    #             , trainable=True
+    #             )
+    #         )(cl)
+    #
+    #     l01 = TimeDistributed(
+    #         Dense(
+    #             framelen * 19
+    #             , activation="relu"
+    #             , trainable=True
+    #             )
+    #         )(l001)
+    #
+    #     lout.append(
+    #         TimeDistributed(
+    #             Dense(
+    #                 framelen
+    #                 , activation="relu"
+    #                 , trainable=True
+    #                 )
+    #             )(l01)
+    #     )
+    #
+    # lout.append(main_input)
 
-        d0 = TimeDistributed(
-            Dense(
-                    3
-                    , activation="relu"
-                    , trainable=True
-            )
-        )(main_input)
-
-        d005 = TimeDistributed(
-            Dense(
-                    5
-                    , activation="relu"
-                    , trainable=True
-            )
-        )(d0)
-
-        d01 = TimeDistributed(
-            Dense(
-                    3
-                    , activation="relu"
-                    , trainable=True
-            )
-        )(d005)
-
-        l0.append(d01)
-        # l0.append(
-        #     LSTM(
-        #             3
-        #             , return_sequences=True
-        #             , trainable=True
-        #     )(d0)
-        # )
-
-
-    for i in range(0, in_count):
-        j = i - 1
-        if j < 0:
-            j = in_count - 1
-        cl = keras.layers.concatenate([l0[j], l0[i]])
-        # l01 = LSTM(
-        #             6
-        #             , return_sequences=True
-        #             , trainable=True
-        # )(cl)
-
-        l001 = TimeDistributed(
-            Dense(
-                framelen
-                , activation="relu"
-                , trainable=True
-                )
-            )(cl)
-
-        l01 = TimeDistributed(
-            Dense(
-                framelen * 19
-                , activation="relu"
-                , trainable=True
-                )
-            )(l001)
-
-        lout.append(
-            TimeDistributed(
-                Dense(
-                    framelen
-                    , activation="relu"
-                    , trainable=True
-                    )
-                )(l01)
-        )
-
-    lout.append(main_input)
+    lout = []
+    for i in range(0, in_scale):
+        lout.append(main_input)
 
     conc = keras.layers.concatenate(lout)
+
+
 
     lmid = LSTM(
         framelen
         , return_sequences=False
         , trainable=False
+        , kernel_initializer='ones'
     )(conc)
-    mid_output = Dense(framelen, name="mid_output")(lmid)
+    mid_output = Dense(framelen, name="mid_output", kernel_initializer='ones', trainable=False)(lmid)
 
     # bring this back down to size...
-    cd0 = TimeDistributed(
-        Dense(
-            in_count
-            , activation="relu"
-            , trainable=True
-        )
-    )(conc)
+    # cd0 = TimeDistributed(
+    #     Dense(
+    #         in_count
+    #         , activation="relu"
+    #         , trainable=True
+    #     )
+    # )(conc)
+
+    cd0 = conc
 
     cr = TimeDistributed(keras.layers.Reshape((in_count, 1)))(cd0)
 
-    conv0 = Conv2D(in_count, 5, padding='same', data_format='channels_last')(cr)
+    conv0 = Conv2D(conv_count, 5, padding='same', data_format='channels_last')(cr)
 
     mp = MaxPooling2D(in_scale, padding='valid', data_format='channels_last')
     mp0 = mp(conv0)
@@ -139,9 +149,9 @@ class ModelDef(object):
     print(mp.output_shape)
 
 
-    conv1 = Conv2D(in_count, 3, padding='same', data_format='channels_last', dilation_rate=(1,3))(mp0)
+    conv1 = Conv2D(conv_count, 3, padding='same', data_format='channels_last', dilation_rate=(1,3))(mp0)
 
-    tdl =  TimeDistributed(keras.layers.Reshape((framelen*in_count,)))
+    tdl =  TimeDistributed(keras.layers.Reshape((framelen*conv_count,)))
     rs1 = tdl(conv1)
     print(tdl.get_config())
     print(tdl.input_shape)
@@ -155,9 +165,9 @@ class ModelDef(object):
     print(rpl.input_shape)
     print(rpl.output_shape)
 
-    rp = keras.layers.Reshape((100, in_count*framelen))(rp0)
+    rp = keras.layers.Reshape((100, framelen * conv_count * in_scale))(rp0)
 
-    rpd = TimeDistributed(Dense(in_count))(rp)
+    rpd = TimeDistributed(Dense(conv_count))(rp)
 
     recomb = keras.layers.concatenate([rpd, main_input])
 
