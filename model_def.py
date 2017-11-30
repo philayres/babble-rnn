@@ -223,7 +223,7 @@ class ModelDef(object):
 
     self.model.compile(
         loss={'main_output': loss, 'mid_output': loss},
-        loss_weights={'main_output': 1., 'mid_output': 0.2},
+        loss_weights={'main_output': 1., 'mid_output': 0.},
         optimizer=self.get_optimizer_from_config())
     self.utils.log_model_summary()
 
