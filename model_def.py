@@ -165,9 +165,8 @@ class ModelDef(object):
         framelen
         , return_sequences=False
         , trainable=False
-        , kernel_initializer='ones'
     )(rpd)
-    mid_output = Dense(framelen, name="mid_output", kernel_initializer='ones', trainable=False)(lmid)
+    mid_output = Dense(framelen, name="mid_output", trainable=True)(lmid)
 
 
     recomb = keras.layers.concatenate([rpd, main_input])
