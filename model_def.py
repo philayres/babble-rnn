@@ -118,15 +118,6 @@ class ModelDef(object):
     conc = keras.layers.concatenate(lout)
 
 
-
-    lmid = LSTM(
-        framelen
-        , return_sequences=False
-        , trainable=False
-        , kernel_initializer='ones'
-    )(conc)
-    mid_output = Dense(framelen, name="mid_output", kernel_initializer='ones', trainable=False)(lmid)
-
     # bring this back down to size...
     # cd0 = TimeDistributed(
     #     Dense(
@@ -168,6 +159,16 @@ class ModelDef(object):
     rp = keras.layers.Reshape((100, framelen * conv_count))(rp0)
 
     rpd = TimeDistributed(Dense(conv_count))(rp)
+
+    # Measure the mid stage loss
+    lmid = LSTM(
+        framelen
+        , return_sequences=False
+        , trainable=False
+        , kernel_initializer='ones'
+    )(rpd)
+    mid_output = Dense(framelen, name="mid_output", kernel_initializer='ones', trainable=False)(lmid)
+
 
     recomb = keras.layers.concatenate([rpd, main_input])
 
