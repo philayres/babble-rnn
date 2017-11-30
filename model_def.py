@@ -165,7 +165,7 @@ class ModelDef(object):
     print(rpl.input_shape)
     print(rpl.output_shape)
 
-    rp = keras.layers.Reshape((100, framelen * conv_count * in_scale))(rp0)
+    rp = keras.layers.Reshape((100, framelen * conv_count))(rp0)
 
     rpd = TimeDistributed(Dense(conv_count))(rp)
 
