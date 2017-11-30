@@ -141,15 +141,8 @@ class ModelDef(object):
 
     conv1 = Conv2D(in_count, 3, padding='same', data_format='channels_last', dilation_rate=(1,3))(mp0)
 
-    mp1l = MaxPooling2D(in_scale, padding='valid', data_format='channels_last')
-    mp1 = mp1l(conv1)
-    print(mp1l.get_config())
-    print(mp1l.input_shape)
-    print(mp1l.output_shape)
-
-
-    tdl =  TimeDistributed(keras.layers.Reshape((framelen*in_count/in_scale,)))
-    rs1 = tdl(mp1)
+    tdl =  TimeDistributed(keras.layers.Reshape((framelen*in_count)))
+    rs1 = tdl(conv1)
     print(tdl.get_config())
     print(tdl.input_shape)
     print(tdl.output_shape)
