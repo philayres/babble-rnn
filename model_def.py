@@ -141,7 +141,7 @@ class ModelDef(object):
 
     conv1 = Conv2D(in_count, 3, padding='same', data_format='channels_last', dilation_rate=(1,3))(mp0)
 
-    tdl =  TimeDistributed(keras.layers.Reshape((framelen*in_count)))
+    tdl =  TimeDistributed(keras.layers.Reshape((framelen*in_count,)))
     rs1 = tdl(conv1)
     print(tdl.get_config())
     print(tdl.input_shape)
@@ -155,7 +155,7 @@ class ModelDef(object):
     print(rpl.input_shape)
     print(rpl.output_shape)
 
-    rp = keras.layers.Reshape((100, in_count/in_scale*framelen))(rp0)
+    rp = keras.layers.Reshape((100, in_count*framelen))(rp0)
 
     rpd = TimeDistributed(Dense(in_count))(rp)
 
