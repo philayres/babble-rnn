@@ -32,7 +32,7 @@ class ModelDef(object):
     lout = []
     l0 = []
 
-    in_scale = 5
+    in_scale = 2
     in_count = framelen * in_scale
     conv_count = 65
 
@@ -131,25 +131,32 @@ class ModelDef(object):
 
     cr = TimeDistributed(keras.layers.Reshape((in_count, 1)))(cd0)
 
-    conv0 = Conv2D(conv_count, 5, padding='same', data_format='channels_last')(cr)
+    conv0 = Conv2D(conv_count, (5,9), padding='same', data_format='channels_last')(cr)
 
-    mp = MaxPooling2D(in_scale, padding='valid', data_format='channels_last')
+    mp = MaxPooling2D(2, padding='valid', data_format='channels_last')
     mp0 = mp(conv0)
     print(mp.get_config())
     print(mp.input_shape)
     print(mp.output_shape)
 
 
-    conv1 = Conv2D(conv_count, 3, padding='same', data_format='channels_last', dilation_rate=(1,3))(mp0)
+    conv1 = Conv2D(conv_count, 3, padding='same', data_format='channels_last')(mp0)
+
+
+    mp = MaxPooling2D(2, padding='valid', data_format='channels_last')
+    mp1 = mp(conv1)
+    print(mp.get_config())
+    print(mp.input_shape)
+    print(mp.output_shape)
 
     tdl =  TimeDistributed(keras.layers.Reshape((framelen*conv_count,)))
-    rs1 = tdl(conv1)
+    rs1 = tdl(mp1)
     print(tdl.get_config())
     print(tdl.input_shape)
     print(tdl.output_shape)
 
 
-    rpl = TimeDistributed(RepeatVector(in_scale))
+    rpl = TimeDistributed(RepeatVector(4))
     # Need to repeat here
     rp0 = rpl(rs1)
     print(rpl.get_config())
@@ -158,7 +165,8 @@ class ModelDef(object):
 
     rp = keras.layers.Reshape((100, framelen * conv_count))(rp0)
 
-    rpd = TimeDistributed(Dense(conv_count))(rp)
+    rpd0 = TimeDistributed(Dense(conv_count))(rp)
+    rpd = TimeDistributed(Dense(conv_count))(rpd0)
 
     # Measure the mid stage loss
     lmid = LSTM(
