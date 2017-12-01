@@ -79,6 +79,7 @@ class Generator:
     generate_len = self.generate_len
     framelen = self.config.framelen
     num_frames = self.num_frames
+    overlap_sequence = config.overlap_sequence
 
     model_def = utils.model_def
 
@@ -115,12 +116,18 @@ class Generator:
       x = np.zeros((1, seed_seq_len, framelen), dtype=np.float32)
       for t, frame in enumerate(seed_frame_seq):
         x[0, t] = frame
+        if overlap_sequence != 0:
+            x2[0, t] = frame[overlap_sequence : -(overlap_sequence)]
 
+      if overlap_sequence == 0:
+          inx = x
+      else:
+          inx = [x, x2]
 
       if utils.generate_mode() : utils.log("predicting",i)
       # run the prediction for the next frame, getting the result
       # from the first output, regardless of whether there are multiple outputs specified
-      predicted_frame_props = model_def.model.predict_on_batch(x)[0]
+      predicted_frame_props = model_def.model.predict_on_batch(inx)[0]
 
       if loop_len > 0:
         # predicted_frame_props = model_def.model.predict(x,
