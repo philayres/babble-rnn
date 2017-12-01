@@ -58,6 +58,8 @@ config.log_attrs()
 if not utils.generate_mode():
   config.save_config()
 
+overlap_sequence = config.overlap_sequence
+
 frame_seqs = []
 next_frame_seqs = []
 next_frames = []
@@ -116,6 +118,10 @@ else:
   print('initialising input and expected output arrays')
   num_frame_seqs = len(frame_seqs)
   X = np.zeros((num_frame_seqs, frame_seq_len, framelen), dtype=np.float32)
+
+  if overlap_sequence != 0:
+    X2 = np.zeros((num_frame_seqs, (frame_seq_len - overlap_sequence*2), framelen), dtype=np.float32)
+
   if learn_next_step:
       y = np.zeros((num_frame_seqs, framelen), dtype=np.float32)
   else:
@@ -124,15 +130,25 @@ else:
 
 
   for i, frame_seq in enumerate(frame_seqs):
-      if learn_next_step:
-          # expected output is always the next frame for corresponding frame_seq
-          y[i] = next_frames[i]
+      if overlap_sequence == 0:
+          if learn_next_step:
+              # expected output is always the next frame for corresponding frame_seq
+              y[i] = next_frames[i]
+          else:
+              y[i] = next_frame_seqs[i]
       else:
-          y[i] = next_frame_seqs[i]
+          # Shorten the expected output, to match the sequence overlap
+          if learn_next_step:
+              # expected output is always the next frame for corresponding frame_seq
+              y[i] = next_frames[i][overlap_sequence:-(overlap_sequence-1)]
+          else:
+              y[i] = next_frame_seqs[i][overlap_sequence:-(overlap_sequence-1)]
 
 
       # input is just each frame_seq
       X[i] = frame_seq
+      if overlap_sequence != 0:
+        X2[i] = frame_seq[overlap_sequence:-(overlap_sequence-1)]
 
 
 ####  Setup the model
@@ -177,15 +193,21 @@ for iteration in range(start_iteration, num_iterations + 1):
     utils.log("to frame:", (frame_rotate+1)*limit_frames)
 
     Xl = X[frame_rotate*limit_frames : (frame_rotate+1)*limit_frames]
+    Xl2 = X2[frame_rotate*limit_frames : (frame_rotate+1)*limit_frames]
     yl = y[frame_rotate*limit_frames : (frame_rotate+1)*limit_frames]
     utils.log("starting model fit with frames:", len(Xl))
   else:
     Xl = X
+    Xl2 = X2
     yl = y
     utils.log('using full set of frames')
 
+  if overlap_sequence == 0:
+    inX = Xl
+  else:
+    inX = [Xl, Xl2]
 
-  model_def.fit(Xl, yl, batch_size=fit_batch_size, epochs=1, shuffle=config.shuffle,
+  model_def.fit(inX, yl, batch_size=fit_batch_size, epochs=1, shuffle=config.shuffle,
    callbacks=[utils.csv_logger]
   )
 

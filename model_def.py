@@ -26,8 +26,14 @@ class ModelDef(object):
 
   def define_model(self, frame_seq_len, framelen, num_frame_seqs):
     self.utils.log("Defining model")
+    config = self.config
+    overlap_sequence = config.overlap_sequence
+    short_input_len = frame_seq_len - overlap_sequence*2
+
 
     main_input = Input(shape=(frame_seq_len, framelen), dtype='float32', name="main_input")
+    if overlap_sequence != 0:
+        short_input = Input(shape=(short_input_len, framelen), dtype='float32', name="short_input")
 
     lout = []
     l0 = []
@@ -156,23 +162,23 @@ class ModelDef(object):
 
 
 
-    tdl =  TimeDistributed(keras.layers.Reshape((conv_count,)))
-    rs1 = tdl(conv1)
-    conf = tdl
+    td0_conf =  TimeDistributed(keras.layers.Reshape((conv_count,)))
+    td0 = td0_conf(conv1)
+    conf = td0_conf
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
 
 
-    rpl = TimeDistributed(RepeatVector(15))
-    # Need to repeat here
-    rp0 = rpl(rs1)
-    conf = rpl
-    print(conf.get_config())
-    print(conf.input_shape)
-    print(conf.output_shape)
+    # rpl = TimeDistributed(RepeatVector(15))
+    # # Need to repeat here
+    # rp0 = rpl(rs1)
+    # conf = rpl
+    # print(conf.get_config())
+    # print(conf.input_shape)
+    # print(conf.output_shape)
 
-    rp = keras.layers.Reshape((100, conv_count))(rp0)
+    rp = keras.layers.Reshape((100, conv_count))(td0)
 
     rpd0 = TimeDistributed(Dense(conv_count))(rp)
     rpd = TimeDistributed(Dense(conv_count))(rpd0)
@@ -186,7 +192,7 @@ class ModelDef(object):
     mid_output = Dense(framelen, name="mid_output", trainable=True)(lmid)
 
 
-    recomb = keras.layers.concatenate([rpd, main_input])
+    recomb = keras.layers.concatenate([rpd, short_input])
 
     l20 = LSTM(
         framelen * 10
@@ -224,7 +230,7 @@ class ModelDef(object):
 
 
     model = Model(
-        inputs=[main_input],
+        inputs=[main_input, short_input],
         outputs=[main_output, mid_output]
     )
 

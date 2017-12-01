@@ -43,6 +43,9 @@ class RunConfig(object):
   # length of frame sequence for learning
   frame_seq_len = 100
 
+  # overlap the sequence at each end and provide a secondary non-overlapped version as an input
+  # Disable by setting to 0
+  overlap_sequence = 3
 
   # the seed sequence length is the number of frames the generator expects to be input
   # as the seed. This must match the frame_seq_len currently
@@ -54,7 +57,7 @@ class RunConfig(object):
   # picking a number larger than frame_seq_len means that frames from the corpus will be skipped
   # note that overlapping frame sequences may be considered a way to augment data, but also increases memory requirements,
   # since a single batch of data will actually be larger than the original corpus
-  seq_step = frame_seq_len
+  seq_step = frame_seq_len - overlap_sequence*2
 
   # filename including relative path to the test data
   # this filename may be overridden by setting on the command line, in which case this setting will be updated to match
@@ -121,6 +124,7 @@ class RunConfig(object):
     "save_model_every_nth",
     "framelen",
     "frame_seq_len",
+    "overlap_sequence",
     "seed_seq_len",
     "seq_step",
     "test_data_fn",
