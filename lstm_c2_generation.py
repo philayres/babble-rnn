@@ -125,7 +125,7 @@ else:
   if learn_next_step:
       y = np.zeros((num_frame_seqs, framelen), dtype=np.float32)
   else:
-      y = np.zeros((num_frame_seqs, frame_seq_len, framelen), dtype=np.float32)
+      y = np.zeros((num_frame_seqs, frame_seq_len - overlap_sequence*2, framelen), dtype=np.float32)
 
 
 
