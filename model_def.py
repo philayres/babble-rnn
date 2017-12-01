@@ -128,11 +128,11 @@ class ModelDef(object):
     #     )
     # )(conc)
 
-    cin = keras.layers.concatenate([main_input, main_input[0:-2]])
+    cin = keras.layers.concatenate([main_input, main_input])
 
     cr = TimeDistributed(keras.layers.Reshape((in_count, 1)))(cin)
 
-    conv0_def = Conv2D(conv_count, (3,13), padding='valid', data_format='channels_last')
+    conv0_def = Conv2D(conv_count, (3,14), padding='valid', data_format='channels_last')
     conv0 = conv0_def(cr)
 
     conf = conv0_def
