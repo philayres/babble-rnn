@@ -79,7 +79,7 @@ class Generator:
     generate_len = self.generate_len
     framelen = self.config.framelen
     num_frames = self.num_frames
-    overlap_sequence = config.overlap_sequence
+    overlap_sequence = self.config.overlap_sequence
 
     model_def = utils.model_def
 
