@@ -111,11 +111,12 @@ class ModelDef(object):
     #
     # lout.append(main_input)
 
-    lout = []
-    for i in range(0, in_scale):
-        lout.append(main_input)
+    # lout = []
+    # for i in range(0, in_scale):
+    #     lout.append(main_input)
+    #
+    # conc = keras.layers.concatenate(lout)
 
-    conc = keras.layers.concatenate(lout)
 
 
     # bring this back down to size...
@@ -127,39 +128,51 @@ class ModelDef(object):
     #     )
     # )(conc)
 
-    cd0 = conc
+    cin = keras.layers.concatenate([main_input, main_input])
 
-    cr = TimeDistributed(keras.layers.Reshape((in_count, 1)))(cd0)
+    cr = TimeDistributed(keras.layers.Reshape((in_count, 1)))(cin)
 
-    conv0 = Conv2D(conv_count, (5,9), padding='same', data_format='channels_last')(cr)
+    conv0_def = Conv2D(conv_count, (3,13), padding='valid', data_format='channels_last')
+    conv0 = conv0_def(cr)
 
-    mp = MaxPooling2D(2, padding='valid', data_format='channels_last')
-    mp0 = mp(conv0)
-    print(mp.get_config())
-    print(mp.input_shape)
-    print(mp.output_shape)
+    conf = conv0_def
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
 
-
-    conv1 = Conv2D(conv_count, 3, padding='same', data_format='channels_last')(mp0)
-
-
+    # mp = MaxPooling2D(2, padding='valid', data_format='channels_last')
+    # mp0 = mp(conv0)
 
 
-    tdl =  TimeDistributed(keras.layers.Reshape((framelen*conv_count,)))
+    conv1_def = Conv2D(conv_count, (5,13), padding='valid', data_format='channels_last')
+    conv1 = conv1_def(conv0)
+
+    conf = conv1_def
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
+
+
+
+
+
+    tdl =  TimeDistributed(keras.layers.Reshape((conv_count,)))
     rs1 = tdl(conv1)
-    print(tdl.get_config())
-    print(tdl.input_shape)
-    print(tdl.output_shape)
+    conf = tdl1
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
 
 
-    rpl = TimeDistributed(RepeatVector(4))
+    rpl = TimeDistributed(RepeatVector(15))
     # Need to repeat here
     rp0 = rpl(rs1)
-    print(rpl.get_config())
-    print(rpl.input_shape)
-    print(rpl.output_shape)
+    conf = rpl
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
 
-    rp = keras.layers.Reshape((100, framelen * conv_count * 2))(rp0)
+    rp = keras.layers.Reshape((100, conv_count))(rp0)
 
     rpd0 = TimeDistributed(Dense(conv_count))(rp)
     rpd = TimeDistributed(Dense(conv_count))(rpd0)
