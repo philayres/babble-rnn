@@ -158,7 +158,7 @@ class ModelDef(object):
 
     tdl =  TimeDistributed(keras.layers.Reshape((conv_count,)))
     rs1 = tdl(conv1)
-    conf = tdl1
+    conf = tdl
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
