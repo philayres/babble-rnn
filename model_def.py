@@ -24,52 +24,8 @@ class ModelDef(object):
 
     self.layers=[]
 
+
   def define_model(self, frame_seq_len, framelen, num_frame_seqs):
-    self.utils.log("Defining model")
-    config = self.config
-    overlap_sequence = config.overlap_sequence
-    short_input_len = frame_seq_len - overlap_sequence*2
-
-
-    main_input = Input(shape=(frame_seq_len, framelen), dtype='float32', name="main_input")
-    if overlap_sequence != 0:
-      short_input = Input(shape=(short_input_len, framelen), dtype='float32', name="short_input")
-
-    lout = []
-    l0 = []
-    l2 = LSTM(
-        framelen * 10
-        , return_sequences=False
-        , trainable=True
-    )(short_input)
-
-
-    mid_output = Dense(
-      framelen
-      ,activation="relu"
-      , trainable=True
-      , name="mid_output"
-    )(l2)
-
-    main_output = Dense(
-      framelen
-      ,activation="relu"
-      , trainable=True
-      , name="main_output"
-    )(l2)
-
-
-    
-    model = Model(
-        inputs=[main_input, short_input],
-        outputs=[main_output, mid_output]
-    )
-
-    self.model = model
-    return model
-
-
-  def define_model_bak(self, frame_seq_len, framelen, num_frame_seqs):
     self.utils.log("Defining model")
     config = self.config
     overlap_sequence = config.overlap_sequence
