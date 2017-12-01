@@ -44,6 +44,13 @@ class ModelDef(object):
     )(short_input)
 
 
+    mid_output = Dense(
+      framelen
+      ,activation="relu"
+      , trainable=True
+      , name="mid_output"
+    )(l2)
+
     main_output = Dense(
       framelen
       ,activation="relu"
@@ -52,10 +59,10 @@ class ModelDef(object):
     )(l2)
 
 
-
+    
     model = Model(
         inputs=[main_input, short_input],
-        outputs=[main_output]
+        outputs=[main_output, mid_output]
     )
 
     self.model = model
