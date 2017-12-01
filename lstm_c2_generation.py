@@ -99,10 +99,10 @@ else:
     frame_seqs.append(all_frames[i: i + frame_seq_len])
     if learn_next_step:
         # pull a single frame following each frame sequence into a corresponding array of next_frames
-        next_frames.append(all_frames[i + frame_seq_len])
+        next_frames.append(all_frames[i + frame_seq_len - overlap_sequence])
     else:
         j = i + frame_seq_len
-        next_frame_seqs.append(all_frames[j: j + frame_seq_len])
+        next_frame_seqs.append(all_frames[(j+overlap_sequence) : (j + frame_seq_len - overlap_sequence*2)])
 
   if config.stateful and (len(frame_seqs) % fit_batch_size > 0):
     excess_frameseqs = len(frame_seqs) % fit_batch_size
@@ -130,20 +130,11 @@ else:
 
 
   for i, frame_seq in enumerate(frame_seqs):
-      if overlap_sequence == 0:
-          if learn_next_step:
-              # expected output is always the next frame for corresponding frame_seq
-              y[i] = next_frames[i]
-          else:
-              y[i] = next_frame_seqs[i]
+      if learn_next_step:
+          # expected output is always the next frame for corresponding frame_seq
+          y[i] = next_frames[i]
       else:
-          # Shorten the expected output, to match the sequence overlap
-          if learn_next_step:
-              # expected output is always the next frame for corresponding frame_seq
-              y[i] = next_frames[i+overlap_sequence]
-          else:
-              y[i] = next_frame_seqs[i][overlap_sequence:-(overlap_sequence)]
-
+          y[i] = next_frame_seqs[i]
 
       # input is just each frame_seq
       X[i] = frame_seq
