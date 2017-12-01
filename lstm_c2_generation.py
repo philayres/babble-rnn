@@ -142,13 +142,13 @@ else:
               # expected output is always the next frame for corresponding frame_seq
               y[i] = next_frames[i+overlap_sequence]
           else:
-              y[i] = next_frame_seqs[i][overlap_sequence:-(overlap_sequence+1)]
+              y[i] = next_frame_seqs[i][overlap_sequence:-(overlap_sequence)]
 
 
       # input is just each frame_seq
       X[i] = frame_seq
       if overlap_sequence != 0:
-        X2[i] = frame_seq[overlap_sequence:-(overlap_sequence+1)]
+        X2[i] = frame_seq[overlap_sequence:-(overlap_sequence)]
 
 
 ####  Setup the model
