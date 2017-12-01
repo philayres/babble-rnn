@@ -151,7 +151,7 @@ class ModelDef(object):
     # mp0 = mp(conv0)
 
 
-    conv1_def = Conv2D(conv_count, (10,13), padding='valid', data_format='channels_last')
+    conv1_def = Conv2D(conv_count, (11,13), padding='valid', data_format='channels_last')
     conv1 = conv1_def(conv0)
 
     conf = conv1_def
