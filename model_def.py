@@ -128,7 +128,7 @@ class ModelDef(object):
     #     )
     # )(conc)
 
-    cin = keras.layers.concatenate([main_input, main_input])
+    cin = keras.layers.concatenate([main_input, main_input[0:-2]])
 
     cr = TimeDistributed(keras.layers.Reshape((in_count, 1)))(cin)
 
