@@ -119,7 +119,9 @@ class Generator:
       for t, frame in enumerate(seed_frame_seq):
         x[0, t] = frame
         if overlap_sequence != 0:
-            x2[0, t] = frame[overlap_sequence : -(overlap_sequence)]
+            if t >= overlap_sequence and t < seed_seq_len - overlap_sequence:
+                t2 = t - overlap_sequence
+                x2[0, t2] = frame
 
       if overlap_sequence == 0:
           inx = x
