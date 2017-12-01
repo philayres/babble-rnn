@@ -178,7 +178,7 @@ class ModelDef(object):
     # print(conf.input_shape)
     # print(conf.output_shape)
 
-    rp = keras.layers.Reshape((100, conv_count))(td0)
+    rp = keras.layers.Reshape((94, conv_count))(td0)
 
     rpd0 = TimeDistributed(Dense(conv_count))(rp)
     rpd = TimeDistributed(Dense(conv_count))(rpd0)
