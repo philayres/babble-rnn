@@ -151,7 +151,7 @@ class ModelDef(object):
     # mp0 = mp(conv0)
 
 
-    conv1_def = Conv2D(conv_count, (5,13), padding='valid', data_format='channels_last')
+    conv1_def = Conv2D(conv_count, (10,13), padding='valid', data_format='channels_last')
     conv1 = conv1_def(conv0)
 
     conf = conv1_def
@@ -179,7 +179,7 @@ class ModelDef(object):
     # print(conf.input_shape)
     # print(conf.output_shape)
 
-    rp = keras.layers.Reshape((100-overlap_sequence*2, conv_count))(td0)
+    rp = keras.layers.Reshape((short_input_len, conv_count))(td0)
 
     rpd0 = TimeDistributed(Dense(conv_count))(rp)
     rpd = TimeDistributed(Dense(conv_count))(rpd0)
