@@ -185,13 +185,15 @@ class ModelDef(object):
     rpd0 = TimeDistributed(Dense(conv_count))(rs0)
     rpd = TimeDistributed(Dense(conv_count))(rpd0)
 
-    # Measure the mid stage loss
+
+    # Attempt to the decoder back to the original input
     lmid = LSTM(
-        framelen
+        20
         , return_sequences=False
-        , trainable=False
+        , trainable=True
     )(rpd)
-    mid_output = Dense(framelen, name="mid_output", trainable=True)(lmid)
+    mid_d0 = Dense(framelen, trainable=True)(lmid)
+    mid_output = Dense(framelen, name="mid_output", trainable=True)(mid_d0)
 
 
     recomb = keras.layers.concatenate([rpd, short_input])
@@ -248,13 +250,19 @@ class ModelDef(object):
 
     self.model.compile(
         loss={'main_output': loss, 'mid_output': loss},
-        loss_weights={'main_output': 1., 'mid_output': 0.},
+        loss_weights={'main_output': 0.5, 'mid_output': 0.5},
         optimizer=self.get_optimizer_from_config())
     self.utils.log_model_summary()
 
   def fit(self, input_seq, output_seq, batch_size=None, epochs=1, shuffle=False, callbacks=None):
       inputs = input_seq
-      outputs = {'main_output': output_seq, 'mid_output': output_seq}
+
+      if self.config.overlap_sequence == 0:
+          outputs = {'main_output': output_seq, 'mid_output': output_seq}
+      else:
+          # Attempt to learn the mid output as a decoder of the original input
+          outputs = {'main_output': output_seq, 'mid_output': input_seq[1]}
+
       self.model.fit(inputs, outputs, batch_size=batch_size, epochs=epochs, shuffle=shuffle,
        callbacks=callbacks
       )
