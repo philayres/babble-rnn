@@ -13,9 +13,9 @@ import os
 home = os.environ.get('HOME')
 
 def model_config(network_tag):
-  with open(home + "/store/c2gen/out/" + network_tag + "/jmodel-0.json") as data_file:    
+  with open(home + "/store/c2gen/out/" + network_tag + "/jmodel-0.json") as data_file:
     data = json.load(data_file)
-  
+
   #pprint(data)
   config = data['config']
   for cs in config:
@@ -27,11 +27,12 @@ def model_config(network_tag):
     print(c.get('dropout',""), "dropout")
     print("stateful", c.get('stateful',""))
     print()
-    
+
 def plot_training_loss(network_tag, ln):
   dataframe = pandas.io.parsers.read_csv(home + "/store/c2gen/out/" + network_tag + "/training.log")
   data = dataframe.as_matrix(None)
   plt.plot(data)
+  plt.legend(['','loss', 'main', 'mid'])
   plt.xlabel('iteration')
   plt.ylabel('loss ('+ln+')')
   plt.title('Training Loss for\nnetwork: ' + network_tag)
@@ -45,15 +46,15 @@ def plot_training_loss(network_tag, ln):
 
 def plot_codec_params(network_tag, iteration, scale_up='full', loc='out'):
   iteration = str(iteration)
-  
+
   if loc=='out':
     fn = "/out-c2cb-" + iteration
   else:
     fn = ""
-  
+
   infilename = home + "/store/c2gen/"+loc+"/" + network_tag + fn
   indata = np.fromfile(infilename, dtype=np.uint8)
-  
+
   if codec1300:
     data = np.reshape(indata, (-1,16))
     if scale_up == 'full':
@@ -63,7 +64,7 @@ def plot_codec_params(network_tag, iteration, scale_up='full', loc='out'):
           2**5,
           16,16,16,16,16,16,16,8,8,4
          ])
-    elif scale_up == 'orig':    
+    elif scale_up == 'orig':
       data = np.multiply(data, [16,16,16,16,1,1,4,4,4,4,4,4,4,4,4,4])
   elif codec3200:
     print("3200 rate codec\n")
@@ -75,9 +76,9 @@ def plot_codec_params(network_tag, iteration, scale_up='full', loc='out'):
             2**5,
             32,32,32,32,32,32,32,32,32,32
          ])
-    elif scale_up == 'orig':    
-      data 
-  
+    elif scale_up == 'orig':
+      data
+
   plt.plot(data)
   plt.xlabel('time (frames)')
   plt.ylabel('audio params (units)')
@@ -91,10 +92,10 @@ def plot_spec_params(network_tag, iteration, params='Voicing', loc='out'):
     fn = "/out-c2cb-" + iteration
   else:
     fn = ""
-  
+
   infilename = home + "/store/c2gen/"+loc+"/" + network_tag + fn
   indata = np.fromfile(infilename, dtype=np.uint8)
-  
+
   if codec1300:
     data = np.reshape(indata, (-1,16))
     if params == 'Voicing':
@@ -105,7 +106,7 @@ def plot_spec_params(network_tag, iteration, params='Voicing', loc='out'):
       data = data[:, 5]
     elif params == 'LSPs':
       data = data[:, 6:]
-  elif codec3200:  
+  elif codec3200:
     data = np.reshape(indata, (-1,13))
     if params == 'Voicing':
       data = data[:, 0]
@@ -115,7 +116,7 @@ def plot_spec_params(network_tag, iteration, params='Voicing', loc='out'):
       data = data[:, 2]
     elif params == 'LSPs':
       data = data[:, 3:]
-      
+
   plt.plot(data)
   plt.xlabel('time (frames)')
   plt.ylabel(params + ' (units)')
@@ -131,7 +132,7 @@ def plot_audio_waveform(network_tag, iteration):
   elif codec3200:
     infilename = home + "/store/c2gen/out/" + network_tag + "/out-c2cb-" + iteration + "-3200.raw"
   data = np.fromfile(infilename, dtype=np.int16)
-  
+
   plt.plot(data)
   plt.xlabel('time (samples)')
   plt.ylabel('audio waveform')
@@ -145,7 +146,7 @@ def plot_gen_audio_waveform(infilename):
 
   infilename = home + "/store/c2gen/generated/"+infilename+".wav"
   data = np.fromfile(infilename, dtype=np.int16)
-  
+
   plt.plot(data)
   plt.xlabel('time (samples)')
   plt.ylabel('audio waveform')

@@ -43,104 +43,13 @@ class ModelDef(object):
     lout = []
     l0 = []
 
-
-    # for i in range(0, in_count):
-    #
-    #     d0 = TimeDistributed(
-    #         Dense(
-    #                 3
-    #                 , activation="relu"
-    #                 , trainable=True
-    #         )
-    #     )(main_input)
-    #
-    #     d005 = TimeDistributed(
-    #         Dense(
-    #                 5
-    #                 , activation="relu"
-    #                 , trainable=True
-    #         )
-    #     )(d0)
-    #
-    #     d01 = TimeDistributed(
-    #         Dense(
-    #                 3
-    #                 , activation="relu"
-    #                 , trainable=True
-    #         )
-    #     )(d005)
-    #
-    #     l0.append(d01)
-    #     # l0.append(
-    #     #     LSTM(
-    #     #             3
-    #     #             , return_sequences=True
-    #     #             , trainable=True
-    #     #     )(d0)
-    #     # )
-    #
-    #
-    # for i in range(0, in_count):
-    #     j = i - 1
-    #     if j < 0:
-    #         j = in_count - 1
-    #     cl = keras.layers.concatenate([l0[j], l0[i]])
-    #     # l01 = LSTM(
-    #     #             6
-    #     #             , return_sequences=True
-    #     #             , trainable=True
-    #     # )(cl)
-    #
-    #     l001 = TimeDistributed(
-    #         Dense(
-    #             framelen
-    #             , activation="relu"
-    #             , trainable=True
-    #             )
-    #         )(cl)
-    #
-    #     l01 = TimeDistributed(
-    #         Dense(
-    #             framelen * 19
-    #             , activation="relu"
-    #             , trainable=True
-    #             )
-    #         )(l001)
-    #
-    #     lout.append(
-    #         TimeDistributed(
-    #             Dense(
-    #                 framelen
-    #                 , activation="relu"
-    #                 , trainable=True
-    #                 )
-    #             )(l01)
-    #     )
-    #
-    # lout.append(main_input)
-
-    # lout = []
-    # for i in range(0, in_scale):
-    #     lout.append(main_input)
-    #
-    # conc = keras.layers.concatenate(lout)
-
-
-
-    # bring this back down to size...
-    # cd0 = TimeDistributed(
-    #     Dense(
-    #         in_count
-    #         , activation="relu"
-    #         , trainable=True
-    #     )
-    # )(conc)
-
     cin = keras.layers.concatenate([main_input, main_input])
 
-    cr = TimeDistributed(keras.layers.Reshape((in_count, 1)))(cin)
+    encoder_trainable = True
 
-    conv0_def = Conv2D(conv_count, (3,14), padding='valid', data_format='channels_last')
+    cr = TimeDistributed(keras.layers.Reshape((in_count, 1), trainable=encoder_trainable))(cin)
+
+    conv0_def = Conv2D(conv_count, (1,14), padding='valid', data_format='channels_last', trainable=encoder_trainable)
     conv0 = conv0_def(cr)
 
     conf = conv0_def
@@ -152,7 +61,7 @@ class ModelDef(object):
     # mp0 = mp(conv0)
 
 
-    conv1_def = Conv2D(conv_count, (3,13), padding='valid', data_format='channels_last')
+    conv1_def = Conv2D(conv_count, (5,13), padding='valid', data_format='channels_last', trainable=encoder_trainable)
     conv1 = conv1_def(conv0)
 
     conf = conv1_def
@@ -180,31 +89,36 @@ class ModelDef(object):
     # # print(conf.input_shape)
     # # print(conf.output_shape)
     #
-    rs0 = keras.layers.Reshape((short_input_len, conv_count))(conv1)
+    rs0 = keras.layers.Reshape((short_input_len, conv_count), trainable=encoder_trainable)(conv1)
 
-    rpd0 = TimeDistributed(Dense(conv_count))(rs0)
-    rpd = TimeDistributed(Dense(conv_count))(rpd0)
+    rpd0 = TimeDistributed(Dense(conv_count, trainable=encoder_trainable))(rs0)
+    rpd = TimeDistributed(Dense(conv_count, trainable=encoder_trainable))(rpd0)
 
 
     # Attempt to the decoder back to the original input
+
+    decoder_trainable = True
+
     lmid = LSTM(
         framelen * 10
         , return_sequences=False
-        , trainable=True
+        , trainable=decoder_trainable
     )(rpd)
-    mid_d0 = Dense(framelen, trainable=True)(lmid)
-    mid_output = Dense(framelen, name="mid_output", trainable=True)(mid_d0)
+    mid_d0 = Dense(framelen, trainable=decoder_trainable)(lmid)
+    mid_output = Dense(framelen, name="mid_output", trainable=decoder_trainable)(mid_d0)
 
 
 
 
     recomb = keras.layers.concatenate([rpd, short_input])
 
+    generator_trainable = False
+
     l20 = LSTM(
         framelen * 10
         , return_sequences=True
-        , trainable=True
         , name='LSTM_post_mid_1'
+        , trainable=generator_trainable
     )(recomb)
 
     # cd = TimeDistributed(Dense(
@@ -222,14 +136,14 @@ class ModelDef(object):
     l2 = LSTM(
         framelen * 10
         , return_sequences=False
-        , trainable=True
+        , trainable=generator_trainable
     )(l20)
 
 
     main_output = Dense(
       framelen
-      ,activation="relu"
-      , trainable=True
+      , activation="relu"
+      , trainable=generator_trainable
       , name="main_output"
     )(l2)
 
@@ -239,6 +153,9 @@ class ModelDef(object):
         inputs=[main_input, short_input],
         outputs=[main_output, mid_output]
     )
+
+    self.generator_trainable = generator_trainable
+    self.decoder_trainable = decoder_trainable
 
     self.model = model
     return model
@@ -250,9 +167,19 @@ class ModelDef(object):
     loss = CustomObjects.codec2_param_error
     # other loss options: CustomObjects.codec2_param_mean_square_error; 'mean_absolute_error'; 'cosine_proximity'
 
+    main_loss_prop = 0.5
+    mid_loss_prop = 0.5
+
+    if not self.generator_trainable:
+      main_loss_prop = 0
+      mid_loss_prop = 1
+    if not self.decoder_trainable:
+      mid_loss_prop = 0
+      main_loss_prop = 1
+
     self.model.compile(
         loss={'main_output': loss, 'mid_output': loss},
-        loss_weights={'main_output': 0.5, 'mid_output': 0.5},
+        loss_weights={'main_output': main_loss_prop, 'mid_output': mid_loss_prop},
         optimizer=self.get_optimizer_from_config())
     self.utils.log_model_summary()
 
