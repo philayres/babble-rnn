@@ -29,7 +29,7 @@ class RunConfig(object):
   gen_every_nth = 30
 
   # Generate just the main output (1) or mid output too (2)
-  generate_num_outputs = 1
+  generate_num_outputs = 2
 
   # save model every nth iteration
   save_model_every_nth = 30
@@ -124,6 +124,7 @@ class RunConfig(object):
     "fit_batch_size",
     "learn_next_step",
     "gen_every_nth",
+    "generate_num_outputs",
     "save_model_every_nth",
     "framelen",
     "frame_seq_len",
