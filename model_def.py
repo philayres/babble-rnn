@@ -188,7 +188,7 @@ class ModelDef(object):
 
     # Attempt to the decoder back to the original input
     lmid = LSTM(
-        20
+        framelen * 10
         , return_sequences=False
         , trainable=True
     )(rpd)
