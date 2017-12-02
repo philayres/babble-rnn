@@ -189,7 +189,7 @@ class ModelDef(object):
     # Attempt to the decoder back to the original input
     lmid = LSTM(
         20
-        , return_sequences=False
+        , return_sequences=True
         , trainable=True
     )(rpd)
     mid_d0 = TimeDistributed(Dense(framelen, trainable=True))(lmid)
