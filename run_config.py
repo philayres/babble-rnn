@@ -26,7 +26,7 @@ class RunConfig(object):
   learn_next_step = True
 
   # generate sample data every nth iteration
-  gen_every_nth = 10
+  gen_every_nth = 30
 
   # save model every nth iteration
   save_model_every_nth = 10
