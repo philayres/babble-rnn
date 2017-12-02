@@ -164,12 +164,12 @@ class ModelDef(object):
 
 
 
-    td0_conf =  TimeDistributed(keras.layers.Reshape((short_input_len, conv_count)))
-    td0 = td0_conf(conv1)
-    conf = td0_conf
-    print(conf.get_config())
-    print(conf.input_shape)
-    print(conf.output_shape)
+    # td0_conf =  TimeDistributed(keras.layers.Reshape((short_input_len, conv_count)))
+    # td0 = td0_conf(conv1)
+    # conf = td0_conf
+    # print(conf.get_config())
+    # print(conf.input_shape)
+    # print(conf.output_shape)
 
 
     # # rpl = TimeDistributed(RepeatVector(15))
@@ -180,9 +180,9 @@ class ModelDef(object):
     # # print(conf.input_shape)
     # # print(conf.output_shape)
     #
-    # rp = keras.layers.Reshape((short_input_len, conv_count))(td0)
+    rs0 = keras.layers.Reshape((short_input_len, conv_count))(conv1)
 
-    rpd0 = TimeDistributed(Dense(conv_count))(td0)
+    rpd0 = TimeDistributed(Dense(conv_count))(rs0)
     rpd = TimeDistributed(Dense(conv_count))(rpd0)
 
     # Measure the mid stage loss
