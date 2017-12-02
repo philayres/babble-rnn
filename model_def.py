@@ -192,8 +192,10 @@ class ModelDef(object):
         , return_sequences=False
         , trainable=True
     )(rpd)
-    mid_d0 = Dense(framelen, trainable=True)(lmid)
+    mid_d0 = TimeDistributed(Dense(framelen, trainable=True))(lmid)
     mid_output = Dense(framelen, name="mid_output", trainable=True)(mid_d0)
+
+
 
 
     recomb = keras.layers.concatenate([rpd, short_input])
