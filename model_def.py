@@ -30,7 +30,11 @@ class ModelDef(object):
     config = self.config
     overlap_sequence = config.overlap_sequence
     short_input_len = frame_seq_len - overlap_sequence*2
+    in_scale = 2
+    in_count = framelen * in_scale
+    conv_count = 65
 
+    print("short_input_len", short_input_len)
 
     main_input = Input(shape=(frame_seq_len, framelen), dtype='float32', name="main_input")
     if overlap_sequence != 0:
@@ -39,9 +43,6 @@ class ModelDef(object):
     lout = []
     l0 = []
 
-    in_scale = 2
-    in_count = framelen * in_scale
-    conv_count = 65
 
     # for i in range(0, in_count):
     #
