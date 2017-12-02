@@ -45,7 +45,7 @@ class RunConfig(object):
 
   # overlap the sequence at each end and provide a secondary non-overlapped version as an input
   # Disable by setting to 0
-  overlap_sequence = 3
+  overlap_sequence = 2
 
   # the seed sequence length is the number of frames the generator expects to be input
   # as the seed. This must match the frame_seq_len currently
