@@ -29,7 +29,7 @@ class RunConfig(object):
   gen_every_nth = 30
 
   # Generate just the main output (1) or mid output too (2)
-  generate_num_outputs = 2
+  generate_num_outputs = 1
 
   # save model every nth iteration
   save_model_every_nth = 30
