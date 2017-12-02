@@ -139,7 +139,7 @@ class ModelDef(object):
 
     cr = TimeDistributed(keras.layers.Reshape((in_count, 1)))(cin)
 
-    conv0_def = Conv2D(conv_count, (1,14), padding='valid', data_format='channels_last')
+    conv0_def = Conv2D(conv_count, (3,14), padding='valid', data_format='channels_last')
     conv0 = conv0_def(cr)
 
     conf = conv0_def
@@ -151,7 +151,7 @@ class ModelDef(object):
     # mp0 = mp(conv0)
 
 
-    conv1_def = Conv2D(conv_count, (11,13), padding='valid', data_format='channels_last')
+    conv1_def = Conv2D(conv_count, (3,13), padding='valid', data_format='channels_last')
     conv1 = conv1_def(conv0)
 
     conf = conv1_def
@@ -163,7 +163,7 @@ class ModelDef(object):
 
 
 
-    td0_conf =  TimeDistributed(keras.layers.Reshape((conv_count,)))
+    td0_conf =  TimeDistributed(keras.layers.Reshape((short_input_len, conv_count)))
     td0 = td0_conf(conv1)
     conf = td0_conf
     print(conf.get_config())
@@ -171,17 +171,17 @@ class ModelDef(object):
     print(conf.output_shape)
 
 
-    # rpl = TimeDistributed(RepeatVector(15))
-    # # Need to repeat here
-    # rp0 = rpl(rs1)
-    # conf = rpl
-    # print(conf.get_config())
-    # print(conf.input_shape)
-    # print(conf.output_shape)
+    # # rpl = TimeDistributed(RepeatVector(15))
+    # # # Need to repeat here
+    # # rp0 = rpl(rs1)
+    # # conf = rpl
+    # # print(conf.get_config())
+    # # print(conf.input_shape)
+    # # print(conf.output_shape)
+    #
+    # rp = keras.layers.Reshape((short_input_len, conv_count))(td0)
 
-    rp = keras.layers.Reshape((short_input_len, conv_count))(td0)
-
-    rpd0 = TimeDistributed(Dense(conv_count))(rp)
+    rpd0 = TimeDistributed(Dense(conv_count))(td0)
     rpd = TimeDistributed(Dense(conv_count))(rpd0)
 
     # Measure the mid stage loss
