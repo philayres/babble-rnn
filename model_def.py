@@ -49,7 +49,7 @@ class ModelDef(object):
     # rpd0 = TimeDistributed(Dense(conv_count, trainable=encoder_trainable))(cin)
     # rpd = TimeDistributed(Dense(conv_count, trainable=encoder_trainable))(rpd0)
 
-
+    rpd = short_input
     # Attempt to the decoder back to the original input
 
     decoder_trainable = True
