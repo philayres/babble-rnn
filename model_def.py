@@ -42,12 +42,12 @@ class ModelDef(object):
     lout = []
     l0 = []
 
-    cin = keras.layers.concatenate([short_input, short_input])
+    # cin = keras.layers.concatenate([short_input, short_input])
 
     encoder_trainable = True
 
-    rpd0 = TimeDistributed(Dense(conv_count, trainable=encoder_trainable))(cin)
-    rpd = TimeDistributed(Dense(conv_count, trainable=encoder_trainable))(rpd0)
+    # rpd0 = TimeDistributed(Dense(conv_count, trainable=encoder_trainable))(cin)
+    # rpd = TimeDistributed(Dense(conv_count, trainable=encoder_trainable))(rpd0)
 
 
     # Attempt to the decoder back to the original input
@@ -58,9 +58,9 @@ class ModelDef(object):
         framelen * 10
         , return_sequences=False
         , trainable=decoder_trainable
-    )(rpd)
-    mid_d0 = Dense(framelen, trainable=decoder_trainable)(lmid)
-    mid_output = Dense(framelen, name="mid_output", trainable=decoder_trainable)(mid_d0)
+    )(short_input)
+    # mid_d0 = Dense(framelen, trainable=decoder_trainable)(short_input)
+    mid_output = Dense(framelen, name="mid_output", trainable=decoder_trainable)(lmid)
 
 
 
