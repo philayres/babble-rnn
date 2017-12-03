@@ -42,7 +42,7 @@ class ModelDef(object):
     lout = []
     l0 = []
 
-    cin = keras.layers.concatenate([main_input, main_input])
+    cin = keras.layers.concatenate([short_input, short_input])
 
     encoder_trainable = True
 
