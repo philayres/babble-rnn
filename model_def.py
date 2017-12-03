@@ -24,8 +24,100 @@ class ModelDef(object):
 
     self.layers=[]
 
-
   def define_model(self, frame_seq_len, framelen, num_frame_seqs):
+    self.utils.log("Defining model")
+    config = self.config
+    overlap_sequence = config.overlap_sequence
+    short_input_len = frame_seq_len - overlap_sequence*2
+    in_scale = 2
+    in_count = framelen * in_scale
+    conv_count = 65
+
+    print("short_input_len", short_input_len)
+
+    main_input = Input(shape=(frame_seq_len, framelen), dtype='float32', name="main_input")
+    if overlap_sequence != 0:
+        short_input = Input(shape=(short_input_len, framelen), dtype='float32', name="short_input")
+
+    lout = []
+    l0 = []
+
+    cin = keras.layers.concatenate([main_input, main_input])
+
+    encoder_trainable = True
+
+    rpd0 = TimeDistributed(Dense(conv_count, trainable=encoder_trainable))(cin)
+    rpd = TimeDistributed(Dense(conv_count, trainable=encoder_trainable))(rpd0)
+
+
+    # Attempt to the decoder back to the original input
+
+    decoder_trainable = True
+
+    lmid = LSTM(
+        framelen * 10
+        , return_sequences=False
+        , trainable=decoder_trainable
+    )(rpd)
+    mid_d0 = Dense(framelen, trainable=decoder_trainable)(lmid)
+    mid_output = Dense(framelen, name="mid_output", trainable=decoder_trainable)(mid_d0)
+
+
+
+
+    recomb = keras.layers.concatenate([rpd, short_input])
+
+    generator_trainable = False
+
+    l20 = LSTM(
+        framelen * 10
+        , return_sequences=True
+        , name='LSTM_post_mid_1'
+        , trainable=generator_trainable
+    )(recomb)
+
+    # cd = TimeDistributed(Dense(
+    # framelen * 12
+    # , trainable=True
+    # ))(l20)
+
+    # l21 = LSTM(
+    #     framelen * 10
+    #     , return_sequences=True
+    #     , trainable=True
+    # )(l20)
+
+
+    l2 = LSTM(
+        framelen * 10
+        , return_sequences=False
+        , trainable=generator_trainable
+    )(l20)
+
+
+    main_output = Dense(
+      framelen
+      , activation="relu"
+      , trainable=generator_trainable
+      , name="main_output"
+    )(l2)
+
+
+
+    model = Model(
+        inputs=[main_input, short_input],
+        outputs=[main_output, mid_output]
+    )
+
+    self.generator_trainable = generator_trainable
+    self.decoder_trainable = decoder_trainable
+
+    self.model = model
+    return model
+
+
+
+  def define_model_bak(self, frame_seq_len, framelen, num_frame_seqs):
     self.utils.log("Defining model")
     config = self.config
     overlap_sequence = config.overlap_sequence
