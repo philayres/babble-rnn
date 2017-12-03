@@ -101,7 +101,7 @@ else:
     if learn_next_step:
         # pull a single frame following each frame sequence into a corresponding array of next_frames
         next_frames.append(all_frames[i + frame_seq_len + overlap_sequence])
-        current_frames.append(all_frames[i + frame_seq_len + overlap_sequence - 1])
+        current_frames.append(all_frames[i + overlap_sequence])
     else:
         j = i + frame_seq_len
         next_frame_seqs.append(all_frames[(j+overlap_sequence) : (j + frame_seq_len - overlap_sequence*2)])

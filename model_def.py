@@ -170,12 +170,14 @@ class ModelDef(object):
     main_loss_prop = 0.5
     mid_loss_prop = 0.5
 
-    if not self.generator_trainable:
+    if not self.generator_trainable and self.decoder_trainable:
       main_loss_prop = 0
       mid_loss_prop = 1
-    if not self.decoder_trainable:
+    elif not self.decoder_trainable and self.generator_trainable:
       mid_loss_prop = 0
       main_loss_prop = 1
+
+
 
     self.model.compile(
         loss={'main_output': loss, 'mid_output': loss},
