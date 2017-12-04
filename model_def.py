@@ -253,8 +253,7 @@ class ModelDef(object):
   def fit(self, input_seq, output_seq, batch_size=None, epochs=1, shuffle=False, callbacks=None):
       inputs = input_seq
 
-      #FIX THIS!!!!
-      outputs = {'main_output': output_seq[1], 'mid_output': output_seq[0]}
+      outputs = {'main_output': output_seq[0], 'mid_output': output_seq[1]}
 
       self.model.fit(inputs, outputs, batch_size=batch_size, epochs=epochs, shuffle=shuffle,
        callbacks=callbacks

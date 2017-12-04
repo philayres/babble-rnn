@@ -167,6 +167,7 @@ class Generator:
               # take all the results and append them to the generated array
               generated.append(i)
 
+        # We are done generating predictions
         # write the seed + generated data to the output file
         print("writing output file to disk")
         for frame in generated:
