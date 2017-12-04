@@ -100,11 +100,11 @@ else:
     frame_seqs.append(all_frames[i: i + frame_seq_len])
     if learn_next_step:
         # pull a single frame following each frame sequence into a corresponding array of next_frames
-        next_frames.append(all_frames[i + frame_seq_len - overlap_sequence*2 ])
-        current_frames.append(all_frames[i + frame_seq_len - overlap_sequence*2 - 1 ])
+        next_frames.append(all_frames[i + frame_seq_len])
+        current_frames.append(all_frames[i + frame_seq_len - 1 ])
     else:
         j = i + frame_seq_len
-        next_frame_seqs.append(all_frames[(j+overlap_sequence) : (j + frame_seq_len - overlap_sequence*2)])
+        next_frame_seqs.append(all_frames[(j) : (j + frame_seq_len)])
 
   if config.stateful and (len(frame_seqs) % fit_batch_size > 0):
     excess_frameseqs = len(frame_seqs) % fit_batch_size
@@ -146,7 +146,7 @@ else:
       # input is just each frame_seq
       X[i] = frame_seq
       if overlap_sequence != 0:
-        X2[i] = frame_seq[overlap_sequence:-(overlap_sequence)]
+        X2[i] = frame_seq[0:-(2*overlap_sequence)]
 
 
 ####  Setup the model
