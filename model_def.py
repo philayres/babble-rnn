@@ -257,7 +257,7 @@ class ModelDef(object):
     #       outputs = {'main_output': output_seq, 'mid_output': output_seq}
     #   else:
       # Attempt to learn the mid output as a decoder of the original input
-      outputs = {'main_output': output_seq[0], 'mid_output': output_seq[1]}
+      outputs = {'main_output': output_seq[1], 'mid_output': output_seq[1]}
 
       self.model.fit(inputs, outputs, batch_size=batch_size, epochs=epochs, shuffle=shuffle,
        callbacks=callbacks
