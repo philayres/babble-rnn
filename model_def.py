@@ -19,7 +19,7 @@ class ModelDef(object):
 
   encoder_trainable = True
   decoder_trainable = True
-  generator_trainable = False
+  generator_trainable = True
 
   def __init__(self, utils, config):
     self.utils = utils
@@ -53,14 +53,6 @@ class ModelDef(object):
     lout = []
     l0 = []
 
-    # cin = keras.layers.concatenate([short_input, short_input])
-
-    # rpd0 = TimeDistributed(Dense(conv_count, trainable=encoder_trainable))(cin)
-    # rpd = TimeDistributed(Dense(conv_count, trainable=encoder_trainable))(rpd0)
-
-    rpd = short_input
-    # Attempt to the decoder back to the original input
-
 
     lmid = LSTM(
         framelen * 10
@@ -71,34 +63,11 @@ class ModelDef(object):
     mid_output = Dense(framelen, name="mid_output", trainable=decoder_trainable)(lmid)
 
 
-
-
-    recomb = keras.layers.concatenate([rpd, short_input])
-
-    l20 = LSTM(
-        framelen * 10
-        , return_sequences=True
-        , name='LSTM_post_mid_1'
-        , trainable=generator_trainable
-    )(recomb)
-
-    # cd = TimeDistributed(Dense(
-    # framelen * 12
-    # , trainable=True
-    # ))(l20)
-
-    # l21 = LSTM(
-    #     framelen * 10
-    #     , return_sequences=True
-    #     , trainable=True
-    # )(l20)
-
-
     l2 = LSTM(
         framelen * 10
         , return_sequences=False
         , trainable=generator_trainable
-    )(l20)
+    )(short_input)
 
 
     main_output = Dense(
