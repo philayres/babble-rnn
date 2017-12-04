@@ -253,11 +253,8 @@ class ModelDef(object):
   def fit(self, input_seq, output_seq, batch_size=None, epochs=1, shuffle=False, callbacks=None):
       inputs = input_seq
 
-    #   if self.config.overlap_sequence == 0:
-    #       outputs = {'main_output': output_seq, 'mid_output': output_seq}
-    #   else:
-      # Attempt to learn the mid output as a decoder of the original input
-      outputs = {'main_output': output_seq[1], 'mid_output': output_seq[1]}
+      #FIX THIS!!!!
+      outputs = {'main_output': output_seq[1], 'mid_output': output_seq[0]}
 
       self.model.fit(inputs, outputs, batch_size=batch_size, epochs=epochs, shuffle=shuffle,
        callbacks=callbacks

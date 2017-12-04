@@ -81,6 +81,7 @@ class Generator:
     num_frames = self.num_frames
     overlap_sequence = self.config.overlap_sequence
     generate_num_outputs = self.config.generate_num_outputs
+    frame_seq_len = self.config.frame_seq_len
 
     model_def = utils.model_def
 
@@ -111,7 +112,7 @@ class Generator:
         if self.generate_with_single_timestep:
             loop_len = generate_len
         else:
-            loop_len = int(generate_len /  self.config.frame_seq_len)
+            loop_len = int(generate_len /  frame_seq_len)
 
         for i in range(loop_len):
           if utils.generate_mode():
@@ -122,14 +123,17 @@ class Generator:
           x2 = np.zeros((1, seed_seq_len - overlap_sequence*2, framelen), dtype=np.float32)
           for t, frame in enumerate(seed_frame_seq):
             x[0, t] = frame
-            # if overlap_sequence != 0:
-            if t >= overlap_sequence and t < seed_seq_len - overlap_sequence:
-                t2 = t - overlap_sequence
-                x2[0, t2] = frame
 
-        #   if overlap_sequence == 0:
-        #       inx = x
-        #   else:
+            # Handle the shortened sequence
+            if overlap_sequence == 0:
+                x2[0, t] = frame
+            else:
+                # Ignore the first few timesteps
+                if t >= overlap_sequence and t < frame_seq_len - overlap_sequence:
+                    # Add the frames, starting at the beginning of the shortened array
+                    x2[0, t-overlap_sequence] = frame
+
+
           inx = [x, x2]
 
           if utils.generate_mode() : utils.log("predicting",i)
