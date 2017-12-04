@@ -146,7 +146,7 @@ else:
       # input is just each frame_seq
       X[i] = frame_seq
     #   if overlap_sequence != 0:
-      X2[i] = frame_seq[0:-(2*overlap_sequence)]
+      X2[i] = frame_seq[0:frame_seq_len - (2*overlap_sequence)]
 
 
 ####  Setup the model
