@@ -39,6 +39,9 @@ class ModelDef(object):
     encoder_trainable = self.encoder_trainable
     decoder_trainable = self.decoder_trainable
     generator_trainable = self.generator_trainable
+    self.utils.log("encoder_trainable:", self.encoder_trainable)
+    self.utils.log("decoder_trainable:", self.decoder_trainable)
+    self.utils.log("generator_trainable:", self.generator_trainable)
 
 
     print("short_input_len", short_input_len)
