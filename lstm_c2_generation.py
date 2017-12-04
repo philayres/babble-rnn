@@ -62,6 +62,7 @@ overlap_sequence = config.overlap_sequence
 
 frame_seqs = []
 next_frame_seqs = []
+current_frame_seqs = []
 next_frames = []
 current_frames = []
 all_frames = []
@@ -95,17 +96,26 @@ if utils.generate_mode():
   num_frame_seqs = seed_seq_len
 else:
 
-  # pull the frames into frame sequences (frame_seqs), each of frame_seq_len frames
+  # Pull the frames into frame sequences (frame_seqs), each of frame_seq_len frames
+  # Each frame sequence is a sub-batch of timesteps, handed to the model in one chunk
   for i in range(0, num_frames - 2*frame_seq_len, seq_step):
-    frame_seqs.append(all_frames[i: i + frame_seq_len])
+    i_next = i + frame_seq_len
+    frame_seqs.append(all_frames[i : i_next])
     if learn_next_step:
-        # pull a single frame following each frame sequence into a corresponding array of next_frames
-        next_frames.append(all_frames[i + frame_seq_len])
-        current_frames.append(all_frames[i + frame_seq_len - 1 ])
+        # Pull a single frame following each frame sequence into a corresponding array of next_frames
+        # When just learning based on the next step after a frame sequence, the next frame is the one following
+        # the last frame in the sequence
+        next_frames.append(all_frames[i_next])
+        # The current frame is therefore the last frame in the frame sequence
+        current_frames.append(all_frames[i_next - 1 ])
     else:
-        j = i + frame_seq_len
-        next_frame_seqs.append(all_frames[(j) : (j + frame_seq_len)])
+        # If learning on a whole frame sequence, then start the sequence at the start of the next sequence
+        # and make it span the same length
+        next_frame_seqs.append(all_frames[i_next : (i_next + frame_seq_len)])
+        # The current frame sequence is segmented in the same way as the input frame sequence in frame_seqs
+        current_frame_seqs.append(all_frames[i : i_next])
 
+  # Stateful operation requires the total set of timesteps to be a multiple of the batch size
   if config.stateful and (len(frame_seqs) % fit_batch_size > 0):
     excess_frameseqs = len(frame_seqs) % fit_batch_size
     print("Stateful operation. Reducing frame sequences by:", excess_frameseqs)
@@ -121,13 +131,19 @@ else:
   num_frame_seqs = len(frame_seqs)
   X = np.zeros((num_frame_seqs, frame_seq_len, framelen), dtype=np.float32)
 
-  # if overlap_sequence != 0:
+  # Provide a second input set, containing sub-batch frame sequences that are shorter, to enable
+  # 2D Convolutional networks to be trained without fake padding
+  # These are effectively a window into the main frame sequence with a frame removed from each end
+  # representing where the convolution is not able to reach
   X2 = np.zeros((num_frame_seqs, (frame_seq_len - overlap_sequence*2), framelen), dtype=np.float32)
+
 
   if learn_next_step:
       y = np.zeros((num_frame_seqs, framelen), dtype=np.float32)
       y2 = np.zeros((num_frame_seqs, framelen), dtype=np.float32)
   else:
+      # If we are learning with a shortened X2 input sequence, the outputs we want to use for loss calculation will the
+      # the same length as this shorter input
       y = np.zeros((num_frame_seqs, frame_seq_len - overlap_sequence*2, framelen), dtype=np.float32)
       y2 = np.zeros((num_frame_seqs, frame_seq_len - overlap_sequence*2, framelen), dtype=np.float32)
 
@@ -141,12 +157,13 @@ else:
           y2[i] = current_frames[i]
       else:
           y[i] = next_frame_seqs[i]
-          y2[i] = frame_seq
+          y2[i] = current_frame_seqs[i]
 
-      # input is just each frame_seq
+      # main input is simply each frame_seq
       X[i] = frame_seq
+      # secondary shorter input takes the Conv2D unreachable frames off the start and finish, if we are using this
       if overlap_sequence != 0:
-          X2[i] = frame_seq[0:frame_seq_len - (2*overlap_sequence)]
+          X2[i] = frame_seq[overlap_sequence : frame_seq_len - overlap_sequence]
       else:
           X2[i] = frame_seq
 
