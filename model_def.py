@@ -17,6 +17,9 @@ class ModelDef(object):
 
   stateful = False
 
+  encoder_trainable = True
+  decoder_trainable = True
+  generator_trainable = False
 
   def __init__(self, utils, config):
     self.utils = utils
@@ -33,6 +36,11 @@ class ModelDef(object):
     in_count = framelen * in_scale
     conv_count = 65
 
+    encoder_trainable = self.encoder_trainable
+    decoder_trainable = self.decoder_trainable
+    generator_trainable = self.generator_trainable
+
+
     print("short_input_len", short_input_len)
 
     main_input = Input(shape=(frame_seq_len, framelen), dtype='float32', name="main_input")
@@ -44,15 +52,12 @@ class ModelDef(object):
 
     # cin = keras.layers.concatenate([short_input, short_input])
 
-    encoder_trainable = True
-
     # rpd0 = TimeDistributed(Dense(conv_count, trainable=encoder_trainable))(cin)
     # rpd = TimeDistributed(Dense(conv_count, trainable=encoder_trainable))(rpd0)
 
     rpd = short_input
     # Attempt to the decoder back to the original input
 
-    decoder_trainable = True
 
     lmid = LSTM(
         framelen * 10
@@ -66,8 +71,6 @@ class ModelDef(object):
 
 
     recomb = keras.layers.concatenate([rpd, short_input])
-
-    generator_trainable = False
 
     l20 = LSTM(
         framelen * 10
@@ -109,8 +112,6 @@ class ModelDef(object):
         outputs=[main_output, mid_output]
     )
 
-    self.generator_trainable = generator_trainable
-    self.decoder_trainable = decoder_trainable
 
     self.model = model
     return model
