@@ -121,8 +121,8 @@ else:
   num_frame_seqs = len(frame_seqs)
   X = np.zeros((num_frame_seqs, frame_seq_len, framelen), dtype=np.float32)
 
-  if overlap_sequence != 0:
-    X2 = np.zeros((num_frame_seqs, (frame_seq_len - overlap_sequence*2), framelen), dtype=np.float32)
+  # if overlap_sequence != 0:
+  X2 = np.zeros((num_frame_seqs, (frame_seq_len - overlap_sequence*2), framelen), dtype=np.float32)
 
   if learn_next_step:
       y = np.zeros((num_frame_seqs, framelen), dtype=np.float32)
@@ -145,8 +145,8 @@ else:
 
       # input is just each frame_seq
       X[i] = frame_seq
-      if overlap_sequence != 0:
-        X2[i] = frame_seq[0:-(2*overlap_sequence)]
+    #   if overlap_sequence != 0:
+      X2[i] = frame_seq[0:-(2*overlap_sequence)]
 
 
 ####  Setup the model
@@ -202,9 +202,9 @@ for iteration in range(start_iteration, num_iterations + 1):
     yl2 = y2
     utils.log('using full set of frames')
 
-  if overlap_sequence == 0:
-    inX = Xl
-  else:
+  # if overlap_sequence == 0:
+  #   inX = Xl
+  # else:
     inX = [Xl, Xl2]
 
   outy = [yl, yl2]

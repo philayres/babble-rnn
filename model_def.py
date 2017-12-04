@@ -36,8 +36,8 @@ class ModelDef(object):
     print("short_input_len", short_input_len)
 
     main_input = Input(shape=(frame_seq_len, framelen), dtype='float32', name="main_input")
-    if overlap_sequence != 0:
-        short_input = Input(shape=(short_input_len, framelen), dtype='float32', name="short_input")
+    # if overlap_sequence != 0:
+    short_input = Input(shape=(short_input_len, framelen), dtype='float32', name="short_input")
 
     lout = []
     l0 = []
@@ -129,8 +129,8 @@ class ModelDef(object):
     print("short_input_len", short_input_len)
 
     main_input = Input(shape=(frame_seq_len, framelen), dtype='float32', name="main_input")
-    if overlap_sequence != 0:
-        short_input = Input(shape=(short_input_len, framelen), dtype='float32', name="short_input")
+    # if overlap_sequence != 0:
+    short_input = Input(shape=(short_input_len, framelen), dtype='float32', name="short_input")
 
     lout = []
     l0 = []

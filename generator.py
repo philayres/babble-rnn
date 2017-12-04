@@ -118,19 +118,19 @@ class Generator:
             print("Generating", i, "of", generate_len)
           # setup seed input
           x = np.zeros((1, seed_seq_len, framelen), dtype=np.float32)
-          if overlap_sequence != 0:
-              x2 = np.zeros((1, seed_seq_len - overlap_sequence*2, framelen), dtype=np.float32)
+        #   if overlap_sequence != 0:
+          x2 = np.zeros((1, seed_seq_len - overlap_sequence*2, framelen), dtype=np.float32)
           for t, frame in enumerate(seed_frame_seq):
             x[0, t] = frame
-            if overlap_sequence != 0:
-                if t >= overlap_sequence and t < seed_seq_len - overlap_sequence:
-                    t2 = t - overlap_sequence
-                    x2[0, t2] = frame
+            # if overlap_sequence != 0:
+            if t >= overlap_sequence and t < seed_seq_len - overlap_sequence:
+                t2 = t - overlap_sequence
+                x2[0, t2] = frame
 
-          if overlap_sequence == 0:
-              inx = x
-          else:
-              inx = [x, x2]
+        #   if overlap_sequence == 0:
+        #       inx = x
+        #   else:
+          inx = [x, x2]
 
           if utils.generate_mode() : utils.log("predicting",i)
           # run the prediction for the next frame, getting the result
