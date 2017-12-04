@@ -26,13 +26,13 @@ class RunConfig(object):
   learn_next_step = True
 
   # generate sample data every nth iteration
-  gen_every_nth = 30
+  gen_every_nth = 10
 
   # Generate just the main output (1) or mid output too (2)
   generate_num_outputs = 2
 
   # save model every nth iteration
-  save_model_every_nth = 30
+  save_model_every_nth = 10
 
   # number of bytes (unsigned 8 bit) in a Codec 2 frame
   # for 1300 rate codec one frame encodes 40ms of raw PCM audio
