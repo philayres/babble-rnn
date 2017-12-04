@@ -145,9 +145,10 @@ else:
 
       # input is just each frame_seq
       X[i] = frame_seq
-    #   if overlap_sequence != 0:
-      X2[i] = frame_seq[0:frame_seq_len - (2*overlap_sequence)]
-
+      if overlap_sequence != 0:
+          X2[i] = frame_seq[0:frame_seq_len - (2*overlap_sequence)]
+      else:
+          X2[i] = frame_seq
 
 ####  Setup the model
 model_def = utils.define_or_load_model(frame_seq_len, framelen, num_frame_seqs)
