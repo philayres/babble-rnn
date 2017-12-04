@@ -205,7 +205,7 @@ for iteration in range(start_iteration, num_iterations + 1):
   # if overlap_sequence == 0:
   #   inX = Xl
   # else:
-    inX = [Xl, Xl2]
+  inX = [Xl, Xl2]
 
   outy = [yl, yl2]
 
