@@ -87,7 +87,7 @@ class ModelDef(object):
 
     # Decoder
 
-    decoder_input = Input(shape=(, conv_count), dtype='float32', name="decoder_input")
+    decoder_input = Input(shape=(-1, conv_count), dtype='float32', name="decoder_input")
 
     lmid = LSTM(
         framelen * 3
