@@ -177,9 +177,14 @@ class Generator:
           #(stateful or time distributed operation with learn_next_step = False)
           if len(frame.shape) > 1:
             utils.log("Generated multiple frames in one action:", frame.shape, frame.shape[0])
-            for f in frame:
-              s = self.sample(f).tostring()
-              utils.output_file.write(s)
+            if len(frame.shape) == 3 and frame.shape[0] == 1:
+                for f in frame[0]:
+                  s = self.sample(f).tostring()
+                  utils.output_file.write(s)
+            else:
+                for f in frame:
+                  s = self.sample(f).tostring()
+                  utils.output_file.write(s)
           else:
             # just one frame at a time
             s = self.sample(frame).tostring()
