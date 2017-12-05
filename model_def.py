@@ -130,14 +130,19 @@ class ModelDef(object):
     )(l20)
 
 
-    generator_output = TimeDistributed(
+    conf = TimeDistributed(
         Dense(
           framelen
           , activation="relu"
           , trainable=generator_trainable
         )
         , name='generator_TD_Dense_0'
-    )(l2)
+    )
+    generator_output = conf(l2)
+
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
 
     main_output = decoder_model(generator_output)
 
