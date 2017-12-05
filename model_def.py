@@ -144,13 +144,13 @@ class ModelDef(object):
 
     rs0 = keras.layers.Reshape((short_input_len, conv_count), trainable=encoder_trainable)(conv1)
 
-    rpd0 = TimeDistributed(
-        Dense(
-            conv_count
-            , activation="relu"
-            , trainable=encoder_trainable
-        )
-    )(rs0)
+    # rpd0 = TimeDistributed(
+    #     Dense(
+    #         conv_count
+    #         , activation="relu"
+    #         , trainable=encoder_trainable
+    #     )
+    # )(rs0)
 
     rpd = TimeDistributed(
         Dense(
@@ -158,7 +158,7 @@ class ModelDef(object):
             , activation="relu"
             , trainable=encoder_trainable
         )
-    )(rpd0)
+    )(rs0)
 
 
     # Attempt to decode back to the original input
@@ -170,13 +170,13 @@ class ModelDef(object):
         , trainable=decoder_trainable
     )(rpd)
 
-    mid_d0 = TimeDistributed(
-        Dense(
-            framelen
-            , activation="relu"
-            , trainable=decoder_trainable
-        )
-    )(lmid)
+    # mid_d0 = TimeDistributed(
+    #     Dense(
+    #         framelen
+    #         , activation="relu"
+    #         , trainable=decoder_trainable
+    #     )
+    # )(lmid)
 
     mid_output = TimeDistributed(
         Dense(
@@ -185,7 +185,7 @@ class ModelDef(object):
             , trainable=decoder_trainable
         )
         , name="mid_output"
-    )(mid_d0)
+    )(lmid)
 
 
 
