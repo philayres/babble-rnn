@@ -106,7 +106,7 @@ class ModelDef(object):
 
     decoder_model = Model(decoder_input, decoder_output)
 
-    mid_output = decoder_model(encoder_output, name="mid_output")
+    mid_output = decoder_model(encoder_output)
 
     # Generator
 
@@ -138,7 +138,7 @@ class ModelDef(object):
         , name='generator_TD_Dense_0'
     )(l2)
 
-    main_output = decoder_model(encoder_output, name="main_output")
+    main_output = decoder_model(encoder_output)
 
     model = Model(
         inputs=[main_input, short_input],
@@ -168,16 +168,16 @@ class ModelDef(object):
 
 
     self.model.compile(
-        loss={'main_output': loss, 'mid_output': loss},
-        loss_weights={'main_output': main_loss_prop, 'mid_output': mid_loss_prop},
+        loss=[loss, loss], #{'main_output': loss, 'mid_output': loss},
+        loss_weights=[main_loss_prop, mid_loss_prop],#{'main_output': main_loss_prop, 'mid_output': mid_loss_prop},
         optimizer=self.get_optimizer_from_config())
     self.utils.log_model_summary()
 
   def fit(self, input_seq, output_seq, batch_size=None, epochs=1, shuffle=False, callbacks=None):
       inputs = input_seq
 
-      outputs = {'main_output': output_seq[0], 'mid_output': output_seq[1]}
-
+      #outputs = {'main_output': output_seq[0], 'mid_output': output_seq[1]}
+      outputs = output_seq
       self.model.fit(inputs, outputs, batch_size=batch_size, epochs=epochs, shuffle=shuffle,
        callbacks=callbacks
       )
