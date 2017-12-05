@@ -99,7 +99,7 @@ class ModelDef(object):
 
 
 
-  def define_model_bak(self, frame_seq_len, framelen, num_frame_seqs):
+  def define_model(self, frame_seq_len, framelen, num_frame_seqs):
     self.utils.log("Defining model")
     config = self.config
     overlap_sequence = config.overlap_sequence
