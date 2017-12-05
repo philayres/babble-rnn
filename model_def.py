@@ -109,10 +109,10 @@ class ModelDef(object):
     # Run the decoder portion of autoencoder
     mid_output = decoder_model(encoder_output)
 
+
+
     # Generator
-
-    # recomb = keras.layers.concatenate([encoder_output, short_input])
-
+    
 
     l20 = LSTM(
         framelen * 10
