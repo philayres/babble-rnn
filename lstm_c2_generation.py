@@ -156,10 +156,11 @@ else:
           # The decoder output is always the current frame
           y2[i] = current_frames[i]
       else:
-          y[i] = next_frame_seqs[i]
           if overlap_sequence != 0:
+              y[i] = next_frame_seqs[i][overlap_sequence : frame_seq_len - overlap_sequence]
               y2[i] = current_frame_seqs[i][overlap_sequence : frame_seq_len - overlap_sequence]
           else:
+              y[i] = next_frame_seqs[i]
               y2[i] = current_frame_seqs[i]
 
       # main input is simply each frame_seq
