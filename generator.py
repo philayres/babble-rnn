@@ -85,7 +85,9 @@ class Generator:
 
     model_def = utils.model_def
 
-    for outi in range(generate_num_outputs):
+    # for outi in range(generate_num_outputs):
+    if True:
+        outi = 1
 
         fn_postfix = "output_" + str(outi) + "_" + str(iteration)
 
@@ -133,8 +135,11 @@ class Generator:
                     # Add the frames, starting at the beginning of the shortened array
                     x2[0, t-overlap_sequence] = frame
 
-
-          inx = [x, x2]
+          # Loaded models seem to lose more than one input
+          if utils.generate_mode():
+            inx = x
+          else:
+            inx = [x, x2]
 
           if utils.generate_mode() : utils.log("predicting",i)
           # run the prediction for the next frame, getting the result
@@ -174,7 +179,7 @@ class Generator:
           # if we are passing multiple frames
           #(stateful or time distributed operation with learn_next_step = False)
           if len(frame.shape) > 1:
-            utils.log("Generated multiple frames in one action:", frame.shape[0])
+            utils.log("Generated multiple frames in one action:", frame.shape, frame.shape[0])
             for f in frame:
               s = self.sample(f).tostring()
               utils.output_file.write(s)
