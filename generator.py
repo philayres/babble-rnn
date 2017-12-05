@@ -158,7 +158,10 @@ class Generator:
               seed_frame_seq.append(next_frame)
             else:
               utils.log("using generated frames as seed_seq:", next_frame.shape)
-              seed_frame_seq = next_frame
+              if len(next_frame.shape) == 3 and next_frame.shape[0] == 1:
+                  seed_frame_seq = next_frame[0]
+              else:
+                  seed_frame_seq = next_frame
 
           else:
             #print('LENGTH:',len(predicted_frame_props),len(predicted_frame_props[i]))
