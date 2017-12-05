@@ -82,6 +82,7 @@ class Generator:
     overlap_sequence = self.config.overlap_sequence
     generate_num_outputs = self.config.generate_num_outputs
     frame_seq_len = self.config.frame_seq_len
+    use_short_input = False
 
     model_def = utils.model_def
 
@@ -133,7 +134,10 @@ class Generator:
                     # Add the frames, starting at the beginning of the shortened array
                     x2[0, t-overlap_sequence] = frame
 
-          inx = x #[x, x2]
+          if use_short_input:
+            inx = [x, x2]
+          else:
+            inx = x
 
           if utils.generate_mode() : utils.log("predicting",i)
           # run the prediction for the next frame, getting the result

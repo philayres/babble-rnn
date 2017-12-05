@@ -112,7 +112,7 @@ class ModelDef(object):
 
 
     # Generator
-    
+
 
     l20 = LSTM(
         framelen * 10
@@ -140,7 +140,7 @@ class ModelDef(object):
     )(l2)
 
     main_output = decoder_model(generator_output)
-    main_output = mid_output
+
 
     model = Model(
         #inputs=[main_input, short_input],
