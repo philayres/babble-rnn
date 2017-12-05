@@ -64,9 +64,9 @@ class ModelDef(object):
         Dense(
             framelen
             , activation="relu"
-            , name="mid_output"
             , trainable=decoder_trainable
         )
+        , name="mid_output"
     )(lmid)
 
 
@@ -82,8 +82,8 @@ class ModelDef(object):
           framelen
           , activation="relu"
           , trainable=generator_trainable
-          , name="main_output"
         )
+        , name="main_output"
     )(l2)
 
 
