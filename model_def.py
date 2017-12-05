@@ -85,26 +85,28 @@ class ModelDef(object):
     )(rs0)
 
 
-    # Attempt to decode back to the original input
+    # Decoder
 
+    decoder_input = Input(shape=(short_input_len, conv_count))
 
     lmid = LSTM(
         framelen * 3
         , return_sequences=True
         , trainable=decoder_trainable
-    )(encoder_output)
+    )(decoder_input)
 
 
-    mid_output = TimeDistributed(
+    decoder_output = TimeDistributed(
         Dense(
             framelen
             , activation="relu"
             , trainable=decoder_trainable
         )
-        , name="mid_output"
     )(lmid)
 
+    decoder_model = Model(decoder_input, decoder_output)
 
+    mid_output = decoder_model(encoder_output, name="mid_output")
 
     # Generator
 
@@ -127,17 +129,16 @@ class ModelDef(object):
     )(l20)
 
 
-    main_output = TimeDistributed(
+    generator_output = TimeDistributed(
         Dense(
           framelen
           , activation="relu"
-          , name='generator_Dense_0'
           , trainable=generator_trainable
         )
-        , name="main_output"
+        , name='generator_TD_Dense_0'
     )(l2)
 
-
+    main_output = decoder_model(encoder_output, name="main_output")
 
     model = Model(
         inputs=[main_input, short_input],
