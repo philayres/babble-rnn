@@ -106,6 +106,7 @@ class ModelDef(object):
 
     decoder_model = Model(decoder_input, decoder_output)
 
+    # Run the decoder portion of autoencoder
     mid_output = decoder_model(encoder_output)
 
     # Generator
@@ -138,7 +139,7 @@ class ModelDef(object):
         , name='generator_TD_Dense_0'
     )(l2)
 
-    main_output = decoder_model(encoder_output)
+    main_output = decoder_model(generator_output)
 
     model = Model(
         inputs=[main_input, short_input],
