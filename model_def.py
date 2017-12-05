@@ -56,25 +56,34 @@ class ModelDef(object):
 
     lmid = LSTM(
         framelen * 10
-        , return_sequences=False
+        , return_sequences=True
         , trainable=decoder_trainable
     )(short_input)
-    # mid_d0 = Dense(framelen, trainable=decoder_trainable)(short_input)
-    mid_output = Dense(framelen, activation="relu", name="mid_output", trainable=decoder_trainable)(lmid)
+
+    mid_output = TimeDistributed(
+        Dense(
+            framelen
+            , activation="relu"
+            , name="mid_output"
+            , trainable=decoder_trainable
+        )
+    )(lmid)
 
 
     l2 = LSTM(
         framelen * 10
-        , return_sequences=False
+        , return_sequences=True
         , trainable=generator_trainable
-    )(short_input)
+    )(main_input)
 
 
-    main_output = Dense(
-      framelen
-      , activation="relu"
-      , trainable=generator_trainable
-      , name="main_output"
+    main_output = TimeDistributed(
+        Dense(
+          framelen
+          , activation="relu"
+          , trainable=generator_trainable
+          , name="main_output"
+        )
     )(l2)
 
 

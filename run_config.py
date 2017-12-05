@@ -23,7 +23,7 @@ class RunConfig(object):
 
   # learn and generate with just a single timestep (True) or
   # use a block (and a TimeDistributed output)
-  learn_next_step = True
+  learn_next_step = False
 
   # generate sample data every nth iteration
   gen_every_nth = 10
