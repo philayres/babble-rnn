@@ -49,7 +49,7 @@ class ModelDef(object):
     print("short_input_len", short_input_len)
 
     main_input = Input(shape=(frame_seq_len, framelen), dtype='float32', name="main_input")
-    short_input = Input(shape=(short_input_len, framelen), dtype='float32', name="short_input")
+    # short_input = Input(shape=(short_input_len, framelen), dtype='float32', name="short_input")
 
     cin = keras.layers.concatenate([main_input, main_input])
 
@@ -143,7 +143,8 @@ class ModelDef(object):
     main_output = mid_output
 
     model = Model(
-        inputs=[main_input, short_input],
+        #inputs=[main_input, short_input],
+        inputs=[main_input],
         outputs=[main_output, mid_output]
     )
 
@@ -176,7 +177,7 @@ class ModelDef(object):
     self.utils.log_model_summary()
 
   def fit(self, input_seq, output_seq, batch_size=None, epochs=1, shuffle=False, callbacks=None):
-      inputs = input_seq
+      inputs = input_seq[0]
 
       #outputs = {'main_output': output_seq[0], 'mid_output': output_seq[1]}
       outputs = output_seq
