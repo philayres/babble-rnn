@@ -133,7 +133,7 @@ class Generator:
                     # Add the frames, starting at the beginning of the shortened array
                     x2[0, t-overlap_sequence] = frame
 
-          inx = [x, x2]
+          inx = x #[x, x2]
 
           if utils.generate_mode() : utils.log("predicting",i)
           # run the prediction for the next frame, getting the result
