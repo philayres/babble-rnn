@@ -114,32 +114,32 @@ class ModelDef(object):
     # recomb = keras.layers.concatenate([encoder_output, short_input])
 
 
-    # l20 = LSTM(
-    #     framelen * 10
-    #     , return_sequences=True
-    #     , name='generator_LSTM_0'
-    #     , trainable=generator_trainable
-    # )(encoder_output)
-    #
-    #
-    # l2 = LSTM(
-    #     framelen * 10
-    #     , return_sequences=True
-    #     , name='generator_LSTM_1'
-    #     , trainable=generator_trainable
-    # )(l20)
-    #
-    #
-    # generator_output = TimeDistributed(
-    #     Dense(
-    #       framelen
-    #       , activation="relu"
-    #       , trainable=generator_trainable
-    #     )
-    #     , name='generator_TD_Dense_0'
-    # )(l2)
-    #
-    # main_output = decoder_model(generator_output)
+    l20 = LSTM(
+        framelen * 10
+        , return_sequences=True
+        , name='generator_LSTM_0'
+        , trainable=generator_trainable
+    )(encoder_output)
+
+
+    l2 = LSTM(
+        framelen * 10
+        , return_sequences=True
+        , name='generator_LSTM_1'
+        , trainable=generator_trainable
+    )(l20)
+
+
+    generator_output = TimeDistributed(
+        Dense(
+          framelen
+          , activation="relu"
+          , trainable=generator_trainable
+        )
+        , name='generator_TD_Dense_0'
+    )(l2)
+
+    main_output = decoder_model(generator_output)
     main_output = mid_output
 
     model = Model(
