@@ -27,7 +27,7 @@ class ModelDef(object):
 
     self.layers=[]
 
-  def define_model(self, frame_seq_len, framelen, num_frame_seqs):
+  def define_model_simple(self, frame_seq_len, framelen, num_frame_seqs):
     self.utils.log("Defining model")
     config = self.config
     overlap_sequence = config.overlap_sequence
@@ -108,18 +108,19 @@ class ModelDef(object):
     in_count = framelen * in_scale
     conv_count = 65
 
+    encoder_trainable = self.encoder_trainable
+    decoder_trainable = self.decoder_trainable
+    generator_trainable = self.generator_trainable
+    self.utils.log("encoder_trainable:", self.encoder_trainable)
+    self.utils.log("decoder_trainable:", self.decoder_trainable)
+    self.utils.log("generator_trainable:", self.generator_trainable)
+
     print("short_input_len", short_input_len)
 
     main_input = Input(shape=(frame_seq_len, framelen), dtype='float32', name="main_input")
-    # if overlap_sequence != 0:
     short_input = Input(shape=(short_input_len, framelen), dtype='float32', name="short_input")
 
-    lout = []
-    l0 = []
-
     cin = keras.layers.concatenate([main_input, main_input])
-
-    encoder_trainable = True
 
     cr = TimeDistributed(keras.layers.Reshape((in_count, 1), trainable=encoder_trainable))(cin)
 
@@ -131,10 +132,6 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-    # mp = MaxPooling2D(2, padding='valid', data_format='channels_last')
-    # mp0 = mp(conv0)
-
-
     conv1_def = Conv2D(conv_count, (5,13), padding='valid', data_format='channels_last', trainable=encoder_trainable)
     conv1 = conv1_def(conv0)
 
@@ -145,48 +142,57 @@ class ModelDef(object):
 
 
 
-
-
-    # td0_conf =  TimeDistributed(keras.layers.Reshape((short_input_len, conv_count)))
-    # td0 = td0_conf(conv1)
-    # conf = td0_conf
-    # print(conf.get_config())
-    # print(conf.input_shape)
-    # print(conf.output_shape)
-
-
-    # # rpl = TimeDistributed(RepeatVector(15))
-    # # # Need to repeat here
-    # # rp0 = rpl(rs1)
-    # # conf = rpl
-    # # print(conf.get_config())
-    # # print(conf.input_shape)
-    # # print(conf.output_shape)
-    #
     rs0 = keras.layers.Reshape((short_input_len, conv_count), trainable=encoder_trainable)(conv1)
 
-    rpd0 = TimeDistributed(Dense(conv_count, trainable=encoder_trainable))(rs0)
-    rpd = TimeDistributed(Dense(conv_count, trainable=encoder_trainable))(rpd0)
+    rpd0 = TimeDistributed(
+        Dense(
+            conv_count
+            , activation="relu"
+            , trainable=encoder_trainable
+        )
+    )(rs0)
+
+    rpd = TimeDistributed(
+        Dense(
+            conv_count
+            , activation="relu"
+            , trainable=encoder_trainable
+        )
+    )(rpd0)
 
 
-    # Attempt to the decoder back to the original input
+    # Attempt to decode back to the original input
 
-    decoder_trainable = True
 
     lmid = LSTM(
         framelen * 10
-        , return_sequences=False
+        , return_sequences=True
         , trainable=decoder_trainable
     )(rpd)
-    mid_d0 = Dense(framelen, trainable=decoder_trainable)(lmid)
-    mid_output = Dense(framelen, name="mid_output", trainable=decoder_trainable)(mid_d0)
+
+    mid_d0 = TimeDistributed(
+        Dense(
+            framelen
+            , activation="relu"
+            , trainable=decoder_trainable
+        )
+    )(lmid)
+
+    mid_output = TimeDistributed(
+        Dense(
+            framelen
+            , activation="relu"
+            , trainable=decoder_trainable
+        )
+        , name="mid_output"
+    )(mid_d0)
 
 
 
+    # Generator
 
     recomb = keras.layers.concatenate([rpd, short_input])
 
-    generator_trainable = False
 
     l20 = LSTM(
         framelen * 10
@@ -195,30 +201,21 @@ class ModelDef(object):
         , trainable=generator_trainable
     )(recomb)
 
-    # cd = TimeDistributed(Dense(
-    # framelen * 12
-    # , trainable=True
-    # ))(l20)
-
-    # l21 = LSTM(
-    #     framelen * 10
-    #     , return_sequences=True
-    #     , trainable=True
-    # )(l20)
-
 
     l2 = LSTM(
         framelen * 10
-        , return_sequences=False
+        , return_sequences=True
         , trainable=generator_trainable
     )(l20)
 
 
-    main_output = Dense(
-      framelen
-      , activation="relu"
-      , trainable=generator_trainable
-      , name="main_output"
+    main_output = TimeDistributed(
+        Dense(
+          framelen
+          , activation="relu"
+          , trainable=generator_trainable
+        )
+        , name="main_output"
     )(l2)
 
 
@@ -227,9 +224,6 @@ class ModelDef(object):
         inputs=[main_input, short_input],
         outputs=[main_output, mid_output]
     )
-
-    self.generator_trainable = generator_trainable
-    self.decoder_trainable = decoder_trainable
 
     self.model = model
     return model
