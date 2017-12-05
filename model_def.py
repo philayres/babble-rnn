@@ -165,7 +165,7 @@ class ModelDef(object):
 
 
     lmid = LSTM(
-        framelen * 10
+        framelen * 3
         , return_sequences=True
         , trainable=decoder_trainable
     )(rpd)
