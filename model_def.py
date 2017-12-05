@@ -136,7 +136,7 @@ class ModelDef(object):
 
     conf = TimeDistributed(
         Dense(
-          framelen
+          conv_count
           , activation="relu"
           , trainable=generator_trainable
         )
