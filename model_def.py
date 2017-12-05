@@ -20,6 +20,7 @@ class ModelDef(object):
   encoder_trainable = True
   decoder_trainable = True
   generator_trainable = True
+  decoder_model_memo = None
 
   def __init__(self, utils, config):
     self.utils = utils
@@ -89,29 +90,9 @@ class ModelDef(object):
     print(conf.output_shape)
 
 
-    # Decoder
-
-    decoder_input = Input(shape=(-1, conv_count), dtype='float32', name="decoder_input")
-
-    lmid = LSTM(
-        framelen * 3
-        , return_sequences=True
-        , trainable=decoder_trainable
-    )(decoder_input)
-
-
-    decoder_output = TimeDistributed(
-        Dense(
-            framelen
-            , activation="relu"
-            , trainable=decoder_trainable
-        )
-    )(lmid)
-
-    decoder_model = Model(decoder_input, decoder_output)
 
     # Run the decoder portion of autoencoder
-    mid_output = decoder_model(encoder_output)
+    mid_output = self.decoder_model(framelen, (-1, conv_count))(encoder_output)
 
 
 
@@ -148,7 +129,7 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-    main_output = decoder_model(generator_output)
+    main_output = self.decoder_model(framelen, (-1, conv_count))(generator_output)
 
 
     model = Model(
@@ -159,6 +140,33 @@ class ModelDef(object):
 
     self.model = model
     return model
+
+  def decoder_model(self, framelen, shape=(-1)):
+
+      if self.decoder_model_memo:
+        return self.decoder_model_memo
+      # Decoder
+
+      decoder_input = Input(shape=shape, dtype='float32', name="decoder_input")
+
+      lmid = LSTM(
+          framelen * 3
+          , return_sequences=True
+          , trainable=self.decoder_trainable
+      )(decoder_input)
+
+
+      decoder_output = TimeDistributed(
+          Dense(
+              framelen
+              , activation="relu"
+              , trainable=self.decoder_trainable
+          )
+      )(lmid)
+
+      self.decoder_model_memo = Model(decoder_input, decoder_output)
+      return self.decoder_model_memo
+
 
 
   def compile_model(self):
