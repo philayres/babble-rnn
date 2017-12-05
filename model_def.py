@@ -108,20 +108,21 @@ class ModelDef(object):
 
     # Generator
 
-    recomb = keras.layers.concatenate([encoder_output, short_input])
+    # recomb = keras.layers.concatenate([encoder_output, short_input])
 
 
     l20 = LSTM(
         framelen * 10
         , return_sequences=True
-        , name='LSTM_post_mid_1'
+        , name='generator_LSTM_0'
         , trainable=generator_trainable
-    )(recomb)
+    )(encoder_output)
 
 
     l2 = LSTM(
         framelen * 10
         , return_sequences=True
+        , name='generator_LSTM_1'
         , trainable=generator_trainable
     )(l20)
 
@@ -130,6 +131,7 @@ class ModelDef(object):
         Dense(
           framelen
           , activation="relu"
+          , name='generator_Dense_0'
           , trainable=generator_trainable
         )
         , name="main_output"
