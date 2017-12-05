@@ -141,11 +141,25 @@ class ModelDef(object):
     self.model = model
     return model
 
+  # Shared Decoder model, taking Conv2D encoded input, or an attempt at predicted
+  # sequences of the encoded data.
+  #
+  # Returns a single instance of a decoder model. May be called any number of times.
+  #
+  # Arguments:
+  #  framelen: standard frame length for a timestep
+  #  shape: two element tensor, typically (-1, conv_count), where conv_count is the
+  #         width of the input timestep. -1 saves us having to enter the
+  #         frame sequence (sub-batch) length
+  #
+  # Learning can be disabled by setting self.decoder_trainable = False
+  #
+  # Example:
+  #    main_output = self.decoder_model(framelen, (-1, conv_count))(generator_output)
   def decoder_model(self, framelen, shape=(-1)):
 
       if self.decoder_model_memo:
         return self.decoder_model_memo
-      # Decoder
 
       decoder_input = Input(shape=shape, dtype='float32', name="decoder_input")
 
