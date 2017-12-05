@@ -75,14 +75,18 @@ class ModelDef(object):
 
     rs0 = keras.layers.Reshape((short_input_len, conv_count), trainable=encoder_trainable)(conv1)
 
-
-    encoder_output = TimeDistributed(
+    conf = TimeDistributed(
         Dense(
             conv_count
             , activation="relu"
             , trainable=encoder_trainable
         )
-    )(rs0)
+    )
+    encoder_output = conf(rs0)
+
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
 
 
     # Decoder
