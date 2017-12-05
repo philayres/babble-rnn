@@ -19,7 +19,7 @@ class ModelDef(object):
 
   encoder_trainable = True
   decoder_trainable = True
-  generator_trainable = True
+  generator_trainable = False
 
   def __init__(self, utils, config):
     self.utils = utils
@@ -132,7 +132,7 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-    conv1_def = Conv2D(conv_count, (5,13), padding='valid', data_format='channels_last', trainable=encoder_trainable)
+    conv1_def = Conv2D(conv_count, (3,13), padding='valid', data_format='channels_last', trainable=encoder_trainable)
     conv1 = conv1_def(conv0)
 
     conf = conv1_def
