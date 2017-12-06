@@ -174,7 +174,7 @@ class ModelDef(object):
               conv_count,
               kernel_size=(3,13),
               padding='valid',
-              strides=(2,13),
+              strides=(2,14),
               activation='relu',
               data_format="channels_last",
               trainable=self.decoder_trainable
@@ -201,7 +201,7 @@ class ModelDef(object):
     # print(conf.input_shape)
     # print(conf.output_shape)
 
-    conf = Conv2D(framelen,
+    conf = Conv2D(1,
                    kernel_size=2,
                    padding='valid',
                    activation='sigmoid')
