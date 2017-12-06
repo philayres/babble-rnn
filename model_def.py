@@ -36,7 +36,7 @@ class ModelDef(object):
     config = self.config
     overlap_sequence = config.overlap_sequence
     short_input_len = frame_seq_len - overlap_sequence*2
-    in_scale = 2
+    in_scale = 1
     in_count = framelen * in_scale
     conv_count = 65
 
@@ -54,7 +54,7 @@ class ModelDef(object):
 
     # cin = keras.layers.concatenate([main_input, main_input])
     #
-    # cr = TimeDistributed(keras.layers.Reshape((in_count, 1), trainable=encoder_trainable))(cin)
+    cr = TimeDistributed(keras.layers.Reshape((in_count, 1), trainable=encoder_trainable))(main_input)
     #
     # conv0_def = Conv2D(conv_count, (1,14), padding='valid', data_format='channels_last', trainable=encoder_trainable)
     # conv0 = conv0_def(cr)
@@ -65,7 +65,7 @@ class ModelDef(object):
     # print(conf.output_shape)
 
     conv1_def = Conv2D(conv_count, (3,13), padding='valid', data_format='channels_last', trainable=encoder_trainable)
-    conv1 = conv1_def(main_input)
+    conv1 = conv1_def(cr)
 
     conf = conv1_def
     print(conf.get_config())
