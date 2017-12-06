@@ -102,7 +102,7 @@ class ModelDef(object):
     cropped_re  = keras.layers.Reshape((-1, framelen))(cropped)
 
     conf = LSTM(
-        framelen * 50
+        128
         , return_sequences=True
         , name='generator_LSTM_0'
         , trainable=generator_trainable
@@ -114,7 +114,7 @@ class ModelDef(object):
 
 
     l2 = LSTM(
-        framelen * 50
+        128
         , return_sequences=True
         , name='generator_LSTM_1'
         , trainable=generator_trainable

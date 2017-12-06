@@ -15,11 +15,11 @@ class RunConfig(object):
   # gradients are updated after each of these batches
   # some research suggests reducing the size of batches to increase generalisation during learning,
   # although at the expense of slower training
-  # Note: for TimeDensity (and maybe stateful) learning, the fit_batch_size acts more like
+  # Note: for TimeDistributed (and maybe stateful) learning, the fit_batch_size acts more like
   # a counter of the number of complete frame sequences. Therefore if you retain a high number
   # there are very few updates happening (one every frame_seq_len * fit_batch_size)
   # and learning stalls
-  fit_batch_size = 100
+  fit_batch_size = 1
 
   # learn and generate with just a single timestep (True) or
   # use a block (and a TimeDistributed output)
