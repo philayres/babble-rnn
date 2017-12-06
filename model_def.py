@@ -64,7 +64,7 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-    conv1_def = Conv2D(conv_count, (3,13), strides=(3,1), padding='valid', data_format='channels_last', activation='relu', trainable=encoder_trainable)
+    conv1_def = Conv2D(conv_count, (3,13), strides=(2,1), padding='valid', data_format='channels_last', activation='relu', trainable=encoder_trainable)
     conv1 = conv1_def(conv0)
 
     conf = conv1_def
@@ -174,7 +174,7 @@ class ModelDef(object):
               conv_count,
               kernel_size=(3,13),
               padding='valid',
-              strides=(3,13),
+              strides=(2,13),
               activation='relu',
               data_format="channels_last",
               trainable=self.decoder_trainable
@@ -201,8 +201,18 @@ class ModelDef(object):
     # print(conf.input_shape)
     # print(conf.output_shape)
 
+    conf = Conv2D(framelen,
+                   kernel_size=2,
+                   padding='valid',
+                   activation='sigmoid')
+    decoder_mean_squashed = conf(decoder_deconv_0)
+
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
+
     conf  = keras.layers.Reshape((-1, framelen), trainable=self.decoder_trainable)
-    rs0 = conf(decoder_deconv_0)
+    rs0 = conf(decoder_mean_squashed)
 
     print(conf.get_config())
     print(conf.input_shape)
