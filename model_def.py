@@ -1,7 +1,7 @@
 import keras as keras
 from keras.models import Sequential, Model
 from keras.layers import Dense, Activation, Dropout, TimeDistributed, Concatenate, Input
-from keras.layers import GRU, LSTM, Conv2D, Conv1D, Reshape, Flatten, Permute, AveragePooling2D, MaxPooling2D, RepeatVector
+from keras.layers import GRU, LSTM, Conv2D, Conv1D, Reshape, Flatten, Permute, AveragePooling2D, MaxPooling2D, RepeatVector, Conv2DTranspose
 import keras.optimizers as optimizers
 
 from custom_objects import CustomObjects
@@ -36,7 +36,7 @@ class ModelDef(object):
     config = self.config
     overlap_sequence = config.overlap_sequence
     short_input_len = frame_seq_len - overlap_sequence*2
-    in_scale = 1
+    in_scale = 2
     in_count = framelen * in_scale
     conv_count = 65
 
@@ -52,20 +52,20 @@ class ModelDef(object):
     main_input = Input(shape=(frame_seq_len, framelen), dtype='float32', name="main_input")
     # short_input = Input(shape=(short_input_len, framelen), dtype='float32', name="short_input")
 
-    # cin = keras.layers.concatenate([main_input, main_input])
-    #
-    cr = TimeDistributed(keras.layers.Reshape((in_count, 1), trainable=encoder_trainable))(main_input)
-    #
-    # conv0_def = Conv2D(conv_count, (1,14), padding='valid', data_format='channels_last', trainable=encoder_trainable)
-    # conv0 = conv0_def(cr)
-    #
-    # conf = conv0_def
-    # print(conf.get_config())
-    # print(conf.input_shape)
-    # print(conf.output_shape)
+    cin = keras.layers.concatenate([main_input, main_input])
 
-    conv1_def = Conv2D(conv_count, (3,13), padding='valid', data_format='channels_last', trainable=encoder_trainable)
-    conv1 = conv1_def(cr)
+    cr = TimeDistributed(keras.layers.Reshape((in_count, 1), trainable=encoder_trainable))(cin)
+
+    conv0_def = Conv2D(conv_count, (1,14), padding='valid', data_format='channels_last', trainable=encoder_trainable)
+    conv0 = conv0_def(cr)
+
+    conf = conv0_def
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
+
+    conv1_def = Conv2D(conv_count, (3,13), strides=(3,1), padding='valid', data_format='channels_last', trainable=encoder_trainable)
+    conv1 = conv1_def(conv0)
 
     conf = conv1_def
     print(conf.get_config())
@@ -74,7 +74,7 @@ class ModelDef(object):
 
 
 
-    rs0 = keras.layers.Reshape((short_input_len, conv_count), trainable=encoder_trainable)(conv1)
+    rs0 = keras.layers.Reshape((-1, conv_count), trainable=encoder_trainable)(conv1)
 
     conf = TimeDistributed(
         Dense(
@@ -157,29 +157,75 @@ class ModelDef(object):
   # Example:
   #    main_output = self.decoder_model(framelen, (-1, conv_count))(generator_output)
   def decoder_model(self, framelen, shape=(-1)):
-
-      if self.decoder_model_memo:
-        return self.decoder_model_memo
-
-      decoder_input = Input(shape=shape, dtype='float32', name="decoder_input")
-
-      lmid = LSTM(
-          framelen * 3
-          , return_sequences=True
-          , trainable=self.decoder_trainable
-      )(decoder_input)
-
-
-      decoder_output = TimeDistributed(
-          Dense(
-              framelen
-              , activation="relu"
-              , trainable=self.decoder_trainable
-          )
-      )(lmid)
-
-      self.decoder_model_memo = Model(decoder_input, decoder_output)
+    conv_count = shape[1]
+    if self.decoder_model_memo:
       return self.decoder_model_memo
+
+    decoder_input = Input(shape=shape, dtype='float32', name="decoder_input")
+
+    cr = TimeDistributed(
+            keras.layers.Reshape(
+              (conv_count, 1)
+              , trainable=self.decoder_trainable
+            )
+          )(decoder_input)
+
+    conf = Conv2DTranspose(
+              filters,
+              kernel_size=shape[1],
+              padding='same',
+              strides=(3,13),
+              activation='relu',
+              data_format="channels_last",
+              trainable=self.decoder_trainable
+    )
+    decoder_deconv_0 = conf(cr)
+
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
+
+    conf = Conv2DTranspose(
+      filters,
+      kernel_size=shape[1],
+      padding='same',
+      strides=(1,14),
+      activation='relu',
+      data_format="channels_last",
+      trainable=self.decoder_trainable
+    )
+
+    decoder_deconv_1 = conf(decoder_deconv_0)
+
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
+
+    conf  = keras.layers.Reshape((-1, framelen), trainable=self.decoder_trainable)
+    rs0 = conf(decoder_deconv_1)
+
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
+
+
+    lmid = LSTM(
+        framelen * 3
+        , return_sequences=True
+        , trainable=self.decoder_trainable
+    )(rs0)
+
+
+    decoder_output = TimeDistributed(
+        Dense(
+            framelen
+            , activation="relu"
+            , trainable=self.decoder_trainable
+        )
+    )(lmid)
+
+    self.decoder_model_memo = Model(decoder_input, decoder_output)
+    return self.decoder_model_memo
 
 
 

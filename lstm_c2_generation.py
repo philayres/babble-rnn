@@ -92,14 +92,19 @@ for j in range(0, num_frames):
 
 utils.log('actual number of frames:', len(all_frames))
 
+# Check if we are in 'generate' mode.
 if utils.generate_mode():
+  # In generate mode
   num_frame_seqs = seed_seq_len
 else:
+  # In training mode
 
   # Pull the frames into frame sequences (frame_seqs), each of frame_seq_len frames
   # Each frame sequence is a sub-batch of timesteps, handed to the model in one chunk
   for i in range(0, num_frames - 2*frame_seq_len, seq_step):
+    # The next frame starts frame_seq_len from the current index
     i_next = i + frame_seq_len
+    # Store a set of frame sequences
     frame_seqs.append(all_frames[i : i_next])
     if learn_next_step:
         # Pull a single frame following each frame sequence into a corresponding array of next_frames
