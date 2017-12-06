@@ -163,12 +163,12 @@ class ModelDef(object):
 
     decoder_input = Input(shape=shape, dtype='float32', name="decoder_input")
 
-    cr = TimeDistributed(
-            keras.layers.Reshape(
-              (conv_count, 1)
-              , trainable=self.decoder_trainable
-            )
-          )(decoder_input)
+    # cr = TimeDistributed(
+    #         keras.layers.Reshape(
+    #           (conv_count)
+    #           , trainable=self.decoder_trainable
+    #         )
+    #       )(decoder_input)
 
     conf = Conv2DTranspose(
               conv_count,
@@ -179,7 +179,7 @@ class ModelDef(object):
               data_format="channels_last",
               trainable=self.decoder_trainable
     )
-    decoder_deconv_0 = conf(cr)
+    decoder_deconv_0 = conf(decoder_input)
 
     print(conf.get_config())
     print(conf.input_shape)
@@ -187,7 +187,7 @@ class ModelDef(object):
 
     conf = Conv2DTranspose(
       conv_count,
-      kernel_size=shape[1],
+      kernel_size=(1,14),
       padding='valid',
       strides=(1,14),
       activation='relu',
