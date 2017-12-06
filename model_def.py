@@ -189,7 +189,7 @@ class ModelDef(object):
       conv_count,
       kernel_size=(1,14),
       padding='valid',
-      strides=(1,14),
+      strides=(1,2),
       activation='relu',
       data_format="channels_last",
       trainable=self.decoder_trainable
