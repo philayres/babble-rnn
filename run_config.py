@@ -19,14 +19,14 @@ class RunConfig(object):
   # a counter of the number of complete frame sequences. Therefore if you retain a high number
   # there are very few updates happening (one every frame_seq_len * fit_batch_size)
   # and learning stalls
-  fit_batch_size = 1
+  fit_batch_size = 5
 
   # learn and generate with just a single timestep (True) or
   # use a block (and a TimeDistributed output)
   learn_next_step = False
 
   # generate sample data every nth iteration
-  gen_every_nth = 10
+  gen_every_nth = 4
 
   # Generate just the main output (1) or mid output too (2)
   generate_num_outputs = 2
@@ -44,7 +44,7 @@ class RunConfig(object):
   frame_len_ms = 20
 
   # length of frame sequence for learning
-  frame_seq_len = 100
+  frame_seq_len = 20
 
   # overlap the sequence at each end and provide a secondary non-overlapped version as an input
   # Disable by setting to 0
