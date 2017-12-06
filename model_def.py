@@ -78,7 +78,7 @@ class ModelDef(object):
 
     conf = TimeDistributed(
         Dense(
-            conv_count
+            20
             , activation="relu"
             , trainable=encoder_trainable
         )
@@ -92,7 +92,7 @@ class ModelDef(object):
 
 
     # Run the decoder portion of autoencoder
-    mid_output = self.decoder_model(framelen, (-1, conv_count))(encoder_output)
+    mid_output = self.decoder_model(framelen, (-1, 20))(encoder_output)
 
 
 
@@ -102,7 +102,7 @@ class ModelDef(object):
     cropped_re  = keras.layers.Reshape((-1, framelen))(cropped)
 
     conf = LSTM(
-        framelen * 10
+        framelen * 50
         , return_sequences=True
         , name='generator_LSTM_0'
         , trainable=generator_trainable
@@ -114,7 +114,7 @@ class ModelDef(object):
 
 
     l2 = LSTM(
-        framelen * 10
+        framelen * 50
         , return_sequences=True
         , name='generator_LSTM_1'
         , trainable=generator_trainable
