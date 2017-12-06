@@ -185,24 +185,24 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-    conf = Conv2DTranspose(
-      conv_count,
-      kernel_size=(1,14),
-      padding='valid',
-      strides=(1,2),
-      activation='relu',
-      data_format="channels_last",
-      trainable=self.decoder_trainable
-    )
-
-    decoder_deconv_1 = conf(decoder_deconv_0)
-
-    print(conf.get_config())
-    print(conf.input_shape)
-    print(conf.output_shape)
+    # conf = Conv2DTranspose(
+    #   conv_count,
+    #   kernel_size=(1,14),
+    #   padding='valid',
+    #   strides=(1,2),
+    #   activation='relu',
+    #   data_format="channels_last",
+    #   trainable=self.decoder_trainable
+    # )
+    #
+    # decoder_deconv_1 = conf(decoder_deconv_0)
+    #
+    # print(conf.get_config())
+    # print(conf.input_shape)
+    # print(conf.output_shape)
 
     conf  = keras.layers.Reshape((-1, framelen), trainable=self.decoder_trainable)
-    rs0 = conf(decoder_deconv_1)
+    rs0 = conf(decoder_deconv_0)
 
     print(conf.get_config())
     print(conf.input_shape)
