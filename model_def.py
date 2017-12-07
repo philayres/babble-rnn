@@ -229,7 +229,7 @@ class ModelDef(object):
 
     conf = Conv2DTranspose(
       conv_count,
-      kernel_size=(3,15),
+      kernel_size=(3,14),
       padding='valid',
       activation='relu',
       data_format="channels_last",
@@ -243,38 +243,27 @@ class ModelDef(object):
     print(conf.output_shape)
 
     # Return a single filter pulling together the results of all conv_count filters
-    # conf = Conv2D( 1,
-    #                kernel_size=(2,2),
-    #               #  strides=(2,1),
-    #                padding='valid',
-    #                activation='sigmoid',
-    #                name='decoder_conv_squash',
-    #                trainable=decoder_trainable)
-    # decoder_mean_squashed = conf(decoder_deconv_1)
+    conf = Conv2D( 1,
+                   kernel_size=(1,2),
+                  #  strides=(2,1),
+                   padding='valid',
+                   activation='sigmoid',
+                   name='decoder_conv_squash',
+                   trainable=decoder_trainable)
+    res = conf(decoder_deconv_1)
 
-    res = TimeDistributed(
-      Flatten()
-    )(decoder_deconv_1)
 
-    conf = TimeDistributed(
-      Dense(
-        framelen
-        , activation="relu"
-        , trainable=decoder_trainable
-      )
-    )
-    res = conf(res)
 
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
 
-    # conf  = keras.layers.Reshape((-1, framelen), trainable=decoder_trainable)
-    # res = conf(res)
-    #
-    # print(conf.get_config())
-    # print(conf.input_shape)
-    # print(conf.output_shape)
+    conf  = keras.layers.Reshape((-1, framelen), trainable=decoder_trainable)
+    res = conf(res)
+
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
 
     #
     # lmid = LSTM(
