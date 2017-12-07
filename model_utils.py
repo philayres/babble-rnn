@@ -126,6 +126,7 @@ class ModelUtils(object):
       self.csv_logger_fn = self.output_dir + 'training.log'
       self.csv_logger = CSVLogger(self.csv_logger_fn, append=True)
       self.iteration_counter_fn = self.output_dir + "iteration_counter"
+      self.gen_counter_fn = self.output_dir + "gen_counter"
     self.logfile_fn = self.output_dir + "log"
     self.logfile = open(self.logfile_fn, "a", 1)
 
@@ -204,6 +205,9 @@ class ModelUtils(object):
     with open(self.iteration_counter_fn, "w") as f:
       f.write(str(iteration))
 
+  def write_gen_count(self, iteration):    
+    with open(self.gen_counter_fn, "w") as f:
+      f.write(str(iteration))
 
   def read_iteration_count(self):
     res = []

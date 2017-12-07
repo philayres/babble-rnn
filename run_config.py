@@ -26,7 +26,7 @@ class RunConfig(object):
   learn_next_step = False
 
   # generate sample data every nth iteration
-  gen_every_nth = 4
+  gen_every_nth = 10
 
   # Generate just the main output (1) or mid output too (2)
   generate_num_outputs = 2

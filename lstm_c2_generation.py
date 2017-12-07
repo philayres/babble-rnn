@@ -253,6 +253,7 @@ for iteration in range(start_iteration, num_iterations + 1):
 
     utils.log("Generating samples")
     generator.generate(iteration)
+    utils.write_gen_count(iteration)
   else:
     print("not generating samples this iteration")
 
