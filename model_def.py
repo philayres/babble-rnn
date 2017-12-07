@@ -115,7 +115,7 @@ class ModelDef(object):
 
     if self.models.get('encoder_model'):
       return self.models.get('encoder_model')
-
+    framelen = shape[1]
     in_scale = 2
     in_count = framelen * in_scale
     encoder_trainable = self.encoder_trainable
