@@ -57,9 +57,10 @@ class ModelDef(object):
     print(conf.get_input_shape_at(0))
     print(conf.get_output_shape_at(0))
 
+    encoder_output_len = conf.get_output_shape_at(0)[1]
 
     # Run the decoder portion of autoencoder
-    mid_output = self.decoder_model(framelen, (int(frame_seq_len/3), enc_params))(encoder_output)
+    mid_output = self.decoder_model(framelen, (encoder_output_len, enc_params))(encoder_output)
 
     conf = self.decoder_model(framelen)
     print("decoder_model shapes for input / output 0")
@@ -240,7 +241,7 @@ class ModelDef(object):
 
     # Return a single filter pulling together the results of all conv_count filters
     conf = Conv2D( 1,
-                   kernel_size=(1,2),
+                   kernel_size=(2,2),
                    padding='valid',
                    activation='sigmoid',
                    name='decoder_conv_squash',
