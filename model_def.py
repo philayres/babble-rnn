@@ -225,9 +225,10 @@ class ModelDef(object):
     print(conf.output_shape)
 
     conf = Conv2D(1,
-                   kernel_size=2,
+                   kernel_size=(4,2),
                    padding='valid',
                    activation='sigmoid',
+                   name='decoder_conv_squash',
                    trainable=decoder_trainable)
     decoder_mean_squashed = conf(decoder_deconv_1)
 
