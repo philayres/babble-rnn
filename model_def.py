@@ -41,7 +41,7 @@ class ModelDef(object):
     short_input_len = frame_seq_len - overlap_sequence*2
 
     self.conv_count = 64
-    enc_params = 32
+    enc_params = 48
 
 
     generator_trainable = self.generator_trainable
@@ -224,30 +224,30 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-    # conf = Conv2DTranspose(
-    #   conv_count,
-    #   kernel_size=(1,15),
-    #   padding='valid',
-    #   activation='relu',
-    #   data_format="channels_last",
-    #   trainable=decoder_trainable
-    # )
-    #
-    # decoder_deconv_1 = conf(decoder_deconv_0)
-    #
-    # print(conf.get_config())
-    # print(conf.input_shape)
-    # print(conf.output_shape)
+    conf = Conv2DTranspose(
+      conv_count,
+      kernel_size=(1,15),
+      padding='valid',
+      activation='relu',
+      data_format="channels_last",
+      trainable=decoder_trainable
+    )
+
+    decoder_deconv_1 = conf(decoder_deconv_0)
+
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
 
     # Return a single filter pulling together the results of all conv_count filters
     conf = Conv2D( 1,
-                   kernel_size=(1,1),
+                   kernel_size=(2,2),
                   #  strides=(2,1),
                    padding='valid',
                    activation='sigmoid',
                    name='decoder_conv_squash',
                    trainable=decoder_trainable)
-    decoder_mean_squashed = conf(decoder_deconv_0)
+    decoder_mean_squashed = conf(decoder_deconv_1)
 
     print(conf.get_config())
     print(conf.input_shape)
