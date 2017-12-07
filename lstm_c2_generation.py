@@ -229,9 +229,7 @@ for iteration in range(start_iteration, num_iterations + 1):
     yl2 = y2
     utils.log('using full set of frames')
 
-  # if overlap_sequence == 0:
-  #   inX = Xl
-  # else:
+
   inX = [Xl, Xl2]
 
   outy = [yl, yl2]

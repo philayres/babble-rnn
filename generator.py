@@ -111,9 +111,11 @@ class Generator:
 
 
         if self.generate_with_single_timestep:
-            loop_len = generate_len
+          loop_len = generate_len
+          utils.log('generate with single timesteps:', loop_len)
         else:
-            loop_len = int(generate_len /  frame_seq_len)
+          loop_len = int(generate_len /  frame_seq_len)
+          utils.log('generate with frame sequences:', loop_len)
 
         for i in range(loop_len):
           if utils.generate_mode():
@@ -168,7 +170,7 @@ class Generator:
                   seed_frame_seq = next_frame
 
           else:
-            #print('LENGTH:',len(predicted_frame_props),len(predicted_frame_props[i]))
+            # Final loop. No need to setup seed again
             for i in predicted_frame_props:
               # take all the results and append them to the generated array
               generated.append(i)
