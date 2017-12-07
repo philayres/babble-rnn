@@ -39,8 +39,7 @@ class ModelDef(object):
     config = self.config
     overlap_sequence = config.overlap_sequence
     short_input_len = frame_seq_len - overlap_sequence*2
-    in_scale = 2
-    in_count = framelen * in_scale
+
     self.conv_count = 65
     enc_params = 20
 
@@ -111,16 +110,20 @@ class ModelDef(object):
     return model
 
 
-  def encoder_model(self, enc_params, shape=(-1,0), in_count=2):
+  def encoder_model(self, enc_params, shape=(-1,0)):
+
 
     if self.models.get('encoder_model'):
       return self.models.get('encoder_model')
 
+    in_scale = 2
+    in_count = framelen * in_scale
     encoder_trainable = self.encoder_trainable
 
     conv_count = self.conv_count
 
     encoder_input = Input(shape=shape, dtype='float32', name="encoder_input")
+    print("Encoder model input shape:", shape)
 
     cin = keras.layers.concatenate([encoder_input, encoder_input])
 
