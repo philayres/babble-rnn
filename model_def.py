@@ -147,14 +147,14 @@ class ModelDef(object):
 
     cr = TimeDistributed(keras.layers.Reshape((in_count, 1), trainable=encoder_trainable))(cin)
 
-    conf = Conv2D(conv_count, (1,14), padding='valid', data_format='channels_last', activation='relu', trainable=encoder_trainable)
+    conf = Conv2D(conv_count, (3,14), padding='valid', data_format='channels_last', activation='relu', trainable=encoder_trainable)
     conv0 = conf(cr)
 
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
 
-    conf = Conv2D(conv_count, (5,13), strides=(3,1), padding='valid', data_format='channels_last', activation='relu', trainable=encoder_trainable)
+    conf = Conv2D(conv_count, (3,13), strides=(3,1), padding='valid', data_format='channels_last', activation='relu', trainable=encoder_trainable)
     conv1 = conf(conv0)
 
     print(conf.get_config())
@@ -214,7 +214,7 @@ class ModelDef(object):
 
     conf = Conv2DTranspose(
               conv_count,
-              kernel_size=(5,13),
+              kernel_size=(3,13),
               padding='valid',
               # strides=(3,1),
               activation='relu',
@@ -229,7 +229,7 @@ class ModelDef(object):
 
     conf = Conv2DTranspose(
       conv_count,
-      kernel_size=(1,15),
+      kernel_size=(3,15),
       padding='valid',
       activation='relu',
       data_format="channels_last",
