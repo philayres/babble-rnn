@@ -59,7 +59,7 @@ class ModelUtils(object):
     for i, arg in enumerate(sys.argv[1:]):
 
       self.log('arg', 1, arg)
-
+      print('arg', 1, arg)
       if arg[0:2] == "--":
         a = arg.split("=")
         key = a[0][2:]
