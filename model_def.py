@@ -101,8 +101,8 @@ class ModelDef(object):
 
     conf = self.decoder_model(framelen)
     print(conf.get_config())
-    print(conf.input_shape)
-    print(conf.output_shape)
+    print(conf.get_input_shape_at(1))
+    print(conf.get_output_shape_at(1))
 
     model = Model(
         #inputs=[main_input, short_input],
