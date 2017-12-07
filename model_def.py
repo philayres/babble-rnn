@@ -98,15 +98,16 @@ class ModelDef(object):
         )
         , name='generator_TD_Dense_0'
     )
-    generator_output = conf(res)
+    res = generator_output = conf(res)
 
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
 
-    res = self.decoder_model(framelen, (-1, enc_params))(generator_output)
+    # res = self.decoder_model(framelen, (-1, enc_params))(generator_output)
 
-    conf = self.decoder_model(framelen)(res)
+    conf = self.decoder_model(framelen)
+    res = conf(res)
     print("decoder_model shapes for input / output 1")
     print(conf.get_input_shape_at(1))
     print(conf.get_output_shape_at(1))
