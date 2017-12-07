@@ -52,6 +52,11 @@ class ModelDef(object):
     # short_input = Input(shape=(short_input_len, framelen), dtype='float32', name="short_input")
 
     encoder_output = self.encoder_model(enc_params, shape=(frame_seq_len, framelen))(main_input)
+    conf = self.encoder_model(framelen)
+    print("encoder_model shapes for input / output 0")
+    print(conf.get_input_shape_at(0))
+    print(conf.get_output_shape_at(0))
+
 
     # Run the decoder portion of autoencoder
     mid_output = self.decoder_model(framelen, (-1, enc_params))(encoder_output)
