@@ -104,15 +104,15 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-    main_output = self.decoder_model(framelen, (-1, enc_params))(generator_output)
+    res = self.decoder_model(framelen, (-1, enc_params))(generator_output)
 
-    conf = self.decoder_model(framelen)
+    conf = self.decoder_model(framelen)(res)
     print("decoder_model shapes for input / output 1")
     print(conf.get_input_shape_at(1))
     print(conf.get_output_shape_at(1))
 
 
-    main_output = mid_output
+    main_output = res
 
     model = Model(
         #inputs=[main_input, short_input],

@@ -92,7 +92,7 @@ class ModelUtils(object):
       self.output_dir="out/"+str(self.model_tag)+"/"
       self.output_fn="generated/"+str(self.generate_name)
 
-    
+
 
 
     self.config = RunConfig(self)
@@ -263,7 +263,7 @@ class ModelUtils(object):
 
   def signal_handler(self, signal, frame):
 
-    self.log('Interrupt signal caught. Closing gracefully.')
+    self.log('Interrupt signal caught. Closing gracefully. Iteration:', self.iteration)
     self.write_iteration_count(self.iteration)
 
     print("saving .h5 model file")
