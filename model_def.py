@@ -136,7 +136,7 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-    conf = Conv2D(conv_count, (5,13), strides=(4,1), padding='valid', data_format='channels_last', activation='relu', trainable=encoder_trainable)
+    conf = Conv2D(conv_count, (5,13), strides=(3,1), padding='valid', data_format='channels_last', activation='relu', trainable=encoder_trainable)
     conv1 = conf(conv0)
 
     print(conf.get_config())
@@ -198,7 +198,7 @@ class ModelDef(object):
               conv_count,
               kernel_size=(5,13),
               padding='valid',
-              strides=(4,1),
+              strides=(3,1),
               activation='relu',
               data_format="channels_last",
               trainable=decoder_trainable
