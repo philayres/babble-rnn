@@ -118,6 +118,7 @@ class ModelUtils(object):
     if named_args.get('load-weights', None):
       self.load_weights = named_args['load-weights']
       self.log("loading weights from a weights file:", self.load_weights)
+      self.model_filename = 'none'
     else:
       self.log("not loading weights from a weights file")
 
