@@ -44,7 +44,7 @@ class RunConfig(object):
   frame_len_ms = 20
 
   # length of frame sequence for learning
-  frame_seq_len = 21
+  frame_seq_len = 23
 
   # overlap the sequence at each end and provide a secondary non-overlapped version as an input
   # Disable by setting to 0
