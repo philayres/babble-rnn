@@ -243,25 +243,38 @@ class ModelDef(object):
     print(conf.output_shape)
 
     # Return a single filter pulling together the results of all conv_count filters
-    conf = Conv2D( 1,
-                   kernel_size=(2,2),
-                  #  strides=(2,1),
-                   padding='valid',
-                   activation='sigmoid',
-                   name='decoder_conv_squash',
-                   trainable=decoder_trainable)
-    decoder_mean_squashed = conf(decoder_deconv_1)
+    # conf = Conv2D( 1,
+    #                kernel_size=(2,2),
+    #               #  strides=(2,1),
+    #                padding='valid',
+    #                activation='sigmoid',
+    #                name='decoder_conv_squash',
+    #                trainable=decoder_trainable)
+    # decoder_mean_squashed = conf(decoder_deconv_1)
+
+    res = TimeDistributed(
+      Flatten()
+    )()
+
+    conf = TimeDistributed(
+      Dense(
+        framelen
+        , activation="relu"
+        , trainable=decoder_trainable
+      )
+    )
+    res = conf(res)
 
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
 
-    conf  = keras.layers.Reshape((-1, framelen), trainable=decoder_trainable)
-    rs0 = conf(decoder_mean_squashed)
-
-    print(conf.get_config())
-    print(conf.input_shape)
-    print(conf.output_shape)
+    # conf  = keras.layers.Reshape((-1, framelen), trainable=decoder_trainable)
+    # res = conf(res)
+    #
+    # print(conf.get_config())
+    # print(conf.input_shape)
+    # print(conf.output_shape)
 
     #
     # lmid = LSTM(
@@ -277,7 +290,7 @@ class ModelDef(object):
             , activation="relu"
             , trainable=decoder_trainable
         )
-    )(rs0)
+    )(res)
 
     self.models['decoder_model'] = Model(decoder_input, decoder_output)
     return self.models['decoder_model']
@@ -300,7 +313,7 @@ class ModelDef(object):
       mid_loss_prop = 0
       main_loss_prop = 1
 
-
+    self.utils.log("Loss weightings:", main_loss_prop, mid_loss_prop)
 
     self.model.compile(
         loss=[loss, loss], #{'main_output': loss, 'mid_output': loss},
