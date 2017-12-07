@@ -166,7 +166,7 @@ class ModelDef(object):
     conf = TimeDistributed(
         Dense(
             enc_params
-            , activation="softmax"
+            , activation="relu"
             , trainable=encoder_trainable
         )
     )
