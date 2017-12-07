@@ -224,8 +224,9 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-    conf = Conv2D(1,
-                   kernel_size=(4,2),
+    # Return a single filter pulling together the results of all conv_count filters
+    conf = Conv2D( 1,
+                   kernel_size=(2,4),
                    padding='valid',
                    activation='sigmoid',
                    name='decoder_conv_squash',
