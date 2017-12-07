@@ -213,7 +213,7 @@ class ModelDef(object):
               conv_count,
               kernel_size=(5,13),
               padding='valid',
-              strides=(3,1),
+              # strides=(3,1),
               activation='relu',
               data_format="channels_last",
               trainable=decoder_trainable
@@ -224,30 +224,30 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-    conf = Conv2DTranspose(
-      conv_count,
-      kernel_size=(1,15),
-      padding='valid',
-      activation='relu',
-      data_format="channels_last",
-      trainable=decoder_trainable
-    )
-
-    decoder_deconv_1 = conf(decoder_deconv_0)
-
-    print(conf.get_config())
-    print(conf.input_shape)
-    print(conf.output_shape)
+    # conf = Conv2DTranspose(
+    #   conv_count,
+    #   kernel_size=(1,15),
+    #   padding='valid',
+    #   activation='relu',
+    #   data_format="channels_last",
+    #   trainable=decoder_trainable
+    # )
+    #
+    # decoder_deconv_1 = conf(decoder_deconv_0)
+    #
+    # print(conf.get_config())
+    # print(conf.input_shape)
+    # print(conf.output_shape)
 
     # Return a single filter pulling together the results of all conv_count filters
     conf = Conv2D( 1,
                    kernel_size=(3,2),
-                   strides=(2,1),
+                  #  strides=(2,1),
                    padding='valid',
                    activation='sigmoid',
                    name='decoder_conv_squash',
                    trainable=decoder_trainable)
-    decoder_mean_squashed = conf(decoder_deconv_1)
+    decoder_mean_squashed = conf(decoder_deconv_0)
 
     print(conf.get_config())
     print(conf.input_shape)
