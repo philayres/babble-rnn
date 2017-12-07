@@ -73,46 +73,49 @@ class ModelDef(object):
     # cropped = keras.layers.Cropping2D(cropping=((overlap_sequence, 0)), data_format='channels_last')(cr)
     # cropped_re  = keras.layers.Reshape((-1, framelen))(cropped)
 
-    conf = LSTM(
-        128
-        , return_sequences=True
-        , name='generator_LSTM_0'
-        , trainable=generator_trainable
-    )
-    l20 = conf(encoder_output)
-    print(conf.get_config())
-    print(conf.input_shape)
-    print(conf.output_shape)
+    # conf = LSTM(
+    #     128
+    #     , return_sequences=True
+    #     , name='generator_LSTM_0'
+    #     , trainable=generator_trainable
+    # )
+    # l20 = conf(encoder_output)
+    # print(conf.get_config())
+    # print(conf.input_shape)
+    # print(conf.output_shape)
+    #
+    #
+    # l2 = LSTM(
+    #     128
+    #     , return_sequences=True
+    #     , name='generator_LSTM_1'
+    #     , trainable=generator_trainable
+    # )(l20)
+    #
+    #
+    # conf = TimeDistributed(
+    #     Dense(
+    #       enc_params
+    #       , activation="relu"
+    #       , trainable=generator_trainable
+    #     )
+    #     , name='generator_TD_Dense_0'
+    # )
+    # generator_output = conf(l2)
+    #
+    # print(conf.get_config())
+    # print(conf.input_shape)
+    # print(conf.output_shape)
+    #
+    # main_output = self.decoder_model(framelen, (-1, enc_params))(generator_output)
+    #
+    # conf = self.decoder_model(framelen)
+    # print("decoder_model shapes for input / output 1")
+    # print(conf.get_input_shape_at(1))
+    # print(conf.get_output_shape_at(1))
 
 
-    l2 = LSTM(
-        128
-        , return_sequences=True
-        , name='generator_LSTM_1'
-        , trainable=generator_trainable
-    )(l20)
-
-
-    conf = TimeDistributed(
-        Dense(
-          enc_params
-          , activation="relu"
-          , trainable=generator_trainable
-        )
-        , name='generator_TD_Dense_0'
-    )
-    generator_output = conf(l2)
-
-    print(conf.get_config())
-    print(conf.input_shape)
-    print(conf.output_shape)
-
-    main_output = self.decoder_model(framelen, (-1, enc_params))(generator_output)
-
-    conf = self.decoder_model(framelen)
-    print("decoder_model shapes for input / output 1")
-    print(conf.get_input_shape_at(1))
-    print(conf.get_output_shape_at(1))
+    main_output = mid_output
 
     model = Model(
         #inputs=[main_input, short_input],
@@ -260,12 +263,12 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-
-    lmid = LSTM(
-        framelen * 3
-        , return_sequences=True
-        , trainable=decoder_trainable
-    )(rs0)
+    #
+    # lmid = LSTM(
+    #     framelen * 3
+    #     , return_sequences=True
+    #     , trainable=decoder_trainable
+    # )(rs0)
 
 
     decoder_output = TimeDistributed(
@@ -274,7 +277,7 @@ class ModelDef(object):
             , activation="relu"
             , trainable=decoder_trainable
         )
-    )(lmid)
+    )(rs0)
 
     self.models['decoder_model'] = Model(decoder_input, decoder_output)
     return self.models['decoder_model']

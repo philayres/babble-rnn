@@ -12,7 +12,7 @@ class Generator:
   generate_len = None
   framelen = None
   num_frames = None
-  seed_start_index = 0
+  seed_start_index = 60
   frame_len_ms = None
 
   def __init__(self, utils, all_frames, seed_seq_len, generate_len, generate_with_single_timestep):
