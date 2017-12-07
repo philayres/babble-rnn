@@ -157,13 +157,12 @@ class ModelDef(object):
     print(conf.output_shape)
 
 
-    conf = TimeDistributed(
-        LSTM(
+    conf = LSTM(
             enc_params * 3
             , return_sequences=True
             , trainable=encoder_trainable
         )
-    )
+
     res = conf(res)
     print(conf.get_config())
     print(conf.input_shape)
@@ -227,13 +226,12 @@ class ModelDef(object):
     print(conf.output_shape)
 
 
-    conf = TimeDistributed(
-        LSTM(
+    conf = LSTM(
             framelen * 3
             , return_sequences=True
             , trainable=decoder_trainable
         )
-    )
+
     res = conf(res)
     print(conf.get_config())
     print(conf.input_shape)
