@@ -58,7 +58,7 @@ class ModelUtils(object):
     self.basic_args = basic_args
 
     print('arguments:', sys.argv)
-    exit()
+
     for i, arg in enumerate(sys.argv[1:]):
 
       self.log('arg', i, arg)
@@ -92,7 +92,7 @@ class ModelUtils(object):
       self.output_dir="out/"+str(self.model_tag)+"/"
       self.output_fn="generated/"+str(self.generate_name)
 
-    exit()
+    
 
 
     self.config = RunConfig(self)
