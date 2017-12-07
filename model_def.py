@@ -41,7 +41,7 @@ class ModelDef(object):
     short_input_len = frame_seq_len - overlap_sequence*2
 
     self.conv_count = 64
-    enc_params = 48
+    enc_params = 8
 
 
     generator_trainable = self.generator_trainable
@@ -140,28 +140,35 @@ class ModelDef(object):
 
     conv_count = self.conv_count
 
-    encoder_input = Input(shape=shape, dtype='float32', name="encoder_input")
+    res = encoder_input = Input(shape=shape, dtype='float32', name="encoder_input")
     print("Encoder model input shape:", shape)
 
-    cin = keras.layers.concatenate([encoder_input, encoder_input])
 
-    cr = TimeDistributed(keras.layers.Reshape((in_count, 1), trainable=encoder_trainable))(cin)
-
-    conf = Conv2D(conv_count, (3,14), padding='valid', data_format='channels_last', activation='relu', trainable=encoder_trainable)
-    conv0 = conf(cr)
-
+    conf = TimeDistributed(
+        Dense(
+            framelen
+            , activation="relu"
+            , trainable=encoder_trainable
+        )
+    )
+    res = conf(res)
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
 
-    conf = Conv2D(conv_count, (3,13), strides=(3,1), padding='valid', data_format='channels_last', activation='relu', trainable=encoder_trainable)
-    conv1 = conf(conv0)
 
+    conf = TimeDistributed(
+        LSTM(
+            enc_params * 3
+            , return_sequences=True
+            , trainable=encoder_trainable
+        )
+    )
+    res = conf(res)
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
 
-    rs0 = keras.layers.Reshape((-1, conv_count), trainable=encoder_trainable)(conv1)
 
     conf = TimeDistributed(
         Dense(
@@ -170,11 +177,13 @@ class ModelDef(object):
             , trainable=encoder_trainable
         )
     )
-    encoder_output = conf(rs0)
-
+    res = conf(res)
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
+
+
+    encoder_output = res
 
     self.models['encoder_model'] = Model(encoder_input, encoder_output)
     return self.models['encoder_model']
@@ -200,86 +209,49 @@ class ModelDef(object):
       return self.models.get('decoder_model')
 
     decoder_trainable = self.decoder_trainable
-
+    enc_params = shape[1]
     conv_count = self.conv_count
 
-    decoder_input = Input(shape=shape, dtype='float32', name="decoder_input")
+    res = decoder_input = Input(shape=shape, dtype='float32', name="decoder_input")
 
-    cr = TimeDistributed(
-            keras.layers.Reshape(
-              (1, shape[1])
-              , trainable=self.decoder_trainable
-            )
-          )(decoder_input)
-
-    conf = Conv2DTranspose(
-              conv_count,
-              kernel_size=(3,13),
-              padding='valid',
-              strides=(3,1),
-              activation='relu',
-              data_format="channels_last",
-              trainable=decoder_trainable
+    conf = TimeDistributed(
+        Dense(
+            enc_params
+            , activation="relu"
+            , trainable=decoder_trainable
+        )
     )
-    decoder_deconv_0 = conf(cr)
-
-    print(conf.get_config())
-    print(conf.input_shape)
-    print(conf.output_shape)
-
-    conf = Conv2DTranspose(
-      conv_count,
-      kernel_size=(3,14),
-      padding='valid',
-      activation='relu',
-      data_format="channels_last",
-      trainable=decoder_trainable
-    )
-
-    decoder_deconv_1 = conf(decoder_deconv_0)
-
-    print(conf.get_config())
-    print(conf.input_shape)
-    print(conf.output_shape)
-
-    # Return a single filter pulling together the results of all conv_count filters
-    conf = Conv2D( 1,
-                   kernel_size=(3,14),
-                  #  strides=(2,1),
-                   padding='valid',
-                   activation='sigmoid',
-                   name='decoder_conv_squash',
-                   trainable=decoder_trainable)
-    res = conf(decoder_deconv_1)
-
-
-
-    print(conf.get_config())
-    print(conf.input_shape)
-    print(conf.output_shape)
-
-    conf  = keras.layers.Reshape((-1, framelen), trainable=decoder_trainable)
     res = conf(res)
-
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
 
-    #
-    # lmid = LSTM(
-    #     framelen * 3
-    #     , return_sequences=True
-    #     , trainable=decoder_trainable
-    # )(rs0)
+
+    conf = TimeDistributed(
+        LSTM(
+            framelen * 3
+            , return_sequences=True
+            , trainable=decoder_trainable
+        )
+    )
+    res = conf(res)
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
 
 
-    decoder_output = TimeDistributed(
+
+
+    res = TimeDistributed(
         Dense(
             framelen
             , activation="relu"
             , trainable=decoder_trainable
         )
     )(res)
+
+
+    decoder_output = res
 
     self.models['decoder_model'] = Model(decoder_input, decoder_output)
     return self.models['decoder_model']
