@@ -69,9 +69,6 @@ class ModelDef(object):
 
 
     # Generator
-    # cr = TimeDistributed(keras.layers.Reshape((framelen, 1)))(main_input)
-    # cropped = keras.layers.Cropping2D(cropping=((overlap_sequence, 0)), data_format='channels_last')(cr)
-    # cropped_re  = keras.layers.Reshape((-1, framelen))(cropped)
 
     # conf = LSTM(
     #     128
@@ -79,18 +76,18 @@ class ModelDef(object):
     #     , name='generator_LSTM_0'
     #     , trainable=generator_trainable
     # )
-    # l20 = conf(encoder_output)
+    # res = conf(encoder_output)
     # print(conf.get_config())
     # print(conf.input_shape)
     # print(conf.output_shape)
     #
     #
-    # l2 = LSTM(
+    # res = LSTM(
     #     128
     #     , return_sequences=True
     #     , name='generator_LSTM_1'
     #     , trainable=generator_trainable
-    # )(l20)
+    # )(res)
     #
     #
     # conf = TimeDistributed(
@@ -101,7 +98,7 @@ class ModelDef(object):
     #     )
     #     , name='generator_TD_Dense_0'
     # )
-    # generator_output = conf(l2)
+    # generator_output = conf(res)
     #
     # print(conf.get_config())
     # print(conf.input_shape)
