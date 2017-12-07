@@ -56,6 +56,10 @@ class ModelDef(object):
     # Run the decoder portion of autoencoder
     mid_output = self.decoder_model(framelen, (-1, enc_params))(encoder_output)
 
+    conf = self.decoder_model(framelen)
+    print("decoder_model shapes for input / output 0")
+    print(conf.get_input_shape_at(0))
+    print(conf.get_output_shape_at(0))
 
 
     # Generator
@@ -100,7 +104,7 @@ class ModelDef(object):
     main_output = self.decoder_model(framelen, (-1, enc_params))(generator_output)
 
     conf = self.decoder_model(framelen)
-    print(conf.get_config())
+    print("decoder_model shapes for input / output 1")
     print(conf.get_input_shape_at(1))
     print(conf.get_output_shape_at(1))
 
