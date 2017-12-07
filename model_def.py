@@ -211,7 +211,7 @@ class ModelDef(object):
 
     conf = Conv2DTranspose(
       conv_count,
-      kernel_size=(1,14),
+      kernel_size=(1,15),
       padding='valid',
       activation='relu',
       data_format="channels_last",
