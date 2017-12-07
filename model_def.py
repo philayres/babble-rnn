@@ -99,6 +99,10 @@ class ModelDef(object):
 
     main_output = self.decoder_model(framelen, (-1, enc_params))(generator_output)
 
+    conf = self.decoder_model(framelen)
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
 
     model = Model(
         #inputs=[main_input, short_input],
@@ -114,6 +118,7 @@ class ModelDef(object):
 
 
     if self.models.get('encoder_model'):
+      print("Reusing encoder model")
       return self.models.get('encoder_model')
     framelen = shape[1]
     in_scale = 2
