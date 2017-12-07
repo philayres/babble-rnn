@@ -28,6 +28,9 @@ class ModelDef(object):
     self.models = {}
     self.layers = []
 
+    self.utils.log("encoder_trainable:", self.encoder_trainable)
+    self.utils.log("decoder_trainable:", self.decoder_trainable)
+    self.utils.log("generator_trainable:", self.generator_trainable)
 
 
 
@@ -41,12 +44,8 @@ class ModelDef(object):
     self.conv_count = 65
     enc_params = 20
 
-    encoder_trainable = self.encoder_trainable
-    decoder_trainable = self.decoder_trainable
+
     generator_trainable = self.generator_trainable
-    self.utils.log("encoder_trainable:", self.encoder_trainable)
-    self.utils.log("decoder_trainable:", self.decoder_trainable)
-    self.utils.log("generator_trainable:", self.generator_trainable)
 
     print("short_input_len", short_input_len)
 
@@ -117,6 +116,8 @@ class ModelDef(object):
     if self.models.get('encoder_model'):
       return self.models.get('encoder_model')
 
+    encoder_trainable = self.encoder_trainable
+
     conv_count = self.conv_count
 
     encoder_input = Input(shape=shape, dtype='float32', name="encoder_input")
@@ -177,6 +178,8 @@ class ModelDef(object):
     if self.models.get('decoder_model'):
       return self.models.get('decoder_model')
 
+    decoder_trainable = self.decoder_trainable
+
     conv_count = self.conv_count
 
     decoder_input = Input(shape=shape, dtype='float32', name="decoder_input")
@@ -195,7 +198,7 @@ class ModelDef(object):
               strides=(4,1),
               activation='relu',
               data_format="channels_last",
-              trainable=self.decoder_trainable
+              trainable=decoder_trainable
     )
     decoder_deconv_0 = conf(cr)
 
@@ -209,7 +212,7 @@ class ModelDef(object):
       padding='valid',
       activation='relu',
       data_format="channels_last",
-      trainable=self.decoder_trainable
+      trainable=decoder_trainable
     )
 
     decoder_deconv_1 = conf(decoder_deconv_0)
@@ -221,14 +224,15 @@ class ModelDef(object):
     conf = Conv2D(1,
                    kernel_size=2,
                    padding='valid',
-                   activation='sigmoid')
+                   activation='sigmoid',
+                   trainable=decoder_trainable)
     decoder_mean_squashed = conf(decoder_deconv_1)
 
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
 
-    conf  = keras.layers.Reshape((-1, framelen), trainable=self.decoder_trainable)
+    conf  = keras.layers.Reshape((-1, framelen), trainable=decoder_trainable)
     rs0 = conf(decoder_mean_squashed)
 
     print(conf.get_config())
@@ -239,7 +243,7 @@ class ModelDef(object):
     lmid = LSTM(
         framelen * 3
         , return_sequences=True
-        , trainable=self.decoder_trainable
+        , trainable=decoder_trainable
     )(rs0)
 
 
@@ -247,7 +251,7 @@ class ModelDef(object):
         Dense(
             framelen
             , activation="relu"
-            , trainable=self.decoder_trainable
+            , trainable=decoder_trainable
         )
     )(lmid)
 
