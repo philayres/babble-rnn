@@ -254,7 +254,7 @@ class ModelDef(object):
 
     res = TimeDistributed(
       Flatten()
-    )()
+    )(decoder_deconv_1)
 
     conf = TimeDistributed(
       Dense(
