@@ -56,9 +56,12 @@ class ModelUtils(object):
 
     self.named_args = named_args
     self.basic_args = basic_args
+
+    print('arguments:', sys.argv)
+    exit()
     for i, arg in enumerate(sys.argv[1:]):
 
-      self.log('arg', 1, arg)
+      self.log('arg', i, arg)
       print('arg', 1, arg)
       if arg[0:2] == "--":
         a = arg.split("=")
