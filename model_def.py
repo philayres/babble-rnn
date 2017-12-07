@@ -40,7 +40,7 @@ class ModelDef(object):
     overlap_sequence = config.overlap_sequence
     short_input_len = frame_seq_len - overlap_sequence*2
 
-    self.conv_count = 65
+    self.conv_count = 48
     enc_params = 20
 
 
