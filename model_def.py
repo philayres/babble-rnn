@@ -17,9 +17,9 @@ class ModelDef(object):
 
   stateful = False
 
-  encoder_trainable = True
-  decoder_trainable = True
-  generator_trainable = False
+  encoder_trainable = False
+  decoder_trainable = False
+  generator_trainable = True
   decoder_model_memo = None
 
   def __init__(self, utils, config):
@@ -70,46 +70,46 @@ class ModelDef(object):
 
     # Generator
 
-    # conf = LSTM(
-    #     128
-    #     , return_sequences=True
-    #     , name='generator_LSTM_0'
-    #     , trainable=generator_trainable
-    # )
-    # res = conf(encoder_output)
-    # print(conf.get_config())
-    # print(conf.input_shape)
-    # print(conf.output_shape)
-    #
-    #
-    # res = LSTM(
-    #     128
-    #     , return_sequences=True
-    #     , name='generator_LSTM_1'
-    #     , trainable=generator_trainable
-    # )(res)
-    #
-    #
-    # conf = TimeDistributed(
-    #     Dense(
-    #       enc_params
-    #       , activation="relu"
-    #       , trainable=generator_trainable
-    #     )
-    #     , name='generator_TD_Dense_0'
-    # )
-    # generator_output = conf(res)
-    #
-    # print(conf.get_config())
-    # print(conf.input_shape)
-    # print(conf.output_shape)
-    #
-    # main_output = self.decoder_model(framelen, (-1, enc_params))(generator_output)
-    #
-    # conf = self.decoder_model(framelen)
-    # print("decoder_model shapes for input / output 1")
-    # print(conf.get_input_shape_at(1))
-    # print(conf.get_output_shape_at(1))
+    conf = LSTM(
+        128
+        , return_sequences=True
+        , name='generator_LSTM_0'
+        , trainable=generator_trainable
+    )
+    res = conf(encoder_output)
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
+
+
+    res = LSTM(
+        128
+        , return_sequences=True
+        , name='generator_LSTM_1'
+        , trainable=generator_trainable
+    )(res)
+
+
+    conf = TimeDistributed(
+        Dense(
+          enc_params
+          , activation="relu"
+          , trainable=generator_trainable
+        )
+        , name='generator_TD_Dense_0'
+    )
+    generator_output = conf(res)
+
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
+
+    main_output = self.decoder_model(framelen, (-1, enc_params))(generator_output)
+
+    conf = self.decoder_model(framelen)
+    print("decoder_model shapes for input / output 1")
+    print(conf.get_input_shape_at(1))
+    print(conf.get_output_shape_at(1))
 
 
     main_output = mid_output
