@@ -244,7 +244,7 @@ class ModelDef(object):
 
     # Return a single filter pulling together the results of all conv_count filters
     conf = Conv2D( 1,
-                   kernel_size=(1,2),
+                   kernel_size=(3,13),
                   #  strides=(2,1),
                    padding='valid',
                    activation='sigmoid',
