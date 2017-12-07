@@ -58,6 +58,7 @@ class ModelUtils(object):
     self.basic_args = basic_args
     for i, arg in enumerate(sys.argv[1:]):
 
+      self.log('arg', 1, arg)
 
       if arg[0:2] == "--":
         a = arg.split("=")
@@ -88,6 +89,7 @@ class ModelUtils(object):
       self.output_dir="out/"+str(self.model_tag)+"/"
       self.output_fn="generated/"+str(self.generate_name)
 
+    exit()
 
 
     self.config = RunConfig(self)
@@ -205,7 +207,7 @@ class ModelUtils(object):
     with open(self.iteration_counter_fn, "w") as f:
       f.write(str(iteration))
 
-  def write_gen_count(self, iteration):    
+  def write_gen_count(self, iteration):
     with open(self.gen_counter_fn, "w") as f:
       f.write(str(iteration))
 
