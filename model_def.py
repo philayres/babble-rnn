@@ -59,7 +59,7 @@ class ModelDef(object):
 
 
     # Run the decoder portion of autoencoder
-    mid_output = self.decoder_model(framelen, (-1, enc_params))(encoder_output)
+    mid_output = self.decoder_model(framelen, (frame_seq_len/3, enc_params))(encoder_output)
 
     conf = self.decoder_model(framelen)
     print("decoder_model shapes for input / output 0")
