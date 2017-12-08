@@ -44,11 +44,11 @@ class RunConfig(object):
   frame_len_ms = 20
 
   # length of frame sequence for learning
-  frame_seq_len = 20
+  frame_seq_len = 100
 
   # overlap the sequence at each end and provide a secondary non-overlapped version as an input
   # Disable by setting to 0
-  overlap_sequence = 0
+  overlap_sequence = 1
 
   # the seed sequence length is the number of frames the generator expects to be input
   # as the seed. This must match the frame_seq_len currently
