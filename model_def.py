@@ -17,9 +17,9 @@ class ModelDef(object):
 
   stateful = False
 
-  encoder_trainable = True
-  decoder_trainable = True
-  generator_trainable = False
+  encoder_trainable = False
+  decoder_trainable = False
+  generator_trainable = True
   decoder_model_memo = None
 
   def __init__(self, utils, config):
