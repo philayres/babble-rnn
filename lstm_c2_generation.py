@@ -233,7 +233,7 @@ for iteration in range(start_iteration, num_iterations + 1):
   inX = [Xl, Xl2]
 
   # Generate a mid layer encoded 'next step' output
-  generator.input_frame_sequences = (Xl + Xl[0])[1:]
+  generator.input_frame_sequences = next_frame_seqs
   out_mid = generator.generate_full_output(2)
 
   outy = [yl, yl2, out_mid]
