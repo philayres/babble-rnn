@@ -232,9 +232,18 @@ for iteration in range(start_iteration, num_iterations + 1):
 
   inX = [Xl, Xl2]
 
-  # Generate a mid layer encoded 'next step' output
-  generator.input_frame_sequences = next_frame_seqs
-  out_mid = generator.generate_full_output(2)
+  split_times = 10
+  split_num = 49440 / split_times
+  for s in range(split_times):
+    # Generate a mid layer encoded 'next step' output
+    if split_num == split_times - 1:
+      generator.input_frame_sequences = next_frame_seqs[s * split_num :]
+    else:
+      generator.input_frame_sequences = next_frame_seqs[s * split_num : s * (split_num+1)]
+    if s == 0:
+      out_mid = generator.generate_full_output(2)
+    else:
+      out_mid += generator.generate_full_output(2)
 
   outy = [yl, yl2, out_mid]
 
