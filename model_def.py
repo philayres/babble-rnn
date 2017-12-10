@@ -331,7 +331,7 @@ class ModelDef(object):
 
   def fit(self, input_seq, output_seq, batch_size=None, epochs=1, shuffle=False, callbacks=None):
       inputs = input_seq[0]
-
+      outputs = output_seq
       #outputs = {'main_output': output_seq[0], 'mid_output': output_seq[1]}
       s = input_seq[0].shape
       dummy_encoded_output = np.zeros((s[0], 24, 64), dtype=np.float32)
