@@ -116,14 +116,10 @@ class ModelDef(object):
 
     main_output = res
 
-    # model = Model(
-    #     #inputs=[main_input, short_input],
-    #     inputs=[main_input],
-    #     outputs=[main_output, mid_output]
-    # )
     model = Model(
+        #inputs=[main_input, short_input],
         inputs=[main_input],
-        outputs=[encoder_output, mid_output]
+        outputs=[main_output, mid_output, encoder_output]
     )
 
     self.model = model
@@ -327,13 +323,9 @@ class ModelDef(object):
 
     self.utils.log("Loss weightings:", main_loss_prop, mid_loss_prop)
 
-    # self.model.compile(
-    #     loss=[loss, loss],
-    #     loss_weights=[main_loss_prop, mid_loss_prop],
-    #     optimizer=self.get_optimizer_from_config())
     self.model.compile(
-        loss=[loss, loss],
-        loss_weights=[main_loss_prop, mid_loss_prop],
+        loss=[loss, loss, 'mean_absolute_error'], 
+        loss_weights=[main_loss_prop, mid_loss_prop, 0],#{'main_output': main_loss_prop, 'mid_output': mid_loss_prop},
         optimizer=self.get_optimizer_from_config())
     self.utils.log_model_summary()
 
@@ -343,10 +335,10 @@ class ModelDef(object):
       #outputs = {'main_output': output_seq[0], 'mid_output': output_seq[1]}
       s = output_seq[0].shape
       dummy_encoded_output = np.zeros((s[0], 24, 64), dtype=np.float32)
-      outputs[0] =  dummy_encoded_output
+      outputs.append( dummy_encoded_output)
 
       print("X shape:", inputs.shape)
-      print("y shape:", outputs[0].shape, outputs[1].shape)
+      print("y shape:", outputs[0].shape, outputs[1].shape, outputs[2].shape)
 
       self.model.fit(inputs, outputs, batch_size=batch_size, epochs=epochs, shuffle=shuffle,
        callbacks=callbacks
