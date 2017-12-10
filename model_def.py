@@ -323,8 +323,8 @@ class ModelDef(object):
     self.utils.log("Loss weightings:", main_loss_prop, mid_loss_prop)
 
     self.model.compile(
-        loss=[loss, loss], #{'main_output': loss, 'mid_output': loss},
-        loss_weights=[main_loss_prop, mid_loss_prop],#{'main_output': main_loss_prop, 'mid_output': mid_loss_prop},
+        loss=[loss, loss, loss], #{'main_output': loss, 'mid_output': loss},
+        loss_weights=[main_loss_prop, mid_loss_prop, 0],#{'main_output': main_loss_prop, 'mid_output': mid_loss_prop},
         optimizer=self.get_optimizer_from_config())
     self.utils.log_model_summary()
 
