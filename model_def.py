@@ -328,7 +328,7 @@ class ModelDef(object):
 
     self.model.compile(
         loss=[loss, loss, 'mean_squared_error'],
-        loss_weights=[main_loss_prop, mid_loss_prop, encoded_loss_prop],
+        loss_weights=[main_loss_prop, mid_loss_prop, generator_loss_prop],
         optimizer=self.get_optimizer_from_config())
     self.utils.log_model_summary()
 
