@@ -338,7 +338,8 @@ class ModelDef(object):
       outputs.append( dummy_encoded_output)
 
       print("X shape:", inputs.shape)
-      print("y shape:", outputs[0].shape, outputs[1].shape, outputs[2].shape)
+      # print("y shape:", outputs[0].shape, outputs[1].shape, outputs[2].shape)
+      outputs[2] = None
 
       self.model.fit(inputs, outputs, batch_size=batch_size, epochs=epochs, shuffle=shuffle,
        callbacks=callbacks
