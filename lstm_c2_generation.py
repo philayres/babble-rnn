@@ -243,7 +243,7 @@ for iteration in range(start_iteration, num_iterations + 1):
     if s == 0:
       out_mid = generator.generate_full_output(2)
     else:
-      out_mid = np.concatenate(generator.generate_full_output(2))
+      out_mid = np.concatenate(out_mid, generator.generate_full_output(2))
 
   outy = [yl, yl2, out_mid]
 
