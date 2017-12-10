@@ -232,18 +232,17 @@ for iteration in range(start_iteration, num_iterations + 1):
 
   inX = [Xl, Xl2]
 
+  # Generate a mid layer encoded 'next step' output
   split_times = 10
   split_seq_len = num_frame_seqs / split_times
   out_mid = np.zeros((num_frame_seqs, 24, 64), dtype=np.float32)
+  gblocks = []
   for s in range(split_times):
-    # Generate a mid layer encoded 'next step' output
     generator.input_frame_sequences = next_frame_seqs[int(s * split_seq_len) : int((s+1) * split_seq_len)]
+    gblocks[s] = generator.generate_full_output(2)
 
-    gblock = generator.generate_full_output(2)
-    for i, g in enumerate(gblock):
-      out_mid[int(s * split_seq_len) + i] = g
+  np.concatenate(gblocks)
 
-    print("Split:", int(s * split_seq_len) , ':', int(s * split_seq_len + i))
 
   outy = [yl, yl2, out_mid]
 
