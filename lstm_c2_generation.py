@@ -233,17 +233,17 @@ for iteration in range(start_iteration, num_iterations + 1):
   inX = [Xl, Xl2]
 
   split_times = 10
-  split_num = 49440 / split_times
+  split_seq_len = num_frame_seqs / split_times
+  out_mid = np.zeros((num_frame_seqs, 24, 64), dtype=np.float32)
   for s in range(split_times):
     # Generate a mid layer encoded 'next step' output
-    if split_num == split_times - 1:
-      generator.input_frame_sequences = next_frame_seqs[int(s * split_num) : ]
-    else:
-      generator.input_frame_sequences = next_frame_seqs[int(s * split_num) : int((s+1) * split_num)]
-    if s == 0:
-      out_mid = generator.generate_full_output(2)
-    else:
-      out_mid = np.concatenate(out_mid, generator.generate_full_output(2))
+    generator.input_frame_sequences = next_frame_seqs[int(s * split_seq_len) : int((s+1) * split_seq_len)]
+
+    gblock = generator.generate_full_output(2)
+    for i, g in enumerate(gblock):
+      out_mid[int(s * split_seq_len) + i] = g
+
+    print("Split:", int(s * split_seq_len) , ':', int(s * split_seq_len + i))
 
   outy = [yl, yl2, out_mid]
 
