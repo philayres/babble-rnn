@@ -148,8 +148,9 @@ class Generator:
           wf = open('workfile.txt', 'w')
           for r in all_predicted_frame_props[2]:
             for s in r:
-              wf.write(",".join(s))
-            wf.write("\n")
+              sstr = (str(s) for sn in s)
+              wf.write(",".join(sstr))
+              wf.write("\n")
 
           predicted_frame_props = all_predicted_frame_props[outi]
 
