@@ -144,7 +144,9 @@ class Generator:
           if utils.generate_mode() : utils.log("predicting",i)
           # run the prediction for the next frame, getting the result
           # from the specified output, outi
-          predicted_frame_props = model_def.model.predict_on_batch(inx)[outi]
+          all_predicted_frame_props = model_def.model.predict_on_batch(inx)
+          print(all_predicted_frame_props[2])
+          predicted_frame_props = all_predicted_frame_props[outi]
 
           if loop_len > 0:
             # predicted_frame_props = model_def.model.predict(x,
