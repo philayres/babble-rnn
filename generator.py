@@ -145,7 +145,12 @@ class Generator:
           # run the prediction for the next frame, getting the result
           # from the specified output, outi
           all_predicted_frame_props = model_def.model.predict_on_batch(inx)
-          print(all_predicted_frame_props[2])
+          wf = open('workfile.txt', 'w')
+          for r in all_predicted_frame_props[2]:
+            for s in r:
+              wf.write(s)
+            wf.write("\n")
+            
           predicted_frame_props = all_predicted_frame_props[outi]
 
           if loop_len > 0:
