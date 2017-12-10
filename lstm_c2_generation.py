@@ -231,10 +231,10 @@ for iteration in range(start_iteration, num_iterations + 1):
 
 
   inX = [Xl, Xl2]
-  generator.input_frame_sequences = Xl
 
-  if iteration == 0:
-    out_mid = generator.generate_full_output(2)
+  # Generate a mid layer encoded 'next step' output
+  generator.input_frame_sequences = Xl.append(Xl[0])[1:]
+  out_mid = generator.generate_full_output(2)
 
   outy = [yl, yl2, out_mid]
 

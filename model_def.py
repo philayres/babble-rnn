@@ -20,8 +20,8 @@ class ModelDef(object):
 
   encoder_trainable = True
   decoder_trainable = True
-  generator_trainable = False
-  decoder_model_memo = None
+  generator_trainable = True
+
 
   def __init__(self, utils, config):
     self.utils = utils
@@ -119,7 +119,7 @@ class ModelDef(object):
     model = Model(
         #inputs=[main_input, short_input],
         inputs=[main_input],
-        outputs=[main_output, mid_output, encoder_output]
+        outputs=[main_output, mid_output, generator_output]
     )
 
     self.model = model
@@ -311,28 +311,31 @@ class ModelDef(object):
     loss = CustomObjects.codec2_param_error_td
     # other loss options: CustomObjects.codec2_param_mean_square_error; 'mean_absolute_error'; 'cosine_proximity'
 
-    main_loss_prop = 0.5
-    mid_loss_prop = 0.5
+    main_loss_prop = 0.4
+    mid_loss_prop = 0.2
+    generator_loss_prop = 0.4
 
-    if not self.generator_trainable and self.decoder_trainable:
+    if self.decoder_trainable and not self.generator_trainable:
       main_loss_prop = 0
       mid_loss_prop = 1
+      generator_loss_prop = 0
     elif not self.decoder_trainable and self.generator_trainable:
       mid_loss_prop = 0
-      main_loss_prop = 1
+      generator_loss_prop = 0.5
+      main_loss_prop = 0.5
 
-    self.utils.log("Loss weightings:", main_loss_prop, mid_loss_prop)
+    self.utils.log("Loss weightings:", main_loss_prop, mid_loss_prop, generator_loss_prop)
 
     self.model.compile(
         loss=[loss, loss, 'mean_absolute_error'],
-        loss_weights=[main_loss_prop, mid_loss_prop, 0],#{'main_output': main_loss_prop, 'mid_output': mid_loss_prop},
+        loss_weights=[main_loss_prop, mid_loss_prop, encoded_loss_prop],
         optimizer=self.get_optimizer_from_config())
     self.utils.log_model_summary()
 
   def fit(self, input_seq, output_seq, batch_size=None, epochs=1, shuffle=False, callbacks=None):
       inputs = input_seq[0]
       outputs = output_seq
-      
+
       # s = output_seq[0].shape
       # dummy_encoded_output = np.zeros((s[0], 24, 64), dtype=np.float32)
       # outputs.append( dummy_encoded_output)
