@@ -311,9 +311,9 @@ class ModelDef(object):
     loss = CustomObjects.codec2_param_error_td
     # other loss options: CustomObjects.codec2_param_mean_square_error; 'mean_absolute_error'; 'cosine_proximity'
 
-    main_loss_prop = 0.3
-    mid_loss_prop = 0.1
-    generator_loss_prop = 0.6
+    main_loss_prop = 0.2
+    mid_loss_prop = 0.4
+    generator_loss_prop = 0.4
 
     if self.decoder_trainable and not self.generator_trainable:
       main_loss_prop = 0

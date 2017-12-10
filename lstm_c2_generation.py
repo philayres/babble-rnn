@@ -232,8 +232,12 @@ for iteration in range(start_iteration, num_iterations + 1):
 
   inX = [Xl, Xl2]
 
+  utils.log('generating encoded output')
   # Generate a mid layer encoded 'next step' output
-  split_times = 10
+  if num_frame_seqs > 5000:
+    split_times = 10
+  else:
+    split_times = 1
   split_seq_len = num_frame_seqs / split_times
   gblocks = []
   for s in range(split_times):

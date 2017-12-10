@@ -75,9 +75,9 @@ class Generator:
     utils = self.utils
     model_def = utils.model_def
 
-    utils.log("Generating full output for output index:", output_index)
+    print("Generating full output for output index:", output_index)
     self.generated_output = model_def.model.predict(self.input_frame_sequences, batch_size=len(self.input_frame_sequences))[output_index]
-    utils.log("Generated full output of shape:", self.generated_output.shape)
+
     return self.generated_output
 
 
