@@ -19,7 +19,7 @@ class ModelDef(object):
 
   encoder_trainable = False
   decoder_trainable = False
-  generator_trainable = True
+  generator_trainable = False
   decoder_model_memo = None
 
   def __init__(self, utils, config):
@@ -118,7 +118,7 @@ class ModelDef(object):
     model = Model(
         #inputs=[main_input, short_input],
         inputs=[main_input],
-        outputs=[main_output, mid_output]
+        outputs=[main_output, mid_output, encoder_output]
     )
 
     self.model = model
