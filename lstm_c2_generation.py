@@ -237,9 +237,9 @@ for iteration in range(start_iteration, num_iterations + 1):
   for s in range(split_times):
     # Generate a mid layer encoded 'next step' output
     if split_num == split_times - 1:
-      generator.input_frame_sequences = next_frame_seqs[s * split_num :]
+      generator.input_frame_sequences = next_frame_seqs[s * split_num : ]
     else:
-      generator.input_frame_sequences = next_frame_seqs[s * split_num : s * (split_num+1)]
+      generator.input_frame_sequences = next_frame_seqs[s * split_num : int(s * (split_num+1))]
     if s == 0:
       out_mid = generator.generate_full_output(2)
     else:
