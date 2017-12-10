@@ -238,7 +238,7 @@ for iteration in range(start_iteration, num_iterations + 1):
   gblocks = []
   for s in range(split_times):
     generator.input_frame_sequences = next_frame_seqs[int(s * split_seq_len) : int((s+1) * split_seq_len)]
-    gblocks[s] = generator.generate_full_output(2)
+    gblocks.append(generator.generate_full_output(2))
 
   out_mid = np.concatenate(gblocks)
 
