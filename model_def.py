@@ -324,7 +324,7 @@ class ModelDef(object):
     self.utils.log("Loss weightings:", main_loss_prop, mid_loss_prop)
 
     self.model.compile(
-        loss=[loss, loss, 'mean_absolute_error'], 
+        loss=[loss, loss, 'mean_absolute_error'],
         loss_weights=[main_loss_prop, mid_loss_prop, 0],#{'main_output': main_loss_prop, 'mid_output': mid_loss_prop},
         optimizer=self.get_optimizer_from_config())
     self.utils.log_model_summary()
@@ -332,10 +332,10 @@ class ModelDef(object):
   def fit(self, input_seq, output_seq, batch_size=None, epochs=1, shuffle=False, callbacks=None):
       inputs = input_seq[0]
       outputs = output_seq
-      #outputs = {'main_output': output_seq[0], 'mid_output': output_seq[1]}
-      s = output_seq[0].shape
-      dummy_encoded_output = np.zeros((s[0], 24, 64), dtype=np.float32)
-      outputs.append( dummy_encoded_output)
+      
+      # s = output_seq[0].shape
+      # dummy_encoded_output = np.zeros((s[0], 24, 64), dtype=np.float32)
+      # outputs.append( dummy_encoded_output)
 
       print("X shape:", inputs.shape)
       print("y shape:", outputs[0].shape, outputs[1].shape, outputs[2].shape)

@@ -14,6 +14,7 @@ class Generator:
   num_frames = None
   seed_start_index = 60
   frame_len_ms = None
+  input_frame_sequences = None
 
   def __init__(self, utils, all_frames, seed_seq_len, generate_len, generate_with_single_timestep):
     self.utils = utils
@@ -70,6 +71,13 @@ class Generator:
       intpreds.append(q)
     return np.array([intpreds], dtype=np.uint8)
 
+  def generate_full_output(self, output_index = 2):
+    model_def = utils.model_def
+
+    print("Generating full output for output index:", output_index)
+    self.generated_output = model_def.model.predict(self.input_frame_sequences, batch_size=len(self.input_frame_sequences))[output_index]
+    print("Generated full output of shape:", self.generated_output.shape)
+    return self.generated_output
 
 
   def generate(self, iteration):
@@ -145,12 +153,14 @@ class Generator:
           # run the prediction for the next frame, getting the result
           # from the specified output, outi
           all_predicted_frame_props = model_def.model.predict_on_batch(inx)
-          wf = open('workfile.txt', 'w')
-          for r in all_predicted_frame_props[2]:
-            for s in r:
-              for sn in s:
-                wf.write(str(sn)+' ')
-              wf.write("\n")
+
+          # Write out a specific output to file, for debugging purposes
+          # wf = open('workfile.txt', 'w')
+          # for r in all_predicted_frame_props[2]:
+          #   for s in r:
+          #     for sn in s:
+          #       wf.write(str(sn)+' ')
+          #     wf.write("\n")
 
           predicted_frame_props = all_predicted_frame_props[outi]
 
