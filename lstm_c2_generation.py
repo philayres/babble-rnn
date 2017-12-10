@@ -235,13 +235,12 @@ for iteration in range(start_iteration, num_iterations + 1):
   # Generate a mid layer encoded 'next step' output
   split_times = 10
   split_seq_len = num_frame_seqs / split_times
-  out_mid = np.zeros((num_frame_seqs, 24, 64), dtype=np.float32)
   gblocks = []
   for s in range(split_times):
     generator.input_frame_sequences = next_frame_seqs[int(s * split_seq_len) : int((s+1) * split_seq_len)]
     gblocks[s] = generator.generate_full_output(2)
 
-  np.concatenate(gblocks)
+  out_mid = np.concatenate(gblocks)
 
 
   outy = [yl, yl2, out_mid]
