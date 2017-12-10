@@ -3,6 +3,7 @@ from keras.models import Sequential, Model
 from keras.layers import Dense, Activation, Dropout, TimeDistributed, Concatenate, Input
 from keras.layers import GRU, LSTM, Conv2D, Conv1D, Reshape, Flatten, Permute, AveragePooling2D, MaxPooling2D, RepeatVector, Conv2DTranspose
 import keras.optimizers as optimizers
+import numpy as np
 
 from custom_objects import CustomObjects
 
@@ -332,7 +333,9 @@ class ModelDef(object):
       inputs = input_seq[0]
 
       #outputs = {'main_output': output_seq[0], 'mid_output': output_seq[1]}
-      outputs = output_seq
+      s = input_seq[0].shape
+      dummy_encoded_output = np.zeros((s[0], 24, 64), dtype=np.float32)
+      outputs.append(dummy_encoded_output)
       self.model.fit(inputs, outputs, batch_size=batch_size, epochs=epochs, shuffle=shuffle,
        callbacks=callbacks
       )
