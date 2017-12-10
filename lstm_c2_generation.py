@@ -232,7 +232,13 @@ for iteration in range(start_iteration, num_iterations + 1):
 
   inX = [Xl, Xl2]
 
-  outy = [yl, yl2]
+
+  s = yl.shape
+  dummy_encoded_output = np.zeros((s[0], 24, 64), dtype=np.float32)
+
+
+  outy = [yl, yl2, dummy_encoded_output]
+  print("y shape:", yl.shape, yl2.shape, dummy_encoded_output.shape)
 
   model_def.fit(inX, outy, batch_size=fit_batch_size, epochs=1, shuffle=config.shuffle,
    callbacks=[utils.csv_logger]

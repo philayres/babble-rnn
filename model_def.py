@@ -333,10 +333,6 @@ class ModelDef(object):
       inputs = input_seq[0]
       outputs = output_seq
       #outputs = {'main_output': output_seq[0], 'mid_output': output_seq[1]}
-      s = input_seq[0].shape
-      dummy_encoded_output = np.zeros((s[0], 24, 64), dtype=np.float32)
-      outputs.append( dummy_encoded_output)
-      print("y shape:", len(outputs))
       self.model.fit(inputs, outputs, batch_size=batch_size, epochs=epochs, shuffle=shuffle,
        callbacks=callbacks
       )
