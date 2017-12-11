@@ -119,7 +119,7 @@ class ModelDef(object):
     model = Model(
         #inputs=[main_input, short_input],
         inputs=[main_input],
-        outputs=[main_output, mid_output, generator_output]
+        outputs=[main_output, mid_output, generator_output, encoder_output]
     )
 
     self.model = model
@@ -319,6 +319,8 @@ class ModelDef(object):
     loss = CustomObjects.codec2_param_error_td
     # other loss options: CustomObjects.codec2_param_mean_square_error; 'mean_absolute_error'; 'cosine_proximity'
 
+    encoder_loss_prop = 0
+
     main_loss_prop = 0.2
     mid_loss_prop = 0.4
     generator_loss_prop = 0.4
@@ -329,13 +331,13 @@ class ModelDef(object):
       generator_loss_prop = 0
     elif not self.decoder_trainable and self.generator_trainable:
       mid_loss_prop = 0
-      generator_loss_prop = 1.0
-      main_loss_prop = 0.0
+      generator_loss_prop = 0.7
+      main_loss_prop = 0.3
 
-    self.utils.log("Loss weightings:", main_loss_prop, mid_loss_prop, generator_loss_prop)
+    self.utils.log("Loss weightings:", main_loss_prop, mid_loss_prop, generator_loss_prop, encoder_loss_prop)
 
     self.model.compile(
-        loss=[loss, loss, 'mean_squared_error'],
+        loss=[loss, loss, 'mean_squared_error', 'mean_absolute_error'],
         loss_weights=[main_loss_prop, mid_loss_prop, generator_loss_prop],
         optimizer=self.get_optimizer_from_config())
     self.utils.log_model_summary()
@@ -349,7 +351,7 @@ class ModelDef(object):
       # outputs.append( dummy_encoded_output)
 
       print("X shape:", inputs.shape)
-      print("y shape:", outputs[0].shape, outputs[1].shape, outputs[2].shape)
+      print("y shape:", outputs[0].shape, outputs[1].shape, outputs[2].shape, outputs[3].shape)
 
       self.model.fit(inputs, outputs, batch_size=batch_size, epochs=epochs, shuffle=shuffle,
        callbacks=callbacks
