@@ -247,7 +247,7 @@ for iteration in range(start_iteration, num_iterations + 1):
   out_mid = np.concatenate(gblocks)
 
 
-  outy = [yl, yl2, out_mid]
+  outy = [yl, yl2, out_mid, out_mid]
 
   model_def.fit(inX, outy, batch_size=fit_batch_size, epochs=1, shuffle=config.shuffle,
    callbacks=[utils.csv_logger]
