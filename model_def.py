@@ -20,7 +20,7 @@ class ModelDef(object):
 
   encoder_trainable = True
   decoder_trainable = True
-  generator_trainable = True
+  generator_trainable = False
 
 
   def __init__(self, utils, config):
@@ -277,12 +277,12 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-    #
-    # lmid = LSTM(
-    #     framelen * 3
-    #     , return_sequences=True
-    #     , trainable=decoder_trainable
-    # )(rs0)
+    # Trying to reduce autoencoder loss below 0.78
+    res = LSTM(
+        framelen * 3
+        , return_sequences=True
+        , trainable=decoder_trainable
+    )(res)
 
 
     conf = TimeDistributed(
