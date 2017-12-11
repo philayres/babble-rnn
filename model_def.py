@@ -277,13 +277,13 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-    # Trying to reduce autoencoder loss below 0.78
-    res = LSTM(
-        framelen * 3
-        , return_sequences=True
-        , name='decoder_lstm'
-        , trainable=decoder_trainable
-    )(res)
+    # # Trying to reduce autoencoder loss below 0.78
+    # res = LSTM(
+    #     framelen * 3
+    #     , return_sequences=True
+    #     , name='decoder_lstm'
+    #     , trainable=decoder_trainable
+    # )(res)
 
 
     conf = TimeDistributed(
