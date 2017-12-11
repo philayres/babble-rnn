@@ -329,8 +329,8 @@ class ModelDef(object):
       generator_loss_prop = 0
     elif not self.decoder_trainable and self.generator_trainable:
       mid_loss_prop = 0
-      generator_loss_prop = 0.95
-      main_loss_prop = 0.05
+      generator_loss_prop = 1.0
+      main_loss_prop = 0.0
 
     self.utils.log("Loss weightings:", main_loss_prop, mid_loss_prop, generator_loss_prop)
 
