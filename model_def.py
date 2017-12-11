@@ -331,13 +331,13 @@ class ModelDef(object):
       generator_loss_prop = 0
     elif not self.decoder_trainable and self.generator_trainable:
       mid_loss_prop = 0
-      main_loss_prop = 0.01
-      generator_loss_prop = 0.99
+      main_loss_prop = 0.0
+      generator_loss_prop = 1.0
 
     self.utils.log("Loss weightings:", main_loss_prop, mid_loss_prop, generator_loss_prop, encoder_loss_prop)
 
     self.model.compile(
-        loss=[loss, loss, 'mean_squared_error', 'mean_absolute_error'],
+        loss=[loss, loss, 'mean_absolute_error', 'mean_absolute_error'],
         loss_weights=[main_loss_prop, mid_loss_prop, generator_loss_prop, encoder_loss_prop],
         optimizer=self.get_optimizer_from_config())
     self.utils.log_model_summary()
