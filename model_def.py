@@ -281,6 +281,7 @@ class ModelDef(object):
     res = LSTM(
         framelen * 3
         , return_sequences=True
+        , name='decoder_lstm'
         , trainable=decoder_trainable
     )(res)
 
