@@ -90,6 +90,12 @@ class ModelDef(object):
         , trainable=generator_trainable
     )(res)
 
+    res = LSTM(
+        128
+        , return_sequences=True
+        , name='generator_LSTM_2'
+        , trainable=generator_trainable
+    )(res)
 
     conf = TimeDistributed(
         Dense(
