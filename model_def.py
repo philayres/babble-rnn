@@ -114,15 +114,12 @@ class ModelDef(object):
 
     res = keras.layers.concatenate([res, generator_GRU_wide])
 
-    conf = TimeDistributed(
-        Dense(
-          enc_params
-          , activation="relu"
-          , trainable=generator_trainable
-        )
-        , name='generator_TD_postconcat_Dense_0'
-    )    
-    res = conf(res)
+    res = LSTM(
+        128
+        , return_sequences=True
+        , name='generator_LSTM_postconcat'
+        , trainable=generator_trainable
+    )(res)
 
     conf = TimeDistributed(
         Dense(
