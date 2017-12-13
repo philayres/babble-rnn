@@ -120,6 +120,16 @@ class ModelDef(object):
           , activation="relu"
           , trainable=generator_trainable
         )
+        , name='generator_TD_postconcat_Dense_0'
+    )    
+    res = conf(res)
+
+    conf = TimeDistributed(
+        Dense(
+          enc_params
+          , activation="relu"
+          , trainable=generator_trainable
+        )
         , name='generator_TD_Dense_0'
     )
     res = generator_output = conf(res)
