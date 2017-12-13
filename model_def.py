@@ -104,12 +104,15 @@ class ModelDef(object):
         , trainable=generator_trainable
     )(res)
 
-    res = LSTM(
-        128
+    generator_GRU_wide = GRU(
+        256
         , return_sequences=True
-        , name='generator_LSTM_4'
+        , name='generator_GRU_wide'
+        , activation='relu'
         , trainable=generator_trainable
-    )(res)
+    )(encoder_output)
+
+    res = keras.layers.concatenate([res, generator_GRU_wide])
 
     conf = TimeDistributed(
         Dense(
