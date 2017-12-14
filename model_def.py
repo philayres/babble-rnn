@@ -184,7 +184,23 @@ class ModelDef(object):
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
-    res_mean = keras.layers.Reshape((-1, conv_count), trainable=encoder_trainable)(res_mean)
+    conf = keras.layers.Reshape((-1, conv_count), trainable=encoder_trainable)
+    res_mean = conf(res_mean)
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
+    conf = TimeDistributed(
+        Dense(
+            enc_params
+            , activation="relu"
+            , trainable=encoder_trainable
+            , name="encoder_post_average_dense"
+        )
+    )
+    res_mean = conf(res_mean)
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
 
     res = keras.layers.concatenate([res, res_mean])
 
