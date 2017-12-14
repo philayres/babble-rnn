@@ -221,12 +221,23 @@ class ModelDef(object):
         )
     )
     res = conf(res)
-    
+
     conf = GRU(enc_params, return_sequences=True, trainable=encoder_trainable, name="encoder_gru0")
     res = conf(res)
 
     conf = GRU(enc_params, return_sequences=True, trainable=encoder_trainable, name="encoder_gru1")
     res = conf(res)
+
+    conf = TimeDistributed(
+        Dense(
+            enc_params * 5
+            , activation="relu"
+            , trainable=encoder_trainable
+            , name="encoder_post_gru_dense"
+        )
+    )
+    res = conf(res)
+
 
     conf = TimeDistributed(
         Dense(
