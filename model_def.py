@@ -151,7 +151,7 @@ class ModelDef(object):
     res = keras.layers.concatenate([res, res])
 
     conf = TimeDistributed(keras.layers.Reshape((in_count, 1), trainable=encoder_trainable))
-    shaped_input = res = conf(res)
+    res = conf(res)
 
     print(conf.get_config())
     print(conf.input_shape)
@@ -174,6 +174,10 @@ class ModelDef(object):
     res = keras.layers.Reshape((-1, conv_count), trainable=encoder_trainable)(res)
 
 
+
+    conf = TimeDistributed(keras.layers.Reshape((framelen, 1), trainable=encoder_trainable))
+    shaped_input = conf(encoder_input)
+
     conf = AveragePooling2D(pool_size=(3,1), strides=(2,1), padding="valid", trainable=encoder_trainable)
     res_mean = conf(shaped_input)
     print(conf.get_config())
@@ -184,7 +188,7 @@ class ModelDef(object):
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
-    conf = keras.layers.Reshape((-1, conv_count), trainable=encoder_trainable)
+    conf = keras.layers.Reshape((-1, framelen), trainable=encoder_trainable)
     res_mean = conf(res_mean)
     print(conf.get_config())
     print(conf.input_shape)
