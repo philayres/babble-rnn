@@ -148,6 +148,9 @@ class ModelDef(object):
     res = encoder_input = Input(shape=shape, dtype='float32', name="encoder_input")
     print("Encoder model input shape:", shape)
 
+
+
+
     res = keras.layers.concatenate([res, res])
 
     conf = TimeDistributed(keras.layers.Reshape((in_count, 1), trainable=encoder_trainable))
@@ -217,6 +220,13 @@ class ModelDef(object):
         )
     )
     res = conf(res)
+
+    conf = GRU(enc_params, return_sequences=True, trainable=encoder_trainable)
+    res = conf(res)
+
+    conf = GRU(enc_params, return_sequences=True, trainable=encoder_trainable)
+    res = conf(res)
+
 
     conf = TimeDistributed(
         Dense(
