@@ -260,7 +260,7 @@ class ModelDef(object):
     print(conf.output_shape)
 
     # Return a single filter pulling together the results of all conv_count filters
-    conf = LocallyConnected2D(
+    conf = Conv2D(
               1,
               kernel_size=(2,14),
               #  strides=(2,1),
