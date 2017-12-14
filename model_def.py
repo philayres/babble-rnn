@@ -1,6 +1,6 @@
 import keras as keras
 from keras.models import Sequential, Model
-from keras.layers import Dense, Activation, Dropout, TimeDistributed, Concatenate, Input
+from keras.layers import Dense, Activation, Dropout, TimeDistributed, Concatenate, Input, UpSampling2D
 from keras.layers import GRU, LSTM, Conv2D, Conv1D, Reshape, Flatten, Permute, AveragePooling2D, MaxPooling2D, RepeatVector, Conv2DTranspose, LocallyConnected2D
 import keras.optimizers as optimizers
 import numpy as np
