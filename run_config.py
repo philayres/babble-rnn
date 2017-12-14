@@ -54,6 +54,10 @@ class RunConfig(object):
   # as the seed. This must match the frame_seq_len currently
   seed_seq_len = frame_seq_len
 
+  # the start frame for seeds used during training
+  # one off generated sequences typically override this on the command line
+  seed_start_index = 60
+
   # number of frames between the start of each sequence of frames used during learning in a batch
   # if this equals frame_seq_len, then the frame sequences will be contiguous and will not overlap
   # picking a number less than frame_seq_len provides overlapping frames every seq_step to add to the training set
@@ -137,6 +141,7 @@ class RunConfig(object):
     "frame_seq_len",
     "overlap_sequence",
     "seed_seq_len",
+    "seed_start_index",
     "seq_step",
     "test_data_fn",
     "frame_prop_orig_scale",

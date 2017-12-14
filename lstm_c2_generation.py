@@ -180,7 +180,7 @@ else:
 model_def = utils.define_or_load_model(frame_seq_len, framelen, num_frame_seqs)
 
 
-generator = Generator(utils, all_frames, seed_seq_len, utils.one_off_generate_len, learn_next_step)
+generator = Generator(utils, all_frames)
 generator.framelen = framelen
 
 # generator seed can start at various positions in the frame set

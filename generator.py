@@ -16,20 +16,26 @@ class Generator:
   frame_len_ms = None
   input_frame_sequences = None
 
-  def __init__(self, utils, all_frames, seed_seq_len, generate_len, generate_with_single_timestep):
+  def __init__(self, utils, all_frames, seed_seq_len=None, generate_len=None, generate_with_single_timestep=None):
     self.utils = utils
     self.config = utils.config
     self.all_frames = all_frames
-    self.seed_seq_len = seed_seq_len
-    if generate_len != None:
+    if seed_seq_len is not None:
+      self.seed_seq_len = seed_seq_len
+    else:
+      self.seed_seq_len = self.config.seed_seq_len
+    if generate_len is not None:
       self.generate_len = generate_len
     else:
       self.generate_len = self.config.generate_len
     utils.log("generate_len:", generate_len)
     self.num_frames = len(all_frames)
-    self.generate_with_single_timestep = generate_with_single_timestep
+    if generate_with_single_timestep is not None:
+      self.generate_with_single_timestep = generate_with_single_timestep
+    else:
+      self.generate_with_single_timestep = self.config.learn_next_step
     self.frame_len_ms = self.config.frame_len_ms
-
+    self.seed_start_index = self.config.seed_start_index
 
 
   def set_random_seed_start_index(self):
@@ -84,7 +90,7 @@ class Generator:
   def generate(self, iteration):
     utils = self.utils
     all_frames = self.all_frames
-    seed_seq_len = self.config.seed_seq_len
+    seed_seq_len = self.seed_seq_len
     generate_len = self.generate_len
     framelen = self.config.framelen
     num_frames = self.num_frames

@@ -28,13 +28,28 @@ def model_config(network_tag):
     print("stateful", c.get('stateful',""))
     print()
 
-def plot_training_loss(network_tag, ln):
+def plot_training_loss(network_tag, ln, legend=None, weights=None, yscale=None, columns=None):
   dataframe = pandas.io.parsers.read_csv(home + "/store/c2gen/out/" + network_tag + "/training.log")
+
+  if columns is not None:
+    dataframe = dataframe[columns]
+
+  print("Columns:", list(dataframe.columns.values))
   data = dataframe.as_matrix(None)
+
+
+  if weights is not None:
+    data = data * weights
+
   plt.plot(data)
-  plt.legend(['','loss', 'main', 'mid'])
+
+  legend = legend or list(dataframe.columns.values)
+
+  plt.legend(legend, loc='center left', bbox_to_anchor=(1, 0.5))
   plt.xlabel('iteration')
   plt.ylabel('loss ('+ln+')')
+  if yscale == 'log':
+    plt.yscale('log')
   plt.title('Training Loss for\nnetwork: ' + network_tag)
   plt.grid(True)
 #  fn = "loss-plot-" + network_tag + ".png"
