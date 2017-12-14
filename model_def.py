@@ -177,7 +177,7 @@ class ModelDef(object):
     conf = AveragePooling2D(pool_size=(3,1), strides=(2,1), padding="valid", trainable=encoder_trainable)
     res_mean = conf(shaped_input)
     print(conf.get_config())
-    print(conf.input_shape)
+    
     print(conf.output_shape)
     res_mean = AveragePooling2D(pool_size=(3,1), strides=(2,1), padding="valid", trainable=encoder_trainable)(res_mean)
     res_mean = conf(res_mean)
