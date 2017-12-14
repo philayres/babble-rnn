@@ -346,8 +346,8 @@ class ModelDef(object):
     print(conf.output_shape)
 
 
-    conf = TimeDistributed(keras.layers.Reshape((-1, enc_params, 1), trainable=decoder_trainable))
-    res = conf(res_pt)
+    conf = TimeDistributed(keras.layers.Reshape((enc_params, 1), trainable=decoder_trainable))
+    res_pt = conf(res_pt)
 
     conf = UpSampling2D(
         size=[4,1]
@@ -360,7 +360,7 @@ class ModelDef(object):
     print(conf.output_shape)
 
     conf = TimeDistributed(keras.layers.Reshape((-1, enc_params), trainable=decoder_trainable))
-    res = conf(res_pt)
+    res_pt = conf(res_pt)
 
     conf = TimeDistributed(
         Dense(
@@ -370,7 +370,7 @@ class ModelDef(object):
             , name='decoder_pass_thru_dense_wide'
         )
     )
-    res_pt = conf(res)
+    res_pt = conf(res_pt)
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
@@ -383,7 +383,7 @@ class ModelDef(object):
             , name='decoder_pass_thru_dense'
         )
     )
-    res_pt = conf(res)
+    res_pt = conf(res_pt)
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
