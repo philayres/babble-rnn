@@ -18,9 +18,9 @@ class ModelDef(object):
 
   stateful = False
 
-  encoder_trainable = True
-  decoder_trainable = True
-  generator_trainable = False
+  encoder_trainable = False
+  decoder_trainable = False
+  generator_trainable = True
 
 
   def __init__(self, utils, config):
@@ -148,9 +148,6 @@ class ModelDef(object):
     res = encoder_input = Input(shape=shape, dtype='float32', name="encoder_input")
     print("Encoder model input shape:", shape)
 
-
-
-
     res = keras.layers.concatenate([res, res])
 
     conf = TimeDistributed(keras.layers.Reshape((in_count, 1), trainable=encoder_trainable))
@@ -211,23 +208,6 @@ class ModelDef(object):
 
     res = keras.layers.concatenate([res, res_mean])
 
-    conf = GRU(enc_params*2, return_sequences=True, trainable=encoder_trainable, name="encoder_gru0")
-    res = conf(res)
-
-    conf = GRU(enc_params*2, return_sequences=True, trainable=encoder_trainable, name="encoder_gru1")
-    res = conf(res)
-
-    conf = TimeDistributed(
-        Dense(
-            enc_params * 5
-            , activation="relu"
-            , trainable=encoder_trainable
-            , name="encoder_post_gru_dense"
-        )
-    )
-    res = conf(res)
-
-
     conf = TimeDistributed(
         Dense(
             enc_params * 5
@@ -250,6 +230,7 @@ class ModelDef(object):
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
+
 
     encoder_output = res
 
@@ -351,70 +332,69 @@ class ModelDef(object):
 
     # Pass through the input
 
-    # conf = TimeDistributed(
-    #     Dense(
-    #         enc_params
-    #         , activation="relu"
-    #         , trainable=decoder_trainable
-    #         , name='decoder_pass_thru_dense_in'
-    #     )
-    # )
-    # res_pt = conf(decoder_input)
-    # print(conf.get_config())
-    # print(conf.input_shape)
-    # print(conf.output_shape)
-    #
-    #
-    # conf = TimeDistributed(keras.layers.Reshape((enc_params, 1), trainable=decoder_trainable))
-    # res_pt = conf(res_pt)
-    #
-    # conf = UpSampling2D(
-    #     size=[4,1]
-    #     , data_format='channels_last'
-    #     , trainable=decoder_trainable
-    # )
-    # res_pt = conf(res_pt)
-    # print(conf.get_config())
-    # print(conf.input_shape)
-    # print(conf.output_shape)
-    #
-    # conf = ZeroPadding2D(padding=(1,0), trainable=decoder_trainable)
-    # res_pt = conf(res_pt)
-    # print(conf.get_config())
-    # print(conf.input_shape)
-    # print(conf.output_shape)
-    #
-    # conf = keras.layers.Reshape((-1, enc_params), trainable=decoder_trainable)
-    # res_pt = conf(res_pt)
-    #
-    # conf = TimeDistributed(
-    #     Dense(
-    #         framelen * 5
-    #         , activation="relu"
-    #         , trainable=decoder_trainable
-    #         , name='decoder_pass_thru_dense_wide'
-    #     )
-    # )
-    # res_pt = conf(res_pt)
-    # print(conf.get_config())
-    # print(conf.input_shape)
-    # print(conf.output_shape)
-    #
-    # conf = TimeDistributed(
-    #     Dense(
-    #         framelen
-    #         , activation="relu"
-    #         , trainable=decoder_trainable
-    #         , name='decoder_pass_thru_dense'
-    #     )
-    # )
-    # res_pt = conf(res_pt)
-    # print(conf.get_config())
-    # print(conf.input_shape)
-    # print(conf.output_shape)
-    #
-    # res = keras.layers.concatenate([res, res_pt])
+    conf = TimeDistributed(
+        Dense(
+            enc_params
+            , activation="relu"
+            , trainable=decoder_trainable
+            , name='decoder_pass_thru_dense_in'
+        )
+    )
+    res_pt = conf(decoder_input)
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
 
+
+    conf = TimeDistributed(keras.layers.Reshape((enc_params, 1), trainable=decoder_trainable))
+    res_pt = conf(res_pt)
+
+    conf = UpSampling2D(
+        size=[4,1]
+        , data_format='channels_last'
+        , trainable=decoder_trainable
+    )
+    res_pt = conf(res_pt)
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
+
+    conf = ZeroPadding2D(padding=(1,0), trainable=decoder_trainable)
+    res_pt = conf(res_pt)
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
+
+    conf = keras.layers.Reshape((-1, enc_params), trainable=decoder_trainable)
+    res_pt = conf(res_pt)
+
+    conf = TimeDistributed(
+        Dense(
+            framelen * 5
+            , activation="relu"
+            , trainable=decoder_trainable
+            , name='decoder_pass_thru_dense_wide'
+        )
+    )
+    res_pt = conf(res_pt)
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
+
+    conf = TimeDistributed(
+        Dense(
+            framelen
+            , activation="relu"
+            , trainable=decoder_trainable
+            , name='decoder_pass_thru_dense'
+        )
+    )
+    res_pt = conf(res_pt)
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
+
+    res = keras.layers.concatenate([res, res_pt])
 
     conf = TimeDistributed(
         Dense(
@@ -428,11 +408,6 @@ class ModelDef(object):
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
-
-    conf = GRU(enc_params, return_sequences=True, trainable=decoder_trainable)
-    res = conf(res)
-    conf = GRU(framelen, return_sequences=True, trainable=decoder_trainable)
-    res = conf(res)
 
     conf = TimeDistributed(
         Dense(
