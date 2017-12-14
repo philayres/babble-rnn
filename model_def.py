@@ -359,7 +359,13 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-    conf = TimeDistributed(keras.layers.Reshape((-1, enc_params), trainable=decoder_trainable))
+    conf = ZeroPadding2D(padding=(1,0))
+    res_pt = conf(res_pt)
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
+    
+    conf = TimeDistributed(keras.layers.Reshape((enc_params), trainable=decoder_trainable))
     res_pt = conf(res_pt)
 
     conf = TimeDistributed(
