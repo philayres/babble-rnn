@@ -411,7 +411,7 @@ class ModelDef(object):
 
     conf = GRU(enc_params, return_sequences=True, trainable=decoder_trainable)
     res = conf(res)
-    conf = GRU(enc_params, return_sequences=True, trainable=decoder_trainable)
+    conf = GRU(framelen, return_sequences=True, trainable=decoder_trainable)
     res = conf(res)
 
     conf = TimeDistributed(
