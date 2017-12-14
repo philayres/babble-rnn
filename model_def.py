@@ -1,7 +1,7 @@
 import keras as keras
 from keras.models import Sequential, Model
 from keras.layers import Dense, Activation, Dropout, TimeDistributed, Concatenate, Input
-from keras.layers import GRU, LSTM, Conv2D, Conv1D, Reshape, Flatten, Permute, AveragePooling2D, MaxPooling2D, RepeatVector, Conv2DTranspose
+from keras.layers import GRU, LSTM, Conv2D, Conv1D, Reshape, Flatten, Permute, AveragePooling2D, MaxPooling2D, RepeatVector, Conv2DTranspose, LocallyConnected2D
 import keras.optimizers as optimizers
 import numpy as np
 
@@ -18,9 +18,9 @@ class ModelDef(object):
 
   stateful = False
 
-  encoder_trainable = False
-  decoder_trainable = False
-  generator_trainable = True
+  encoder_trainable = True
+  decoder_trainable = True
+  generator_trainable = False
 
 
   def __init__(self, utils, config):
@@ -41,8 +41,8 @@ class ModelDef(object):
     overlap_sequence = config.overlap_sequence
     short_input_len = frame_seq_len - overlap_sequence*2
 
-    self.conv_count = 64
-    enc_params = 64
+    self.conv_count = 16
+    enc_params = 16
 
 
     generator_trainable = self.generator_trainable
@@ -89,30 +89,6 @@ class ModelDef(object):
         , name='generator_LSTM_1'
         , trainable=generator_trainable
     )(res)
-
-    res = LSTM(
-        128
-        , return_sequences=True
-        , name='generator_LSTM_2'
-        , trainable=generator_trainable
-    )(res)
-
-    res = LSTM(
-        128
-        , return_sequences=True
-        , name='generator_LSTM_3'
-        , trainable=generator_trainable
-    )(res)
-
-    generator_GRU_wide = GRU(
-        256
-        , return_sequences=True
-        , name='generator_GRU_wide'
-        , activation='relu'
-        , trainable=generator_trainable
-    )(encoder_output)
-
-    res = keras.layers.concatenate([res, generator_GRU_wide])
 
     res = LSTM(
         128
@@ -284,7 +260,7 @@ class ModelDef(object):
     print(conf.output_shape)
 
     # Return a single filter pulling together the results of all conv_count filters
-    conf = Conv2D(
+    conf = LocallyConnected2D(
               1,
               kernel_size=(2,14),
               #  strides=(2,1),
@@ -307,21 +283,21 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-    # Trying to reduce autoencoder loss below 0.78
-    res = LSTM(
-        framelen
-        , return_sequences=True
-        , name='decoder_lstm'
-        , trainable=decoder_trainable
-    )(res)
-
-    # Trying to reduce autoencoder loss below 0.78
-    res = LSTM(
-        framelen * 3
-        , return_sequences=True
-        , name='decoder_lstm2'
-        , trainable=decoder_trainable
-    )(res)
+    # # Trying to reduce autoencoder loss below 0.78
+    # res = LSTM(
+    #     framelen
+    #     , return_sequences=True
+    #     , name='decoder_lstm'
+    #     , trainable=decoder_trainable
+    # )(res)
+    #
+    # # Trying to reduce autoencoder loss below 0.78
+    # res = LSTM(
+    #     framelen * 3
+    #     , return_sequences=True
+    #     , name='decoder_lstm2'
+    #     , trainable=decoder_trainable
+    # )(res)
 
     conf = TimeDistributed(
         Dense(
