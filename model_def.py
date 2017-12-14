@@ -396,15 +396,6 @@ class ModelDef(object):
     #
     # res = keras.layers.concatenate([res, res_pt])
 
-    conf = TimeDistributed(
-        Dense(
-            enc_params
-            , activation="relu"
-            , trainable=decoder_trainable
-            , name='decoder_post_conv_dense_0'
-        )
-    )
-    res = conf(res)
 
     conf = TimeDistributed(
         Dense(
