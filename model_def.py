@@ -221,13 +221,6 @@ class ModelDef(object):
     )
     res = conf(res)
 
-    conf = GRU(enc_params, return_sequences=True, trainable=encoder_trainable)
-    res = conf(res)
-
-    conf = GRU(enc_params, return_sequences=True, trainable=encoder_trainable)
-    res = conf(res)
-
-
     conf = TimeDistributed(
         Dense(
             enc_params
@@ -241,6 +234,24 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
+    conf = GRU(enc_params, return_sequences=True, trainable=encoder_trainable)
+    res = conf(res)
+
+    conf = GRU(enc_params, return_sequences=True, trainable=encoder_trainable)
+    res = conf(res)
+
+    conf = TimeDistributed(
+        Dense(
+            enc_params
+            , activation="relu"
+            , trainable=encoder_trainable
+            , name="encoder_post_gru_final_dense"
+        )
+    )
+    res = conf(res)
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
 
     encoder_output = res
 
