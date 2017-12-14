@@ -346,6 +346,9 @@ class ModelDef(object):
     print(conf.output_shape)
 
 
+    conf = TimeDistributed(keras.layers.Reshape((enc_params, 1), trainable=decoder_trainable))
+    res = conf(res_pt)
+
     conf = UpSampling2D(
         size=[4,1]
         , data_format='channels_last'
@@ -355,6 +358,9 @@ class ModelDef(object):
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
+
+    conf = TimeDistributed(keras.layers.Reshape((-1, enc_params), trainable=decoder_trainable))
+    res = conf(res_pt)
 
     conf = TimeDistributed(
         Dense(
