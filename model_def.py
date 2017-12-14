@@ -398,6 +398,16 @@ class ModelDef(object):
 
     conf = TimeDistributed(
         Dense(
+            enc_params
+            , activation="relu"
+            , trainable=decoder_trainable
+            , name='decoder_post_conv_dense_0'
+        )
+    )
+    res = conf(res)
+
+    conf = TimeDistributed(
+        Dense(
             enc_params * 5
             , activation="relu"
             , trainable=decoder_trainable
