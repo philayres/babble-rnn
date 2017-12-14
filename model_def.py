@@ -409,9 +409,9 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-    conf = GRU(enc_params, trainable=decoder_trainable)
+    conf = GRU(enc_params, return_sequences=True, trainable=decoder_trainable)
     res = conf(res)
-    conf = GRU(enc_params, trainable=decoder_trainable)
+    conf = GRU(enc_params, return_sequences=True, trainable=decoder_trainable)
     res = conf(res)
 
     conf = TimeDistributed(
