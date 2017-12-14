@@ -174,12 +174,17 @@ class ModelDef(object):
     res = keras.layers.Reshape((-1, conv_count), trainable=encoder_trainable)(res)
 
 
-    conf = AveragePooling2D(pool_size=(3,1), strides=(2,1), padding="valid")
+    conf = AveragePooling2D(pool_size=(3,1), strides=(2,1), padding="valid", trainable=encoder_trainable)
     res_mean = conf(shaped_input)
     print(conf.get_config())
-    res_mean = AveragePooling2D(pool_size=(3,1), strides=(2,1), padding="valid")(res_mean)
+    print(conf.input_shape)
+    print(conf.output_shape)
+    res_mean = AveragePooling2D(pool_size=(3,1), strides=(2,1), padding="valid", trainable=encoder_trainable)(res_mean)
     res_mean = conf(res_mean)
     print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
+    res_mean = keras.layers.Reshape((-1, conv_count), trainable=encoder_trainable)(res_mean)
 
     res = keras.layers.concatenate([res, res_mean])
 
