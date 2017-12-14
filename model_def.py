@@ -42,7 +42,7 @@ class ModelDef(object):
     short_input_len = frame_seq_len - overlap_sequence*2
 
     self.conv_count = 16
-    enc_params = 16
+    enc_params = 20
 
 
     generator_trainable = self.generator_trainable
@@ -174,7 +174,7 @@ class ModelDef(object):
     res = keras.layers.Reshape((-1, conv_count), trainable=encoder_trainable)(res)
 
 
-
+    # Second chain - pooling input data parameter by parameter
     conf = TimeDistributed(keras.layers.Reshape((framelen, 1), trainable=encoder_trainable))
     shaped_input = conf(encoder_input)
 
@@ -193,18 +193,18 @@ class ModelDef(object):
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
-    conf = TimeDistributed(
-        Dense(
-            enc_params
-            , activation="relu"
-            , trainable=encoder_trainable
-            , name="encoder_post_average_dense"
-        )
-    )
-    res_mean = conf(res_mean)
-    print(conf.get_config())
-    print(conf.input_shape)
-    print(conf.output_shape)
+    # conf = TimeDistributed(
+    #     Dense(
+    #         enc_params
+    #         , activation="relu"
+    #         , trainable=encoder_trainable
+    #         , name="encoder_post_average_dense"
+    #     )
+    # )
+    # res_mean = conf(res_mean)
+    # print(conf.get_config())
+    # print(conf.input_shape)
+    # print(conf.output_shape)
 
     res = keras.layers.concatenate([res, res_mean])
 
@@ -343,6 +343,19 @@ class ModelDef(object):
     #     , name='decoder_lstm2'
     #     , trainable=decoder_trainable
     # )(res)
+
+    conf = TimeDistributed(
+        Dense(
+            enc_params * 5
+            , activation="relu"
+            , trainable=decoder_trainable
+            , name='decoder_post_conv_dense'
+        )
+    )
+    res = conf(res)
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
 
     conf = TimeDistributed(
         Dense(
