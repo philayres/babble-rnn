@@ -1,6 +1,6 @@
 import keras as keras
 from keras.models import Sequential, Model
-from keras.layers import Dense, Activation, Dropout, TimeDistributed, Concatenate, Input, UpSampling2D
+from keras.layers import Dense, Activation, Dropout, TimeDistributed, Concatenate, Input, UpSampling2D, ZeroPadding2D
 from keras.layers import GRU, LSTM, Conv2D, Conv1D, Reshape, Flatten, Permute, AveragePooling2D, MaxPooling2D, RepeatVector, Conv2DTranspose, LocallyConnected2D
 import keras.optimizers as optimizers
 import numpy as np
@@ -364,7 +364,7 @@ class ModelDef(object):
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
-    
+
     conf = TimeDistributed(keras.layers.Reshape((enc_params), trainable=decoder_trainable))
     res_pt = conf(res_pt)
 
