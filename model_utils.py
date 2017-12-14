@@ -105,10 +105,10 @@ class ModelUtils(object):
 
     if len(basic_args) > 2:
       self.model_filename = basic_args[2]
-      self.log("using command line model filename:",self.model_filename)
+      #self.log("using command line model filename:",self.model_filename)
     else:
       self.model_filename = self.config.model_filename
-      self.log("using configured model_filename:",self.config.model_filename)
+      #self.log("using configured model_filename:",self.config.model_filename)
 
 
 
