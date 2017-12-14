@@ -173,6 +173,26 @@ class ModelDef(object):
 
     res = keras.layers.Reshape((-1, conv_count), trainable=encoder_trainable)(res)
 
+
+    conf = AveragePooling2D(pool_size=(3,1), strides=(2,1), padding="valid")
+    res_mean = conf(encoder_input)
+    print(conf.get_config())
+    res_mean = AveragePooling2D(pool_size=(3,1), strides=(2,1), padding="valid")(res_mean)
+    res_mean = conf(res_mean)
+    print(conf.get_config())
+
+    res = keras.layers.concatenate([res, res_mean])
+
+    conf = TimeDistributed(
+        Dense(
+            enc_params * 5
+            , activation="relu"
+            , trainable=encoder_trainable
+            , name="encoder_concat_chains_dense"
+        )
+    )
+    res = conf(res)
+
     conf = TimeDistributed(
         Dense(
             enc_params
