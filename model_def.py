@@ -328,21 +328,61 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-    # # Trying to reduce autoencoder loss below 0.78
-    # res = LSTM(
-    #     framelen
-    #     , return_sequences=True
-    #     , name='decoder_lstm'
-    #     , trainable=decoder_trainable
-    # )(res)
-    #
-    # # Trying to reduce autoencoder loss below 0.78
-    # res = LSTM(
-    #     framelen * 3
-    #     , return_sequences=True
-    #     , name='decoder_lstm2'
-    #     , trainable=decoder_trainable
-    # )(res)
+
+
+    # Pass through the input
+
+    conf = TimeDistributed(
+        Dense(
+            enc_params
+            , activation="relu"
+            , trainable=decoder_trainable
+            , name='decoder_pass_thru_dense_in'
+        )
+    )
+    res_pt = conf(decoder_input)
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
+
+
+    conf = UpSampling2D(
+        size=[4,1]
+        , data_format='channels_last'
+        , trainable=decoder_trainable
+    )
+    res_pt = conf(res_pt)
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
+
+    conf = TimeDistributed(
+        Dense(
+            framelen * 5
+            , activation="relu"
+            , trainable=decoder_trainable
+            , name='decoder_pass_thru_dense_wide'
+        )
+    )
+    res_pt = conf(res)
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
+
+    conf = TimeDistributed(
+        Dense(
+            framelen
+            , activation="relu"
+            , trainable=decoder_trainable
+            , name='decoder_pass_thru_dense'
+        )
+    )
+    res_pt = conf(res)
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
+
+    res = keras.layers.concatenate([res, res_pt])
 
     conf = TimeDistributed(
         Dense(
