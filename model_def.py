@@ -230,7 +230,7 @@ class ModelDef(object):
 
     conf = TimeDistributed(
         Dense(
-            enc_params
+            enc_params - 3
             , activation="relu"
             , trainable=encoder_trainable
             , name="encoder_final_dense"
@@ -241,6 +241,29 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
+    # Add a digest of the second chain into the output
+    conf = TimeDistributed(
+        Dense(
+            framelen * 3
+            , activation="relu"
+            , trainable=encoder_trainable
+            , name="encoder_concat_chains_dense"
+        )
+    )
+    res_mean = conf(res_mean)
+
+    conf = TimeDistributed(
+        Dense(
+            3
+            , activation="relu"
+            , trainable=encoder_trainable
+            , name="encoder_concat_chains_dense"
+        )
+    )
+    res_mean = conf(res_mean)
+
+    # Concatenate the results
+    res = keras.layers.concatenate([res, res_mean])
 
     encoder_output = res
 
