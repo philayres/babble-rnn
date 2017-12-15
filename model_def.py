@@ -42,7 +42,7 @@ class ModelDef(object):
     short_input_len = frame_seq_len - overlap_sequence*2
 
     self.conv_count = 16
-    enc_params = 20
+    enc_params = 23
 
 
     generator_trainable = self.generator_trainable
@@ -140,6 +140,7 @@ class ModelDef(object):
       return self.models.get('encoder_model')
     framelen = shape[1]
     in_scale = 2
+    pt_len = 3
     in_count = framelen * in_scale
     encoder_trainable = self.encoder_trainable
 
@@ -230,7 +231,7 @@ class ModelDef(object):
 
     conf = TimeDistributed(
         Dense(
-            enc_params - 3
+            enc_params - pt_len
             , activation="relu"
             , trainable=encoder_trainable
             , name="encoder_final_dense"
@@ -254,7 +255,7 @@ class ModelDef(object):
 
     conf = TimeDistributed(
         Dense(
-            3
+            pt_len
             , activation="relu"
             , trainable=encoder_trainable
             , name="encoder_concat_chains_dense"
@@ -290,11 +291,26 @@ class ModelDef(object):
     if self.models.get('decoder_model'):
       return self.models.get('decoder_model')
 
+    pt_len = 3
+
     decoder_trainable = self.decoder_trainable
     enc_params = shape[1]
     conv_count = self.conv_count
 
     res = decoder_input = Input(shape=shape, dtype='float32', name="decoder_input")
+
+    conf = TimeDistributed(
+        Dense(
+            enc_params - pt_len
+            , activation="relu"
+            , trainable=decoder_trainable
+            , name='decoder_pre_conv_dense'
+        )
+    )
+    res = conf(res)
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
 
     conf = TimeDistributed(
             keras.layers.Reshape(
@@ -367,7 +383,7 @@ class ModelDef(object):
 
     conf = TimeDistributed(
         Dense(
-            enc_params
+            pt_len
             , activation="relu"
             , trainable=decoder_trainable
             , name='decoder_pass_thru_dense_in'
@@ -379,7 +395,7 @@ class ModelDef(object):
     print(conf.output_shape)
 
 
-    conf = TimeDistributed(keras.layers.Reshape((enc_params, 1), trainable=decoder_trainable))
+    conf = TimeDistributed(keras.layers.Reshape((pt_len, 1), trainable=decoder_trainable))
     res_pt = conf(res_pt)
 
     conf = UpSampling2D(
@@ -398,7 +414,7 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-    conf = keras.layers.Reshape((-1, enc_params), trainable=decoder_trainable)
+    conf = keras.layers.Reshape((-1, pt_len), trainable=decoder_trainable)
     res_pt = conf(res_pt)
 
     conf = TimeDistributed(
@@ -427,6 +443,8 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
+
+    # Final stage of decoder
     res = keras.layers.concatenate([res, res_pt])
 
     conf = TimeDistributed(
