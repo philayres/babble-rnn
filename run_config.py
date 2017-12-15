@@ -9,7 +9,7 @@ class RunConfig(object):
   start_iteration = 0
 
   # number of training iterations
-  num_iterations = 1200
+  num_iterations = 15000
 
   # number of frame sequences (each of length frame_seq_len) that make up a batch during .fit()
   # gradients are updated after each of these batches
