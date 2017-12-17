@@ -174,15 +174,15 @@ class ModelDef(object):
 
     res = keras.layers.Reshape((-1, conv_count), trainable=encoder_trainable)(res)
 
-    conf = TimeDistributed(
-        Dense(
-            conv_count
-            , activation="softmax"
-            , trainable=encoder_trainable
-            , name="encoder_softmax"
-        )
-    )
-    res = conf(res)
+    # conf = TimeDistributed(
+    #     Dense(
+    #         conv_count
+    #         , activation="softmax"
+    #         , trainable=encoder_trainable
+    #         , name="encoder_softmax"
+    #     )
+    # )
+    # res = conf(res)
 
 
     # Second chain - pooling input data parameter by parameter
