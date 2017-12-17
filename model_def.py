@@ -136,7 +136,7 @@ class ModelDef(object):
         , name='generator_parallel_td_final'
     )
 
-    res = Average((generator_output, res))
+    res = keras.layers.Average([generator_output, res])
 
     # res = self.decoder_model(framelen, (-1, enc_params))(generator_output)
 
