@@ -1,6 +1,6 @@
 import keras as keras
 from keras.models import Sequential, Model
-from keras.layers import Dense, Activation, Dropout, TimeDistributed, Concatenate, Input, UpSampling2D, ZeroPadding2D, Average
+from keras.layers import Dense, Activation, Dropout, TimeDistributed, Concatenate, Input, UpSampling2D, ZeroPadding2D, average
 from keras.layers import GRU, LSTM, Conv2D, Conv1D, Reshape, Flatten, Permute, AveragePooling2D, MaxPooling2D, RepeatVector, Conv2DTranspose, LocallyConnected2D
 import keras.optimizers as optimizers
 import numpy as np
@@ -136,7 +136,7 @@ class ModelDef(object):
         , name='generator_parallel_td_final'
     )
 
-    res = keras.layers.Average([generator_output, res])
+    res = keras.layers.average([generator_output, res])
 
     # res = self.decoder_model(framelen, (-1, enc_params))(generator_output)
 
