@@ -105,7 +105,7 @@ class Generator:
 
         fn_postfix = "output_" + str(outi) + "_" + str(iteration)
 
-        ofn = utils.open_output_file(fn_postfix)
+        ofn = utils.open_output_file(fn_postfix, output_index=outi)
         utils.log("saving generated sample output to: ", ofn)
 
         utils.log("generating sample data of length: ", generate_len)
@@ -225,5 +225,5 @@ class Generator:
         utils.log("wrote frames: ", len(generated))
 
         if utils.generate_mode():
-          utils.log("converting:", utils.output_fn)
-          call(["bash", "./c2towav.sh", utils.output_fn])
+          utils.log("converting:", utils.output_fn + '_' + str(outi))
+          call(["bash", "./c2towav.sh", utils.output_fn + '_' + str(outi)])

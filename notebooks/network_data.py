@@ -28,7 +28,7 @@ def model_config(network_tag):
     print("stateful", c.get('stateful',""))
     print()
 
-def plot_training_loss(network_tag, ln, legend=None, weights=None, yscale=None, columns=None, start_index=0):
+def plot_training_loss(network_tag, ln, legend=None, weights=None, yscale=None, columns=None, start_index=0, y_max=None):
   dataframe = pandas.io.parsers.read_csv(home + "/store/c2gen/out/" + network_tag + "/training.log")
 
   if columns is not None:
@@ -41,8 +41,10 @@ def plot_training_loss(network_tag, ln, legend=None, weights=None, yscale=None, 
   if weights is not None:
     data = data * weights
 
-  plt.plot(data[start_index : ])
-
+  plt.plot(data)
+  plt.xlim([start_index, len(data)])
+  if y_max is not None:
+    plt.ylim([0, y_max])
   legend = legend or list(dataframe.columns.values)
 
   plt.legend(legend, loc='center left', bbox_to_anchor=(1, 0.5))

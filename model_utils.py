@@ -194,11 +194,13 @@ class ModelUtils(object):
     model = self.model_def.model
     return model.save_weights(self.h5_weights_filename+str(iteration)+".h5")
 
-  def open_output_file(self, iteration):
+  def open_output_file(self, iteration, output_index=None):
     if self.training_mode():
       output_fn = self.output_fn+str(iteration)
     else:
       output_fn = self.output_fn
+      if output_index is not None:
+        output_fn += '_' + str(output_index)
     self.output_file = open(output_fn, "wb")
     return output_fn
 
