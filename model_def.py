@@ -515,9 +515,9 @@ class ModelDef(object):
 
     encoder_loss_prop = 0
 
-    main_loss_prop = 0.2
-    mid_loss_prop = 0.4
-    generator_loss_prop = 0.4
+    main_loss_prop = 0.06
+    mid_loss_prop = 0.47
+    generator_loss_prop = 0.47
 
     if self.decoder_trainable and not self.generator_trainable:
       main_loss_prop = 0
