@@ -340,7 +340,6 @@ class ModelDef(object):
         , output_shape=(enc_params-pt_len,)
         , trainable=decoder_trainable
       )
-      , output_shape=(shape[0], enc_params-pt_len)
     )
 
     res = conf(res)
