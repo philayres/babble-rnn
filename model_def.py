@@ -1,6 +1,6 @@
 import keras as keras
 from keras.models import Sequential, Model
-from keras.layers import Dense, Activation, Dropout, TimeDistributed, Concatenate, Input, UpSampling2D, ZeroPadding2D, average
+from keras.layers import Dense, Activation, Dropout, TimeDistributed, Concatenate, Input, UpSampling2D, ZeroPadding2D, average, Lambda
 from keras.layers import GRU, LSTM, Conv2D, Conv1D, Reshape, Flatten, Permute, AveragePooling2D, MaxPooling2D, RepeatVector, Conv2DTranspose, LocallyConnected2D
 import keras.optimizers as optimizers
 import numpy as np
@@ -326,14 +326,20 @@ class ModelDef(object):
 
     res = decoder_input = Input(shape=shape, dtype='float32', name="decoder_input")
 
+    # conf = TimeDistributed(
+    #     Dense(
+    #         enc_params - pt_len
+    #         , activation="relu"
+    #         , trainable=decoder_trainable
+    #         , name='decoder_pre_conv_dense'
+    #     )
+    # )
     conf = TimeDistributed(
-        Dense(
-            enc_params - pt_len
-            , activation="relu"
-            , trainable=decoder_trainable
-            , name='decoder_pre_conv_dense'
-        )
+      Lambda(
+        lambda x: x[ : enc_params-pt_len]
+      )
     )
+
     res = conf(res)
     print(conf.get_config())
     print(conf.input_shape)
@@ -407,15 +413,21 @@ class ModelDef(object):
 
 
     # Pass through the input
-
     conf = TimeDistributed(
-        Dense(
-            pt_len
-            , activation="relu"
-            , trainable=decoder_trainable
-            , name='decoder_pass_thru_dense_in'
-        )
+      Lambda(
+        lambda x: x[enc_params-pt_len : enc_params]
+      )
     )
+
+
+    # conf = TimeDistributed(
+    #     Dense(
+    #         pt_len
+    #         , activation="relu"
+    #         , trainable=decoder_trainable
+    #         , name='decoder_pass_thru_dense_in'
+    #     )
+    # )
     res_pt = conf(decoder_input)
     print(conf.get_config())
     print(conf.input_shape)
