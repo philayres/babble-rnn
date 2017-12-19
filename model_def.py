@@ -355,7 +355,8 @@ class ModelDef(object):
 
     conf = TimeDistributed(
       keras.layers.Reshape(
-        (1, enc_params-pt_len)
+        # (1, enc_params-pt_len)
+        (1, enc_params)
         , trainable=decoder_trainable
       )
       # , input_shape=(shape[0], enc_params-pt_len)
