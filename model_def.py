@@ -42,7 +42,7 @@ class ModelDef(object):
     short_input_len = frame_seq_len - overlap_sequence*2
 
     self.conv_count = 16
-    enc_params = 30
+    enc_params = 23
 
 
     generator_trainable = self.generator_trainable
@@ -334,13 +334,11 @@ class ModelDef(object):
     #         , name='decoder_pre_conv_dense'
     #     )
     # )
-    conf = TimeDistributed(
-      Lambda(
-        lambda x: x[ : enc_params-pt_len]
-        , output_shape=(enc_params-pt_len,)
+    conf Lambda(
+        lambda x: x[:][:][ : enc_params-pt_len]
+        , output_shape=(-1, shape[0], enc_params-pt_len)
         , trainable=decoder_trainable
       )
-    )
 
     res = conf(res)
     print(conf.get_config())
@@ -349,7 +347,7 @@ class ModelDef(object):
 
     conf = TimeDistributed(
       keras.layers.Reshape(
-        (1, enc_params-pt_len)        
+        (1, enc_params-pt_len)
         , trainable=decoder_trainable
       )
       # , input_shape=(shape[0], enc_params-pt_len)
@@ -416,13 +414,12 @@ class ModelDef(object):
 
 
     # Pass through the input
-    conf = TimeDistributed(
-      Lambda(
-        lambda x: x[enc_params-pt_len : enc_params]
-        , output_shape=(pt_len,)
+    conf = Lambda(
+        lambda x: x[:][:][enc_params-pt_len : enc_params]
+        , output_shape=(-1, shape[0], pt_len)
         , trainable=decoder_trainable
       )
-    )
+
 
 
     # conf = TimeDistributed(
