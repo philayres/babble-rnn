@@ -334,20 +334,14 @@ class ModelDef(object):
     #         , name='decoder_pre_conv_dense'
     #     )
     # )
-    # conf = TimeDistributed(
-    #   Lambda(
-    #     lambda x: x[ : enc_params-pt_len]
-    #     , output_shape=(enc_params-pt_len,)
-    #     , trainable=decoder_trainable
-    #   )
-    # )
     conf = TimeDistributed(
       Lambda(
-        lambda x: x
-        , output_shape=(enc_params,)
+        lambda x: x[ : enc_params-pt_len]
+        , output_shape=(enc_params-pt_len,)
         , trainable=decoder_trainable
       )
     )
+
     res = conf(res)
     print(conf.get_config())
     print(conf.input_shape)
@@ -355,8 +349,7 @@ class ModelDef(object):
 
     conf = TimeDistributed(
       keras.layers.Reshape(
-        # (1, enc_params-pt_len)
-        (1, enc_params)
+        (1, enc_params-pt_len)        
         , trainable=decoder_trainable
       )
       # , input_shape=(shape[0], enc_params-pt_len)
