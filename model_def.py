@@ -42,7 +42,7 @@ class ModelDef(object):
     short_input_len = frame_seq_len - overlap_sequence*2
 
     self.conv_count = 16
-    enc_params = 23
+    enc_params = 30
 
 
     generator_trainable = self.generator_trainable
@@ -531,8 +531,8 @@ class ModelDef(object):
 
     encoder_loss_prop = 0
 
-    main_loss_prop = 0.3
-    mid_loss_prop = 0.1
+    main_loss_prop = 0.1
+    mid_loss_prop = 0.3
     generator_loss_prop = 0.6
 
     if self.decoder_trainable and not self.generator_trainable:
