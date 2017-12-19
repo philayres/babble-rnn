@@ -340,6 +340,7 @@ class ModelDef(object):
         , output_shape=(enc_params-pt_len,)
         , trainable=decoder_trainable
       )
+      , output_shape=(shape[0], enc_params-pt_len)
     )
 
     res = conf(res)
@@ -348,11 +349,12 @@ class ModelDef(object):
     print(conf.output_shape)
 
     conf = TimeDistributed(
-            keras.layers.Reshape(
-              (1, enc_params-pt_len)
-              , trainable=decoder_trainable
-            )
-          )
+      keras.layers.Reshape(
+        (1, enc_params-pt_len)
+        , trainable=decoder_trainable
+      )
+      , input_shape=(shape[0], enc_params-pt_len)
+    )
     res = conf(res)
     print(conf.get_config())
     print(conf.input_shape)
