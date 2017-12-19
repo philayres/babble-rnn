@@ -334,12 +334,13 @@ class ModelDef(object):
     #         , name='decoder_pre_conv_dense'
     #     )
     # )
-    conf = Lambda(
+    conf = TimeDistributed(
+      Lambda(
         lambda x: x[:][ : enc_params-pt_len]
-        , output_shape=(shape[0], enc_params-pt_len)
+        , output_shape=(enc_params-pt_len)
         , trainable=decoder_trainable
       )
-
+    )
     res = conf(res)
     print(conf.get_config())
     print(conf.input_shape)
@@ -414,11 +415,13 @@ class ModelDef(object):
 
 
     # Pass through the input
-    conf = Lambda(
+    conf = TimeDistributed(
+      Lambda(
         lambda x: x[:][enc_params-pt_len : enc_params]
-        , output_shape=(shape[0], pt_len)
+        , output_shape=(pt_len)
         , trainable=decoder_trainable
       )
+    )
 
 
 
