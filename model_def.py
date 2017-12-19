@@ -334,7 +334,7 @@ class ModelDef(object):
     #         , name='decoder_pre_conv_dense'
     #     )
     # )
-    conf Lambda(
+    conf = Lambda(
         lambda x: x[:][:][ : enc_params-pt_len]
         , output_shape=(-1, shape[0], enc_params-pt_len)
         , trainable=decoder_trainable
