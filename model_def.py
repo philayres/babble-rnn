@@ -337,6 +337,8 @@ class ModelDef(object):
     conf = TimeDistributed(
       Lambda(
         lambda x: x[ : enc_params-pt_len]
+        , output_shape=(enc_params-pt_len,)
+        , trainable=decoder_trainable
       )
     )
 
@@ -416,6 +418,8 @@ class ModelDef(object):
     conf = TimeDistributed(
       Lambda(
         lambda x: x[enc_params-pt_len : enc_params]
+        , output_shape=(pt_len,)
+        , trainable=decoder_trainable
       )
     )
 
