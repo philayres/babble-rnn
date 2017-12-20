@@ -42,7 +42,7 @@ class ModelDef(object):
     short_input_len = frame_seq_len - overlap_sequence*2
 
     self.conv_count = 16
-    enc_params = 23
+    enc_params = 15
 
 
     generator_trainable = self.generator_trainable
@@ -112,31 +112,31 @@ class ModelDef(object):
     print(conf.output_shape)
 
 
-    # parallel dense layers
-    res = encoder_output
-
-    # parallel dense layers
-    for i in range(5):
-      conf = TimeDistributed(
-          Dense(
-            200
-            , activation="relu"
-            , trainable=generator_trainable
-          )
-          , name='generator_parallel_td'+str(i)
-      )
-      res = conf(res)
-
-    conf = TimeDistributed(
-        Dense(
-          enc_params
-          , activation="relu"
-          , trainable=generator_trainable
-        )
-        , name='generator_parallel_td_final'
-    )
-    res = conf(res)
-    res = keras.layers.average([generator_output, res])
+    # # parallel dense layers
+    # res = encoder_output
+    #
+    # # parallel dense layers
+    # for i in range(5):
+    #   conf = TimeDistributed(
+    #       Dense(
+    #         200
+    #         , activation="relu"
+    #         , trainable=generator_trainable
+    #       )
+    #       , name='generator_parallel_td'+str(i)
+    #   )
+    #   res = conf(res)
+    #
+    # conf = TimeDistributed(
+    #     Dense(
+    #       enc_params
+    #       , activation="relu"
+    #       , trainable=generator_trainable
+    #     )
+    #     , name='generator_parallel_td_final'
+    # )
+    # res = conf(res)
+    # res = keras.layers.average([generator_output, res])
 
     # res = self.decoder_model(framelen, (-1, enc_params))(generator_output)
 
