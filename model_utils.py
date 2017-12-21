@@ -279,7 +279,7 @@ class ModelUtils(object):
   def custom_objects(self):
     return {
       "CustomObjects": CustomObjects,
-      # "codec2_param_error": CustomObjects.codec2_param_error,
+      "codec2_param_error": CustomObjects.codec2_param_error,
       "codec2_param_error_td": CustomObjects.codec2_param_error_td
       }
 
