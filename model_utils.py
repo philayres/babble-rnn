@@ -156,7 +156,7 @@ class ModelUtils(object):
   def load_model(self):
 
     self.log("loading model: " + self.model_filename)
-    self.model_def.model = load_model(self.model_filename, custom_objects=self.model_def.loss_types())
+    self.model_def.model = load_model(self.model_filename, custom_objects=self.custom_objects())
 
     if self.training_mode():
       self.log("saving config after loading model")
@@ -276,12 +276,12 @@ class ModelUtils(object):
     self.logfile.close()
     sys.exit(0)
 
-  # def custom_objects(self):
-  #   return {
-  #     "CustomObjects": CustomObjects,
-  #     "codec2_param_error": CustomObjects.codec2_param_error,
-  #     "codec2_param_error_td": CustomObjects.codec2_param_error_td
-  #     }
+  def custom_objects(self):
+    return {
+      "CustomObjects": CustomObjects,
+      # "codec2_param_error": CustomObjects.codec2_param_error,
+      "codec2_param_error_td": CustomObjects.codec2_param_error_td
+      }
 
   def test_seed_data(self, all_frames, start_index):
     self.open_output_file(0)
