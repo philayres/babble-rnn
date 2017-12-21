@@ -523,12 +523,15 @@ class ModelDef(object):
     return self.models['decoder_model']
 
 
+  def loss_types(self):
+    loss = CustomObjects.codec2_param_error_td
+    # other loss options: CustomObjects.codec2_param_mean_square_error; 'mean_absolute_error'; 'cosine_proximity'
+
+    return [loss, loss, 'mean_absolute_error', 'mean_absolute_error']
 
   def compile_model(self):
     self.utils.log("Compiling model")
 
-    loss = CustomObjects.codec2_param_error_td
-    # other loss options: CustomObjects.codec2_param_mean_square_error; 'mean_absolute_error'; 'cosine_proximity'
 
     encoder_loss_prop = 0
 
@@ -548,7 +551,7 @@ class ModelDef(object):
     self.utils.log("Loss weightings:", main_loss_prop, mid_loss_prop, generator_loss_prop, encoder_loss_prop)
 
     self.model.compile(
-        loss=[loss, loss, 'mean_absolute_error', 'mean_absolute_error'],
+        loss=self.loss_types(),
         loss_weights=[main_loss_prop, mid_loss_prop, generator_loss_prop, encoder_loss_prop],
         optimizer=self.get_optimizer_from_config())
     self.utils.log_model_summary()
