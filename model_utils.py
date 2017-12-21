@@ -113,7 +113,7 @@ class ModelUtils(object):
 
 
     if named_args.get('generate-len', None):
-      self.one_off_generate_len = int(named_args['generate-len'])
+      self.config.one_off_generate_len = int(named_args['generate-len'])
 
     if named_args.get('load-weights', None):
       self.load_weights = named_args['load-weights']
@@ -239,6 +239,8 @@ class ModelUtils(object):
       args = []
       for a in inargs:
         args.append(str(a))
+        print(str(a)),
+      print
       self.buffered_logs.append(str.join(" ", args) + "\n")
       return
     elif len(self.buffered_logs) > 0:

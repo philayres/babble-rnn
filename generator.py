@@ -91,13 +91,19 @@ class Generator:
     utils = self.utils
     all_frames = self.all_frames
     seed_seq_len = self.seed_seq_len
-    generate_len = self.generate_len
     framelen = self.config.framelen
     num_frames = self.num_frames
     overlap_sequence = self.config.overlap_sequence
     generate_num_outputs = self.config.generate_num_outputs
     frame_seq_len = self.config.frame_seq_len
     use_short_input = False
+
+    if utils.generate_mode() :
+      generate_len = self.config.one_off_generate_len
+    else:
+      generate_len = self.generate_len
+
+
 
     model_def = utils.model_def
 
@@ -134,7 +140,7 @@ class Generator:
 
         for i in range(loop_len):
           if utils.generate_mode():
-            print("Generating", i, "of", generate_len)
+            print("Generating", i, "of", loop_len-1)
           # setup seed input
           x = np.zeros((1, seed_seq_len, framelen), dtype=np.float32)
         #   if overlap_sequence != 0:
@@ -156,7 +162,7 @@ class Generator:
           else:
             inx = x
 
-          if utils.generate_mode() : utils.log("predicting",i)
+          if utils.generate_mode() : utils.log("predicting", i)
           # run the prediction for the next frame, getting the result
           # from the specified output, outi
           all_predicted_frame_props = model_def.model.predict_on_batch(inx)
@@ -171,7 +177,7 @@ class Generator:
 
           predicted_frame_props = all_predicted_frame_props[outi]
 
-          if loop_len > 0:
+          if loop_len > 0 and i < loop_len-1:
             # predicted_frame_props = model_def.model.predict(x,
             # batch_size=self.generate_len, verbose=0)[0]
             # generate a Codec 2 frame from the predicted frame property values

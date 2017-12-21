@@ -74,6 +74,9 @@ class RunConfig(object):
   # when using --generate=audiofile on the command line, this setting is ignored
   generate_len = 200
 
+  # same but for one off generation runs
+  one_off_generate_len = 200
+
   # flag to indicate use of Stateful LSTMs. shuffle should be set to False  when using stateful=True
   # learn_next_step = False is probably also required
   stateful = False
