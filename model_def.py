@@ -119,7 +119,7 @@ class ModelDef(object):
     for i in range(15):
       conf = TimeDistributed(
           Dense(
-            200
+            500
             , activation="relu"
             , trainable=generator_trainable
           )
