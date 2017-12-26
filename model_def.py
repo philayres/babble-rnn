@@ -113,30 +113,30 @@ class ModelDef(object):
 
 
     # # parallel dense layers
-    # res = encoder_output
-    #
-    # # parallel dense layers
-    # for i in range(5):
-    #   conf = TimeDistributed(
-    #       Dense(
-    #         200
-    #         , activation="relu"
-    #         , trainable=generator_trainable
-    #       )
-    #       , name='generator_parallel_td'+str(i)
-    #   )
-    #   res = conf(res)
-    #
-    # conf = TimeDistributed(
-    #     Dense(
-    #       enc_params
-    #       , activation="relu"
-    #       , trainable=generator_trainable
-    #     )
-    #     , name='generator_parallel_td_final'
-    # )
-    # res = conf(res)
-    # res = keras.layers.average([generator_output, res])
+    res = encoder_output
+
+    # parallel dense layers
+    for i in range(15):
+      conf = TimeDistributed(
+          Dense(
+            200
+            , activation="relu"
+            , trainable=generator_trainable
+          )
+          , name='generator_parallel_td'+str(i)
+      )
+      res = conf(res)
+
+    conf = TimeDistributed(
+        Dense(
+          enc_params
+          , activation="relu"
+          , trainable=generator_trainable
+        )
+        , name='generator_parallel_td_final'
+    )
+    res = conf(res)
+    res = keras.layers.average([generator_output, res])
 
     # res = self.decoder_model(framelen, (-1, enc_params))(generator_output)
 
