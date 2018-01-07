@@ -72,7 +72,7 @@ class ModelDef(object):
     # Generator
 
     conf = LSTM(
-        128
+        512
         , return_sequences=True
         , name='generator_LSTM_0'
         , trainable=generator_trainable
@@ -84,14 +84,14 @@ class ModelDef(object):
 
 
     res = LSTM(
-        128
+        512
         , return_sequences=True
         , name='generator_LSTM_1'
         , trainable=generator_trainable
     )(res)
 
     res = LSTM(
-        128
+        512
         , return_sequences=True
         , name='generator_LSTM_postconcat'
         , trainable=generator_trainable
@@ -111,32 +111,6 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-
-    # # parallel dense layers
-    res = encoder_output
-
-    # parallel dense layers
-    for i in range(15):
-      conf = TimeDistributed(
-          Dense(
-            500
-            , activation="relu"
-            , trainable=generator_trainable
-          )
-          , name='generator_parallel_td'+str(i)
-      )
-      res = conf(res)
-
-    conf = TimeDistributed(
-        Dense(
-          enc_params
-          , activation="relu"
-          , trainable=generator_trainable
-        )
-        , name='generator_parallel_td_final'
-    )
-    res = conf(res)
-    res = keras.layers.average([generator_output, res])
 
     # res = self.decoder_model(framelen, (-1, enc_params))(generator_output)
 
