@@ -71,11 +71,13 @@ class ModelDef(object):
 
     # Generator
 
-    conf = GRU(
-        256
+    conf = LSTM(
+        128
         , return_sequences=True
         , name='generator_LSTM_0'
         , trainable=generator_trainable
+        , kernel_initializer='he_normal'
+        , recurrent_initializer='he_normal'
     )
     res = conf(encoder_output)
     print(conf.get_config())
@@ -83,18 +85,22 @@ class ModelDef(object):
     print(conf.output_shape)
 
 
-    res = GRU(
-        256
+    res = LSTM(
+        128
         , return_sequences=True
         , name='generator_LSTM_1'
         , trainable=generator_trainable
+        , kernel_initializer='he_normal'
+        , recurrent_initializer='he_normal'
     )(res)
 
-    res = GRU(
-        256
+    res = LSTM(
+        128
         , return_sequences=True
         , name='generator_LSTM_postconcat'
         , trainable=generator_trainable
+        , kernel_initializer='he_normal'
+        , recurrent_initializer='he_normal'
     )(res)
 
     conf = TimeDistributed(
@@ -102,6 +108,7 @@ class ModelDef(object):
           enc_params
           , activation="relu"
           , trainable=generator_trainable
+          , kernel_initializer='he_normal'
         )
         , name='generator_TD_Dense_0'
     )
@@ -511,7 +518,7 @@ class ModelDef(object):
 
     main_loss_prop = 0.0
     mid_loss_prop = 0.1
-    generator_loss_prop = 0.90
+    generator_loss_prop = 0.9
 
     if self.decoder_trainable and not self.generator_trainable:
       main_loss_prop = 0
