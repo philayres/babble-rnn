@@ -71,8 +71,8 @@ class ModelDef(object):
 
     # Generator
 
-    conf = LSTM(
-        512
+    conf = GRU(
+        256
         , return_sequences=True
         , name='generator_LSTM_0'
         , trainable=generator_trainable
@@ -83,15 +83,15 @@ class ModelDef(object):
     print(conf.output_shape)
 
 
-    res = LSTM(
-        512
+    res = GRU(
+        256
         , return_sequences=True
         , name='generator_LSTM_1'
         , trainable=generator_trainable
     )(res)
 
-    res = LSTM(
-        512
+    res = GRU(
+        256
         , return_sequences=True
         , name='generator_LSTM_postconcat'
         , trainable=generator_trainable
@@ -510,8 +510,8 @@ class ModelDef(object):
     encoder_loss_prop = 0
 
     main_loss_prop = 0.0
-    mid_loss_prop = 0.01
-    generator_loss_prop = 0.99
+    mid_loss_prop = 0.1
+    generator_loss_prop = 0.90
 
     if self.decoder_trainable and not self.generator_trainable:
       main_loss_prop = 0
