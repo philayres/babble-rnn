@@ -18,8 +18,8 @@ class ModelDef(object):
 
   stateful = False
 
-  encoder_trainable = True
-  decoder_trainable = True
+  encoder_trainable = False
+  decoder_trainable = False
   generator_trainable = True
 
 
@@ -517,8 +517,8 @@ class ModelDef(object):
     encoder_loss_prop = 0
 
     main_loss_prop = 0.0
-    mid_loss_prop = 0.0
-    generator_loss_prop = 1.0
+    mid_loss_prop = 0.1
+    generator_loss_prop = 0.9
 
     if self.decoder_trainable and not self.generator_trainable:
       main_loss_prop = 0
