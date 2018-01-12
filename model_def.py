@@ -166,14 +166,32 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-    conf = Conv2D(conv_count, (3,14), strides=(2,1), padding='valid', data_format='channels_last', activation='relu', trainable=encoder_trainable)
+    conf = Conv2D(
+              conv_count
+              , (3,14)
+              , strides=(2,1)
+              , padding='valid'
+              , data_format='channels_last'
+              , activation='relu'
+              , kernel_initializer='he_normal'
+              , trainable=encoder_trainable
+            )
     res = conf(res)
 
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
 
-    conf = Conv2D(conv_count, (3,13), strides=(2,1), padding='valid', data_format='channels_last', activation='relu', trainable=encoder_trainable)
+    conf = Conv2D(
+              conv_count
+              , (3,13)
+              , strides=(2,1)
+              , padding='valid'
+              , data_format='channels_last'
+              , activation='relu'
+              , kernel_initializer='he_normal'
+              , trainable=encoder_trainable
+            )
     res = conf(res)
 
     print(conf.get_config())
@@ -182,15 +200,16 @@ class ModelDef(object):
 
     res = keras.layers.Reshape((-1, conv_count), trainable=encoder_trainable)(res)
 
-    # conf = TimeDistributed(
-    #     Dense(
-    #         conv_count
-    #         , activation="softmax"
-    #         , trainable=encoder_trainable
-    #         , name="encoder_softmax"
-    #     )
-    # )
-    # res = conf(res)
+    conf = TimeDistributed(
+        Dense(
+            conv_count
+            , activation="softmax"
+            , kernel_initializer='he_normal'
+            , trainable=encoder_trainable
+            , name="encoder_softmax"
+        )
+    )
+    res = conf(res)
 
 
     # Second chain - pooling input data parameter by parameter
@@ -231,6 +250,7 @@ class ModelDef(object):
         Dense(
             enc_params * 5
             , activation="relu"
+            , kernel_initializer='he_normal'
             , trainable=encoder_trainable
             , name="encoder_concat_chains_dense"
         )
@@ -241,6 +261,7 @@ class ModelDef(object):
         Dense(
             enc_params - pt_len
             , activation="relu"
+            , kernel_initializer='he_normal'
             , trainable=encoder_trainable
             , name="encoder_final_dense"
         )
@@ -255,6 +276,7 @@ class ModelDef(object):
         Dense(
             framelen * 3
             , activation="relu"
+            , kernel_initializer='he_normal'
             , trainable=encoder_trainable
             , name="encoder_concat_chains_dense"
         )
@@ -265,6 +287,7 @@ class ModelDef(object):
         Dense(
             pt_len
             , activation="relu"
+            , kernel_initializer='he_normal'
             , trainable=encoder_trainable
             , name="encoder_concat_chains_dense"
         )
@@ -340,13 +363,14 @@ class ModelDef(object):
     print(conf.output_shape)
 
     conf = Conv2DTranspose(
-              conv_count,
-              kernel_size=(3,13),
-              padding='valid',
-              strides=(2,1),
-              activation='relu',
-              data_format="channels_last",
-              trainable=decoder_trainable
+              conv_count
+              , kernel_size=(3,13)
+              , padding='valid'
+              , strides=(2,1)
+              , activation='relu'
+              , data_format="channels_last"
+              , kernel_initializer='he_normal'
+              , trainable=decoder_trainable
     )
     res = conf(res)
 
@@ -355,13 +379,14 @@ class ModelDef(object):
     print(conf.output_shape)
 
     conf = Conv2DTranspose(
-              conv_count,
-              kernel_size=(3,14),
-              strides=(2,1),
-              padding='valid',
-              activation='relu',
-              data_format="channels_last",
-              trainable=decoder_trainable
+              conv_count
+              , kernel_size=(3,14)
+              , strides=(2,1)
+              , padding='valid'
+              , activation='relu'
+              , data_format="channels_last"
+              , kernel_initializer='he_normal'
+              , trainable=decoder_trainable
     )
 
     res = conf(res)
@@ -371,13 +396,14 @@ class ModelDef(object):
 
     # Return a single filter pulling together the results of all conv_count filters
     conf = Conv2D(
-              1,
-              kernel_size=(2,14),
-              #  strides=(2,1),
-              padding='valid',
-              activation='sigmoid',
-              name='decoder_conv_squash',
-              trainable=decoder_trainable)
+              1
+              , kernel_size=(2,14)
+              #  , strides=(2,1)
+              , padding='valid'
+              , activation='sigmoid'
+              , name='decoder_conv_squash'
+              , kernel_initializer='he_normal'
+              , trainable=decoder_trainable)
     res = conf(res)
 
 
@@ -446,6 +472,7 @@ class ModelDef(object):
         Dense(
             framelen * 5
             , activation="relu"
+            , kernel_initializer='he_normal'
             , trainable=decoder_trainable
             , name='decoder_pass_thru_dense_wide'
         )
@@ -459,6 +486,7 @@ class ModelDef(object):
         Dense(
             framelen
             , activation="relu"
+            , kernel_initializer='he_normal'
             , trainable=decoder_trainable
             , name='decoder_pass_thru_dense'
         )
@@ -476,6 +504,7 @@ class ModelDef(object):
         Dense(
             enc_params * 5
             , activation="relu"
+            , kernel_initializer='he_normal'
             , trainable=decoder_trainable
             , name='decoder_post_conv_dense'
         )
@@ -489,6 +518,7 @@ class ModelDef(object):
         Dense(
             framelen
             , activation="relu"
+            , kernel_initializer='he_normal'
             , trainable=decoder_trainable
             , name='decoder_final_dense'
         )
@@ -517,8 +547,8 @@ class ModelDef(object):
     encoder_loss_prop = 0
 
     main_loss_prop = 0.0
-    mid_loss_prop = 0.01
-    generator_loss_prop = 0.99
+    mid_loss_prop = 0.05
+    generator_loss_prop = 0.95
 
     if self.decoder_trainable and not self.generator_trainable:
       main_loss_prop = 0

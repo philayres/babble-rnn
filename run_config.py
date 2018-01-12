@@ -101,7 +101,7 @@ class RunConfig(object):
   # name: exact case-sensitive name to match the class of the optimizer
   # params: the optional parameters to be used by the optimizer, e.g. {"lr": 0.01,...}
   optimizer = {
-    "name": "Nadam",
+    "name": "RMSprop",
     "params": {}
   }
 
