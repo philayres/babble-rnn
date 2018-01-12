@@ -200,16 +200,16 @@ class ModelDef(object):
 
     res = keras.layers.Reshape((-1, conv_count), trainable=encoder_trainable)(res)
 
-    conf = TimeDistributed(
-        Dense(
-            conv_count
-            , activation="softmax"
-            , kernel_initializer='he_normal'
-            , trainable=encoder_trainable
-            , name="encoder_softmax"
-        )
-    )
-    res = conf(res)
+    # conf = TimeDistributed(
+    #     Dense(
+    #         conv_count
+    #         , activation="softmax"
+    #         , kernel_initializer='he_normal'
+    #         , trainable=encoder_trainable
+    #         , name="encoder_softmax"
+    #     )
+    # )
+    # res = conf(res)
 
 
     # Second chain - pooling input data parameter by parameter
@@ -270,6 +270,22 @@ class ModelDef(object):
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
+
+
+
+    conf = TimeDistributed(
+        Dense(
+            enc_params - pt_len
+            , activation="softmax"
+            , kernel_initializer='he_normal'
+            , trainable=encoder_trainable
+            , name="encoder_softmax"
+        )
+    )
+    res = conf(res)
+
+
+
 
     # Add a digest of the second chain into the output
     conf = TimeDistributed(
