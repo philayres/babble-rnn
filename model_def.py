@@ -70,6 +70,8 @@ class ModelDef(object):
 
 
     # Generator
+    res = encoder_output
+    res = TimeDistributed(Dropout(0.05))(res)
 
     conf = LSTM(
         128
@@ -79,12 +81,12 @@ class ModelDef(object):
         , kernel_initializer='he_normal'
         , recurrent_initializer='he_normal'
     )
-    res = conf(encoder_output)
+    res = conf(res)
     print(conf.get_config())
     print(conf.input_shape)
     print(conf.output_shape)
 
-
+    res = TimeDistributed(Dropout(0.05))(res)
     res = LSTM(
         128
         , return_sequences=True
@@ -94,6 +96,7 @@ class ModelDef(object):
         , recurrent_initializer='he_normal'
     )(res)
 
+    res = TimeDistributed(Dropout(0.05))(res)
     res = LSTM(
         128
         , return_sequences=True
@@ -103,6 +106,7 @@ class ModelDef(object):
         , recurrent_initializer='he_normal'
     )(res)
 
+    res = TimeDistributed(Dropout(0.05))(res)
     conf = TimeDistributed(
         Dense(
           enc_params
