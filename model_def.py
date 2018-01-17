@@ -74,7 +74,7 @@ class ModelDef(object):
     res = TimeDistributed(Dropout(0.05))(res)
 
     conf = LSTM(
-        128
+        256
         , return_sequences=True
         , name='generator_LSTM_0'
         , trainable=generator_trainable
@@ -88,7 +88,7 @@ class ModelDef(object):
 
     res = TimeDistributed(Dropout(0.05))(res)
     res = LSTM(
-        128
+        256
         , return_sequences=True
         , name='generator_LSTM_1'
         , trainable=generator_trainable
@@ -98,13 +98,29 @@ class ModelDef(object):
 
     res = TimeDistributed(Dropout(0.05))(res)
     res = LSTM(
-        128
+        512
         , return_sequences=True
         , name='generator_LSTM_postconcat'
         , trainable=generator_trainable
         , kernel_initializer='he_normal'
         , recurrent_initializer='he_normal'
     )(res)
+
+    res = TimeDistributed(Dropout(0.05))(res)
+    conf = TimeDistributed(
+        Dense(
+          512
+          , activation="relu"
+          , trainable=generator_trainable
+          , kernel_initializer='he_normal'
+        )
+        , name='generator_TD_Dense_1'
+    )
+    res = generator_output = conf(res)
+
+    print(conf.get_config())
+    print(conf.input_shape)
+    print(conf.output_shape)
 
     res = TimeDistributed(Dropout(0.05))(res)
     conf = TimeDistributed(
