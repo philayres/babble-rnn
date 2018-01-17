@@ -1,6 +1,6 @@
 import keras as keras
 from keras.models import Sequential, Model
-from keras.layers import Dense, Activation, Dropout, TimeDistributed, Concatenate, Input, UpSampling2D, ZeroPadding2D, average, Lambda
+from keras.layers import Dense, Activation, Dropout, TimeDistributed, Concatenate, Input, UpSampling2D, ZeroPadding2D, average, Lambda, Bidirectional
 from keras.layers import GRU, LSTM, Conv2D, Conv1D, Reshape, Flatten, Permute, AveragePooling2D, MaxPooling2D, RepeatVector, Conv2DTranspose, LocallyConnected2D
 import keras.optimizers as optimizers
 import numpy as np
@@ -73,13 +73,15 @@ class ModelDef(object):
     res = encoder_output
     res = TimeDistributed(Dropout(0.05))(res)
 
-    conf = LSTM(
-        256
-        , return_sequences=True
-        , name='generator_LSTM_0'
-        , trainable=generator_trainable
-        , kernel_initializer='he_normal'
-        , recurrent_initializer='he_normal'
+    conf = Bidirectional(
+      LSTM(
+          256
+          , return_sequences=True
+          , name='generator_LSTM_0'
+          , trainable=generator_trainable
+          , kernel_initializer='he_normal'
+          , recurrent_initializer='he_normal'
+      )
     )
     res = conf(res)
     print(conf.get_config())
@@ -87,23 +89,27 @@ class ModelDef(object):
     print(conf.output_shape)
 
     res = TimeDistributed(Dropout(0.05))(res)
-    res = LSTM(
+    res = Bidirectional(
+      LSTM(
         256
         , return_sequences=True
         , name='generator_LSTM_1'
         , trainable=generator_trainable
         , kernel_initializer='he_normal'
         , recurrent_initializer='he_normal'
+      )
     )(res)
 
     res = TimeDistributed(Dropout(0.05))(res)
-    res = LSTM(
-        512
+    res = Bidirectional(
+      LSTM(
+        256
         , return_sequences=True
         , name='generator_LSTM_postconcat'
         , trainable=generator_trainable
         , kernel_initializer='he_normal'
         , recurrent_initializer='he_normal'
+      )
     )(res)
 
     res = TimeDistributed(Dropout(0.05))(res)
