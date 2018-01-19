@@ -83,7 +83,7 @@ class ModelDef(object):
           , recurrent_initializer='he_normal'
       )
     )
-    # res = conf(res)
+    res = conf(res)
     # print(conf.get_config())
     # print(conf.input_shape)
     # print(conf.output_shape)
@@ -101,7 +101,7 @@ class ModelDef(object):
     # )(res)
 
     res = TimeDistributed(Dropout(0.05))(res)
-    res = Bidirectional(
+    conf = Bidirectional(
       LSTM(
         512
         , return_sequences=True
@@ -110,7 +110,8 @@ class ModelDef(object):
         , kernel_initializer='he_normal'
         , recurrent_initializer='he_normal'
       )
-    )(res)
+    )
+    res = conf(res)
 
     # res = TimeDistributed(Dropout(0.05))(res)
     # conf = TimeDistributed(
