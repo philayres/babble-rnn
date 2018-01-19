@@ -12,6 +12,14 @@ import os
 
 home = os.environ.get('HOME')
 
+scale_3200 = [
+    1,
+      2**7,
+      2**5,
+      32,32,32,32,32,32,32,32,32,32
+   ]
+
+
 def model_config(network_tag):
   with open(home + "/store/c2gen/out/" + network_tag + "/jmodel-0.json") as data_file:
     data = json.load(data_file)
@@ -61,7 +69,7 @@ def plot_training_loss(network_tag, ln, legend=None, weights=None, yscale=None, 
 
 
 
-def plot_codec_params(network_tag, iteration, scale_up='full', loc='out'):
+def plot_codec_params(network_tag, iteration, scale_up='full', loc='out', test_data_fn=None, test_seed_start=0):
   iteration = str(iteration)
 
   if loc=='out':
@@ -87,23 +95,37 @@ def plot_codec_params(network_tag, iteration, scale_up='full', loc='out'):
     print("3200 rate codec\n")
     data = np.reshape(indata, (-1,13))
     if scale_up == 'full':
-      data = np.divide(data, [
-          1,
-            2**7,
-            2**5,
-            32,32,32,32,32,32,32,32,32,32
-         ])
+      data = np.divide(data, scale_3200)
     elif scale_up == 'orig':
       data
 
-  plt.plot(data)
+    if test_data_fn:
+      infilename = home + "/store/c2gen/"+test_data_fn
+      len_data = len(data)
+      testdata = np.fromfile(infilename, dtype=np.uint8)
+      tdc = np.reshape(testdata, (-1,13))[test_seed_start : test_seed_start+len_data]
+      if scale_up == 'full':
+        tdc = np.divide(tdc, scale_3200)
+      elif scale_up == 'orig':
+        tdc
+      print("Calculated diff for each parameter")
+      data = np.subtract(tdc.astype(np.float), data.astype(np.float))
+
+
+  res = plt.plot(data)
+
+
+  legend = ['voicing', 'Wo', 'E', 'LSP', 'LSP', 'LSP', 'LSP', 'LSP', 'LSP', 'LSP', 'LSP', 'LSP', 'LSP']
+
+  plt.legend(res, legend, loc='center left', bbox_to_anchor=(1, 0.5))
+
   plt.xlabel('time (frames)')
   plt.ylabel('audio params (units)')
   plt.title('Codec Params\n' + network_tag + " @ iteration " + iteration)
   plt.grid(True)
   plt.show()
 
-def plot_spec_params(network_tag, iteration, params='Voicing', loc='out'):
+def plot_spec_params(network_tag, iteration, params='Voicing', loc='out', lsp_param=[3,None], test_data_fn=None, test_seed_start=0):
   iteration = str(iteration)
   if loc=='out':
     fn = "/out-c2cb-" + iteration
@@ -132,9 +154,33 @@ def plot_spec_params(network_tag, iteration, params='Voicing', loc='out'):
     elif params == 'E':
       data = data[:, 2]
     elif params == 'LSPs':
-      data = data[:, 3:]
+      if len(lsp_param) == 2:
+        data = data[:, 3+lsp_param[0]:3+lsp_param[1] ]
+      else:
+        data = data[:, 3+lsp_param[0] ]
 
-  plt.plot(data)
+  if test_data_fn:
+    infilename = home + "/store/c2gen/"+test_data_fn
+    len_data = len(data)
+    testdata = np.fromfile(infilename, dtype=np.uint8)
+    testdatacol = np.reshape(testdata, (-1,13))[test_seed_start : test_seed_start+len_data]
+    if len(lsp_param) == 2:
+      tdc = testdatacol[:, 3+lsp_param[0]:3+lsp_param[1]]
+      data = np.append(data, tdc, axis=1)
+    else:
+      tdc = testdatacol[:,  3+lsp_param[0]]
+      data = np.vstack((data, tdc)).T
+
+
+
+  res = plt.plot(data)
+
+  if test_data_fn:
+    legend = ['generated', 'test data']
+
+    plt.legend(res, legend, loc='center left', bbox_to_anchor=(1, 0.5))
+
+
   plt.xlabel('time (frames)')
   plt.ylabel(params + ' (units)')
   plt.title(params + '\n' + network_tag + " @ iteration " + iteration)
