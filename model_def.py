@@ -20,7 +20,7 @@ class ModelDef(object):
 
   encoder_trainable = True
   decoder_trainable = True
-  generator_trainable = True
+  generator_trainable = False
 
 
   def __init__(self, utils, config):
