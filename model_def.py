@@ -75,7 +75,7 @@ class ModelDef(object):
 
     conf = Bidirectional(
       LSTM(
-          512
+          256
           , return_sequences=True
           , name='generator_LSTM_0'
           , trainable=generator_trainable
@@ -103,7 +103,7 @@ class ModelDef(object):
     res = TimeDistributed(Dropout(0.05))(res)
     conf = Bidirectional(
       LSTM(
-        512
+        256
         , return_sequences=True
         , name='generator_LSTM_postconcat'
         , trainable=generator_trainable
