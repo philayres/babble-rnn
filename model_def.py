@@ -113,17 +113,17 @@ class ModelDef(object):
     )
     res = conf(res)
 
-    # res = TimeDistributed(Dropout(0.05))(res)
-    # conf = TimeDistributed(
-    #     Dense(
-    #       512
-    #       , activation="relu"
-    #       , trainable=generator_trainable
-    #       , kernel_initializer='he_normal'
-    #     )
-    #     , name='generator_TD_Dense_1'
-    # )
-    # res = generator_output = conf(res)
+    res = TimeDistributed(Dropout(0.05))(res)
+    conf = TimeDistributed(
+        Dense(
+          512
+          , activation="relu"
+          , trainable=generator_trainable
+          , kernel_initializer='he_normal'
+        )
+        , name='generator_TD_Dense_1'
+    )
+    res = generator_output = conf(res)
 
     print(conf.get_config())
     print(conf.input_shape)
@@ -595,8 +595,8 @@ class ModelDef(object):
 
     if self.decoder_trainable and not self.generator_trainable:
       main_loss_prop = 0
-      mid_loss_prop = 1
-      generator_loss_prop = 0
+      mid_loss_prop = 1.0
+      generator_loss_prop = 0.0
     elif not self.decoder_trainable and self.generator_trainable:
       mid_loss_prop = 0
       main_loss_prop = 0.0
