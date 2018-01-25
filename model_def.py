@@ -71,16 +71,18 @@ class ModelDef(object):
 
     # Generator
     res = encoder_output
-    res = TimeDistributed(Dropout(0.05))(res)
+
 
     conf = Bidirectional(
       LSTM(
-          128
-          , return_sequences=True
-          , name='generator_LSTM_0'
-          , trainable=generator_trainable
-          , kernel_initializer='he_normal'
-          , recurrent_initializer='he_normal'
+        128
+        , return_sequences=True
+        , dropout=0.05
+        , recurrent_dropout=0.05
+        , name='generator_LSTM_0'
+        , trainable=generator_trainable
+        , kernel_initializer='he_normal'
+        , recurrent_initializer='he_normal'
       )
     )
     res = conf(res)
@@ -88,11 +90,13 @@ class ModelDef(object):
     print(conf.input_shape)
     print(conf.output_shape)
 
-    res = TimeDistributed(Dropout(0.05))(res)
+
     res = Bidirectional(
       LSTM(
         128
         , return_sequences=True
+        , dropout=0.05
+        , recurrent_dropout=0.05
         , name='generator_LSTM_1'
         , trainable=generator_trainable
         , kernel_initializer='he_normal'
@@ -100,11 +104,13 @@ class ModelDef(object):
       )
     )(res)
 
-    res = TimeDistributed(Dropout(0.05))(res)
+
     conf = Bidirectional(
       LSTM(
         128
         , return_sequences=True
+        , dropout=0.05
+        , recurrent_dropout=0.05
         , name='generator_LSTM_postconcat'
         , trainable=generator_trainable
         , kernel_initializer='he_normal'
