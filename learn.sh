@@ -31,6 +31,7 @@ wait_file "./out/$1/config.json" && {
   editor $NOTES_FILE
   git add out/$1/config.json
   git add out/$1/training.log
+  git add $NOTES_FILE
   git commit -a -m "Learning $1 $2 $3"
 }
 
