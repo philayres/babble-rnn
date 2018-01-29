@@ -18,9 +18,10 @@ class ModelDef(object):
 
   stateful = False
 
-  encoder_trainable = True
-  decoder_trainable = True
+  encoder_trainable = False
+  decoder_trainable = False
   generator_trainable = True
+  earlylstm_trainable = False
 
 
   def __init__(self, utils, config):
@@ -46,6 +47,7 @@ class ModelDef(object):
 
 
     generator_trainable = self.generator_trainable
+    earlylstm_trainable = self.earlylstm_trainable
 
     print("short_input_len", short_input_len)
 
@@ -80,7 +82,7 @@ class ModelDef(object):
         , dropout=0.05
         , recurrent_dropout=0.05
         , name='generator_LSTM_0'
-        , trainable=generator_trainable
+        , trainable=generator_trainable and earlylstm_trainable
         , kernel_initializer='he_normal'
         , recurrent_initializer='he_normal'
       )
@@ -98,7 +100,7 @@ class ModelDef(object):
         , dropout=0.05
         , recurrent_dropout=0.05
         , name='generator_LSTM_1'
-        , trainable=generator_trainable
+        , trainable=generator_trainable and earlylstm_trainable
         , kernel_initializer='he_normal'
         , recurrent_initializer='he_normal'
       )
@@ -112,12 +114,41 @@ class ModelDef(object):
         , dropout=0.05
         , recurrent_dropout=0.05
         , name='generator_LSTM_postconcat'
+        , trainable=generator_trainable and earlylstm_trainable
+        , kernel_initializer='he_normal'
+        , recurrent_initializer='he_normal'
+      )
+    )
+    res = conf(res)
+
+    conf = Bidirectional(
+      LSTM(
+        128
+        , return_sequences=True
+        , dropout=0.05
+        , recurrent_dropout=0.05
+        , name='generator_LSTM_3'
         , trainable=generator_trainable
         , kernel_initializer='he_normal'
         , recurrent_initializer='he_normal'
       )
     )
     res = conf(res)
+
+    conf = Bidirectional(
+      LSTM(
+        128
+        , return_sequences=True
+        , dropout=0.05
+        , recurrent_dropout=0.05
+        , name='generator_LSTM_4'
+        , trainable=generator_trainable
+        , kernel_initializer='he_normal'
+        , recurrent_initializer='he_normal'
+      )
+    )
+    res = conf(res)
+
 
     conf = TimeDistributed(
         Dense(
