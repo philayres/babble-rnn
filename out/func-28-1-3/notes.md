@@ -9,3 +9,8 @@ Run with arguments test/critiquepracticalreason_00_kant_64kb.c2cb-3200 --load-we
 Added in two new LSTMs and reloaded weights from last run.
 
 Disabled training on the 3 initial LSTMs and on encoder and decoder
+
+Going well!
+
+Restarted at 3000, having reenabled trainable flag for 
+the initial LSTMs, allowing all LSTMs to refine themselves.
