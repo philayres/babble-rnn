@@ -14,3 +14,7 @@ Going well!
 
 Restarted at 3000, having reenabled trainable flag for 
 the initial LSTMs, allowing all LSTMs to refine themselves.
+
+Restarted at 5450. Added 2 more LSTMs on the end, disabling the training 
+of existing early and mid LSTMs.
+

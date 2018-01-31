@@ -21,7 +21,8 @@ class ModelDef(object):
   encoder_trainable = False
   decoder_trainable = False
   generator_trainable = True
-  earlylstm_trainable = True
+  earlylstm_trainable = False
+  midlstm_trainable = False
 
 
   def __init__(self, utils, config):
@@ -48,6 +49,7 @@ class ModelDef(object):
 
     generator_trainable = self.generator_trainable
     earlylstm_trainable = self.earlylstm_trainable
+    midlstm_trainable = self.midlstm_trainable
 
     print("short_input_len", short_input_len)
 
@@ -128,7 +130,7 @@ class ModelDef(object):
         , dropout=0.05
         , recurrent_dropout=0.05
         , name='generator_LSTM_3'
-        , trainable=generator_trainable
+        , trainable=generator_trainable and midlstm_trainable
         , kernel_initializer='he_normal'
         , recurrent_initializer='he_normal'
       )
@@ -142,6 +144,20 @@ class ModelDef(object):
         , dropout=0.05
         , recurrent_dropout=0.05
         , name='generator_LSTM_4'
+        , trainable=generator_trainable and midlstm_trainable
+        , kernel_initializer='he_normal'
+        , recurrent_initializer='he_normal'
+      )
+    )
+    res = conf(res)
+
+    conf = Bidirectional(
+      LSTM(
+        128
+        , return_sequences=True
+        , dropout=0.05
+        , recurrent_dropout=0.05
+        , name='generator_LSTM_5'
         , trainable=generator_trainable
         , kernel_initializer='he_normal'
         , recurrent_initializer='he_normal'
@@ -149,6 +165,19 @@ class ModelDef(object):
     )
     res = conf(res)
 
+    conf = Bidirectional(
+      LSTM(
+        128
+        , return_sequences=True
+        , dropout=0.05
+        , recurrent_dropout=0.05
+        , name='generator_LSTM_6'
+        , trainable=generator_trainable
+        , kernel_initializer='he_normal'
+        , recurrent_initializer='he_normal'
+      )
+    )
+    res = conf(res)
 
     conf = TimeDistributed(
         Dense(
