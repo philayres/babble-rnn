@@ -18,3 +18,5 @@ the initial LSTMs, allowing all LSTMs to refine themselves.
 Restarted at 5450. Added 2 more LSTMs on the end, disabling the training 
 of existing early and mid LSTMs.
 
+
+Restarted at 9290 with a final wide LSTM on the end after disabling the training of all others
