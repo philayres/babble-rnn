@@ -181,11 +181,25 @@ class ModelDef(object):
 
     conf = Bidirectional(
       LSTM(
-        512
+        128
         , return_sequences=True
         , dropout=0.05
         , recurrent_dropout=0.05
         , name='generator_LSTM_7'
+        , trainable=generator_trainable
+        , kernel_initializer='he_normal'
+        , recurrent_initializer='he_normal'
+      )
+    )
+    res = conf(res)
+
+    conf = Bidirectional(
+      LSTM(
+        128
+        , return_sequences=True
+        , dropout=0.05
+        , recurrent_dropout=0.05
+        , name='generator_LSTM_8'
         , trainable=generator_trainable
         , kernel_initializer='he_normal'
         , recurrent_initializer='he_normal'
