@@ -23,4 +23,4 @@ Restarted at 9290 with a final wide LSTM on the end after disabling the training
 
 Didn't work due to a shape mismatch. Trying two new lstms instead of one large
 
-Restarted at 12943 setting all LSTMs to trainable
+Restarted at 12940 setting all LSTMs to trainable
