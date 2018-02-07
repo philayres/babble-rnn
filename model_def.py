@@ -213,7 +213,7 @@ class ModelDef(object):
         , return_sequences=True
         , dropout=0.05
         , recurrent_dropout=0.05
-        , name='generator_LSTM_7'
+        , name='generator_LSTM_9'
         , trainable=generator_trainable
         , kernel_initializer='he_normal'
         , recurrent_initializer='he_normal'
@@ -227,7 +227,7 @@ class ModelDef(object):
         , return_sequences=True
         , dropout=0.05
         , recurrent_dropout=0.05
-        , name='generator_LSTM_8'
+        , name='generator_LSTM_10'
         , trainable=generator_trainable
         , kernel_initializer='he_normal'
         , recurrent_initializer='he_normal'
