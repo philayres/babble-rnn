@@ -28,3 +28,4 @@ Restarted at 12940 setting all LSTMs to trainable
 At 18130 added two more LSTMs, disabling all others from training.
 
 
+At 20290 enabled training on all the LSTMs. 

@@ -21,8 +21,8 @@ class ModelDef(object):
   encoder_trainable = False
   decoder_trainable = False
   generator_trainable = True
-  earlylstm_trainable = False
-  midlstm_trainable = False
+  earlylstm_trainable = True
+  midlstm_trainable = True
 
 
   def __init__(self, utils, config):
