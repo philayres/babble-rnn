@@ -29,3 +29,7 @@ At 18130 added two more LSTMs, disabling all others from training.
 
 
 At 20290 enabled training on all the LSTMs. 
+
+Finished running at 27830. The results are interesting. 
+Unfortunately the time it takes to load the network to 
+generate is very large. 
