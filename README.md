@@ -12,7 +12,7 @@ View the [babble-rnn code on Github](https://github.com/philayres/babble-rnn/blo
 
 **Wondering what babble-rnn can do?** Listen to the latest babble produced by the experiments since the original tech report:
 
-[play the audio](https://raw.githubusercontent.com/philayres/babble-rnn/master/out/func-28-1-3/27830-example.wav)
+[play the audio](http://babble-rnn.consected.com/docs/current-audio.html)
 
 This babbler is a stack of 11 bidirectional LSTMs, attempting to learning an encoded sequence of data (frame of 13 normalized parameters, representing 20ms of audio).
 Groups of LSTMs are trained to, while keeping others locked, to limit the complexity of learning such a deep network.
