@@ -15,10 +15,10 @@ View the [babble-rnn code on Github](https://github.com/philayres/babble-rnn/blo
 [play the audio](http://babble-rnn.consected.com/docs/current-audio.html)
 
 This babbler is a stack of 11 bidirectional LSTMs, attempting to learning an encoded sequence of data (frame of 13 normalized parameters, representing 20ms of audio).
-Groups of LSTMs are trained to, while keeping others locked, to limit the complexity of learning such a deep network.
+Groups of LSTMs are trained together, while keeping others locked, to limit the complexity of learning such a deep network.
 
 The audio itself is highly compressed through the Codec 2 (see the original tech post for details) producing a 3200 bit per second
 stream of frequency, energy, sinusoidal and voicing parameters. An autoencoder learns the features of this against a particular human
-speaker, to compress the output further. The encoder stage is a mix of 2D convolutional layers, picking features from the Codec 2 data,
-in parallel with a series of standard hidden layers, before being merged into a single encoded output at a quarter of the rate of the
+speaker, to compress the output further. The encoder stage is a mix of 2D convolutional layers, picking features from the Codec 2 data over short time sequences,
+runnning in parallel with a series of standard hidden layers (to provide a compressed stream that helps feed through some of the original input), before being merged into a single encoded output at a quarter of the rate of the
 original Codec 2 input (80ms audio per frame, although more parameters output than the original).
